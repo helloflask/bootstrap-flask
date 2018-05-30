@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    Boostrap-Flask
+    Bootstrap-Flask
     ~~~~~~~~~~~~~~
     :copyright: (c) 2017 by Grey Li.
     :license: MIT, see LICENSE for more details.
