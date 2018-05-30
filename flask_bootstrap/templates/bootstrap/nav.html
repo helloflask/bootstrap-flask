@@ -1,0 +1,6 @@
+{% macro render_nav_item(endpoint, text, badge='') %}
+    <a class="nav-item nav-link {% if request.endpoint and request.endpoint == endpoint %}active{% endif %}"
+       href="{{ url_for(endpoint, **kwargs) }}">
+        {{ text }} {% if badge %}<span class="badge badge-light">{{ badge }}</span>{% endif %}
+    </a>
+{% endmacro %}
