@@ -31,7 +31,7 @@ class Bootstrap(object):
         app.extensions['bootstrap'] = self
 
         blueprint = Blueprint('bootstrap', __name__, template_folder='templates',
-                              static_folder='static', static_url_path='/bootstrap/static')
+                              static_folder='static', static_url_path=app.static_url_path + '/bootstrap')
         app.register_blueprint(blueprint)
 
         app.jinja_env.globals['bootstrap'] = self
@@ -39,12 +39,66 @@ class Bootstrap(object):
             is_hidden_field_filter
         app.jinja_env.add_extension('jinja2.ext.do')
         # default settings
-        app.config.setdefault('SHARE_SERVE_LOCAL', False)
+        app.config.setdefault('BOOTSTRAP_SERVE_LOCAL', False)
 
     @staticmethod
-    def load_css():
-        pass
+    def load_css(version='4.1.0'):
+        """Load Bootstrap's css resources with given version.
+
+        .. versionadded:: 0.1.0
+
+        :param version: The version of Bootstrap.
+        """
+        css_filename = 'bootstrap.min.css'
+        serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
+
+        if serve_local:
+            css = '<link rel="stylesheet" href="%s" type="text/css">\n' % \
+                  url_for('bootstrap.static', filename=css_filename)
+        else:
+            css = '<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/%s/min/%s"' \
+                  ' type="text/css">\n' % (version, css_filename)
+        return Markup(css)
 
     @staticmethod
-    def load_js(with_jquery=True, with_popper=True):
-        pass
+    def load_js(version='4.1.0', jquery_version='3.3.1', popper_version='1.14.3', with_jquery=True, with_popper=True):
+        """Load Bootstrap and related library's js resources with given version.
+
+        .. versionadded:: 0.1.0
+
+        :param version: The version of Bootstrap.
+        :param jquery_version: The version of jQuery.
+        :param popper_version: The version of Popper.js.
+        :param with_jquery: Include jQuery or not.
+        :param with_popper: Include Popper.js or not.
+        """
+        js_filename = 'bootstrap.min.js'
+        jquery_filename = 'jquery.min.js'
+        popper_filename = 'popper.min.js'
+
+        serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
+
+        if serve_local:
+            js = '<script src="%s"></script>' % url_for('bootstrap.static', filename=js_filename)
+        else:
+            js = '<script src="//cdn.bootcss.com/bootstrap/%s/min/%s">' \
+                 '</script>' % (version, js_filename)
+
+        if with_jquery:
+            if serve_local:
+                jquery = '<script src="%s"></script>' % url_for('bootstrap.static', filename=jquery_filename)
+            else:
+                jquery = '<script src="//cdn.bootcss.com/jquery/%s/min/%s">' \
+                 '</script>' % (jquery_version, jquery_filename)
+        else:
+            jquery = ''
+
+        if with_popper:
+            if serve_local:
+                popper = '<script src="%s"></script>' % url_for('bootstrap.static', filename=popper_filename)
+            else:
+                popper = '<script src="//cdn.bootcss.com/popper.js/%s/esm/%s">' \
+                     '</script>' % (popper_version, popper_filename)
+        else:
+            popper = ''
+        return Markup('%s\n%s\n%s\n' % (js, jquery, popper))
