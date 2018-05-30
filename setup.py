@@ -22,7 +22,7 @@ setup(
     license='MIT',
     author='Grey Li',
     author_email='withlihui@gmail.com',
-    description='',
+    description='Bootstrap helper for Flask/Jinja2.',
     long_description=long_description,
     long_description_content_type='text/markdown',
     platforms='any',
