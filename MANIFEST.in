@@ -1,0 +1,2 @@
+graft flask_bootstrap/static
+graft flask_bootstrap/templates
