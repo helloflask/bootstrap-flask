@@ -56,12 +56,12 @@ class Bootstrap(object):
             css = '<link rel="stylesheet" href="%s" type="text/css">\n' % \
                   url_for('bootstrap.static', filename=css_filename)
         else:
-            css = '<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/%s/min/%s"' \
+            css = '<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/%s/css/%s"' \
                   ' type="text/css">\n' % (version, css_filename)
         return Markup(css)
 
     @staticmethod
-    def load_js(version='4.1.0', jquery_version='3.3.1', popper_version='1.14.3', with_jquery=True, with_popper=True):
+    def load_js(version='4.1.0', jquery_version='3.3.1', popper_version='1.14.0', with_jquery=True, with_popper=True):
         """Load Bootstrap and related library's js resources with given version.
 
         .. versionadded:: 0.1.0
@@ -81,14 +81,14 @@ class Bootstrap(object):
         if serve_local:
             js = '<script src="%s"></script>' % url_for('bootstrap.static', filename=js_filename)
         else:
-            js = '<script src="//cdn.bootcss.com/bootstrap/%s/min/%s">' \
+            js = '<script src="//cdn.bootcss.com/bootstrap/%s/js/%s">' \
                  '</script>' % (version, js_filename)
 
         if with_jquery:
             if serve_local:
                 jquery = '<script src="%s"></script>' % url_for('bootstrap.static', filename=jquery_filename)
             else:
-                jquery = '<script src="//cdn.bootcss.com/jquery/%s/min/%s">' \
+                jquery = '<script src="//cdn.bootcss.com/jquery/%s/%s">' \
                  '</script>' % (jquery_version, jquery_filename)
         else:
             jquery = ''
@@ -97,8 +97,8 @@ class Bootstrap(object):
             if serve_local:
                 popper = '<script src="%s"></script>' % url_for('bootstrap.static', filename=popper_filename)
             else:
-                popper = '<script src="//cdn.bootcss.com/popper.js/%s/esm/%s">' \
+                popper = '<script src="//cdn.bootcss.com/popper.js/%s/umd/%s">' \
                      '</script>' % (popper_version, popper_filename)
         else:
             popper = ''
-        return Markup('%s\n%s\n%s\n' % (js, jquery, popper))
+        return Markup('%s\n%s\n%s\n' % (jquery, js, popper))
