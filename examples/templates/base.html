@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Bootstrap-Flask Demo Application</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    {{ bootstrap.load_css() }}
+</head>
+<body>
+<main class="container">
+    <header>
+        <h1 class="text-center display-4">
+            <a href="{{ url_for('index') }}" class="text-success"><strong>Bootstrap-Flask Demo Application</strong></a>
+        </h1>
+    </header>
+    {% block content %}{% endblock %}
+    <footer class="text-center">
+        {% block footer %}
+        <small> &copy; 2018 <a href="http://greyli.com" title="Written by Grey Li">Grey Li</a> /
+        </small>
+        {% endblock %}
+    </footer>
+</main>
+
+{{ bootstrap.load_js() }}
+</body>
+</html>

@@ -1,5 +1,5 @@
 [[source]]
-url = "https://pypi.python.org/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 verify_ssl = true
 name = "pypi"
 
@@ -7,3 +7,4 @@ name = "pypi"
 
 [packages]
 "e1839a8" = {path = ".", editable = true}
+flask-wtf = "*"
