@@ -51,7 +51,7 @@ Call it at your template, for example:
 How to use these macors? It's quite simple, just import them from the
 correspond path and then call them like any other macro:
 ```py
-from 'bootstrap/form.html' import render_form
+{% from 'bootstrap/form.html' import render_form %}
 
 {{ render_form(form) }}
 ```
