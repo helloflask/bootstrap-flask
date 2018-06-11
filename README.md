@@ -61,7 +61,7 @@ from 'bootstrap/form.html' import render_form
 
 ## Changelog
 
-### 0.1.0
+### 1.0
 
 Release date: 2018/6/11
 
