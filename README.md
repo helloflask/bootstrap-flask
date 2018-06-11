@@ -46,6 +46,7 @@ Call it at your template, for example:
 | render_pagination() | bootstrap/pagination.html | Render a standard pagination |
 | render_nav_item() | bootstrap/nav.html | Render a navigation item |
 | render_breadcrumb_item() | bootstrap/nav.html | Render a breadcrumb item |
+| render_static() | bootstrap/utils.html | Render a resource reference code (i.e. `<link>`, `<script>`) |
 
 How to use these macors? It's quite simple, just import them from the
 correspond path and then call them like any other macro:
