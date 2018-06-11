@@ -6,3 +6,9 @@
     </a>
 {% if use_li %}</li>{% endif %}
 {% endmacro %}
+
+{% macro render_breadcrumb_item(endpoint, text) %}
+    <li class="breadcrumb-item {% if request.endpoint and request.endpoint == endpoint %}active{% endif %}">
+        <a href="{{ url_for(endpoint, **kwargs) }}">{{ text }}</a>
+    </li>
+{% endmacro %}
