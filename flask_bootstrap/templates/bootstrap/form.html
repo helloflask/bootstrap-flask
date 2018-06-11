@@ -1,28 +1,29 @@
 {% macro form_errors(form, hiddens=True) %}
-  {%- if form.errors %}
-    {%- for fieldname, errors in form.errors.items() %}
-      {%- if bootstrap_is_hidden_field(form[fieldname]) and hiddens or
+    {%- if form.errors %}
+        {%- for fieldname, errors in form.errors.items() %}
+            {%- if bootstrap_is_hidden_field(form[fieldname]) and hiddens or
              not bootstrap_is_hidden_field(form[fieldname]) and hiddens != 'only' %}
-        {%- for error in errors %}
-          <div class="invalid-feedback">{{error}}</div>
+                {%- for error in errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                {%- endfor %}
+            {%- endif %}
         {%- endfor %}
-      {%- endif %}
-    {%- endfor %}
-  {%- endif %}
+    {%- endif %}
 {%- endmacro %}
 
 {% macro _hz_form_wrap(horizontal_columns, form_type, add_group=False, required=False) %}
-{% if form_type == "horizontal" %}
-  {% if add_group %}<div class="form-group row{% if required %} required{% endif %}">{% endif %}
-  <div class="offset-{{horizontal_columns[0]}}-{{horizontal_columns[1]}}
-              col-{{horizontal_columns[0]}}-{{horizontal_columns[2]}}
+    {% if form_type == "horizontal" %}
+        {% if add_group %}
+            <div class="form-group row{% if required %} required{% endif %}">{% endif %}
+        <div class="offset-{{ horizontal_columns[0] }}-{{ horizontal_columns[1] }}
+              col-{{ horizontal_columns[0] }}-{{ horizontal_columns[2] }}
              ">
-{% endif %}
-{{caller()}}
+    {% endif %}
+{{ caller() }}
 
 {% if form_type == "horizontal" %}
-  {% if add_group %}</div>{% endif %}
-  </div>
+    {% if add_group %}</div>{% endif %}
+    </div>
 {% endif %}
 {% endmacro %}
 
@@ -31,146 +32,128 @@
                     horizontal_columns=('lg', 2, 10),
                     button_map={}) %}
 
-{# this is a workaround hack for the more straightforward-code of just passing required=required parameter. older versions of wtforms do not have
+    {# this is a workaround hack for the more straightforward-code of just passing required=required parameter. older versions of wtforms do not have
 the necessary fix for required=False attributes, but will also not set the required flag in the first place. we skirt the issue using the code below #}
-{% if field.flags.required and not required in kwargs %}
-{% set kwargs = dict(required=True, **kwargs) %}
-{% endif %}
+    {% if field.flags.required and not required in kwargs %}
+        {% set kwargs = dict(required=True, **kwargs) %}
+    {% endif %}
 
-{% if field.widget.input_type == 'checkbox' %}
-  {% call _hz_form_wrap(horizontal_columns, form_type, True, required=required) %}
-    <div class="form-group form-check{% if form_type == "inline" %} form-check-inline{% endif %}">
-      <label class="form-check-label">
-        {{field(class_="form-check-input")|safe}} {{field.label.text|safe}}
-      </label>
-    </div>
-  {% endcall %}
-{%- elif field.type == 'RadioField' -%}
-  {# note: A cleaner solution would be rendering depending on the widget,
+    {% if field.widget.input_type == 'checkbox' %}
+        {% call _hz_form_wrap(horizontal_columns, form_type, True, required=required) %}
+            <div class="form-group form-check{% if form_type == "inline" %} form-check-inline{% endif %}">
+                <label class="form-check-label">
+                    {{ field(class_="form-check-input")|safe }} {{ field.label.text|safe }}
+                </label>
+            </div>
+        {% endcall %}
+    {%- elif field.type == 'RadioField' -%}
+        {# note: A cleaner solution would be rendering depending on the widget,
      this is just a hack for now, until I can think of something better #}
-  {% call _hz_form_wrap(horizontal_columns, form_type, True, required=required) %}
-    {% for item in field -%}
-      <div class="form-check{% if form_type == "inline" %} form-check-inline{% endif %}">
-        <label class="form-check-label">
-          {{item(class_="form-check-input")|safe}} {{item.label.text|safe}}
-        </label>
-      </div>
-    {% endfor %}
-  {% endcall %}
-{%- elif field.type == 'SubmitField' -%}
-  {# deal with jinja scoping issues? #}
-  {% set field_kwargs = kwargs %}
+        {% call _hz_form_wrap(horizontal_columns, form_type, True, required=required) %}
+            {% for item in field -%}
+                <div class="form-check{% if form_type == "inline" %} form-check-inline{% endif %}">
+                    <label class="form-check-label">
+                        {{ item(class_="form-check-input")|safe }} {{ item.label.text|safe }}
+                    </label>
+                </div>
+            {% endfor %}
+        {% endcall %}
+    {%- elif field.type == 'SubmitField' -%}
+        {# deal with jinja scoping issues? #}
+        {% set field_kwargs = kwargs %}
 
-  {# note: same issue as above - should check widget, not field type #}
-  {% call _hz_form_wrap(horizontal_columns, form_type, True, required=required) %}
-    {{field(class='btn btn-%s' % button_map.get(field.name, 'secondary'),
-            **field_kwargs)}}
-  {% endcall %}
-{%- elif field.type == 'FormField' -%}
-{# note: FormFields are tricky to get right and complex setups requiring
+        {# note: same issue as above - should check widget, not field type #}
+        {% call _hz_form_wrap(horizontal_columns, form_type, True, required=required) %}
+            {{ field(class='btn btn-%s' % button_map.get(field.name, 'secondary'),
+            **field_kwargs) }}
+        {% endcall %}
+    {%- elif field.type == 'FormField' -%}
+        {# note: FormFields are tricky to get right and complex setups requiring
    these are probably beyond the scope of what this macro tries to do.
    the code below ensures that things don't break horribly if we run into
    one, but does not try too hard to get things pretty. #}
-  <fieldset>
-    <legend>{{field.label}}</legend>
-    {%- for subfield in field %}
-      {% if not bootstrap_is_hidden_field(subfield) -%}
-        {{ form_field(subfield,
+        <fieldset>
+            <legend>{{ field.label }}</legend>
+            {%- for subfield in field %}
+                {% if not bootstrap_is_hidden_field(subfield) -%}
+                    {{ form_field(subfield,
                       form_type=form_type,
                       horizontal_columns=horizontal_columns,
                       button_map=button_map) }}
-      {%- endif %}
-    {%- endfor %}
-  </fieldset>
-{% else -%}
-  <div class="form-group {%- if form_type == "horizontal" %} row{% endif -%}
-                         {%- if field.flags.required %} required{% endif -%}
-  ">
-      {%- if form_type == "inline" %}
-        {{field.label(class="sr-only")|safe}}
-        {% if field.type == 'FileField' %}
+                {%- endif %}
+            {%- endfor %}
+        </fieldset>
+    {% else -%}
+        <div class="form-group {%- if form_type == "horizontal" %} row{% endif -%}
+                         {%- if field.flags.required %} required{% endif -%}">
+            {%- if form_type == "inline" %}
+                {{ field.label(class="sr-only")|safe }}
+                {% if field.type == 'FileField' %}
                     {% if field.errors %}
-          {{field(class="form-control-file is-invalid", **kwargs)|safe}}
-            {% else %}
-
-          {{field(class="form-control-file", **kwargs)|safe}}
-            {% endif %}
-        {% else %}
+                        {{ field(class="form-control-file is-invalid", **kwargs)|safe }}
+                    {% else %}
+                        {{ field(class="form-control-file", **kwargs)|safe }}
+                    {% endif %}
+                {% else %}
                     {% if field.errors %}
-          {{field(class="form-control mb-2 mr-sm-2 mb-sm-0 is-invalid", **kwargs)|safe}}
-            {% else %}
-          {{field(class="form-control mb-2 mr-sm-2 mb-sm-0", **kwargs)|safe}}
-            {% endif %}
-        {% endif %}
-      {% elif form_type == "horizontal" %}
-        {{field.label(class="form-control-label " + (
-          " col-%s-%s" % horizontal_columns[0:2]
-        ))|safe}}
-        <div class=" col-{{horizontal_columns[0]}}-{{horizontal_columns[2]}}">
-          {% if field.type == 'FileField' %}
-                                {% if field.errors %}
-
-            {{field(class="form-control-file is-invalid", **kwargs)|safe}}
-            {% else %}
-
-            {{field(class="form-control-file", **kwargs)|safe}}
-        {% endif %}
-
-          {% else %}
-                                {% if field.errors %}
-
-            {{field(class="form-control is-invalid", **kwargs)|safe}}
-
-            {% else %}
-
-            {{field(class="form-control", **kwargs)|safe}}
-        {% endif %}
-
-          {% endif %}
+                        {{ field(class="form-control mb-2 mr-sm-2 mb-sm-0 is-invalid", **kwargs)|safe }}
+                    {% else %}
+                        {{ field(class="form-control mb-2 mr-sm-2 mb-sm-0", **kwargs)|safe }}
+                    {% endif %}
+                {% endif %}
+            {% elif form_type == "horizontal" %}
+                {{ field.label(class="form-control-label " + (" col-%s-%s" % horizontal_columns[0:2]))|safe }}
+                <div class=" col-{{ horizontal_columns[0] }}-{{ horizontal_columns[2] }}">
+                    {% if field.type == 'FileField' %}
+                        {% if field.errors %}
+                            {{ field(class="form-control-file is-invalid", **kwargs)|safe }}
+                        {% else %}
+                            {{ field(class="form-control-file", **kwargs)|safe }}
+                        {% endif %}
+                    {% else %}
+                        {% if field.errors %}
+                            {{ field(class="form-control is-invalid", **kwargs)|safe }}
+                        {% else %}
+                            {{ field(class="form-control", **kwargs)|safe }}
+                        {% endif %}
+                    {% endif %}
+                </div>
+                {%- if field.errors %}
+                    {%- for error in field.errors %}
+                        {% call _hz_form_wrap(horizontal_columns, form_type, required=required) %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endcall %}
+                    {%- endfor %}
+                {%- elif field.description -%}
+                    {% call _hz_form_wrap(horizontal_columns, form_type, required=required) %}
+                        <small class="form-text text-muted">{{ field.description|safe }}</small>
+                    {% endcall %}
+                {%- endif %}
+            {%- else -%}
+                {{ field.label(class="form-control-label")|safe }}
+                {% if field.type == 'FileField' %}
+                    {% if field.errors %}
+                        {{ field(class="form-control-file is-invalid", **kwargs)|safe }}
+                    {% else %}
+                        {{ field(class="form-control-file", **kwargs)|safe }}
+                    {% endif %}
+                {% else %}
+                    {% if field.errors %}
+                        {{ field(class="form-control is-invalid", **kwargs)|safe }}
+                    {% else %}
+                        {{ field(class="form-control", **kwargs)|safe }}
+                    {% endif %}
+                {% endif %}
+                {%- if field.errors %}
+                    {%- for error in field.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {%- endfor %}
+                {%- elif field.description -%}
+                    <small class="form-text text-muted">{{ field.description|safe }}</small>
+                {%- endif %}
+            {%- endif %}
         </div>
-        {%- if field.errors %}
-          {%- for error in field.errors %}
-            {% call _hz_form_wrap(horizontal_columns, form_type, required=required) %}
-              <div class="invalid-feedback">{{error}}</div>
-            {% endcall %}
-          {%- endfor %}
-        {%- elif field.description -%}
-          {% call _hz_form_wrap(horizontal_columns, form_type, required=required) %}
-            <small class="form-text text-muted">{{field.description|safe}}</small>
-          {% endcall %}
-        {%- endif %}
-      {%- else -%}
-        {{field.label(class="form-control-label")|safe}}
-        {% if field.type == 'FileField' %}
-                                {% if field.errors %}
-
-          {{field(class="form-control-file is-invalid", **kwargs)|safe}}
-        {% else %}
-
-          {{field(class="form-control-file", **kwargs)|safe}}
-        {% endif %}
-
-        {% else %}
-                                {% if field.errors %}
-
-          {{field(class="form-control is-invalid", **kwargs)|safe}}
-        {% else %}
-
-          {{field(class="form-control", **kwargs)|safe}}
-        {% endif %}
-
-        {% endif %}
-
-        {%- if field.errors %}
-          {%- for error in field.errors %}
-            <div class="invalid-feedback">{{error}}</div>
-          {%- endfor %}
-        {%- elif field.description -%}
-          <small class="form-text text-muted">{{field.description|safe}}</small>
-        {%- endif %}
-      {%- endif %}
-  </div>
-{% endif %}
+    {% endif %}
 {% endmacro %}
 
 {# valid form types are "basic", "inline" and "horizontal" #}
@@ -186,7 +169,7 @@ the necessary fix for required=False attributes, but will also not set the requi
                     id="",
                     novalidate=False,
                     render_kw={}) %}
-{#-
+    {#-
 action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
 
 4.2. Same-document References
@@ -204,47 +187,42 @@ action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
    into a request.
 
  -#}
-{#- if any file fields are inside the form and enctype is automatic, adjust
+    {#- if any file fields are inside the form and enctype is automatic, adjust
     if file fields are found. could really use the equalto test of jinja2
     here, but latter is not available until 2.8
 
     warning: the code below is guaranteed to make you cry =(
 #}
-{%- set _enctype = [] %}
-{%- if enctype is none -%}
-  {%- for field in form %}
-    {%- if field.type == 'FileField' %}
-      {#- for loops come with a fairly watertight scope, so this list-hack is
+    {%- set _enctype = [] %}
+    {%- if enctype is none -%}
+        {%- for field in form %}
+            {%- if field.type == 'FileField' %}
+                {#- for loops come with a fairly watertight scope, so this list-hack is
           used to be able to set values outside of it #}
-      {%- set _ = _enctype.append('multipart/form-data') -%}
+                {%- set _ = _enctype.append('multipart/form-data') -%}
+            {%- endif %}
+        {%- endfor %}
+    {%- else %}
+        {% set _ = _enctype.append(enctype) %}
     {%- endif %}
-  {%- endfor %}
-{%- else %}
-  {% set _ = _enctype.append(enctype) %}
-{%- endif %}
-<form
-  {%- if action != None %} action="{{action}}"{% endif -%}
-  {%- if id %} id="{{id}}"{% endif -%}
-  {%- if method %} method="{{method}}"{% endif %}
-  class="form
-    {%- if extra_classes %} {{extra_classes}}{% endif -%}
-    {%- if form_type == "inline" %} form-inline{% endif -%}
-  "
-  {%- if _enctype[0] %} enctype="{{_enctype[0]}}"{% endif -%}
-  {%- if role %} role="{{role}}"{% endif -%}
-  {%- if novalidate %} novalidate{% endif -%}
-  {%- if render_kw %} {{render_kw|xmlattr}}{% endif -%}
-  >
-  {{ form.hidden_tag() }}
-  {{ form_errors(form, hiddens='only') }}
-
-  {%- for field in form %}
-    {% if not bootstrap_is_hidden_field(field) -%}
-      {{ render_field(field,
+    <form{%- if action != None %} action="{{ action }}"{% endif -%}
+            {%- if id %} id="{{ id }}"{% endif -%}
+            {%- if method %} method="{{ method }}"{% endif %}
+            class="form
+{%- if extra_classes %} {{ extra_classes }}{% endif -%}{%- if form_type == "inline" %} form-inline{% endif -%}"
+            {%- if _enctype[0] %} enctype="{{ _enctype[0] }}"{% endif -%}
+            {%- if role %} role="{{ role }}"{% endif -%}
+            {%- if novalidate %} novalidate{% endif -%}
+            {%- if render_kw %} {{ render_kw|xmlattr }}{% endif -%}>
+        {{ form.hidden_tag() }}
+        {{ form_errors(form, hiddens='only') }}
+        {%- for field in form %}
+            {% if not bootstrap_is_hidden_field(field) -%}
+                {{ render_field(field,
                     form_type=form_type,
                     horizontal_columns=horizontal_columns,
                     button_map=button_map) }}
-    {%- endif %}
-  {%- endfor %}
-</form>
+            {%- endif %}
+        {%- endfor %}
+    </form>
 {%- endmacro %}
