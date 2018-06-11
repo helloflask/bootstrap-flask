@@ -36,6 +36,7 @@
                            align=''
                            )
 -%}
+    {% if fragment != '' and not fragment.startswith('#') %}{% set fragment = '#' + fragment %}{% endif %}
 {% with url_args = {} %}
 {%- do url_args.update(request.view_args if not endpoint else {}),
        url_args.update(request.args if not endpoint else {}),
