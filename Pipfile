@@ -8,3 +8,4 @@ name = "pypi"
 [packages]
 "e1839a8" = {path = ".", editable = true}
 flask-wtf = "*"
+flask-sqlalchemy = "*"
