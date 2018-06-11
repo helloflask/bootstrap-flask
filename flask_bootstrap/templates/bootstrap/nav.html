@@ -8,7 +8,12 @@
 {% endmacro %}
 
 {% macro render_breadcrumb_item(endpoint, text) %}
-    <li class="breadcrumb-item {% if request.endpoint and request.endpoint == endpoint %}active{% endif %}">
+    {% set active = True if request.endpoint and request.endpoint == endpoint else False %}
+    <li class="breadcrumb-item {% if active %}active{% endif %}" {% if active %} aria-current="page"{% endif %}>
+        {% if active %}
+            {{ text }}
+        {% else %}
         <a href="{{ url_for(endpoint, **kwargs) }}">{{ text }}</a>
+        {% endif %}
     </li>
 {% endmacro %}
