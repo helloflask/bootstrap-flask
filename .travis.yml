@@ -1,0 +1,19 @@
+language: python
+
+python:
+  - "2.7"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+
+# command to install dependencies
+install:
+  - pip install .
+  - pip install coverage coveralls flake8 flask-wtf flask-sqlalchemy
+
+# command to run tests
+script: 
+  - coverage run --source=flask_bootstrap setup.py test
+  - flake8 flask_bootstrap test_bootstrap_flask.py
+
+after_success: coveralls

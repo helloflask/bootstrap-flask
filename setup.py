@@ -30,6 +30,7 @@ setup(
     packages=['flask_bootstrap'],
     zip_safe=False,
     include_package_data=True,
+    test_suite='test_bootstrap_flask',
     install_requires=[
         'Flask'
     ],
