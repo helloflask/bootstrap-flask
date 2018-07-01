@@ -1,6 +1,6 @@
 # Bootstrap-Flask
 
-Bootstrap helper for Flask/Jinja2. Based on Flask-Bootstrap, but lighter and better.
+Bootstrap 4 helper for Flask/Jinja2. Based on Flask-Bootstrap, but lighter and better.
 
 
 ## Installation
@@ -58,8 +58,23 @@ correspond path and then call them like any other macro:
 
 *API documentation will coming soon...*
 
+## Run the demo application
+```
+$ git clone https://github.com/greyli/bootstrap-flask.git
+$ pip install flask flask-wtf flask-sqlalchemy bootstrap-flask
+$ cd bootstrap-flask/examples
+$ flask run
+```
+Now go to http://localhost:5000.
 
 ## Changelog
+
+### 1.0.1
+
+Release date: 2018/7/1
+
+* Fix local resources path error
+* Add basic unit tests
 
 ### 1.0
 
