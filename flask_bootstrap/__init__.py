@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    Bootstrap-Flask
+    flask_bootstrap
     ~~~~~~~~~~~~~~
     :copyright: (c) 2017 by Grey Li.
     :license: MIT, see LICENSE for more details.

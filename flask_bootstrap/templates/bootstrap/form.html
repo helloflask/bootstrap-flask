@@ -1,3 +1,6 @@
+{#  This file was modified based on Flask-Bootstrap.
+    Copyright (c) 2013, Marc Brinkmann. All rights reserved. #}
+
 {% macro form_errors(form, hiddens=True) %}
     {%- if form.errors %}
         {%- for fieldname, errors in form.errors.items() %}
