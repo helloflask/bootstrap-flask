@@ -54,7 +54,7 @@ class Bootstrap(object):
 
         if serve_local:
             css = '<link rel="stylesheet" href="%s" type="text/css">\n' % \
-                  url_for('bootstrap.static', filename=css_filename)
+                  url_for('bootstrap.static', filename='css/' + css_filename)
         else:
             css = '<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/%s/css/%s"' \
                   ' type="text/css">\n' % (version, css_filename)
@@ -79,7 +79,7 @@ class Bootstrap(object):
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
 
         if serve_local:
-            js = '<script src="%s"></script>' % url_for('bootstrap.static', filename=js_filename)
+            js = '<script src="%s"></script>' % url_for('bootstrap.static', filename='js/' + js_filename)
         else:
             js = '<script src="//cdn.bootcss.com/bootstrap/%s/js/%s">' \
                  '</script>' % (version, js_filename)
