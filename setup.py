@@ -18,7 +18,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='Bootstrap-Flask',
-    version='1.0',
+    version='1.0.1',
     url='https://github.com/greyli/bootstrap-flask',
     license='MIT',
     author='Grey Li',
