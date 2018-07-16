@@ -71,6 +71,12 @@ Now go to http://localhost:5000.
 
 ## Changelog
 
+### 1.0.2
+
+Release date: 2018/7/16
+
+* Include `popper.js` before `bootstrap.js` in `bootstrap.load_js()`. ([#2](https://github.com/greyli/bootstrap-flask/issues/2))
+
 ### 1.0.1
 
 Release date: 2018/7/1
