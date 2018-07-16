@@ -101,4 +101,4 @@ class Bootstrap(object):
                      '</script>' % (popper_version, popper_filename)
         else:
             popper = ''
-        return Markup('%s\n%s\n%s\n' % (jquery, js, popper))
+        return Markup('%s\n%s\n%s\n' % (jquery, popper, js))
