@@ -73,14 +73,15 @@ Now go to http://localhost:5000.
 
 ### 1.0.3
 
-Release date: --
+Release date: 2018/7/16
 
 * Built-in resources will be used when `FLASK_ENV` set to `development`.
+* Change CDN provider to jsDelivr.
 
 
 ### 1.0.2
 
-Release date: 2018/7/16
+Release date: 2018/7/21
 
 * Include `popper.js` before `bootstrap.js` in `bootstrap.load_js()`. ([#2](https://github.com/greyli/bootstrap-flask/issues/2))
 
