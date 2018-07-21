@@ -71,6 +71,13 @@ Now go to http://localhost:5000.
 
 ## Changelog
 
+### 1.0.3
+
+Release date: --
+
+* Built-in resources will be used when `FLASK_ENV` set to `development`.
+
+
 ### 1.0.2
 
 Release date: 2018/7/16
