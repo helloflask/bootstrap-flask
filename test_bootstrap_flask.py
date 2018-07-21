@@ -69,7 +69,6 @@ class BootstrapTestCase(unittest.TestCase):
         self.assertNotIn('https://cdn.jsdelivr.net/npm/bootstrap', css_rv)
         self.assertNotIn('https://cdn.jsdelivr.net/npm/bootstrap', js_rv)
 
-
     def test_local_resources_when_dev(self):
         current_app.config['ENV'] = 'development'
 
