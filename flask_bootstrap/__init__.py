@@ -56,7 +56,7 @@ class Bootstrap(object):
             css = '<link rel="stylesheet" href="%s" type="text/css">\n' % \
                   url_for('bootstrap.static', filename='css/' + css_filename)
         else:
-            css = '<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/%s/css/%s"' \
+            css = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/css/%s"' \
                   ' type="text/css">\n' % (version, css_filename)
         return Markup(css)
 
@@ -81,14 +81,14 @@ class Bootstrap(object):
         if serve_local:
             js = '<script src="%s"></script>' % url_for('bootstrap.static', filename='js/' + js_filename)
         else:
-            js = '<script src="//cdn.bootcss.com/bootstrap/%s/js/%s">' \
+            js = 'https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/js/%s">' \
                  '</script>' % (version, js_filename)
 
         if with_jquery:
             if serve_local:
                 jquery = '<script src="%s"></script>' % url_for('bootstrap.static', filename=jquery_filename)
             else:
-                jquery = '<script src="//cdn.bootcss.com/jquery/%s/%s">' \
+                jquery = '<script src="https://cdn.jsdelivr.net/npm/jquery@%s/dist/%s">' \
                  '</script>' % (jquery_version, jquery_filename)
         else:
             jquery = ''
@@ -97,7 +97,7 @@ class Bootstrap(object):
             if serve_local:
                 popper = '<script src="%s"></script>' % url_for('bootstrap.static', filename=popper_filename)
             else:
-                popper = '<script src="//cdn.bootcss.com/popper.js/%s/umd/%s">' \
+                popper = '<script src="https://cdn.jsdelivr.net/npm/popper.js@%s/dist/umd/%s">' \
                      '</script>' % (popper_version, popper_filename)
         else:
             popper = ''
