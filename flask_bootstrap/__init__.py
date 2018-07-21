@@ -51,8 +51,9 @@ class Bootstrap(object):
         """
         css_filename = 'bootstrap.min.css'
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
+        dev = True if current_app.config['ENV'] == 'development' else False
 
-        if serve_local:
+        if serve_local or dev:
             css = '<link rel="stylesheet" href="%s" type="text/css">\n' % \
                   url_for('bootstrap.static', filename='css/' + css_filename)
         else:
@@ -77,15 +78,16 @@ class Bootstrap(object):
         popper_filename = 'popper.min.js'
 
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
+        dev = True if current_app.config['ENV'] == 'development' else False
 
-        if serve_local:
+        if serve_local or dev:
             js = '<script src="%s"></script>' % url_for('bootstrap.static', filename='js/' + js_filename)
         else:
             js = 'https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/js/%s">' \
                  '</script>' % (version, js_filename)
 
         if with_jquery:
-            if serve_local:
+            if serve_local or dev:
                 jquery = '<script src="%s"></script>' % url_for('bootstrap.static', filename=jquery_filename)
             else:
                 jquery = '<script src="https://cdn.jsdelivr.net/npm/jquery@%s/dist/%s">' \
@@ -94,7 +96,7 @@ class Bootstrap(object):
             jquery = ''
 
         if with_popper:
-            if serve_local:
+            if serve_local or dev:
                 popper = '<script src="%s"></script>' % url_for('bootstrap.static', filename=popper_filename)
             else:
                 popper = '<script src="https://cdn.jsdelivr.net/npm/popper.js@%s/dist/umd/%s">' \
