@@ -53,7 +53,7 @@ class BootstrapTestCase(unittest.TestCase):
 
         response = self.client.get('/')
         data = response.get_data(as_text=True)
-        self.assertNotIn('//cdn.bootcss.com', data)
+        self.assertNotIn('https://cdn.jsdelivr.net/npm/bootstrap', data)
         self.assertIn('bootstrap.min.js', data)
         self.assertIn('bootstrap.min.css', data)
 
@@ -66,13 +66,13 @@ class BootstrapTestCase(unittest.TestCase):
         js_rv = self.bootstrap.load_js()
         self.assertIn('/bootstrap/static/css/bootstrap.min.css', css_rv)
         self.assertIn('/bootstrap/static/js/bootstrap.min.js', js_rv)
-        self.assertNotIn('//cdn.bootcss.com', css_rv)
-        self.assertNotIn('//cdn.bootcss.com', js_rv)
+        self.assertNotIn('https://cdn.jsdelivr.net/npm/bootstrap', css_rv)
+        self.assertNotIn('https://cdn.jsdelivr.net/npm/bootstrap', js_rv)
 
     def test_cdn_resources(self):
         response = self.client.get('/')
         data = response.get_data(as_text=True)
-        self.assertIn('//cdn.bootcss.com', data)
+        self.assertIn('https://cdn.jsdelivr.net/npm/bootstrap', data)
         self.assertIn('bootstrap.min.js', data)
         self.assertIn('bootstrap.min.css', data)
 
@@ -80,8 +80,8 @@ class BootstrapTestCase(unittest.TestCase):
         js_rv = self.bootstrap.load_js()
         self.assertNotIn('/bootstrap/static/css/bootstrap.min.css', css_rv)
         self.assertNotIn('/bootstrap/static/js/bootstrap.min.js', js_rv)
-        self.assertIn('//cdn.bootcss.com', css_rv)
-        self.assertIn('//cdn.bootcss.com', js_rv)
+        self.assertIn('https://cdn.jsdelivr.net/npm/bootstrap', css_rv)
+        self.assertIn('https://cdn.jsdelivr.net/npm/bootstrap', js_rv)
 
     def test_render_field(self):
         @self.app.route('/field')
