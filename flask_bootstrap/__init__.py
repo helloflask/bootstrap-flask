@@ -83,7 +83,7 @@ class Bootstrap(object):
         if serve_local or dev:
             js = '<script src="%s"></script>' % url_for('bootstrap.static', filename='js/' + js_filename)
         else:
-            js = 'https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/js/%s">' \
+            js = '<script src="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/js/%s">' \
                  '</script>' % (version, js_filename)
 
         if with_jquery:
