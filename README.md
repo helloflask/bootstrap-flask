@@ -69,6 +69,13 @@ $ flask run
 ```
 Now go to http://localhost:5000.
 
+
+## TODO
+
+- [ ] Add a proper documentation
+- [ ] Remove required attribute handle code in render_form/render_field
+
+
 ## Changelog
 
 
