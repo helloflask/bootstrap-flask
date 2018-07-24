@@ -76,7 +76,7 @@ Now go to http://localhost:5000.
 
 Release date: 2018/7/24
 
-* Fix missing `<script>` tag in URL. ([#3](https://github.com/greyli/bootstrap-flask/issues/3))
+* Add missing `<script>` tag in resources URL. ([#3](https://github.com/greyli/bootstrap-flask/issues/3))
 
 ### 1.0.3
 
