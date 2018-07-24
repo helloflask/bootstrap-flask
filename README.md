@@ -71,13 +71,19 @@ Now go to http://localhost:5000.
 
 ## Changelog
 
+
+### 1.0.4
+
+Release date: 2018/7/24
+
+* Fix missing `<script>` tag in URL. ([#3](https://github.com/greyli/bootstrap-flask/issues/3))
+
 ### 1.0.3
 
-Release date: 2018/7/16
+Release date: 2018/7/22
 
 * Built-in resources will be used when `FLASK_ENV` set to `development`.
 * Change CDN provider to jsDelivr.
-
 
 ### 1.0.2
 
