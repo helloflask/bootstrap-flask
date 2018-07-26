@@ -11,7 +11,6 @@ but lighter and better.
 
 ## TODO
 
-- [ ] Add a proper documentation
 - [ ] Remove required attribute handle code in render_form/render_field
 - [ ] Add `endpoint` parameter in `render_pager`
 
