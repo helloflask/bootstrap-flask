@@ -1,6 +1,6 @@
 # Bootstrap-Flask
 
-Bootstrap 4 helper for Flask/Jinja2.
+[Bootstrap](https://getbootstrap.com) 4 helper for Flask/Jinja2.
 Based on [Flask-Bootstrap](https://github.com/mbr/flask-bootstrap),
 but lighter and better.
 
