@@ -113,7 +113,7 @@ Example
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/form.html' import render_from %}
+    {% from 'bootstrap/form.html' import render_form %}
 
     {{ render_form(form) }}
 
