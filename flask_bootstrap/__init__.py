@@ -78,7 +78,7 @@ class Bootstrap(object):
         popper_filename = 'popper.min.js'
 
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
-        dev = True if current_app.config['ENV'] == 'development' else False
+        dev = current_app.config.get('ENV') == 'development'
 
         if serve_local or dev:
             js = '<script src="%s"></script>' % url_for('bootstrap.static', filename='js/' + js_filename)
