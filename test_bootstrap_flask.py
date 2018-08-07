@@ -56,11 +56,14 @@ class BootstrapTestCase(unittest.TestCase):
         self.assertNotIn('https://cdn.jsdelivr.net/npm/bootstrap', data)
         self.assertIn('bootstrap.min.js', data)
         self.assertIn('bootstrap.min.css', data)
+        self.assertIn('jquery.min.js', data)
 
         css_response = self.client.get('/bootstrap/static/css/bootstrap.min.css')
         js_response = self.client.get('/bootstrap/static/js/bootstrap.min.js')
+        jquery_response = self.client.get('/bootstrap/static/jquery.min.js')
         self.assertNotEqual(css_response.status_code, 404)
         self.assertNotEqual(js_response.status_code, 404)
+        self.assertNotEqual(jquery_response.status_code, 404)
 
         css_rv = self.bootstrap.load_css()
         js_rv = self.bootstrap.load_js()
