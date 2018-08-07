@@ -51,7 +51,7 @@ class Bootstrap(object):
         """
         css_filename = 'bootstrap.min.css'
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
-        dev = True if current_app.config['ENV'] == 'development' else False
+        dev = current_app.config.get('ENV') == 'development'
 
         if serve_local or dev:
             css = '<link rel="stylesheet" href="%s" type="text/css">\n' % \
