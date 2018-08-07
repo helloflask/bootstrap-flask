@@ -1,6 +1,15 @@
 Changelog
 ==========
 
+
+1.0.5
+------
+
+Release date: 2018/8/7
+
+- Fix KeyError Exception if ENV isn't defined. (`#7 <https://github.com/greyli/bootstrap-flask/pull/7>`__)
+
+
 1.0.4
 ------
 
