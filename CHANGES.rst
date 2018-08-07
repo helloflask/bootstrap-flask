@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+1.0.6
+------
+
+Release date: 2018/8/7
+
+- Fix unmatched built-in jQuery filename. (`#8 <https://github.com/greyli/bootstrap-flask/issues/8>`__)
 
 1.0.5
 ------
