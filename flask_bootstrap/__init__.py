@@ -51,7 +51,7 @@ class Bootstrap(object):
         """
         css_filename = 'bootstrap.min.css'
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
-        dev = current_app.config.get('ENV') == 'development'
+        dev = current_app.config.get('ENV', current_app.config['DEBUG']) == 'development'
 
         if serve_local or dev:
             css = '<link rel="stylesheet" href="%s" type="text/css">\n' % \
@@ -78,7 +78,7 @@ class Bootstrap(object):
         popper_filename = 'popper.min.js'
 
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
-        dev = current_app.config.get('ENV') == 'development'
+        dev = current_app.config.get('ENV', current_app.config['DEBUG']) == 'development'
 
         if serve_local or dev:
             js = '<script src="%s"></script>' % url_for('bootstrap.static', filename='js/' + js_filename)
