@@ -72,27 +72,6 @@ class BootstrapTestCase(unittest.TestCase):
         self.assertNotIn('https://cdn.jsdelivr.net/npm/bootstrap', css_rv)
         self.assertNotIn('https://cdn.jsdelivr.net/npm/bootstrap', js_rv)
 
-    def test_local_resources_when_dev(self):
-        current_app.config['ENV'] = 'development'
-
-        response = self.client.get('/')
-        data = response.get_data(as_text=True)
-        self.assertNotIn('https://cdn.jsdelivr.net/npm/bootstrap', data)
-        self.assertIn('bootstrap.min.js', data)
-        self.assertIn('bootstrap.min.css', data)
-
-        css_response = self.client.get('/bootstrap/static/css/bootstrap.min.css')
-        js_response = self.client.get('/bootstrap/static/js/bootstrap.min.js')
-        self.assertNotEqual(css_response.status_code, 404)
-        self.assertNotEqual(js_response.status_code, 404)
-
-        css_rv = self.bootstrap.load_css()
-        js_rv = self.bootstrap.load_js()
-        self.assertIn('/bootstrap/static/css/bootstrap.min.css', css_rv)
-        self.assertIn('/bootstrap/static/js/bootstrap.min.js', js_rv)
-        self.assertNotIn('https://cdn.jsdelivr.net/npm/bootstrap', css_rv)
-        self.assertNotIn('https://cdn.jsdelivr.net/npm/bootstrap', js_rv)
-
     def test_cdn_resources(self):
         response = self.client.get('/')
         data = response.get_data(as_text=True)
