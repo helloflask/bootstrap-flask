@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+1.0.7
+------
+
+Release date: -
+
+- Built-in resources loading not based on``FLASK_ENV``.
+
+
 1.0.6
 ------
 
