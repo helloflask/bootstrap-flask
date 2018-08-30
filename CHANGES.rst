@@ -4,7 +4,7 @@ Changelog
 1.0.7
 ------
 
-Release date: -
+Release date: 2018/8/30
 
 - Built-in resources loading not based on``FLASK_ENV``.
 
