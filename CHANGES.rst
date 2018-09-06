@@ -1,6 +1,15 @@
 Changelog
 ==========
 
+
+1.0.8
+------
+
+Release date: 2018/9/6
+
+- Correct macro name used in ``templates/boostrap/form.html``: ``form_field`` --> ``render_field``.
+
+
 1.0.7
 ------
 
