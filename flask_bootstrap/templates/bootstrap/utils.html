@@ -1,5 +1,5 @@
 {% macro render_static(type, filename_or_url, local=True) %}
-    {% if local -%}{% set filename_or_url = url_for('static', filename=filename_or_url) %}{%- endif %}
+    {% set filename_or_url = url_for('static', filename=filename_or_url) if local %}
     {% if type == 'css' -%}
         <link rel="stylesheet" href="{{ filename_or_url }}" type="text/css">
     {%- elif type == 'js' -%}
@@ -8,3 +8,9 @@
         <link rel="icon" href="{{ filename_or_url }}">
     {%- endif %}
 {% endmacro %}
+
+{% macro typename(obj) %}{{ obj.__class__.__name__ }}{% endmacro %}
+
+{% macro modulename(obj) %}{{ obj.__module__ }}{% endmacro %}
+
+{% macro class() -%}{{- varargs|select|unique|join(' ') -}}{%- endmacro %}

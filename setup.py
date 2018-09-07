@@ -32,8 +32,11 @@ setup(
     include_package_data=True,
     test_suite='test_bootstrap_flask',
     install_requires=[
-        'Flask'
+        'Flask>=1'
     ],
+    extras_require={
+        'forms': ['WTForms>=2.2.0', 'Flask-WTF']
+    },
     keywords='flask extension development',
     classifiers=[
         'Development Status :: 3 - Alpha',

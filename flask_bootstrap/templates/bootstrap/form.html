@@ -1,5 +1,178 @@
 {#  This file was part of Flask-Bootstrap and was modified under the terms of
- its BSD License. Copyright (c) 2013, Marc Brinkmann. All rights reserved. #}
+    its BSD License. Copyright (c) 2013, Marc Brinkmann. All rights reserved. #}
+{% from 'bootstrap/utils.html' import typename, modulename, class %}
+
+
+{% macro help(field, opts={}) %}
+    {%- if field.description %}
+        <small id="{{ '%s-desc' % field.id }}" class="{{ class('text-muted', 'form-text' if not opts.inline)  }}">{{ field.description }}</small>
+    {%- endif -%}
+{% endmacro %}
+
+{% macro error(field, opts={}) %}
+    {%- for error in field.errors %}
+        <div class="invalid-{{ 'tooltip' if opts.tooltips else 'feedback' }}">{{ error }}</div>
+    {%- endfor -%}
+{% endmacro %}
+
+
+{% macro render(field, include_label=true, prefix_label=true, label_class=none, field_class=none, opts={}) -%}
+    {%- set render_kw = dict() -%}
+    {%- set _ = render_kw.setdefault("placeholder", field.label.text) if label_class == "sr-only" -%}
+    {%- set _ = render_kw.setdefault("aria-describedby",'%s-desc' % field.id) if field.description -%}
+
+    {{ field.label(class=class(label_class)) if prefix_label and include_label }}
+    {{ field(class=class(field_class|default("form-control", true), "is-invalid" if field.errors), **render_kw) }}
+    {{ field.label(class=class(label_class)) if not prefix_label and include_label }}
+    {{ help(field, opts=opts) }}
+    {{ error(field, opts=opts) if not opts.inline }}
+{%- endmacro %}
+
+
+{% macro form_group(type=none, col=none) %}
+    <div class="{{ class(type|default('form-group', true), col) }}">
+        {{ caller() }}
+    </div>
+{%- endmacro %}
+
+
+{% macro form_fieldset(field, type=none, col=none) %}
+    <fieldset class="{{ class(type|default('form-group', true), col) }}" id="{{ field.id }}">
+        <legend for="{{ field.label.field_id }}">{{ field.label.text }}</legend>
+        {{ caller() }}
+    </fieldset>
+{%- endmacro %}
+
+
+{% macro render_in_group(field, group_type=none, col=none, opts={}) -%}
+    {% set outer_kwargs = kwargs %}  {# kwargs is overwritten by the `call` block #}
+    {% call form_group(group_type, col=col) %}
+        {{ render(field, opts=opts, **outer_kwargs) }}
+    {% endcall %}
+{%- endmacro %}
+
+
+{% macro form_row() -%}
+    <div class="form-row">
+        {{- caller() -}}
+    </div>
+{%- endmacro %}
+
+
+{%- macro render_field(field, hide_label=none, opts={}) -%}
+{% set outer_kwargs = kwargs %}
+{% set hide_label = hide_label|default(opts.inline) %}
+{%- block render_field scoped -%}
+    {%- set widget_type = typename(field.widget) -%}
+    {%- set widget_module = modulename(field.widget) -%}
+
+    {%- set wtforms_widgets_hmtl5_mapping = {
+        "RangeInput": {
+            "field_class": "custom-range" if opts.custom,
+            "label_class": "sr-only" if hide_label,
+        },
+    }
+    -%}
+
+    {%- set wtforms_widgets_core_mapping = {
+        "TextInput": {
+            "label_class": "sr-only" if hide_label,
+        },
+        "PasswordInput": {
+            "label_class": "sr-only" if hide_label,
+        },
+        "Input": {
+            "label_class": "sr-only" if hide_label,
+        },
+        "TextArea": {
+            "label_class": "sr-only" if hide_label,
+        },
+        "Select": {
+            "field_class": "custom-select" if opts.custom,
+        },
+        "FileInput": {
+            "group_type": "custom-file" if opts.custom,
+            "field_class": "custom-file-input" if opts.custom else "form-control-file",
+            "label_class": "custom-file-label" if opts.custom,
+        },
+        "CheckboxInput": {
+            "group_type": class("custom-control custom-checkbox", "custom-control-inline" if opts.inline)
+                          if opts.custom else class("form-check", "form-check-inline" if opts.inline),
+            "field_class": "custom-control-input" if opts.custom else "form-check-input",
+            "label_class": "custom-control-label" if opts.custom else "form-check-label",
+            "prefix_label": false,
+        },
+        "RadioInput": {
+            "group_type": class("custom-control custom-radio", "custom-control-inline" if opts.inline)
+                          if opts.custom else class("form-check", "form-check-inline" if opts.inline),
+            "field_class": "custom-control-input" if opts.custom else "form-check-input",
+            "label_class": "custom-control-label" if opts.custom else "form-check-label",
+            "prefix_label": false,
+        },
+        "SubmitInput": {
+            "field_class": "btn btn-primary",
+            "include_label": false,
+        },
+    }
+    -%}
+
+    {%- if widget_module == 'wtforms.widgets.html5' -%}
+        {{ render_in_group(field, label_class=("sr-only" if hide_label), opts=opts, **dict(outer_kwargs, **wtforms_widgets_hmtl5_mapping.get(widget_type, {}))) }}
+
+    {%- elif widget_module == 'wtforms.widgets.core' -%}
+        {%- if widget_type in wtforms_widgets_core_mapping -%}
+            {{ render_in_group(field, opts=opts, **dict(outer_kwargs, **wtforms_widgets_core_mapping.get(widget_type, {}))) }}
+        {%- elif widget_type in ['Option', 'HiddenInput'] -%}
+            {{ field() }} {# `Option` is a pseudowidget, we don't wanna to do anything fancy here #}
+
+        {%- elif widget_type == 'ListWidget' -%}
+            {# Removes support for actual list elements like `ul` & `li` #}
+            {% call form_fieldset(field, col=outer_kwargs.get('col')) %}
+                {%- for subfield in field %}
+                    {{ render_field(subfield, prefix_label=field.widget.prefix_label, opts=opts) }}
+                {% endfor -%}
+            {% endcall %}
+        {%- elif widget_type == 'TableWidget' -%}
+            <div class="form-row">
+            {%- for subfield in field %}
+                {{ render_field(subfield, col="col-md-6", hide_label=true, opts=opts) }}
+            {% endfor -%}
+            </div>
+        {%- else -%}
+            {{ field }}
+            {{ field|pprint }}
+            {{ error(field, opts=opts) }}
+        {%- endif -%}
+
+    {%- else -%}
+        {{ field }}
+        {{ field|pprint }}
+        {%- block render_field_unknown scoped %}
+            {# We can try to render the unknown element, but this block is intended to be subclassed #}
+            {{ render_in_group(field, label_class=("sr-only" if hide_label), opts=opts, **outer_kwargs) }}
+        {% endblock -%}
+    {%- endif -%}
+{%- endblock -%}
+{%- endmacro %}
+
+
+{% macro render_form(form) -%}
+    {%- set _ = kwargs.setdefault("inline", false) -%}
+    {%- set _ = kwargs.setdefault("tooltips", false) -%}
+    {%- set _ = kwargs.setdefault("custom", false) -%}
+    {%- set _ = kwargs.setdefault("button_map", {}) -%}
+    <form method="post" class="{{ 'form-inline' if kwargs.get('inline') }}">
+        {%- for field in form -%}
+            {{ render_field(field, opts=kwargs) }}
+        {%- endfor %}
+    </form>
+{%- endmacro %}
+
+
+
+
+
+
 
 {% macro form_errors(form, hiddens=True) %}
     {%- if form.errors %}
@@ -17,20 +190,20 @@
 {% macro _hz_form_wrap(horizontal_columns, form_type, add_group=False, required=False) %}
     {% if form_type == "horizontal" %}
         {% if add_group %}
-            <div class="form-group row{% if required %} required{% endif %}">{% endif %}
+            <div class="form-group row{% if required %} required{% endif %}">
+        {% endif %}
         <div class="offset-{{ horizontal_columns[0] }}-{{ horizontal_columns[1] }}
               col-{{ horizontal_columns[0] }}-{{ horizontal_columns[2] }}
              ">
     {% endif %}
-{{ caller() }}
-
-{% if form_type == "horizontal" %}
-    {% if add_group %}</div>{% endif %}
-    </div>
-{% endif %}
+    {{ caller() }}
+    {% if form_type == "horizontal" %}
+        {% if add_group %}</div>{% endif %}
+        </div>
+    {% endif %}
 {% endmacro %}
 
-{% macro render_field(field,
+{% macro render_field2(field,
                     form_type="basic",
                     horizontal_columns=('lg', 2, 10),
                     button_map={}) %}
@@ -79,7 +252,7 @@ the necessary fix for required=False attributes, but will also not set the requi
             <legend>{{ field.label }}</legend>
             {%- for subfield in field %}
                 {% if not bootstrap_is_hidden_field(subfield) -%}
-                    {{ render_field(subfield,
+                    {{ render_field2(subfield,
                       form_type=form_type,
                       horizontal_columns=horizontal_columns,
                       button_map=button_map) }}
@@ -160,7 +333,7 @@ the necessary fix for required=False attributes, but will also not set the requi
 {% endmacro %}
 
 {# valid form types are "basic", "inline" and "horizontal" #}
-{% macro render_form(form,
+{% macro render_form2(form,
                     action="",
                     method="post",
                     extra_classes=None,
@@ -172,7 +345,8 @@ the necessary fix for required=False attributes, but will also not set the requi
                     id="",
                     novalidate=False,
                     render_kw={}) %}
-    {#-
+
+{#-
 action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
 
 4.2. Same-document References
@@ -189,8 +363,8 @@ action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
    current document and should be replaced by that URI when transformed
    into a request.
 
- -#}
-    {#- if any file fields are inside the form and enctype is automatic, adjust
+-#}
+{#- if any file fields are inside the form and enctype is automatic, adjust
     if file fields are found. could really use the equalto test of jinja2
     here, but latter is not available until 2.8
 
@@ -221,7 +395,7 @@ action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
         {{ form_errors(form, hiddens='only') }}
         {%- for field in form %}
             {% if not bootstrap_is_hidden_field(field) -%}
-                {{ render_field(field,
+                {{ render_field2(field,
                     form_type=form_type,
                     horizontal_columns=horizontal_columns,
                     button_map=button_map) }}
