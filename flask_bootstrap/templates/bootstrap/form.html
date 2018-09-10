@@ -134,7 +134,7 @@
 {%- endmacro -%}
 
 
-{%- macro render_field(field, in_block=false, col=none, prefix_label=true, opts=opts) -%}
+{%- macro render_field(field, in_block=false, col=none, prefix_label=true, opts=namespace()) -%}
 {%- block render_field scoped -%}
     {%- set widget_type = typename(field.widget) -%}
     {%- set widget_module = modulename(field.widget) -%}
@@ -194,6 +194,10 @@
         {%- else -%}
             {{ render_single(field, hide_label=hide_label, col=col, prefix_label=prefix_label, opts=opts) }}
         {%- endif -%}
+
+    {%- elif widget_module == 'flask_wtf.recaptcha.widgets' -%}
+        {# widget_type == 'RecaptchaWidget' #}
+        {{ render_single(field, hide_label=hide_label, col=col, prefix_label=prefix_label, opts=opts) }}
 
     {%- else -%}
         {%- block render_field_unknown scoped -%}
