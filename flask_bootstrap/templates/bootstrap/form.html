@@ -1,405 +1,223 @@
 {#  This file was part of Flask-Bootstrap and was modified under the terms of
     its BSD License. Copyright (c) 2013, Marc Brinkmann. All rights reserved. #}
-{% from 'bootstrap/utils.html' import typename, modulename, class %}
+{%- from 'bootstrap/utils.html' import typename, modulename, class, get_col_from_count, get_col, tag -%}
 
 
-{% macro help(field, opts={}) %}
-    {%- if field.description %}
+{%- macro css_horizontal_fix() -%}
+{%- block css_horizontal_fix scoped -%}
+    <style>
+        /* A fix for custom checkboxes and custom files in horizontal rows */
+        form .form-row > [class*="col-"].custom-control .custom-control-label::before,
+        form .form-row > [class*="col-"].custom-control .custom-control-label::after,
+        form .form-row > [class*="col-"].custom-file .custom-file-label {
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        form .row > [class*="col-"].custom-control .custom-control-label::before,
+        form .row > [class*="col-"].custom-control .custom-control-label::after,
+        form .row > [class*="col-"].custom-file .custom-file-label {
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+        form .custom-control {
+            padding-left: 0px;
+        }
+        form .row > [class*="col-"].custom-control {
+            padding-left: 15px;
+        }
+        form .custom-control .custom-control-label {
+            margin-left: 1.5rem;
+        }
+    </style>
+{%- endblock -%}
+{%- endmacro -%}
+
+
+{%- macro hidden_errors(field) -%}
+{%- block hidden_errors scoped -%}
+    {# Doesn't actually work, has no element which makes it "display: block" #}
+    {%- for subfield in field|select('is_hidden') -%}
+        {{ error(subfield) }}
+    {%- endfor -%}
+{%- endblock -%}
+{%- endmacro -%}
+
+
+{%- macro input_container(container_type=none, opts={}) -%}{%- set outer_caller = caller -%}
+{%- block input_container scoped -%}
+    {%- call tag("div", container_type, get_col(12 - opts.horizontal_label_width, opts.col_type) if opts.horizontal) -%}
+        {{ outer_caller() }}
+    {%- endcall -%}
+{%- endblock -%}
+{%- endmacro -%}
+
+
+{%- macro group(type, col=none, extra=none, opts={}) -%}{%- set outer_caller = caller -%}{%- set outer_kwargs = kwargs -%}
+{%- block group scoped -%}
+    {%- call tag(type, col, 'mb-2 mr-sm-2' if opts.inline and not col, ('form-row' if opts.compact_tables else 'row') if opts.horizontal, extra, **outer_kwargs) -%}
+        {{ outer_caller() }}
+    {%- endcall -%}
+{%- endblock -%}
+{%- endmacro -%}
+
+
+{%- macro help(field, opts={}) -%}
+{%- block help scoped -%}
+    {%- if field.description -%}
         <small id="{{ '%s-desc' % field.id }}" class="{{ class('text-muted', 'form-text' if not opts.inline)  }}">{{ field.description }}</small>
     {%- endif -%}
-{% endmacro %}
+{%- endblock -%}
+{%- endmacro -%}
 
-{% macro error(field, opts={}) %}
-    {%- for error in field.errors %}
-        <div class="invalid-{{ 'tooltip' if opts.tooltips else 'feedback' }}">{{ error }}</div>
+
+{%- macro error(field, opts={}) -%}
+{%- block error scoped -%}
+    {%- for error in field.errors -%}
+        <span class="invalid-{{ 'tooltip' if opts.tooltips else 'feedback' }}">{{ error }}</span>
     {%- endfor -%}
-{% endmacro %}
+{%- endblock -%}
+{%- endmacro -%}
 
 
-{% macro render(field, include_label=true, prefix_label=true, label_class=none, field_class=none, opts={}) -%}
+{%- macro label(field, is_before=true, legend=false, label_class=none, hide_label=false, opts={}) -%}
+{%- block label scoped -%}
+    {%- set label_class = class(label_class, 'sr-only' if hide_label) -%}
+    {%- set outer_class = class('col-form-label', get_col(opts.horizontal_label_width, opts.col_type)) if opts.horizontal -%}
+    {%- if legend -%}
+        {%- call tag("div", outer_class) -%}
+            <legend class="{{ label_class }}" for="{{ field.label.field_id }}">{{ field.label.text }}</legend>
+        {%- endcall -%}
+    {%- else -%}
+        {{ field.label(class=class(label_class, outer_class if is_before)) }}
+    {%- endif -%}
+{%- endblock -%}
+{%- endmacro -%}
+
+
+{%- macro render(field, field_class=none, hide_label=false, opts={}) -%}
+{%- block render scoped -%}
     {%- set render_kw = dict() -%}
-    {%- set _ = render_kw.setdefault("placeholder", field.label.text) if label_class == "sr-only" -%}
+    {%- set _ = render_kw.setdefault("placeholder", field.label.text) if hide_label -%}
     {%- set _ = render_kw.setdefault("aria-describedby",'%s-desc' % field.id) if field.description -%}
-
-    {{ field.label(class=class(label_class)) if prefix_label and include_label }}
     {{ field(class=class(field_class|default("form-control", true), "is-invalid" if field.errors), **render_kw) }}
-    {{ field.label(class=class(label_class)) if not prefix_label and include_label }}
-    {{ help(field, opts=opts) }}
-    {{ error(field, opts=opts) if not opts.inline }}
-{%- endmacro %}
+{%- endblock -%}
+{%- endmacro -%}
 
 
-{% macro form_group(type=none, col=none) %}
-    <div class="{{ class(type|default('form-group', true), col) }}">
-        {{ caller() }}
-    </div>
-{%- endmacro %}
+{%- macro render_single(field, hide_label=false, col=none, prefix_label=true, container_type=none, field_class=none, label_class=none, double_label=false, opts={}) -%}
+{%- block render_single scoped -%}
+    {%- call group("div", col, "form-group", opts=opts) -%}
+        {{ label(field, is_before=true, label_class=(("d-%s-inline-block d-none" % opts.col_type if opts.col_type else "d-inline-block") if double_label else label_class), hide_label=hide_label, opts=opts) if prefix_label or double_label }}
+        {%- call input_container(container_type=container_type, opts=opts) -%}
+            {{ render(field, field_class=field_class, hide_label=hide_label, opts=opts) }}
+            {{ label(field, is_before=false, label_class=label_class, hide_label=hide_label, opts=opts) if not prefix_label or double_label }}
+            {{ help(field, opts=opts) }}
+            {{ error(field, opts=opts) if not opts.inline }}
+        {%- endcall -%}
+    {%- endcall -%}
+{%- endblock -%}
+{%- endmacro -%}
 
 
-{% macro form_fieldset(field, type=none, col=none) %}
-    <fieldset class="{{ class(type|default('form-group', true), col) }}" id="{{ field.id }}">
-        <legend for="{{ field.label.field_id }}">{{ field.label.text }}</legend>
-        {{ caller() }}
-    </fieldset>
-{%- endmacro %}
+{%- macro render_nested(field, hide_label=false, container_type=none, opts={}) -%}{%- set outer_kwargs = kwargs -%}
+{%- block render_nested scoped -%}
+    {%- call group("fieldset", opts=opts, id=field.id) -%}
+        {{ label(field, legend=true, hide_label=hide_label, opts=opts) }}
+        {{ hidden_errors(field) }}
+        {%- call input_container(container_type=container_type, opts=opts) -%}
+            {%- for subfield in field -%}
+                {{ render_field(subfield, in_block=true, opts=opts, **outer_kwargs) }}
+            {%- endfor -%}
+        {%- endcall -%}
+    {%- endcall -%}
+{%- endblock -%}
+{%- endmacro -%}
 
 
-{% macro render_in_group(field, group_type=none, col=none, opts={}) -%}
-    {% set outer_kwargs = kwargs %}  {# kwargs is overwritten by the `call` block #}
-    {% call form_group(group_type, col=col) %}
-        {{ render(field, opts=opts, **outer_kwargs) }}
-    {% endcall %}
-{%- endmacro %}
-
-
-{% macro form_row() -%}
-    <div class="form-row">
-        {{- caller() -}}
-    </div>
-{%- endmacro %}
-
-
-{%- macro render_field(field, hide_label=none, opts={}) -%}
-{% set outer_kwargs = kwargs %}
-{% set hide_label = hide_label|default(opts.inline) %}
+{%- macro render_field(field, in_block=false, col=none, prefix_label=true, opts=opts) -%}
 {%- block render_field scoped -%}
     {%- set widget_type = typename(field.widget) -%}
     {%- set widget_module = modulename(field.widget) -%}
-
-    {%- set wtforms_widgets_hmtl5_mapping = {
-        "RangeInput": {
-            "field_class": "custom-range" if opts.custom,
-            "label_class": "sr-only" if hide_label,
-        },
-    }
-    -%}
-
-    {%- set wtforms_widgets_core_mapping = {
-        "TextInput": {
-            "label_class": "sr-only" if hide_label,
-        },
-        "PasswordInput": {
-            "label_class": "sr-only" if hide_label,
-        },
-        "Input": {
-            "label_class": "sr-only" if hide_label,
-        },
-        "TextArea": {
-            "label_class": "sr-only" if hide_label,
-        },
-        "Select": {
-            "field_class": "custom-select" if opts.custom,
-        },
-        "FileInput": {
-            "group_type": "custom-file" if opts.custom,
-            "field_class": "custom-file-input" if opts.custom else "form-control-file",
-            "label_class": "custom-file-label" if opts.custom,
-        },
-        "CheckboxInput": {
-            "group_type": class("custom-control custom-checkbox", "custom-control-inline" if opts.inline)
-                          if opts.custom else class("form-check", "form-check-inline" if opts.inline),
-            "field_class": "custom-control-input" if opts.custom else "form-check-input",
-            "label_class": "custom-control-label" if opts.custom else "form-check-label",
-            "prefix_label": false,
-        },
-        "RadioInput": {
-            "group_type": class("custom-control custom-radio", "custom-control-inline" if opts.inline)
-                          if opts.custom else class("form-check", "form-check-inline" if opts.inline),
-            "field_class": "custom-control-input" if opts.custom else "form-check-input",
-            "label_class": "custom-control-label" if opts.custom else "form-check-label",
-            "prefix_label": false,
-        },
-        "SubmitInput": {
-            "field_class": "btn btn-primary",
-            "include_label": false,
-        },
-    }
-    -%}
+    {%- set opts.horizontal = opts.horizontal and not in_block -%}
+    {%- set prefix_label = prefix_label or opts.horizontal -%}
+    {%- set hide_label = in_block or opts.inline -%}
 
     {%- if widget_module == 'wtforms.widgets.html5' -%}
-        {{ render_in_group(field, label_class=("sr-only" if hide_label), opts=opts, **dict(outer_kwargs, **wtforms_widgets_hmtl5_mapping.get(widget_type, {}))) }}
+        {%- if widget_type == "RangeInput" -%}
+            {%- set field_class = "custom-range" if opts.custom else "form-control-range" -%}
+        {%- endif -%}
+        {{ render_single(field, hide_label=hide_label, col=col, prefix_label=prefix_label, field_class=field_class, opts=opts) }}
 
     {%- elif widget_module == 'wtforms.widgets.core' -%}
-        {%- if widget_type in wtforms_widgets_core_mapping -%}
-            {{ render_in_group(field, opts=opts, **dict(outer_kwargs, **wtforms_widgets_core_mapping.get(widget_type, {}))) }}
-        {%- elif widget_type in ['Option', 'HiddenInput'] -%}
+        {%- if widget_type in ('Option', 'HiddenInput') -%}
             {{ field() }} {# `Option` is a pseudowidget, we don't wanna to do anything fancy here #}
+
+        {%- elif widget_type == 'FileInput' -%}
+            {{ render_single(
+                field,
+                hide_label=hide_label and not opts.custom,
+                col=col,
+                prefix_label=prefix_label and not opts.custom,
+                container_type="custom-file" if opts.custom,
+                field_class="custom-file-input" if opts.custom else "form-control-file",
+                label_class="custom-file-label" if opts.custom,
+                double_label=opts.horizontal and opts.custom,
+                opts=opts,
+            ) }}
+
+        {%- elif widget_type in ("CheckboxInput", "RadioInput") -%}
+            {{ render_single(
+                field,
+                hide_label=false,
+                col=col,
+                prefix_label=prefix_label and opts.horizontal,
+                container_type=class("custom-control", "custom-checkbox" if widget_type == "CheckboxInput" else "custom-radio", "custom-control-inline" if opts.inline) if opts.custom else class("form-check", "form-check-inline" if opts.inline),
+                field_class="custom-control-input" if opts.custom else "form-check-input",
+                label_class="custom-control-label" if opts.custom else "form-check-label",
+                double_label=opts.horizontal and opts.custom,
+                opts=opts,
+            ) }}
+
+        {%- elif widget_type == 'Select' -%}
+            {{ render_single(field, hide_label=hide_label, col=col, prefix_label=prefix_label, field_class="custom-select" if opts.custom, opts=opts) }}
+
+        {%- elif widget_type == 'SubmitInput' -%}
+            {{ render_single(field, hide_label=true, col=col, prefix_label=prefix_label, field_class="btn btn-primary", opts=opts) }}
 
         {%- elif widget_type == 'ListWidget' -%}
             {# Removes support for actual list elements like `ul` & `li` #}
-            {% call form_fieldset(field, col=outer_kwargs.get('col')) %}
-                {%- for subfield in field %}
-                    {{ render_field(subfield, prefix_label=field.widget.prefix_label, opts=opts) }}
-                {% endfor -%}
-            {% endcall %}
+            {{ render_nested(field, hide_label=hide_label, opts=opts, col=col, prefix_label=field.widget.prefix_label) }}
+
         {%- elif widget_type == 'TableWidget' -%}
-            <div class="form-row">
-            {%- for subfield in field %}
-                {{ render_field(subfield, col="col-md-6", hide_label=true, opts=opts) }}
-            {% endfor -%}
-            </div>
+            {{ render_nested(field, hide_label=hide_label, container_type=('form-row' if opts.compact_tables else 'row'), opts=opts, col=get_col_from_count(field|reject('is_hidden')|list|length, opts.col_type)) }}
+
         {%- else -%}
-            {{ field }}
-            {{ field|pprint }}
-            {{ error(field, opts=opts) }}
+            {{ render_single(field, hide_label=hide_label, col=col, prefix_label=prefix_label, opts=opts) }}
         {%- endif -%}
 
     {%- else -%}
-        {{ field }}
-        {{ field|pprint }}
-        {%- block render_field_unknown scoped %}
-            {# We can try to render the unknown element, but this block is intended to be subclassed #}
-            {{ render_in_group(field, label_class=("sr-only" if hide_label), opts=opts, **outer_kwargs) }}
-        {% endblock -%}
+        {%- block render_field_unknown scoped -%}
+            {# We can try to render the unknown element, but this block is intended to be extended #}
+            {{ render_single(field, hide_label=hide_label, col=col, prefix_label=prefix_label, opts=opts) }}
+        {%- endblock -%}
     {%- endif -%}
 {%- endblock -%}
-{%- endmacro %}
+{%- endmacro -%}
 
 
-{% macro render_form(form) -%}
-    {%- set _ = kwargs.setdefault("inline", false) -%}
-    {%- set _ = kwargs.setdefault("tooltips", false) -%}
-    {%- set _ = kwargs.setdefault("custom", false) -%}
-    {%- set _ = kwargs.setdefault("button_map", {}) -%}
-    <form method="post" class="{{ 'form-inline' if kwargs.get('inline') }}">
+{%- macro render_form(form, inline=false, tooltips=false, custom=false, col_type="md", compact_tables=false, horizontal=false, horizontal_label_width=3) -%}{% set outer_kwargs = kwargs %}
+{%- block render_form scoped -%}
+    {# `col_type` should be one of [none, "sm", "md", "lg", "xl"] #}
+    {# `horizontal_label_width` should be a number between 1 and 11, that specifies the label width if the form is horizontal #}
+    {%- set _ = outer_kwargs.setdefault("method", "post") -%}
+    {%- set _ = outer_kwargs.setdefault("action", "") -%}
+    {%- set _ = outer_kwargs.setdefault("enctype", "multipart/form-data") if form|selectattr("type", "equalto", "FileField") -%}
+    {%- call tag("form", 'form-inline' if inline, **outer_kwargs) -%}
+        {{ css_horizontal_fix() }}
+        {{ hidden_errors(field) }}
         {%- for field in form -%}
-            {{ render_field(field, opts=kwargs) }}
-        {%- endfor %}
-    </form>
-{%- endmacro %}
-
-
-
-
-
-
-
-{% macro form_errors(form, hiddens=True) %}
-    {%- if form.errors %}
-        {%- for fieldname, errors in form.errors.items() %}
-            {%- if bootstrap_is_hidden_field(form[fieldname]) and hiddens or
-             not bootstrap_is_hidden_field(form[fieldname]) and hiddens != 'only' %}
-                {%- for error in errors %}
-                    <div class="invalid-feedback">{{ error }}</div>
-                {%- endfor %}
-            {%- endif %}
-        {%- endfor %}
-    {%- endif %}
-{%- endmacro %}
-
-{% macro _hz_form_wrap(horizontal_columns, form_type, add_group=False, required=False) %}
-    {% if form_type == "horizontal" %}
-        {% if add_group %}
-            <div class="form-group row{% if required %} required{% endif %}">
-        {% endif %}
-        <div class="offset-{{ horizontal_columns[0] }}-{{ horizontal_columns[1] }}
-              col-{{ horizontal_columns[0] }}-{{ horizontal_columns[2] }}
-             ">
-    {% endif %}
-    {{ caller() }}
-    {% if form_type == "horizontal" %}
-        {% if add_group %}</div>{% endif %}
-        </div>
-    {% endif %}
-{% endmacro %}
-
-{% macro render_field2(field,
-                    form_type="basic",
-                    horizontal_columns=('lg', 2, 10),
-                    button_map={}) %}
-
-    {# this is a workaround hack for the more straightforward-code of just passing required=required parameter. older versions of wtforms do not have
-the necessary fix for required=False attributes, but will also not set the required flag in the first place. we skirt the issue using the code below #}
-    {% if field.flags.required and not required in kwargs %}
-        {% set kwargs = dict(required=True, **kwargs) %}
-    {% endif %}
-
-    {% if field.widget.input_type == 'checkbox' %}
-        {% call _hz_form_wrap(horizontal_columns, form_type, True, required=required) %}
-            <div class="form-group form-check{% if form_type == "inline" %} form-check-inline{% endif %}">
-                <label class="form-check-label">
-                    {{ field(class_="form-check-input")|safe }} {{ field.label.text|safe }}
-                </label>
-            </div>
-        {% endcall %}
-    {%- elif field.type == 'RadioField' -%}
-        {# note: A cleaner solution would be rendering depending on the widget,
-     this is just a hack for now, until I can think of something better #}
-        {% call _hz_form_wrap(horizontal_columns, form_type, True, required=required) %}
-            {% for item in field -%}
-                <div class="form-check{% if form_type == "inline" %} form-check-inline{% endif %}">
-                    <label class="form-check-label">
-                        {{ item(class_="form-check-input")|safe }} {{ item.label.text|safe }}
-                    </label>
-                </div>
-            {% endfor %}
-        {% endcall %}
-    {%- elif field.type == 'SubmitField' -%}
-        {# deal with jinja scoping issues? #}
-        {% set field_kwargs = kwargs %}
-
-        {# note: same issue as above - should check widget, not field type #}
-        {% call _hz_form_wrap(horizontal_columns, form_type, True, required=required) %}
-            {{ field(class='btn btn-%s' % button_map.get(field.name, 'secondary'),
-            **field_kwargs) }}
-        {% endcall %}
-    {%- elif field.type == 'FormField' -%}
-        {# note: FormFields are tricky to get right and complex setups requiring
-   these are probably beyond the scope of what this macro tries to do.
-   the code below ensures that things don't break horribly if we run into
-   one, but does not try too hard to get things pretty. #}
-        <fieldset>
-            <legend>{{ field.label }}</legend>
-            {%- for subfield in field %}
-                {% if not bootstrap_is_hidden_field(subfield) -%}
-                    {{ render_field2(subfield,
-                      form_type=form_type,
-                      horizontal_columns=horizontal_columns,
-                      button_map=button_map) }}
-                {%- endif %}
-            {%- endfor %}
-        </fieldset>
-    {% else -%}
-        <div class="form-group {%- if form_type == "horizontal" %} row{% endif -%}
-                         {%- if field.flags.required %} required{% endif -%}">
-            {%- if form_type == "inline" %}
-                {{ field.label(class="sr-only")|safe }}
-                {% if field.type == 'FileField' %}
-                    {% if field.errors %}
-                        {{ field(class="form-control-file is-invalid", **kwargs)|safe }}
-                    {% else %}
-                        {{ field(class="form-control-file", **kwargs)|safe }}
-                    {% endif %}
-                {% else %}
-                    {% if field.errors %}
-                        {{ field(class="form-control mb-2 mr-sm-2 mb-sm-0 is-invalid", **kwargs)|safe }}
-                    {% else %}
-                        {{ field(class="form-control mb-2 mr-sm-2 mb-sm-0", **kwargs)|safe }}
-                    {% endif %}
-                {% endif %}
-            {% elif form_type == "horizontal" %}
-                {{ field.label(class="form-control-label " + (" col-%s-%s" % horizontal_columns[0:2]))|safe }}
-                <div class=" col-{{ horizontal_columns[0] }}-{{ horizontal_columns[2] }}">
-                    {% if field.type == 'FileField' %}
-                        {% if field.errors %}
-                            {{ field(class="form-control-file is-invalid", **kwargs)|safe }}
-                        {% else %}
-                            {{ field(class="form-control-file", **kwargs)|safe }}
-                        {% endif %}
-                    {% else %}
-                        {% if field.errors %}
-                            {{ field(class="form-control is-invalid", **kwargs)|safe }}
-                        {% else %}
-                            {{ field(class="form-control", **kwargs)|safe }}
-                        {% endif %}
-                    {% endif %}
-                </div>
-                {%- if field.errors %}
-                    {%- for error in field.errors %}
-                        {% call _hz_form_wrap(horizontal_columns, form_type, required=required) %}
-                            <div class="invalid-feedback">{{ error }}</div>
-                        {% endcall %}
-                    {%- endfor %}
-                {%- elif field.description -%}
-                    {% call _hz_form_wrap(horizontal_columns, form_type, required=required) %}
-                        <small class="form-text text-muted">{{ field.description|safe }}</small>
-                    {% endcall %}
-                {%- endif %}
-            {%- else -%}
-                {{ field.label(class="form-control-label")|safe }}
-                {% if field.type == 'FileField' %}
-                    {% if field.errors %}
-                        {{ field(class="form-control-file is-invalid", **kwargs)|safe }}
-                    {% else %}
-                        {{ field(class="form-control-file", **kwargs)|safe }}
-                    {% endif %}
-                {% else %}
-                    {% if field.errors %}
-                        {{ field(class="form-control is-invalid", **kwargs)|safe }}
-                    {% else %}
-                        {{ field(class="form-control", **kwargs)|safe }}
-                    {% endif %}
-                {% endif %}
-                {%- if field.errors %}
-                    {%- for error in field.errors %}
-                        <div class="invalid-feedback">{{ error }}</div>
-                    {%- endfor %}
-                {%- elif field.description -%}
-                    <small class="form-text text-muted">{{ field.description|safe }}</small>
-                {%- endif %}
-            {%- endif %}
-        </div>
-    {% endif %}
-{% endmacro %}
-
-{# valid form types are "basic", "inline" and "horizontal" #}
-{% macro render_form2(form,
-                    action="",
-                    method="post",
-                    extra_classes=None,
-                    role="form",
-                    form_type="basic",
-                    horizontal_columns=('lg', 2, 10),
-                    enctype=None,
-                    button_map={},
-                    id="",
-                    novalidate=False,
-                    render_kw={}) %}
-
-{#-
-action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
-
-4.2. Same-document References
-
-   A URI reference that does not contain a URI is a reference to the
-   current document.  In other words, an empty URI reference within a
-   document is interpreted as a reference to the start of that document,
-   and a reference containing only a fragment identifier is a reference
-   to the identified fragment of that document.  Traversal of such a
-   reference should not result in an additional retrieval action.
-   However, if the URI reference occurs in a context that is always
-   intended to result in a new request, as in the case of HTML's FORM
-   element, then an empty URI reference represents the base URI of the
-   current document and should be replaced by that URI when transformed
-   into a request.
-
--#}
-{#- if any file fields are inside the form and enctype is automatic, adjust
-    if file fields are found. could really use the equalto test of jinja2
-    here, but latter is not available until 2.8
-
-    warning: the code below is guaranteed to make you cry =(
-#}
-    {%- set _enctype = [] %}
-    {%- if enctype is none -%}
-        {%- for field in form %}
-            {%- if field.type == 'FileField' %}
-                {#- for loops come with a fairly watertight scope, so this list-hack is
-          used to be able to set values outside of it #}
-                {%- set _ = _enctype.append('multipart/form-data') -%}
-            {%- endif %}
-        {%- endfor %}
-    {%- else %}
-        {% set _ = _enctype.append(enctype) %}
-    {%- endif %}
-    <form{%- if action != None %} action="{{ action }}"{% endif -%}
-            {%- if id %} id="{{ id }}"{% endif -%}
-            {%- if method %} method="{{ method }}"{% endif %}
-            class="form
-{%- if extra_classes %} {{ extra_classes }}{% endif -%}{%- if form_type == "inline" %} form-inline{% endif -%}"
-            {%- if _enctype[0] %} enctype="{{ _enctype[0] }}"{% endif -%}
-            {%- if role %} role="{{ role }}"{% endif -%}
-            {%- if novalidate %} novalidate{% endif -%}
-            {%- if render_kw %} {{ render_kw|xmlattr }}{% endif -%}>
-        {{ form.hidden_tag() }}
-        {{ form_errors(form, hiddens='only') }}
-        {%- for field in form %}
-            {% if not bootstrap_is_hidden_field(field) -%}
-                {{ render_field2(field,
-                    form_type=form_type,
-                    horizontal_columns=horizontal_columns,
-                    button_map=button_map) }}
-            {%- endif %}
-        {%- endfor %}
-    </form>
-{%- endmacro %}
+            {{ render_field(field, opts=namespace(inline=inline, tooltips=tooltips, custom=custom, col_type=col_type, compact_tables=compact_tables, horizontal=horizontal, horizontal_label_width=horizontal_label_width)) }}
+        {%- endfor -%}
+    {%- endcall -%}
+{%- endblock -%}
+{%- endmacro -%}

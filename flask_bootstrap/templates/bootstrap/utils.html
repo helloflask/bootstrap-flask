@@ -9,8 +9,24 @@
     {%- endif %}
 {% endmacro %}
 
-{% macro typename(obj) %}{{ obj.__class__.__name__ }}{% endmacro %}
+{% macro typename(obj) -%}{{- obj.__class__.__name__ -}}{%- endmacro %}
 
-{% macro modulename(obj) %}{{ obj.__module__ }}{% endmacro %}
+{% macro modulename(obj) -%}{{- obj.__module__ -}}{%- endmacro %}
 
 {% macro class() -%}{{- varargs|select|unique|join(' ') -}}{%- endmacro %}
+
+{%- macro get_col(size=none, type=none) -%}
+    {{- ['col', type, size]|select|join('-') -}}
+{%- endmacro -%}
+
+{%- macro get_col_from_count(count, type=none) -%}
+    {%- set size = (12 // count) if count in [1, 2, 3, 4, 6] else "auto" -%}
+    {{- get_col(size, type) -}}
+{%- endmacro -%}
+
+{%- macro tag(tag_type) -%}
+    {%- set _ = kwargs.setdefault("class", class(*varargs) or none) -%}
+    <{{ tag_type }}{{ kwargs|xmlattr }}>
+        {{ caller() }}
+    </{{ tag_type }}>
+{%- endmacro -%}
