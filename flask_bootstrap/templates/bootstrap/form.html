@@ -35,9 +35,10 @@
 
 {%- macro hidden_errors(field) -%}
 {%- block hidden_errors scoped -%}
-    {# Doesn't actually work, has no element which makes it "display: block" #}
     {%- for subfield in field|select('is_hidden') -%}
-        {{ error(subfield) }}
+        {%- for error in subfield.errors -%}
+            <div class="alert alert-danger">{{ error }}</div>
+        {%- endfor -%}
     {%- endfor -%}
 {%- endblock -%}
 {%- endmacro -%}
