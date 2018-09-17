@@ -2,8 +2,9 @@
 from flask import Flask, render_template, request
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, BooleanField, PasswordField
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired, Length, InputRequired
+from wtforms.fields import *
+from wtforms.fields import html5
 
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
@@ -14,12 +15,60 @@ app.secret_key = 'dev'
 bootstrap = Bootstrap(app)
 db = SQLAlchemy(app)
 
+choices = list({"choice_0": "First Choice", "choice_1": "Second choice", "choice_3": "Third choice"}.items())
 
-class HelloForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
-    password = PasswordField('Password', validators=[DataRequired(), Length(8, 150)])
-    remember = BooleanField('Remember me')
-    submit = SubmitField()
+
+class CoreForm(FlaskForm):
+    boolean = BooleanField("Boolean", validators=[InputRequired()])
+    decimal = DecimalField("Decimal", description="Some Description!")
+    date = DateField("Date")
+    date_time = DateTimeField("DateTime", render_kw={"placeholder": "Test"})
+    fieldlist = FieldList(StringField("FieldList (String)"), label="FieldList", min_entries=3)
+    float = FloatField("Float")
+    integer = IntegerField("Integer", validators=[DataRequired()])
+    radio = RadioField("Radio", choices=choices)
+    select = SelectField("Select", choices=choices, validators=[InputRequired()])
+    select_multiple = SelectMultipleField("SelectMultiple", choices=choices)
+    string = StringField("String")
+    time = TimeField("Time")
+
+
+class SimpleForm(FlaskForm):
+    text_area = TextAreaField("TextAreaField")
+    password = PasswordField("Password", validators=[DataRequired()])
+    file = FileField("File")
+    multiple_file = MultipleFileField("MultipleFile")
+    hidden = HiddenField("Hidden")
+    submit = SubmitField("Submit")
+
+
+class HTML5Form(FlaskForm):
+    html5_date = html5.DateField("DateField")
+    html5_date_time = html5.DateTimeField("DateTimeField")
+    html5_date_time_local = html5.DateTimeLocalField("DateTimeLocalField")
+    html5_decimal = html5.DecimalField("DecimalField")
+    html5_decimal_range = html5.DecimalRangeField("DecimalRangeField")
+    html5_email = html5.EmailField("EmailField")
+    html5_integer = html5.IntegerField("IntegerField")
+    html5_integer_range = html5.IntegerRangeField("IntegerRangeField")
+    html5_search = html5.SearchField("SearchField")
+    html5_tel = html5.TelField("TelField")
+    html5_time = html5.TimeField("TimeField")
+    html5_url = html5.URLField("URLField")
+
+class RecaptchaForm(FlaskForm):
+    # RECAPTCHA_PUBLIC_KEY and RECAPTCHA_PRIVATE_KEY must be set in the config
+    # flask_wtf_recaptcha = RecaptchaField("RecaptchaField")
+    pass
+
+class InnerForm(FlaskForm):
+    email = html5.EmailField("Email")
+    password = PasswordField("Password")
+    boolean = BooleanField("Remember me?")
+
+class HelloForm(CoreForm, SimpleForm, HTML5Form):
+    formfield = FormField(InnerForm, label="FormField")
+    fieldlist = FieldList(FormField(InnerForm), label="FormField inside FieldList", min_entries=2)
 
 
 class Message(db.Model):

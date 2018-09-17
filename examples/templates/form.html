@@ -2,15 +2,13 @@
 {% from 'bootstrap/form.html' import render_form, render_field %}
 
 {% block content %}
-    <h1>render_form</h1>
+    <h1>Standard Form</h1>
     {{ render_form(form) }}
 
-    <h1>render_field</h1>
-    <form method="post">
-    {{ form.csrf_token }}
-    {{ render_field(form.username) }}
-    {{ render_field(form.password) }}
-    {{ render_field(form.remember) }}
-    {{ render_field(form.submit) }}
-    </form>
+    <br>
+    <br>
+    <br>
+
+    <h1>Horizontal Form, with bootstrap custom labels</h1>
+    {{ render_form(form, custom=true, horizontal=true) }}
 {% endblock %}
