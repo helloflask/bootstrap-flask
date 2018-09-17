@@ -67,42 +67,6 @@ API
     :param text: The text that will displayed on the item.
     :param kwargs: Additional keyword arguments pass to ``url_for()``.
 
-{{ render_field() }}
----------------------
-
-Render a form field create by Flask-WTF/WTForms.
-
-Example
-~~~~~~~~
-.. code-block:: jinja
-
-    {% from 'bootstrap/form.html' import render_field %}
-
-    <form method="post">
-        {{ form.csrf_token() }}
-        {{ render_field(form.username) }}
-        {{ render_field(form.password) }}
-        {{ render_field(form.submit) }}
-    </form>
-
-API
-~~~~
-
-.. py:function:: render_field(field, form_type="basic", horizontal_columns=('lg', 2, 10), button_map={})
-
-    Render a single form field.
-
-    :param field: The form field (attribute) to render.
-    :param form_type: One of ``basic``, ``inline`` or ``horizontal``. See the
-                     Bootstrap docs for details on different form layouts.
-    :param horizontal_columns: When using the horizontal layout, layout forms
-                              like this. Must be a 3-tuple of ``(column-type,
-                              left-column-size, right-column-size)``.
-    :param button_map: A dictionary, mapping button field names to Bootstrap category names such as
-                      ``primary``, ``danger`` or ``success``. Buttons not found
-                      in the ``button_map`` will use the ``secondary`` type of
-                      button.
-
 
 {{ render_form() }}
 ---------------------
@@ -120,51 +84,20 @@ Example
 API
 ~~~~
 
-.. py:function:: quick_form(form,\
-                    action="",\
-                    method="post",\
-                    extra_classes=None,\
-                    role="form",\
-                    form_type="basic",\
-                    horizontal_columns=('lg', 2, 10),\
-                    enctype=None,\
-                    button_map={},\
-                    id="",\
-                    novalidate=False,\
-                    render_kw={})
+.. py:function:: render_form(form, inline=false, tooltips=false, custom=false, col_type="md", compact_tables=false, horizontal=false, horizontal_label_width=3, **kwargs)
 
     Outputs Bootstrap-markup for a complete Flask-WTF form.
 
     :param form: The form to output.
-    :param method: ``<form>`` method attribute.
-    :param extra_classes: The classes to add to the ``<form>``.
-    :param role: ``<form>`` role attribute.
-    :param form_type: One of ``basic``, ``inline`` or ``horizontal``. See the
-                     Bootstrap docs for details on different form layouts.
-    :param horizontal_columns: When using the horizontal layout, layout forms
-                              like this. Must be a 3-tuple of ``(column-type,
-                              left-column-size, right-column-size)``.
-    :param enctype: ``<form>`` enctype attribute. If ``None``, will
-                    automatically be set to ``multipart/form-data`` if a
-                    :class:`~wtforms.fields.FileField` is present in the form.
-    :param button_map: A dictionary, mapping button field names to names such as
-                      ``primary``, ``danger`` or ``success``. Buttons not found
-                      in the ``button_map`` will use the ``default`` type of
-                      button.
-    :param id: The ``<form>`` id attribute.
-    :param novalidate: Flag that decide whether add ``novalidate`` class in ``<form>``.
-    :param render_kw: A dictionary, specifying custom attributes for the
-                     ``<form>`` tag.
-
-.. py:function:: form_errors(form, hiddens=True)
-
-    Renders paragraphs containing form error messages. This is usually only used
-    to output hidden field form errors, as others are attached to the form
-    fields.
-
-    :param form: Form whose errors should be rendered.
-    :param hiddens: If ``True``, render errors of hidden fields as well. If
-                   ``'only'``, render *only* these.
+    :param inline: Whether the form should be rendered inline
+    :param tooltips: Whether the error messages should appear as tooltips
+    :param custom: Whether the form elements should be converted to Bootstrap custom form elements
+    :param col_type: Should be one of [none, "xs", "sm", "md", "lg", "xl"]. Specifies the responsive breakpoints
+    :param compact_tables: Whether to use the special "form-row" class instead of "row" when creating nested forms
+    :param horizontal: Whether the form should be rendered as a horizontal form
+    :param horizontal_label_width: Should be a number between 1 and 11, that specifies the label width if the form is horizontal
+    :param kwargs: Specify custom attributes for the ``<form>`` tag. Sensible defaults are already set,
+                  but you might want to change the "action", "method" or "id" attribute
 
 
 {{ render_pager() }}
