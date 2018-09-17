@@ -1,0 +1,34 @@
+{%- from 'bootstrap/utils.html' import typename, modulename -%}
+{%- set global_button_map = {} -%}
+
+{%- set new_render_field = render_field -%}
+{%- macro render_field(field, form_type="basic", horizontal_columns=('md', 3, 9), button_map={}, col=none, prefix_label=true, opts=namespace()) -%}
+    {%- if not opts -%}
+        {%- set opts.inline = form_type == 'inline' -%}
+        {%- set opts.horizontal = form_type == 'horizontal' -%}
+        {%- set opts.col_type = horizontal_columns[0] -%}
+        {%- set opts.horizontal_label_width = horizontal_columns[1] -%}
+    {%- endif -%}
+    {%- set _ = global_button_map.update(button_map) -%}
+    {%- if global_button_map and typename(field.widget) == 'SubmitInput' and modulename(field.widget) == 'wtforms.widgets.core' -%}
+        {{- render_single(field, hide_label=true, col=col, prefix_label=prefix_label, field_class="btn btn-%s" % global_button_map.get(field.name, 'secondary'), opts=opts) -}}
+    {%- else -%}
+        {{- new_render_field(field, col=none, prefix_label=true, opts=opts, **kwargs) -}}
+    {%- endif -%}
+{%- endmacro -%}
+
+{%- macro form_errors(form, hiddens=True) -%}
+    {# Intentionally left blank, since the previous version used `invalid-feedback`, which wouldn't actualy render the error #}
+{%- endmacro -%}
+
+{%- macro render_form(form, inline=false, tooltips=false, custom=false, col_type=none, compact_tables=false, horizontal=false, horizontal_label_width=none, extra_classes=None, form_type="basic", horizontal_columns=('md', 3, 9), button_map={}, render_kw={}) -%}
+    {%- set _ = kwargs.setdefault('class', extra_classes) -%}
+    {%- set inline = form_type == 'inline' if not inline else inline -%}
+    {%- set horizontal = form_type == 'horizontal' if not horizontal else horizontal -%}
+    {%- set col_type = horizontal_columns[0] if not col_type else col_type -%}
+    {%- set horizontal_label_width = horizontal_columns[1] if not horizontal_label_width else horizontal_label_width -%}
+    {%- set _ = global_button_map.update(button_map) -%}
+    {%- set _ = kwargs.update(render_kw) -%}
+    {%- set outer_kwargs = kwargs -%}
+    {%- block render_form scoped -%}{%- endblock -%}
+{%- endmacro -%}

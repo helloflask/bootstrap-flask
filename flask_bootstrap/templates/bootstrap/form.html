@@ -1,6 +1,7 @@
 {#  This file was part of Flask-Bootstrap and was modified under the terms of
     its BSD License. Copyright (c) 2013, Marc Brinkmann. All rights reserved. #}
 {%- from 'bootstrap/utils.html' import typename, modulename, class, get_col_from_count, get_col, tag -%}
+{%- extends 'bootstrap/form_compat.html' -%}
 
 
 {%- macro css_horizontal_fix() -%}
@@ -217,7 +218,8 @@
     {%- set _ = outer_kwargs.setdefault("method", "post") -%}
     {%- set _ = outer_kwargs.setdefault("action", "") -%}
     {%- set _ = outer_kwargs.setdefault("enctype", "multipart/form-data") if form|selectattr("type", "equalto", "FileField") -%}
-    {%- call tag("form", 'form-inline' if inline, **outer_kwargs) -%}
+    {%- set extra_classes = outer_kwargs.pop("class", none) -%}
+    {%- call tag("form", 'form-inline' if inline, extra_classes, **outer_kwargs) -%}
         {{ css_horizontal_fix() }}
         {{ hidden_errors(field) }}
         {%- for field in form -%}

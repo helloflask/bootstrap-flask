@@ -32,7 +32,8 @@ setup(
     include_package_data=True,
     test_suite='test_bootstrap_flask',
     install_requires=[
-        'Flask>=1'
+        'Flask'
+        'Jinja2>=2.8'
     ],
     extras_require={
         'forms': ['WTForms>=2.2.0', 'Flask-WTF']
