@@ -120,7 +120,7 @@ Example
 API
 ~~~~
 
-.. py:function:: quick_form(form,\
+.. py:function:: render_form(form,\
                     action="",\
                     method="post",\
                     extra_classes=None,\
@@ -148,9 +148,9 @@ API
                     automatically be set to ``multipart/form-data`` if a
                     :class:`~wtforms.fields.FileField` is present in the form.
     :param button_map: A dictionary, mapping button field names to names such as
-                      ``primary``, ``danger`` or ``success``. Buttons not found
-                      in the ``button_map`` will use the ``default`` type of
-                      button.
+                      ``primary``, ``danger`` or ``success``. For example, 
+                      ``{'submit': 'success'}``. Buttons not found in the
+                      ``button_map`` will use the ``default`` type of button.
     :param id: The ``<form>`` id attribute.
     :param novalidate: Flag that decide whether add ``novalidate`` class in ``<form>``.
     :param render_kw: A dictionary, specifying custom attributes for the
