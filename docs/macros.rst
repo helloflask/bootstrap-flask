@@ -136,6 +136,7 @@ API
     Outputs Bootstrap-markup for a complete Flask-WTF form.
 
     :param form: The form to output.
+    :param action: The URL to receive form data.
     :param method: ``<form>`` method attribute.
     :param extra_classes: The classes to add to the ``<form>``.
     :param role: ``<form>`` role attribute.
