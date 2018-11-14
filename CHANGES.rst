@@ -2,6 +2,16 @@ Changelog
 ==========
 
 
+1.0.9
+------
+
+Release date: 2018/11/14
+
+- Fix missing error message when form type was horizontal.
+- Fix missing input label for RadioField.
+- Fix RadioField grid when form type was horizontal.
+
+
 1.0.8
 ------
 
