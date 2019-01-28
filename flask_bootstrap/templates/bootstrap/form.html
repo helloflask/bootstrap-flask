@@ -246,42 +246,38 @@ action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
     </form>
 {%- endmacro %}
 
-{% macro render_form_row(fields, row_class='form-row', col_class='col') %}
+{% macro render_form_row(fields, row_class='form-row', col_class_default='col', col_class_dict={}) %}
 {#
 fields: an iterable of fields to render in a row.
-  Each element of the iterable should be:
-  - Either a form.field to render.
-  - Or a tuple (form.field, 'col_class') when a custom col_class should be
-    rendered for that field.
 row_class: Class to apply to the div intended to represent the row, like
   'form-row' or 'row'.
-col_class: Default col class to apply if nothing more specific is said about a
-  field.
+col_class_default: Default col class to apply if nothing more specific is said about a field.
+col_class_dict: A dictionary which keys are fields.id and which values are the col_class to apply to the field.
 
 Usages:
 Easiest use with defaults:
 {{ render_form_row([form.first_name, form.surname]) }}
 
 Custom col which should use class col-md-2, and the others the defaults:
-{{ render_form_row([(form.title, 'col-md-2'), form.first_name, form.surname]) }}
+{{ render_form_row([form.title, form.first_name, form.surname], col_class_dict={'title': 'col-md-2'}) }}
 
 Custom col which should use class col-md-2 and modified col_class for the default of the other fields
-{{ render_form_row([(form.title, 'col-md-2'), form.first_name, form.surname], col_class='col-md-5') }}
+{{ render_form_row([form.title, form.first_name, form.surname], col_class='col-md-5', col_class_dict={'title': 'col-md-2'}) }}
 #}
 <div class="{{ row_class }}">
   {% for field in fields %}
-    {% if field is iterable and field is not string %}
-      <div class="{{ field[1] }}">
-        {{ render_field(field[0]) }}
-      </div>
+    {% if field.id in col_class_dict %}
+      {% set col_class = col_class_dict[field.id] %}
     {% else %}
-      <div class="{{ col_class }}">
-        {{ render_field(field) }}
-      </div>
+      {% set col_class = col_class_default %}
     {% endif %}
+    <div class="{{ col_class}}">
+      {{ render_field(field) }}
+    </div>
   {% endfor %}
 </div>
 {% endmacro %}
+
 
 {% macro render_grid_form(
   form,
