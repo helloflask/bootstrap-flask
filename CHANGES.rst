@@ -2,6 +2,15 @@ Changelog
 ==========
 
 
+1.0.10
+------
+
+Release date: 2019/01/30
+
+- Added macro render_form_row for rendering a row of a bootstrap grid form.
+- Added macro render_grid_form for rendering a bootstrap grid form.
+
+
 1.0.9
 ------
 
