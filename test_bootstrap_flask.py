@@ -152,39 +152,18 @@ class BootstrapTestCase(unittest.TestCase):
         data = response.get_data(as_text=True)
         self.assertIn('<div class="col-md-6">', data)
 
-    def test_render_form_row_col_class_dict(self):
+    def test_render_form_row_col_map(self):
         @self.app.route('/form')
         def test():
             form = HelloForm()
             return render_template_string('''
                     {% from 'bootstrap/form.html' import render_form_row %}
-                    {{ render_form_row([form.username, form.password], col_class_dict={'username': 'col-md-6'}) }}
+                    {{ render_form_row([form.username, form.password], col_map={'username': 'col-md-6'}) }}
                     ''', form=form)
         response = self.client.get('/form')
         data = response.get_data(as_text=True)
         self.assertIn('<div class="col">', data)
         self.assertIn('<div class="col-md-6">', data)
-
-    def test_render_grid_form(self):
-        @self.app.route('/form')
-        def test():
-            form = HelloForm()
-            return render_template_string('''
-                    {% from 'bootstrap/form.html' import render_grid_form, render_form_row %}
-                    {{
-                        render_grid_form(
-                            form,
-                            rows=[render_form_row([form.username, form.password])]
-                        )
-                    }}
-                    ''', form=form)
-
-        response = self.client.get('/form')
-        data = response.get_data(as_text=True)
-        self.assertIn('<input class="form-control" id="username" name="username"', data)
-        self.assertIn('<input class="form-control" id="password" name="password"', data)
-        self.assertIn('<div class="form-row">', data)
-        self.assertIn('<div class="col">', data)
 
     def test_render_pager(self):
         db = SQLAlchemy(self.app)
