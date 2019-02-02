@@ -180,6 +180,7 @@ Example
     {% from 'bootstrap/form.html' import render_form_row %}
 
     <form method="post">
+        {{ form.csrf_token() }}
         {{ render_form_row([form.username, form.password]) }}
         {{ render_form_row([form.remember]) }}
         {{ render_form_row([form.submit]) }}
@@ -188,9 +189,9 @@ Example
 API
 ~~~~
 
-.. py:function:: render_form_row(fields,
-                                 row_class='form-row',
-                                 col_class_default='col',
+.. py:function:: render_form_row(fields,\
+                                 row_class='form-row',\
+                                 col_class_default='col',\
                                  col_map={})
 
     Render a bootstrap row with the given fields
@@ -201,8 +202,7 @@ API
     :param col_class_default: The default class to apply to the div that represents a column
                                 if nothing more specific is said for the div column of the rendered field.
     :param col_map: A dictionary, mapping field.name to a class definition that should be applied to 
-                            the div column that contains the field. For example: `col_map={'username':
-                             'col-md-2', 'password': 'col-md-8'})```
+                            the div column that contains the field. For example: ``col_map={'username': 'col-md-2'})``
                             
 
 

@@ -16,6 +16,7 @@
 
     <h1>render_form_row</h1>
     <form method="post">
+    {{ form.csrf_token }}
     {{ render_form_row([form.username, form.password]) }}
     {{ render_form_row([form.username, form.password], col_map={'username': 'col-md-6', 'password': 'col-md-4'}) }}
     {{ render_form_row([form.username, form.password], col_map={'username': 'col-md-2', 'password': 'col-md-8'}) }}
