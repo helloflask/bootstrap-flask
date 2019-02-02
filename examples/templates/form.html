@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% from 'bootstrap/form.html' import render_form, render_field %}
+{% from 'bootstrap/form.html' import render_form, render_field, render_form_row %}
 
 {% block content %}
     <h1>render_form</h1>
@@ -12,5 +12,12 @@
     {{ render_field(form.password) }}
     {{ render_field(form.remember) }}
     {{ render_field(form.submit) }}
+    </form>
+
+    <h1>render_form_row</h1>
+    <form method="post">
+    {{ render_form_row([form.username, form.password]) }}
+    {{ render_form_row([form.remember]) }}
+    {{ render_form_row([form.submit]) }}
     </form>
 {% endblock %}
