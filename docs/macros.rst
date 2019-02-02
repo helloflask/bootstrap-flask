@@ -200,7 +200,7 @@ API
                       or ``row``
     :param col_class_default: The default class to apply to the div that represents a column
                                 if nothing more specific is said for the div column of the rendered field.
-    :param col_class_dict: A dictionary, mapping field.id to a class definition that should be applied to 
+    :param col_class_dict: A dictionary, mapping field.name to a class definition that should be applied to 
                             the div column that contains the field.
                             
 

@@ -252,7 +252,7 @@ fields: an iterable of fields to render in a row.
 row_class: Class to apply to the div intended to represent the row, like
   'form-row' or 'row'.
 col_class_default: Default col class to apply if nothing more specific is said about a field.
-col_class_dict: A dictionary which keys are fields.id and which values are the col_class to apply to the field.
+col_class_dict: A dictionary which keys are fields.name and which values are the col_class to apply to the field.
 
 Usages:
 Easiest use with defaults:
@@ -267,7 +267,7 @@ Custom col which should use class col-md-2 and modified col_class for the defaul
 <div class="{{ row_class }}">
   {% for field in fields %}
     {% if field.id in col_class_dict %}
-      {% set col_class = col_class_dict[field.id] %}
+      {% set col_class = col_class_dict[field.name] %}
     {% else %}
       {% set col_class = col_class_default %}
     {% endif %}
