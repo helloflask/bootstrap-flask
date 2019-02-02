@@ -245,3 +245,98 @@ action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
         {%- endfor %}
     </form>
 {%- endmacro %}
+
+{% macro render_form_row(fields, row_class='form-row', col_class_default='col', col_class_dict={}) %}
+{#
+fields: an iterable of fields to render in a row.
+row_class: Class to apply to the div intended to represent the row, like
+  'form-row' or 'row'.
+col_class_default: Default col class to apply if nothing more specific is said about a field.
+col_class_dict: A dictionary which keys are fields.id and which values are the col_class to apply to the field.
+
+Usages:
+Easiest use with defaults:
+{{ render_form_row([form.first_name, form.surname]) }}
+
+Custom col which should use class col-md-2, and the others the defaults:
+{{ render_form_row([form.title, form.first_name, form.surname], col_class_dict={'title': 'col-md-2'}) }}
+
+Custom col which should use class col-md-2 and modified col_class for the default of the other fields
+{{ render_form_row([form.title, form.first_name, form.surname], col_class='col-md-5', col_class_dict={'title': 'col-md-2'}) }}
+#}
+<div class="{{ row_class }}">
+  {% for field in fields %}
+    {% if field.id in col_class_dict %}
+      {% set col_class = col_class_dict[field.id] %}
+    {% else %}
+      {% set col_class = col_class_default %}
+    {% endif %}
+    <div class="{{ col_class}}">
+      {{ render_field(field) }}
+    </div>
+  {% endfor %}
+</div>
+{% endmacro %}
+
+
+{% macro render_grid_form(
+  form,
+  rows,
+  action="",
+  method="post",
+  extra_classes=None,
+  role="form",
+  enctype=None,
+  id="",
+  novalidate=False,
+  render_kw={})
+%}
+{#
+Parameters have the same meaning of render_form. Some render_form Parameters
+that have no sense in this context have been removed. The only new parameter
+is the required paramenter rows, which should be an iterable, being each
+element the row to print, i.e. each element is a call to render_form_row
+with their desired parameters.
+
+Example:
+render_grid_form(
+  form,
+  rows=[
+    render_form_row([(form.title, 'col-md-2'), form.first_name, form.surname]),
+    render_form_row([(form.addres, 'col-md-6'), (form.city, 'col-md-4'), (form.zip, 'col-md-2')])
+  ]
+)
+
+See render_form_row for further column customization.
+
+#}
+  {%- set _enctype = [] %}
+  {%- if enctype is none -%}
+    {%- for field in form %}
+      {%- if field.type == 'FileField' %}
+        {#- for loops come with a fairly watertight scope, so this list-hack is
+        used to be able to set values outside of it #}
+        {%- set _ = _enctype.append('multipart/form-data') -%}
+      {%- endif %}
+    {%- endfor %}
+  {%- else %}
+    {% set _ = _enctype.append(enctype) %}
+  {%- endif %}
+  <form{%- if action != None %} action="{{ action }}"{% endif -%}
+  {%- if id %} id="{{ id }}"{% endif -%}
+  {%- if method %} method="{{ method }}"{% endif %}
+  class="form
+  {%- if extra_classes %} {{ extra_classes }}{% endif -%}"
+  {%- if _enctype[0] %} enctype="{{ _enctype[0] }}"{% endif -%}
+  {%- if role %} role="{{ role }}"{% endif -%}
+  {%- if novalidate %} novalidate{% endif -%}
+  {%- if render_kw %} {{ render_kw|xmlattr }}{% endif -%}>
+  {{ form.hidden_tag() }}
+  {{ form_errors(form, hiddens='only') }}
+
+  {% for row in rows %}
+    {{ row }}
+  {% endfor %}
+
+</form>
+{% endmacro %}
