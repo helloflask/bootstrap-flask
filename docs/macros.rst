@@ -180,7 +180,9 @@ Example
     {% from 'bootstrap/form.html' import render_form_row %}
 
     <form method="post">
-        {{ render_form_row([form.first_name, form.surname]) }}
+        {{ render_form_row([form.username, form.password]) }}
+        {{ render_form_row([form.remember]) }}
+        {{ render_form_row([form.submit]) }}
     </form>
 
 API
@@ -201,55 +203,6 @@ API
     :param col_class_dict: A dictionary, mapping field.id to a class definition that should be applied to 
                             the div column that contains the field.
                             
-{{ render_grid_form() }}
----------------------
-Render a customized bootstrap grid form based on the render_form_row calls object.
-
-Example
-~~~~~~~~
-
-.. code-block:: jinja
-
-    {% from 'bootstrap/form.html' import render_grid_form %}
-
-    {{ 
-        render_grid_form(
-            form,
-            rows=[
-                render_form_row([(form.title, 'col-md-2'), form.first_name, form.surname]),
-                render_form_row([(form.addres, 'col-md-6'), (form.city, 'col-md-4'), (form.zip, 'col-md-2')])
-            ]
-        )
-    }}
-
-API
-~~~~
-
-.. py:function:: render_grid_form(form,\
-                    rows,\
-                    action="",\
-                    method="post",\
-                    extra_classes=None,\
-                    role="form",\
-                    enctype=None,\
-                    id="",\
-                    novalidate=False,\
-                    render_kw={})
-
-    Outputs Bootstrap-markup for a complete Flask-WTF form.
-
-    :param form: The form that has the fields to render.
-    :param rows: an iterable, being each element the row to print, which can be rendered using render_form_row.
-    :param method: ``<form>`` method attribute.
-    :param extra_classes: The classes to add to the ``<form>``.
-    :param role: ``<form>`` role attribute.
-    :param enctype: ``<form>`` enctype attribute. If ``None``, will
-                    automatically be set to ``multipart/form-data`` if a
-                    :class:`~wtforms.fields.FileField` is present in the form.
-    :param id: The ``<form>`` id attribute.
-    :param novalidate: Flag that decide whether add ``novalidate`` class in ``<form>``.
-    :param render_kw: A dictionary, specifying custom attributes for the
-                     ``<form>`` tag.
 
 
 {{ render_pager() }}

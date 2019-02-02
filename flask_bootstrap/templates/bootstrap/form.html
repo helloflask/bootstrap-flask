@@ -271,72 +271,9 @@ Custom col which should use class col-md-2 and modified col_class for the defaul
     {% else %}
       {% set col_class = col_class_default %}
     {% endif %}
-    <div class="{{ col_class}}">
+    <div class="{{ col_class }}">
       {{ render_field(field) }}
     </div>
   {% endfor %}
 </div>
-{% endmacro %}
-
-
-{% macro render_grid_form(
-  form,
-  rows,
-  action="",
-  method="post",
-  extra_classes=None,
-  role="form",
-  enctype=None,
-  id="",
-  novalidate=False,
-  render_kw={})
-%}
-{#
-Parameters have the same meaning of render_form. Some render_form Parameters
-that have no sense in this context have been removed. The only new parameter
-is the required paramenter rows, which should be an iterable, being each
-element the row to print, i.e. each element is a call to render_form_row
-with their desired parameters.
-
-Example:
-render_grid_form(
-  form,
-  rows=[
-    render_form_row([(form.title, 'col-md-2'), form.first_name, form.surname]),
-    render_form_row([(form.addres, 'col-md-6'), (form.city, 'col-md-4'), (form.zip, 'col-md-2')])
-  ]
-)
-
-See render_form_row for further column customization.
-
-#}
-  {%- set _enctype = [] %}
-  {%- if enctype is none -%}
-    {%- for field in form %}
-      {%- if field.type == 'FileField' %}
-        {#- for loops come with a fairly watertight scope, so this list-hack is
-        used to be able to set values outside of it #}
-        {%- set _ = _enctype.append('multipart/form-data') -%}
-      {%- endif %}
-    {%- endfor %}
-  {%- else %}
-    {% set _ = _enctype.append(enctype) %}
-  {%- endif %}
-  <form{%- if action != None %} action="{{ action }}"{% endif -%}
-  {%- if id %} id="{{ id }}"{% endif -%}
-  {%- if method %} method="{{ method }}"{% endif %}
-  class="form
-  {%- if extra_classes %} {{ extra_classes }}{% endif -%}"
-  {%- if _enctype[0] %} enctype="{{ _enctype[0] }}"{% endif -%}
-  {%- if role %} role="{{ role }}"{% endif -%}
-  {%- if novalidate %} novalidate{% endif -%}
-  {%- if render_kw %} {{ render_kw|xmlattr }}{% endif -%}>
-  {{ form.hidden_tag() }}
-  {{ form_errors(form, hiddens='only') }}
-
-  {% for row in rows %}
-    {{ row }}
-  {% endfor %}
-
-</form>
 {% endmacro %}
