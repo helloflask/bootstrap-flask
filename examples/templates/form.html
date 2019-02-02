@@ -17,6 +17,9 @@
     <h1>render_form_row</h1>
     <form method="post">
     {{ render_form_row([form.username, form.password]) }}
+    {{ render_form_row([form.username, form.password], col_map={'username': 'col-md-6', 'password': 'col-md-4'}) }}
+    {{ render_form_row([form.username, form.password], col_map={'username': 'col-md-2', 'password': 'col-md-8'}) }}
+    {{ render_form_row([form.username, form.password], col_class_default='col-md-2') }}
     {{ render_form_row([form.remember]) }}
     {{ render_form_row([form.submit]) }}
     </form>
