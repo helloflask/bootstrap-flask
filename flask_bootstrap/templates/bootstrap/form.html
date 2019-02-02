@@ -246,28 +246,28 @@ action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
     </form>
 {%- endmacro %}
 
-{% macro render_form_row(fields, row_class='form-row', col_class_default='col', col_class_dict={}) %}
+{% macro render_form_row(fields, row_class='form-row', col_class_default='col', col_map={}) %}
 {#
 fields: an iterable of fields to render in a row.
 row_class: Class to apply to the div intended to represent the row, like
   'form-row' or 'row'.
 col_class_default: Default col class to apply if nothing more specific is said about a field.
-col_class_dict: A dictionary which keys are fields.name and which values are the col_class to apply to the field.
+col_class_dict: A dictionary which keys are fields.name and which values are the col class to apply to the field.
 
 Usages:
 Easiest use with defaults:
 {{ render_form_row([form.first_name, form.surname]) }}
 
 Custom col which should use class col-md-2, and the others the defaults:
-{{ render_form_row([form.title, form.first_name, form.surname], col_class_dict={'title': 'col-md-2'}) }}
+{{ render_form_row([form.title, form.first_name, form.surname], col_map={'title': 'col-md-2'}) }}
 
-Custom col which should use class col-md-2 and modified col_class for the default of the other fields
-{{ render_form_row([form.title, form.first_name, form.surname], col_class='col-md-5', col_class_dict={'title': 'col-md-2'}) }}
+Custom col which should use class col-md-2 and modified col class for the default of the other fields
+{{ render_form_row([form.title, form.first_name, form.surname], col_class_default='col-md-5', col_map={'title': 'col-md-2'}) }}
 #}
 <div class="{{ row_class }}">
   {% for field in fields %}
-    {% if field.id in col_class_dict %}
-      {% set col_class = col_class_dict[field.name] %}
+    {% if field.id in col_map %}
+      {% set col_class = col_map[field.name] %}
     {% else %}
       {% set col_class = col_class_default %}
     {% endif %}

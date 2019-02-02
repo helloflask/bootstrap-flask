@@ -191,7 +191,7 @@ API
 .. py:function:: render_form_row(fields,
                                  row_class='form-row',
                                  col_class_default='col',
-                                 col_class_dict={})
+                                 col_map={})
 
     Render a bootstrap row with the given fields
 
@@ -200,8 +200,9 @@ API
                       or ``row``
     :param col_class_default: The default class to apply to the div that represents a column
                                 if nothing more specific is said for the div column of the rendered field.
-    :param col_class_dict: A dictionary, mapping field.name to a class definition that should be applied to 
-                            the div column that contains the field.
+    :param col_map: A dictionary, mapping field.name to a class definition that should be applied to 
+                            the div column that contains the field. For example: `col_map={'username':
+                             'col-md-2', 'password': 'col-md-8'})```
                             
 
 
