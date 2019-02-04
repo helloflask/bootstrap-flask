@@ -266,7 +266,7 @@ Custom col which should use class col-md-2 and modified col class for the defaul
 #}
 <div class="{{ row_class }}">
   {% for field in fields %}
-    {% if field.id in col_map %}
+    {% if field.name in col_map %}
       {% set col_class = col_map[field.name] %}
     {% else %}
       {% set col_class = col_class_default %}
