@@ -34,6 +34,20 @@ setup(
     install_requires=[
         'Flask'
     ],
+    extras_require={
+        'dev': [
+            'coverage',
+            'tox',
+            'sphinx',
+            'pallets-sphinx-themes',
+            'sphinxcontrib-log-cabinet',
+        ],
+        'docs': [
+            'sphinx',
+            'pallets-sphinx-themes',
+            'sphinxcontrib-log-cabinet',
+        ]
+    },
     keywords='flask extension development',
     classifiers=[
         'Development Status :: 3 - Alpha',
