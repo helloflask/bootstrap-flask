@@ -18,6 +18,11 @@ else:
     def is_hidden_field_filter(field):
         return isinstance(field, HiddenField)
 
+# central definition of used versions
+VERSION_BOOTSTRAP = '4.3.1'
+VERSION_JQUERY = '3.3.1'
+VERSION_POPPER = '1.14.0'
+
 
 class Bootstrap(object):
     def __init__(self, app=None):
@@ -42,7 +47,7 @@ class Bootstrap(object):
         app.config.setdefault('BOOTSTRAP_SERVE_LOCAL', False)
 
     @staticmethod
-    def load_css(version='4.1.0'):
+    def load_css(version=VERSION_BOOTSTRAP):
         """Load Bootstrap's css resources with given version.
 
         .. versionadded:: 0.1.0
@@ -61,7 +66,7 @@ class Bootstrap(object):
         return Markup(css)
 
     @staticmethod
-    def load_js(version='4.1.0', jquery_version='3.3.1', popper_version='1.14.0', with_jquery=True, with_popper=True):
+    def load_js(version=VERSION_BOOTSTRAP, jquery_version=VERSION_JQUERY, popper_version=VERSION_POPPER, with_jquery=True, with_popper=True):
         """Load Bootstrap and related library's js resources with given version.
 
         .. versionadded:: 0.1.0
