@@ -23,11 +23,10 @@ Initialization
 Resources helpers
 -----------------
 
-When development, Bootstrap-Flask provides two helper functions that can
-be used to generate resources load code in template:
-``bootstrap.load_css()`` and ``bootstrap.load_js()``
+Bootstrap-Flask provides two helper functions to load resources in a template:
+``bootstrap.load_css()`` and ``bootstrap.load_js()``.
 
-Call it at your template, for example:
+Call it in your template, for example:
 
 .. code-block:: jinja
 
@@ -43,9 +42,7 @@ Call it at your template, for example:
 Starter template
 -----------------
 
-Considering for flexibility, Bootstrap-Flask did't include a built-in base templates (maybe change in future), 
-for now you have to create it by yourself. Be sure to using an HTML5 doctype and including a viewport meta tag 
-for proper responsive behaviors, your base template should like this:
+For reasons of flexibility, Bootstrap-Flask doesn't include built-in base templates (this may change in the future). For now,  you must create it yourself. Be sure to use an HTML5 doctype and include a viewport meta tag for proper responsive behaviors. Here's an example base template:
 
 .. code-block:: html
 
@@ -66,8 +63,8 @@ for proper responsive behaviors, your base template should like this:
         {% endblock %}
       </head>
       <body>
-        <!-- Your page contont -->
-        {% block content %}{% endblock%}
+        <!-- Your page content -->
+        {% block content %}{% endblock %}
         
         {% block scripts %}
         <!-- Optional JavaScript -->
@@ -76,9 +73,7 @@ for proper responsive behaviors, your base template should like this:
       </body>
     </html>
 
-You can copy it to your base template (name it as ``base.html`` or ``layout.html`` etc.), then you can inherite it
-in chlid templates, see `Template Inheritance <http://flask.pocoo.org/docs/1.0/patterns/templateinheritance/>`_ for
-more details.
+Use this in your templates folder (name it as ``base.html`` or ``layout.html`` etc.), and inherit it in child templates. See `Template Inheritance <http://flask.pocoo.org/docs/1.0/patterns/templateinheritance/>`_ for more details.
 
 Macros
 ------
@@ -102,7 +97,7 @@ Macros
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
 
 How to use these macros? It's quite simple, just import them from the
-correspond path and then call them like any other macro:
+corresponding path and call them like any other macro:
 
 .. code-block:: jinja
 
@@ -110,4 +105,4 @@ correspond path and then call them like any other macro:
 
     {{ render_form(form) }}
 
-Go to :doc:`macros` page to see the detailed usage for these macros.
+Go to the :doc:`macros` page to see the detailed usage for these macros.
