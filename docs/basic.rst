@@ -23,10 +23,10 @@ Initialization
 Resources helpers
 -----------------
 
-Bootstrap-Flask provides two helper functions to load resources in a template:
+Bootstrap-Flask provides two helper functions to load Bootstrap resources in the template:
 ``bootstrap.load_css()`` and ``bootstrap.load_js()``.
 
-Call it in your template, for example:
+Call it in your base template, for example:
 
 .. code-block:: jinja
 
@@ -38,6 +38,9 @@ Call it in your template, for example:
     ...
     {{ bootstrap.load_js() }}
     </body>
+
+You can pass ``version`` to pin the Bootstrap 4 version you want to use. Default to load files from CDN, set ``BOOTSTRAP_SERVE_LOCAL``
+to ``True`` to use built-in local files. However, it's recommended to manage Bootstrap resources by yourself.
 
 Starter template
 -----------------
@@ -85,9 +88,9 @@ Macros
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
 | render_form()             | bootstrap/form.html            | Render a WTForms form                                              |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
-| render_pager()            | bootstrap/pagination.html      | Render a basic pagination, only include previous and next button.  |
+| render_pager()            | bootstrap/pagination.html      | Render a basic Flask-SQLAlchemy pagniantion                        |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
-| render_pagination()       | bootstrap/pagination.html      | Render a standard pagination                                       |
+| render_pagination()       | bootstrap/pagination.html      | Render a standard Flask-SQLAlchemy pagination                      |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
 | render_nav_item()         | bootstrap/nav.html             | Render a navigation item                                           |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
