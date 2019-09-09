@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+1.1.0
+------
+
+Release date: 2019/9/9
+
+- Update Bootstrap version to 4.3.1
+
+
 1.0.10
 ------
 
