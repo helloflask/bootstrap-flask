@@ -1,4 +1,5 @@
 {% from 'bootstrap/nav.html' import render_nav_item %}
+{% from 'bootstrap/utils.html' import render_messages %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,8 +10,7 @@
     {{ bootstrap.load_css() }}
 </head>
 <body>
-<main class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -21,19 +21,24 @@
                 {{ render_nav_item('test_form', 'Form', use_li=True) }}
                 {{ render_nav_item('test_nav', 'Nav', use_li=True) }}
                 {{ render_nav_item('test_pagination', 'Pagination', use_li=True) }}
-                {{ render_nav_item('test_utils', 'Utils', use_li=True) }}
+                {{ render_nav_item('test_static', 'Static', use_li=True) }}
+                {{ render_nav_item('test_flash', 'Flash Messages', use_li=True) }}
             </ul>
         </div>
     </nav>
-    {% block content %}{% endblock %}
+    
+    <main class="container">
+        {{ render_messages(container=False, dismissible=True) }}
+        {% block content %}{% endblock %}
+    </main>
+
     <footer class="text-center">
         {% block footer %}
             <small> &copy; 2018 <a href="http://greyli.com" title="Written by Grey Li">Grey Li</a>
             </small>
         {% endblock %}
     </footer>
-</main>
 
-{{ bootstrap.load_js() }}
+    {{ bootstrap.load_js() }}
 </body>
 </html>
