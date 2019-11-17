@@ -98,6 +98,8 @@ Macros
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
 | render_static()           | bootstrap/utils.html           | Render a resource reference code (i.e. ``<link>``, ``<script>``)   |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
+| render_messages()         | bootstrap/utils.html           | Render flashed messages send by flash() fucntion                   |
++---------------------------+--------------------------------+--------------------------------------------------------------------+
 
 How to use these macros? It's quite simple, just import them from the
 corresponding path and call them like any other macro:

@@ -3,8 +3,8 @@ Use Macros
 
 These macros will help you to generate Bootstrap-markup codes quickly and easily.
 
-{{ render_nav_item() }}
-------------------------
+render_nav_item()
+------------------
 Render a Bootstrap nav item.
 
 Example
@@ -36,8 +36,8 @@ API
     :param kwargs: Additional keyword arguments pass to ``url_for()``.
 
 
-{{ render_breadcrumb_item() }}
----------------------------------
+render_breadcrumb_item()
+--------------------------
 Render a Bootstrap breadcrumb item.
 
 Example
@@ -67,8 +67,8 @@ API
     :param text: The text that will displayed on the item.
     :param kwargs: Additional keyword arguments pass to ``url_for()``.
 
-{{ render_field() }}
----------------------
+render_field()
+----------------
 
 Render a form field create by Flask-WTF/WTForms.
 
@@ -104,8 +104,8 @@ API
                       button.
 
 
-{{ render_form() }}
----------------------
+render_form()
+---------------
 Render a form object create by Flask-WTF/WTForms.
 
 Example
@@ -167,8 +167,8 @@ API
     :param hiddens: If ``True``, render errors of hidden fields as well. If
                    ``'only'``, render *only* these.
 
-{{ render_form_row() }}
-------------------------
+render_form_row()
+------------------
 
 Render a row of a grid form
 
@@ -206,8 +206,8 @@ API
                             
 
 
-{{ render_pager() }}
----------------------
+render_pager()
+-----------------
 
 Render a pagination object create by Flask-SQLAlchemy
 
@@ -241,8 +241,8 @@ API
     :param kwargs: Additional arguments passed to ``url_for``.
 
 
-{{ render_pagination() }}
---------------------------
+render_pagination()
+--------------------
 
 Render a pagination object create by Flask-SQLAlchemy.
 
@@ -291,8 +291,8 @@ API
     :param kwargs: Extra attributes for the ``<ul>``-element.
 
 
-{{ render_static() }}
-----------------------
+render_static()
+----------------
 Render a resource reference code (i.e. ``<link>``, ``<script>``).
 
 Example
@@ -316,8 +316,8 @@ API
     :param local: Load local resources or from the passed URL.
 
 
-{{ render_messages() }}
-------------------------
+render_messages()
+------------------
 
 Render flashed messages send by ``flask.flash()``.
 
@@ -336,28 +336,22 @@ Flash the message in your view function with ``flash(message, category)``:
         flash('a danger message', 'danger')
         return your_template
 
-Render the messages in your base template:
+Render the messages in your base template (normally below the navbar):
 
 .. code-block:: jinja
 
     {% from 'bootstrap/utils.html' import render_flashed_messages %}
 
+    <nav>...</nav>
     {{ render_messages() }}
+    <main>...</main>
 
 API
 ~~~~
 
 .. py:function:: render_flashed_messages(messages=None,\
                     container=False,\
-                    transform={\
-                        'critical': 'danger',\
-                        'error': 'danger',\
-                        'info': 'info',\
-                        'warning': 'warning',\
-                        'debug': 'primary',\
-                        'notset': 'primary',\
-                        'message': 'primary',\
-                    },\ 
+                    transform={...},\ 
                     default_category='primary',\
                     dismissible=False,\
                     dismiss_animate=False)
@@ -365,7 +359,7 @@ API
     Render Bootstrap alerts for flash messages send by ``flask.flash()``.
 
     :param messages: The messages to show. If not given, default to get from ``flask.get_flashed_messages(with_categories=True)``.
-    :param container: If true, will output a complete <div class="container"> element, otherwise just the messages each wrapped in a <div>.
+    :param container: If true, will output a complete ``<div class="container">`` element, otherwise just the messages each wrapped in a ``<div>``.
     :param transform: A dictionary of mappings for categories. Will be looked up case-insensitively. Default maps all Python loglevel names to Bootstrap CSS classes.
     :param default_category: If a category does not has a mapping in transform, it is passed through unchanged. ``default_category`` will be used when ``category`` is empty.
     :param dismissible: If true, will output a button to close an alert. For fully functioning dismissible alerts, you must use the alerts JavaScript plugin.
