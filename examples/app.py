@@ -2,7 +2,7 @@
 from flask import Flask, render_template, request, flash, Markup
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, BooleanField, PasswordField
+from wtforms import StringField, SubmitField, BooleanField, PasswordField, IntegerField, TextField, FormField, SelectField, FieldList
 from wtforms.validators import DataRequired, Length
 
 from flask_bootstrap import Bootstrap
@@ -22,6 +22,26 @@ class HelloForm(FlaskForm):
     submit = SubmitField()
 
 
+class TelephoneForm(FlaskForm):
+    country_code = IntegerField('Country Code')
+    area_code    = IntegerField('Area Code/Exchange')
+    number       = TextField('Number')
+
+
+class IMForm(FlaskForm):
+    protocol = SelectField(choices=[('aim', 'AIM'), ('msn', 'MSN')])
+    username = TextField()
+
+
+class ContactForm(FlaskForm):
+    first_name   = TextField()
+    last_name    = TextField()
+    mobile_phone = FormField(TelephoneForm)
+    office_phone = FormField(TelephoneForm)
+    emails = FieldList(TextField("Email"), min_entries=3)
+    im_accounts = FieldList(FormField(IMForm), min_entries=2)
+
+
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
@@ -34,7 +54,7 @@ def index():
 @app.route('/form', methods=['GET', 'POST'])
 def test_form():
     form = HelloForm()
-    return render_template('form.html', form=form)
+    return render_template('form.html', form=form, telephone_form=TelephoneForm(), contact_form=ContactForm(), im_form=IMForm())
 
 
 @app.route('/nav', methods=['GET', 'POST'])
@@ -72,3 +92,7 @@ def test_flash():
     flash('A simple dark alert—check it out!', 'dark')
     flash(Markup('A simple success alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.'), 'success')
     return render_template('flash.html')
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
