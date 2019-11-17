@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash, Markup
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, BooleanField, PasswordField
@@ -56,6 +56,19 @@ def test_pagination():
     return render_template('pagination.html', pagination=pagination, messages=messages)
 
 
-@app.route('/utils', methods=['GET', 'POST'])
-def test_utils():
-    return render_template('utils.html')
+@app.route('/static', methods=['GET', 'POST'])
+def test_static():
+    return render_template('static.html')
+
+@app.route('/flash', methods=['GET', 'POST'])
+def test_flash():
+    flash('A simple primary alert—check it out!', 'primary')
+    flash('A simple secondary alert—check it out!', 'secondary')
+    flash('A simple success alert—check it out!', 'success')
+    flash('A simple danger alert—check it out!', 'danger')
+    flash('A simple warning alert—check it out!', 'warning')
+    flash('A simple info alert—check it out!', 'info')
+    flash('A simple light alert—check it out!', 'light')
+    flash('A simple dark alert—check it out!', 'dark')
+    flash(Markup('A simple success alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.'), 'success')
+    return render_template('flash.html')

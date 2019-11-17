@@ -1,6 +1,6 @@
 import unittest
 
-from flask import Flask, render_template_string, current_app, request
+from flask import Flask, render_template_string, current_app, request, flash
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, BooleanField, PasswordField
 from wtforms.validators import DataRequired, Length
@@ -275,3 +275,56 @@ class BootstrapTestCase(unittest.TestCase):
         self.assertIn('<link rel="stylesheet" href="/static/test.css" type="text/css">', data)
         self.assertIn('<script type="text/javascript" src="/static/test.js"></script>', data)
         self.assertIn('<link rel="icon" href="/static/test.ico">', data)
+
+    def test_render_messages(self):
+        @self.app.route('/messages')
+        def test_messages():
+            flash('test message', 'danger')
+            return render_template_string('''
+                            {% from 'bootstrap/utils.html' import render_messages %}
+                            {{ render_messages() }}
+                            ''')
+
+        @self.app.route('/container')
+        def test_container():
+            flash('test message', 'danger')
+            return render_template_string('''
+                            {% from 'bootstrap/utils.html' import render_messages %}
+                            {{ render_messages(container=True) }}
+                            ''')
+
+        @self.app.route('/dismissible')
+        def test_dismissible():
+            flash('test message', 'danger')
+            return render_template_string('''
+                            {% from 'bootstrap/utils.html' import render_messages %}
+                            {{ render_messages(dismissible=True) }}
+                            ''')
+
+        @self.app.route('/dismiss_animate')
+        def test_dismiss_animate():
+            flash('test message', 'danger')
+            return render_template_string('''
+                            {% from 'bootstrap/utils.html' import render_messages %}
+                            {{ render_messages(dismissible=True, dismiss_animate=True) }}
+                            ''')
+
+        response = self.client.get('/messages')
+        data = response.get_data(as_text=True)
+        self.assertIn('<div class="alert alert-danger"', data)
+
+        response = self.client.get('/container')
+        data = response.get_data(as_text=True)
+        self.assertIn('<div class="container flashed-messages">', data)
+
+        response = self.client.get('/dismissible')
+        data = response.get_data(as_text=True)
+        self.assertIn('alert-dismissible', data)
+        self.assertIn('<button type="button" class="close" data-dismiss="alert"', data)
+        self.assertNotIn('fade show', data)
+
+        response = self.client.get('/dismiss_animate')
+        data = response.get_data(as_text=True)
+        self.assertIn('alert-dismissible', data)
+        self.assertIn('<button type="button" class="close" data-dismiss="alert"', data)
+        self.assertIn('fade show', data)
