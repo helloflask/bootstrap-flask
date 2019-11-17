@@ -284,14 +284,15 @@ class BootstrapTestCase(unittest.TestCase):
                             {% from 'bootstrap/utils.html' import render_messages %}
                             {{ render_messages() }}
                             ''')
-        
+
         @self.app.route('/container')
         def test_container():
             flash('test message', 'danger')
             return render_template_string('''
                             {% from 'bootstrap/utils.html' import render_messages %}
                             {{ render_messages(container=True) }}
-                            ''')        
+                            ''')
+
         @self.app.route('/dismissible')
         def test_dismissible():
             flash('test message', 'danger')
@@ -299,7 +300,7 @@ class BootstrapTestCase(unittest.TestCase):
                             {% from 'bootstrap/utils.html' import render_messages %}
                             {{ render_messages(dismissible=True) }}
                             ''')
-        
+
         @self.app.route('/dismiss_animate')
         def test_dismiss_animate():
             flash('test message', 'danger')
@@ -327,4 +328,3 @@ class BootstrapTestCase(unittest.TestCase):
         self.assertIn('alert-dismissible', data)
         self.assertIn('<button type="button" class="close" data-dismiss="alert"', data)
         self.assertIn('fade show', data)
-

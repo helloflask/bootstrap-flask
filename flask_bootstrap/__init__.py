@@ -66,7 +66,8 @@ class Bootstrap(object):
         return Markup(css)
 
     @staticmethod
-    def load_js(version=VERSION_BOOTSTRAP, jquery_version=VERSION_JQUERY, popper_version=VERSION_POPPER, with_jquery=True, with_popper=True):
+    def load_js(version=VERSION_BOOTSTRAP, jquery_version=VERSION_JQUERY,
+                popper_version=VERSION_POPPER, with_jquery=True, with_popper=True):
         """Load Bootstrap and related library's js resources with given version.
 
         .. versionadded:: 0.1.0
