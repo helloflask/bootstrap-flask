@@ -168,7 +168,7 @@ API
                    ``'only'``, render *only* these.
 
 {{ render_form_row() }}
----------------------
+------------------------
 
 Render a row of a grid form
 
@@ -314,3 +314,74 @@ API
     :param type: Resources type, one of ``css``, ``js``, ``icon``.
     :param filename_or_url: The name of the file, or the full url when ``local`` set to ``False``.
     :param local: Load local resources or from the passed URL.
+
+
+{{ render_messages() }}
+------------------------
+
+Render flashed messages send by ``flask.flash()``.
+
+Example
+~~~~~~~~
+
+Flash the message in your view function with ``flash(message, category)``:
+
+.. code-block:: python
+
+    from flask import flash
+
+    @app.route('/test')
+    def test():
+        flash('a info message', 'info')
+        flash('a danger message', 'danger')
+        return your_template
+
+Render the messages in your base template:
+
+.. code-block:: jinja
+
+    {% from 'bootstrap/utils.html' import render_flashed_messages %}
+
+    {{ render_messages() }}
+
+API
+~~~~
+
+.. py:function:: render_flashed_messages(messages=None,\
+                    container=False,\
+                    transform={\
+                        'critical': 'danger',\
+                        'error': 'danger',\
+                        'info': 'info',\
+                        'warning': 'warning',\
+                        'debug': 'primary',\
+                        'notset': 'primary',\
+                        'message': 'primary',\
+                    },\ 
+                    default_category='primary',\
+                    dismissible=False,\
+                    dismiss_animate=False)
+
+    Render Bootstrap alerts for flash messages send by ``flask.flash()``.
+
+    :param messages: The messages to show. If not given, default to get from ``flask.get_flashed_messages(with_categories=True)``.
+    :param container: If true, will output a complete <div class="container"> element, otherwise just the messages each wrapped in a <div>.
+    :param transform: A dictionary of mappings for categories. Will be looked up case-insensitively. Default maps all Python loglevel names to Bootstrap CSS classes.
+    :param default_category: If a category does not has a mapping in transform, it is passed through unchanged. ``default_category`` will be used when ``category`` is empty.
+    :param dismissible: If true, will output a button to close an alert. For fully functioning dismissible alerts, you must use the alerts JavaScript plugin.
+    :param dismiss_animate: If true, will enable dismiss animate when click the dismiss button.
+
+When you call ``flash('message', 'category')``, threre are 8 category options available, mapping to Bootstrap 4's alerts type:
+
+primary, secondary, success, danger, warning, info, light, dark.
+
+If you want to use HTML in your message body, just warpper your message string with ``flask.Markup`` to tell Jinja it's safe:
+
+.. code-block:: python
+
+    from flask import flash, Markup
+
+    @app.route('/test')
+    def test():
+        flash(Markup('a info message with a link: <a href="/">Click me!</a>'), 'info')
+        return your_template

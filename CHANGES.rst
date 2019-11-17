@@ -1,6 +1,13 @@
 Changelog
 ==========
 
+1.2.0
+------
+
+Release date: --
+
+- Add macro ``render_flashed_messages`` for rendering flashed messages.
+
 1.1.0
 ------
 
