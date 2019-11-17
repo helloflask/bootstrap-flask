@@ -6,7 +6,7 @@ Changelog
 
 Release date: --
 
-- Add macro ``render_flashed_messages`` for rendering flashed messages.
+- Add macro ``render_messages`` for rendering flashed messages.
 
 1.1.0
 ------
