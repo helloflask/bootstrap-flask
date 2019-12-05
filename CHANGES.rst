@@ -4,7 +4,7 @@ Changelog
 1.2.0
 ------
 
-Release date: --
+Release date: 2019/12/5
 
 - Add macro ``render_messages`` for rendering flashed messages.
 - Fix rendering bug for WTForms ``FormField`` (`#34 <https://github.com/greyli/bootstrap-flask/issues/34>`__). 
