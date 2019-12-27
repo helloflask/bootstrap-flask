@@ -9,12 +9,6 @@
 * [PyPI](https://pypi.org/project/Bootstrap-Flask/)
 * [Examples](https://github.com/greyli/bootstrap-flask/tree/master/examples)
 
-## TODO
-
-- [ ] Remove required attribute handle code in render_form/render_field
-- [ ] Add `endpoint` parameter in `render_pager`
-- [ ] Add render test for every input and form type.
-
 ## License
 
 This project is licensed under the MIT License (see the
