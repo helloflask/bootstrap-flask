@@ -340,7 +340,7 @@ Render the messages in your base template (normally below the navbar):
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/utils.html' import render_flashed_messages %}
+    {% from 'bootstrap/utils.html' import render_messages %}
 
     <nav>...</nav>
     {{ render_messages() }}
@@ -349,7 +349,7 @@ Render the messages in your base template (normally below the navbar):
 API
 ~~~~
 
-.. py:function:: render_flashed_messages(messages=None,\
+.. py:function:: render_messages(messages=None,\
                     container=False,\
                     transform={...},\ 
                     default_category='primary',\
