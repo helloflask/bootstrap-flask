@@ -58,11 +58,11 @@ class Bootstrap(object):
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
 
         if serve_local:
-            css = '<link rel="stylesheet" href="%s" type="text/css">\n' % \
+            css = '<link rel="stylesheet" href="%s" type="text/css">' % \
                   url_for('bootstrap.static', filename='css/' + css_filename)
         else:
             css = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/css/%s"' \
-                  ' type="text/css">\n' % (version, css_filename)
+                  ' type="text/css">' % (version, css_filename)
         return Markup(css)
 
     @staticmethod
@@ -107,4 +107,6 @@ class Bootstrap(object):
                      '</script>' % (popper_version, popper_filename)
         else:
             popper = ''
-        return Markup('%s\n%s\n%s\n' % (jquery, popper, js))
+        return Markup('''%s
+    %s
+    %s''' % (jquery, popper, js))
