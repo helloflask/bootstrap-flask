@@ -192,7 +192,8 @@ API
 .. py:function:: render_form_row(fields,\
                                  row_class='form-row',\
                                  col_class_default='col',\
-                                 col_map={})
+                                 col_map={},
+                                 button_map={})
 
     Render a bootstrap row with the given fields
 
@@ -203,6 +204,10 @@ API
                                 if nothing more specific is said for the div column of the rendered field.
     :param col_map: A dictionary, mapping field.name to a class definition that should be applied to 
                             the div column that contains the field. For example: ``col_map={'username': 'col-md-2'})``
+    :param button_map: A dictionary, mapping button field names to Bootstrap category names such as
+                      ``primary``, ``danger`` or ``success``. Buttons not found
+                      in the ``button_map`` will use the ``secondary`` type of
+                      button.
                             
 
 
