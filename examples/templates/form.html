@@ -5,6 +5,12 @@
     <h1>render_form</h1>
     {{ render_form(form) }}
 
+    <h1>render_form with custom buttons: button_style + button_size</h1>
+    {{ render_form(form, button_style='danger', button_size='sm') }}
+
+    <h1>render_form with custom buttons: button_map</h1>
+    {{ render_form(form, button_map={'submit': 'btn-success btn-sm btn-block'}) }}
+
     <h1>render_field</h1>
     <form method="post">
     {{ form.csrf_token }}

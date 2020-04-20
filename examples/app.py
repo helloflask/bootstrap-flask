@@ -11,6 +11,13 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.secret_key = 'dev'
 
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+
+# set default button sytle and size, will be overwritten by macro args
+app.config['BOOTSTRAP_BTN_STYLE'] = 'primary'
+app.config['BOOTSTRAP_BTN_SIZE'] = 'sm'
+
 bootstrap = Bootstrap(app)
 db = SQLAlchemy(app)
 
