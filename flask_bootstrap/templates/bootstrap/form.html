@@ -33,7 +33,9 @@
 {% macro render_field(field,
                     form_type="basic",
                     horizontal_columns=('lg', 2, 10),
-                    button_map={}) %}
+                    button_map={},
+                    button_style='',
+                    button_size='') %}
 
     {# this is a workaround hack for the more straightforward-code of just passing required=required parameter. older versions of wtforms do not have
 the necessary fix for required=False attributes, but will also not set the required flag in the first place. we skirt the issue using the code below #}
@@ -80,11 +82,21 @@ the necessary fix for required=False attributes, but will also not set the requi
     {%- elif field.type == 'SubmitField' -%}
         {# deal with jinja scoping issues? #}
         {% set field_kwargs = kwargs %}
+        {% set button_classes = button_map.get(field.name) %}
 
         {# note: same issue as above - should check widget, not field type #}
         {% call _hz_form_wrap(horizontal_columns, form_type, True, required=required) %}
-            {{ field(class='btn btn-%s' % button_map.get(field.name, 'secondary'),
-            **field_kwargs) }}
+            {% if button_classes %}
+                {# Start with 1.3.0, button_map was used to pass full multiple btn-* classes #}
+                {% if not button_classes.startswith('btn-') %}
+                    {% set button_classes = 'btn-' + button_classes %}
+                {% endif %}
+                {{ field(class='btn %s' % button_classes, **field_kwargs) }}
+            {% else %}
+                {% set default_button_style = button_style or config.BOOTSTRAP_BTN_STYLE %}
+                {% set default_button_size = button_size or config.BOOTSTRAP_BTN_SIZE %}
+                {{ field(class='btn btn-%s btn-%s' % (default_button_style, default_button_size), **field_kwargs) }}
+            {% endif %}
         {% endcall %}
     {%- elif field.type in ['FormField', 'FieldList'] -%}
         {# note: FormFields are tricky to get right and complex setups requiring
@@ -185,6 +197,9 @@ the necessary fix for required=False attributes, but will also not set the requi
                     horizontal_columns=('lg', 2, 10),
                     enctype=None,
                     button_map={},
+                    button_style="",
+                    button_size="",
+                    button_block="",
                     id="",
                     novalidate=False,
                     render_kw={}) %}
@@ -240,7 +255,9 @@ action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
                 {{ render_field(field,
                     form_type=form_type,
                     horizontal_columns=horizontal_columns,
-                    button_map=button_map) }}
+                    button_map=button_map,
+                    button_style=button_style,
+                    button_size=button_size) }}
             {%- endif %}
         {%- endfor %}
     </form>
