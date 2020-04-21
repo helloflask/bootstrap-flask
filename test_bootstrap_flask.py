@@ -98,8 +98,8 @@ class BootstrapTestCase(unittest.TestCase):
 
         response = self.client.get('/field')
         data = response.get_data(as_text=True)
-        self.assertIn('<input class="form-control" id="username" name="username"', data)
-        self.assertIn('<input class="form-control" id="password" name="password"', data)
+        self.assertIn('<input class="form-control " id="username" name="username"', data)
+        self.assertIn('<input class="form-control " id="password" name="password"', data)
 
     def test_render_form(self):
         @self.app.route('/form')
@@ -112,8 +112,8 @@ class BootstrapTestCase(unittest.TestCase):
 
         response = self.client.get('/form')
         data = response.get_data(as_text=True)
-        self.assertIn('<input class="form-control" id="username" name="username"', data)
-        self.assertIn('<input class="form-control" id="password" name="password"', data)
+        self.assertIn('<input class="form-control " id="username" name="username"', data)
+        self.assertIn('<input class="form-control " id="password" name="password"', data)
 
     def test_render_form_row(self):
         @self.app.route('/form')
@@ -360,3 +360,22 @@ class BootstrapTestCase(unittest.TestCase):
         response = self.client.get('/multi')
         data = response.get_data(as_text=True)
         self.assertIn('multipart/form-data', data)
+
+
+    # test WTForm fields for render_form and render_field
+    def test_form_render_kw_class(self):
+        class TestForm(FlaskForm):
+            submit = SubmitField(render_kw={'class': 'my-awesome-class'})
+
+        @self.app.route('/render_kw')
+        def render_kw():
+            form = TestForm()
+            return render_template_string('''
+            {% from 'bootstrap/form.html' import render_form %}
+            {{ render_form(form) }}
+            ''', form=form)
+
+        response = self.client.get('/render_kw')
+        data = response.get_data(as_text=True)
+        self.assertIn('my-awesome-class', data)
+        self.assertIn('btn', data)

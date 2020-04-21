@@ -5,6 +5,7 @@ Changelog
 ------
 
 - Fix ``enctype`` attribute setting for WTForms ``MultipleFileField``.
+- Fix field class append bug when using ``render_kw={'class': 'my-class'}`` (`#53 <https://github.com/greyli/bootstrap-flask/issues/53>`__).
 
 1.2.0
 ------
