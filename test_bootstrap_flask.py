@@ -362,7 +362,7 @@ class BootstrapTestCase(unittest.TestCase):
         self.assertIn('multipart/form-data', data)
 
 
-    # test WTForm fields for render_form and render_field
+    # test render_kw class for WTForms field
     def test_form_render_kw_class(self):
         class TestForm(FlaskForm):
             submit = SubmitField(render_kw={'class': 'my-awesome-class'})
@@ -379,3 +379,22 @@ class BootstrapTestCase(unittest.TestCase):
         data = response.get_data(as_text=True)
         self.assertIn('my-awesome-class', data)
         self.assertIn('btn', data)
+
+
+    # test WTForm field description for BooleanField
+    def test_form_description_for_booleanfield(self):
+        class TestForm(FlaskForm):
+            remember = BooleanField('Remember me', description='Just check this')
+
+        @self.app.route('/description')
+        def description():
+            form = TestForm()
+            return render_template_string('''
+            {% from 'bootstrap/form.html' import render_form %}
+            {{ render_form(form) }}
+            ''', form=form)
+
+        response = self.client.get('/description')
+        data = response.get_data(as_text=True)
+        self.assertIn('Remember me', data)
+        self.assertIn('<small class="form-text text-muted">Just check this</small>', data)
