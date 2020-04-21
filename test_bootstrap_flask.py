@@ -2,7 +2,7 @@ import unittest
 
 from flask import Flask, render_template_string, current_app, request, flash
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, BooleanField, PasswordField
+from wtforms import StringField, SubmitField, BooleanField, PasswordField, FileField, MultipleFileField
 from wtforms.validators import DataRequired, Length
 
 from flask_bootstrap import Bootstrap
@@ -328,3 +328,35 @@ class BootstrapTestCase(unittest.TestCase):
         self.assertIn('alert-dismissible', data)
         self.assertIn('<button type="button" class="close" data-dismiss="alert"', data)
         self.assertIn('fade show', data)
+
+    # test WTForm fields for render_form and render_field
+    def test_render_form_enctype(self):
+        class SingleUploadForm(FlaskForm):
+            avatar = FileField('Avatar')
+
+        class MultiUploadForm(FlaskForm):
+            photos = MultipleFileField('Multiple photos')
+
+        @self.app.route('/single')
+        def single():
+            form = SingleUploadForm()
+            return render_template_string('''
+            {% from 'bootstrap/form.html' import render_form %}
+            {{ render_form(form) }}
+            ''', form=form)
+
+        @self.app.route('/multi')
+        def multi():
+            form = SingleUploadForm()
+            return render_template_string('''
+            {% from 'bootstrap/form.html' import render_form %}
+            {{ render_form(form) }}
+            ''', form=form)
+
+        response = self.client.get('/single')
+        data = response.get_data(as_text=True)
+        self.assertIn('multipart/form-data', data)
+
+        response = self.client.get('/multi')
+        data = response.get_data(as_text=True)
+        self.assertIn('multipart/form-data', data)
