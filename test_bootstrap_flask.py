@@ -2,7 +2,7 @@ import unittest
 
 from flask import Flask, render_template_string, current_app, request, flash
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, BooleanField, PasswordField
+from wtforms import StringField, SubmitField, BooleanField, PasswordField, FileField, MultipleFileField
 from wtforms.validators import DataRequired, Length
 
 from flask_bootstrap import Bootstrap
@@ -98,8 +98,8 @@ class BootstrapTestCase(unittest.TestCase):
 
         response = self.client.get('/field')
         data = response.get_data(as_text=True)
-        self.assertIn('<input class="form-control" id="username" name="username"', data)
-        self.assertIn('<input class="form-control" id="password" name="password"', data)
+        self.assertIn('<input class="form-control " id="username" name="username"', data)
+        self.assertIn('<input class="form-control " id="password" name="password"', data)
 
     def test_render_form(self):
         @self.app.route('/form')
@@ -112,8 +112,8 @@ class BootstrapTestCase(unittest.TestCase):
 
         response = self.client.get('/form')
         data = response.get_data(as_text=True)
-        self.assertIn('<input class="form-control" id="username" name="username"', data)
-        self.assertIn('<input class="form-control" id="password" name="password"', data)
+        self.assertIn('<input class="form-control " id="username" name="username"', data)
+        self.assertIn('<input class="form-control " id="password" name="password"', data)
 
     def test_render_form_row(self):
         @self.app.route('/form')
@@ -328,3 +328,73 @@ class BootstrapTestCase(unittest.TestCase):
         self.assertIn('alert-dismissible', data)
         self.assertIn('<button type="button" class="close" data-dismiss="alert"', data)
         self.assertIn('fade show', data)
+
+    # test WTForm fields for render_form and render_field
+    def test_render_form_enctype(self):
+        class SingleUploadForm(FlaskForm):
+            avatar = FileField('Avatar')
+
+        class MultiUploadForm(FlaskForm):
+            photos = MultipleFileField('Multiple photos')
+
+        @self.app.route('/single')
+        def single():
+            form = SingleUploadForm()
+            return render_template_string('''
+            {% from 'bootstrap/form.html' import render_form %}
+            {{ render_form(form) }}
+            ''', form=form)
+
+        @self.app.route('/multi')
+        def multi():
+            form = SingleUploadForm()
+            return render_template_string('''
+            {% from 'bootstrap/form.html' import render_form %}
+            {{ render_form(form) }}
+            ''', form=form)
+
+        response = self.client.get('/single')
+        data = response.get_data(as_text=True)
+        self.assertIn('multipart/form-data', data)
+
+        response = self.client.get('/multi')
+        data = response.get_data(as_text=True)
+        self.assertIn('multipart/form-data', data)
+
+
+    # test render_kw class for WTForms field
+    def test_form_render_kw_class(self):
+        class TestForm(FlaskForm):
+            submit = SubmitField(render_kw={'class': 'my-awesome-class'})
+
+        @self.app.route('/render_kw')
+        def render_kw():
+            form = TestForm()
+            return render_template_string('''
+            {% from 'bootstrap/form.html' import render_form %}
+            {{ render_form(form) }}
+            ''', form=form)
+
+        response = self.client.get('/render_kw')
+        data = response.get_data(as_text=True)
+        self.assertIn('my-awesome-class', data)
+        self.assertIn('btn', data)
+
+
+    # test WTForm field description for BooleanField
+    def test_form_description_for_booleanfield(self):
+        class TestForm(FlaskForm):
+            remember = BooleanField('Remember me', description='Just check this')
+
+        @self.app.route('/description')
+        def description():
+            form = TestForm()
+            return render_template_string('''
+            {% from 'bootstrap/form.html' import render_form %}
+            {{ render_form(form) }}
+            ''', form=form)
+
+        response = self.client.get('/description')
+        data = response.get_data(as_text=True)
+        self.assertIn('Remember me', data)
+        self.assertIn('<small class="form-text text-muted">Just check this</small>', data)
