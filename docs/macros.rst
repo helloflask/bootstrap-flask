@@ -88,7 +88,7 @@ Example
 API
 ~~~~
 
-.. py:function:: render_field(field, form_type="basic", horizontal_columns=('lg', 2, 10), button_map={})
+.. py:function:: render_field(field, form_type="basic", horizontal_columns=('lg', 2, 10), button_style="", button_size="", button_map={})
 
     Render a single form field.
 
@@ -98,11 +98,14 @@ API
     :param horizontal_columns: When using the horizontal layout, layout forms
                               like this. Must be a 3-tuple of ``(column-type,
                               left-column-size, right-column-size)``.
-    :param button_map: A dictionary, mapping button field names to Bootstrap category names such as
-                      ``primary``, ``danger`` or ``success``. Buttons not found
-                      in the ``button_map`` will use the ``secondary`` type of
-                      button.
+    :param button_style: Accpet Bootstrap button style name (i.e. priamry, secondary, outline-success, etc.),
+                    default to ``secondary`` (e.g. ``btn-secondary``). This will overwrite config ``BOOTSTRAP_BTN_STYLE``.
+    :param button_size: Accept Bootstrap button size name: sm, md, lg, block, default to ``md``. This will 
+                    overwrite config ``BOOTSTRAP_BTN_SIZE``.
+    :param button_map: A dictionary, mapping button field name to Bootstrap button style names. For example, 
+                      ``{'submit': 'success'}``. This will overwrite ``button_style`` and ``BOOTSTRAP_BTN_STYLE``.
 
+.. tip:: See :ref:`button_customizatoin` to learn how to customize form buttons.
 
 render_form()
 ---------------
@@ -128,6 +131,8 @@ API
                     form_type="basic",\
                     horizontal_columns=('lg', 2, 10),\
                     enctype=None,\
+                    button_style="",\
+                    button_size="",\
                     button_map={},\
                     id="",\
                     novalidate=False,\
@@ -148,10 +153,12 @@ API
     :param enctype: ``<form>`` enctype attribute. If ``None``, will
                     automatically be set to ``multipart/form-data`` if a
                     :class:`~wtforms.fields.FileField` is present in the form.
-    :param button_map: A dictionary, mapping button field names to names such as
-                      ``primary``, ``danger`` or ``success``. For example, 
-                      ``{'submit': 'success'}``. Buttons not found in the
-                      ``button_map`` will use the ``default`` type of button.
+    :param button_style: Accpet Bootstrap button style name (i.e. priamry, secondary, outline-success, etc.),
+                    default to ``secondary`` (e.g. ``btn-secondary``). This will overwrite config ``BOOTSTRAP_BTN_STYLE``.
+    :param button_size: Accept Bootstrap button size name: sm, md, lg, block, default to ``md``. This will 
+                    overwrite config ``BOOTSTRAP_BTN_SIZE``.
+    :param button_map: A dictionary, mapping button field name to Bootstrap button style names. For example, 
+                      ``{'submit': 'success'}``. This will overwrite ``button_style`` and ``BOOTSTRAP_BTN_STYLE``.
     :param id: The ``<form>`` id attribute.
     :param novalidate: Flag that decide whether add ``novalidate`` class in ``<form>``.
     :param render_kw: A dictionary, specifying custom attributes for the
@@ -167,10 +174,12 @@ API
     :param hiddens: If ``True``, render errors of hidden fields as well. If
                    ``'only'``, render *only* these.
 
+.. tip:: See :ref:`button_customizatoin` to learn how to customize form buttons.
+
 render_form_row()
 ------------------
 
-Render a row of a grid form
+Render a row of a grid form.
 
 Example
 ~~~~~~~~
@@ -184,6 +193,10 @@ Example
         {{ render_form_row([form.username, form.password]) }}
         {{ render_form_row([form.remember]) }}
         {{ render_form_row([form.submit]) }}
+        {# Custom col which should use class col-md-2, and the others the defaults: #}
+        {{ render_form_row([form.title, form.first_name, form.surname], col_map={'title': 'col-md-2'}) }}
+        {# Custom col which should use class col-md-2 and modified col class for the default of the other fields: #}
+        {{ render_form_row([form.title, form.first_name, form.surname], col_class_default='col-md-5', col_map={'title': 'col-md-2'}) }}
     </form>
 
 API
@@ -192,10 +205,12 @@ API
 .. py:function:: render_form_row(fields,\
                                  row_class='form-row',\
                                  col_class_default='col',\
-                                 col_map={},
+                                 col_map={},\
+                                 button_style="",\
+                                 button_size="",\
                                  button_map={})
 
-    Render a bootstrap row with the given fields
+    Render a bootstrap row with the given fields.
 
     :param fields: An iterable of fields to render in a row.
     :param row_class: Class to apply to the div intended to represent the row, like ``form-row`` 
@@ -204,17 +219,19 @@ API
                                 if nothing more specific is said for the div column of the rendered field.
     :param col_map: A dictionary, mapping field.name to a class definition that should be applied to 
                             the div column that contains the field. For example: ``col_map={'username': 'col-md-2'})``
-    :param button_map: A dictionary, mapping button field names to Bootstrap category names such as
-                      ``primary``, ``danger`` or ``success``. Buttons not found
-                      in the ``button_map`` will use the ``secondary`` type of
-                      button.
-                            
+    :param button_style: Accpet Bootstrap button style name (i.e. priamry, secondary, outline-success, etc.),
+                    default to ``secondary`` (e.g. ``btn-secondary``). This will overwrite config ``BOOTSTRAP_BTN_STYLE``.
+    :param button_size: Accept Bootstrap button size name: sm, md, lg, block, default to ``md``. This will 
+                    overwrite config ``BOOTSTRAP_BTN_SIZE``.
+    :param button_map: A dictionary, mapping button field name to Bootstrap button style names. For example, 
+                      ``{'submit': 'success'}``. This will overwrite ``button_style`` and ``BOOTSTRAP_BTN_STYLE``.                      
 
+.. tip:: See :ref:`button_customizatoin` to learn how to customize form buttons.
 
 render_pager()
 -----------------
 
-Render a pagination object create by Flask-SQLAlchemy
+Render a pagination object create by Flask-SQLAlchemy.
 
 Example
 ~~~~~~~~

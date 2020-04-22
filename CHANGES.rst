@@ -7,6 +7,8 @@ Changelog
 - Fix ``enctype`` attribute setting for WTForms ``MultipleFileField`` (`Flask-Bootstrap #198<https://github.com/mbr/flask-bootstrap/issues/198>`__).
 - Fix WTForms field class append bug when using ``render_kw={'class': 'my-class'}`` (`#53 <https://github.com/greyli/bootstrap-flask/issues/53>`__).
 - Fix WTForms field description not showing for ``BooleanField`` (`Flask-Bootstrap #197<https://github.com/mbr/flask-bootstrap/issues/197>`__).
+- Add configuration variable ``BOOTSTRAP_BTN_STYLE``(default to ``primary``) and ``BOOTSTRAP_BTN_SIZE``(default to ``md``) to set default form button style and size globally.
+- Add parameter ``button_style`` and ``button_map`` for ``render_form`` and ``render_field`` to set button style and size.
 
 1.2.0
 ------
