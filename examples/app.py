@@ -2,7 +2,8 @@
 from flask import Flask, render_template, request, flash, Markup
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, BooleanField, PasswordField, IntegerField, TextField, FormField, SelectField, FieldList
+from wtforms import StringField, SubmitField, BooleanField, PasswordField, IntegerField, TextField,\
+    FormField, SelectField, FieldList
 from wtforms.validators import DataRequired, Length
 
 from flask_bootstrap import Bootstrap
@@ -14,7 +15,7 @@ app.secret_key = 'dev'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
 
-# set default button sytle and size, will be overwritten by macro args
+# set default button sytle and size, will be overwritten by macro parameters
 app.config['BOOTSTRAP_BTN_STYLE'] = 'primary'
 app.config['BOOTSTRAP_BTN_SIZE'] = 'sm'
 
@@ -29,10 +30,17 @@ class HelloForm(FlaskForm):
     submit = SubmitField()
 
 
+class ButtonForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
+    submit = SubmitField()
+    delete = SubmitField()
+    cancel = SubmitField()
+
+
 class TelephoneForm(FlaskForm):
     country_code = IntegerField('Country Code')
-    area_code    = IntegerField('Area Code/Exchange')
-    number       = TextField('Number')
+    area_code = IntegerField('Area Code/Exchange')
+    number = TextField('Number')
 
 
 class IMForm(FlaskForm):
@@ -41,8 +49,8 @@ class IMForm(FlaskForm):
 
 
 class ContactForm(FlaskForm):
-    first_name   = TextField()
-    last_name    = TextField()
+    first_name = TextField()
+    last_name = TextField()
     mobile_phone = FormField(TelephoneForm)
     office_phone = FormField(TelephoneForm)
     emails = FieldList(TextField("Email"), min_entries=3)
@@ -53,7 +61,7 @@ class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
     return render_template('index.html')
 
@@ -61,7 +69,7 @@ def index():
 @app.route('/form', methods=['GET', 'POST'])
 def test_form():
     form = HelloForm()
-    return render_template('form.html', form=form, telephone_form=TelephoneForm(), contact_form=ContactForm(), im_form=IMForm())
+    return render_template('form.html', form=form, telephone_form=TelephoneForm(), contact_form=ContactForm(), im_form=IMForm(), button_form=ButtonForm())
 
 
 @app.route('/nav', methods=['GET', 'POST'])
@@ -86,6 +94,7 @@ def test_pagination():
 @app.route('/static', methods=['GET', 'POST'])
 def test_static():
     return render_template('static.html')
+
 
 @app.route('/flash', methods=['GET', 'POST'])
 def test_flash():
