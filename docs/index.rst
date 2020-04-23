@@ -1,9 +1,7 @@
 Bootstrap-Flask
 ===============
 
-`Bootstrap <https://getbootstrap.com>`_ 4 helper for Flask/Jinja2. Based on
-`Flask-Bootstrap <https://github.com/mbr/flask-bootstrap>`__, but
-lighter and better.
+`Bootstrap <https://getbootstrap.com>`_ 4 helper for Flask/Jinja2.
 
 Contents
 ---------
@@ -13,6 +11,7 @@ Contents
 
    basic
    macros
+   advanced
    examples
 
 
@@ -60,3 +59,5 @@ License
 
 This project is licensed under the MIT License (see the
 ``LICENSE`` file for details).
+
+Some macros were part of [Flask-Bootstrap](https://github.com/mbr/flask-bootstrap) and were modified under the terms of its BSD License.

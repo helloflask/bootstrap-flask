@@ -45,6 +45,8 @@ class Bootstrap(object):
         app.jinja_env.add_extension('jinja2.ext.do')
         # default settings
         app.config.setdefault('BOOTSTRAP_SERVE_LOCAL', False)
+        app.config.setdefault('BOOTSTRAP_BTN_STYLE', 'secondary')
+        app.config.setdefault('BOOTSTRAP_BTN_SIZE', 'md')
 
     @staticmethod
     def load_css(version=VERSION_BOOTSTRAP):

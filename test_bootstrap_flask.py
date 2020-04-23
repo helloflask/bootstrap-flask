@@ -361,9 +361,9 @@ class BootstrapTestCase(unittest.TestCase):
         data = response.get_data(as_text=True)
         self.assertIn('multipart/form-data', data)
 
-
     # test render_kw class for WTForms field
     def test_form_render_kw_class(self):
+
         class TestForm(FlaskForm):
             submit = SubmitField(render_kw={'class': 'my-awesome-class'})
 
@@ -380,9 +380,9 @@ class BootstrapTestCase(unittest.TestCase):
         self.assertIn('my-awesome-class', data)
         self.assertIn('btn', data)
 
-
     # test WTForm field description for BooleanField
     def test_form_description_for_booleanfield(self):
+
         class TestForm(FlaskForm):
             remember = BooleanField('Remember me', description='Just check this')
 
@@ -398,3 +398,74 @@ class BootstrapTestCase(unittest.TestCase):
         data = response.get_data(as_text=True)
         self.assertIn('Remember me', data)
         self.assertIn('<small class="form-text text-muted">Just check this</small>', data)
+
+    def test_button_size(self):
+        self.assertEqual(current_app.config['BOOTSTRAP_BTN_SIZE'], 'md')
+        current_app.config['BOOTSTRAP_BTN_SIZE'] = 'lg'
+
+        @self.app.route('/form')
+        def test():
+            form = HelloForm()
+            return render_template_string('''
+            {% from 'bootstrap/form.html' import render_form %}
+            {{ render_form(form) }}
+            ''', form=form)
+
+        response = self.client.get('/form')
+        data = response.get_data(as_text=True)
+        self.assertIn('btn-lg', data)
+
+        @self.app.route('/form2')
+        def test_overwrite():
+            form = HelloForm()
+            return render_template_string('''
+            {% from 'bootstrap/form.html' import render_form %}
+            {{ render_form(form, button_size='sm') }}
+            ''', form=form)
+
+        response = self.client.get('/form2')
+        data = response.get_data(as_text=True)
+        self.assertNotIn('btn-lg', data)
+        self.assertIn('btn-sm', data)
+
+    def test_button_style(self):
+        self.assertEqual(current_app.config['BOOTSTRAP_BTN_STYLE'], 'secondary')
+        current_app.config['BOOTSTRAP_BTN_STYLE'] = 'primary'
+
+        @self.app.route('/form')
+        def test():
+            form = HelloForm()
+            return render_template_string('''
+            {% from 'bootstrap/form.html' import render_form %}
+            {{ render_form(form) }}
+            ''', form=form)
+
+        response = self.client.get('/form')
+        data = response.get_data(as_text=True)
+        self.assertIn('btn-primary', data)
+
+        @self.app.route('/form2')
+        def test_overwrite():
+            form = HelloForm()
+            return render_template_string('''
+            {% from 'bootstrap/form.html' import render_form %}
+            {{ render_form(form, button_style='success') }}
+            ''', form=form)
+
+        response = self.client.get('/form2')
+        data = response.get_data(as_text=True)
+        self.assertNotIn('btn-primary', data)
+        self.assertIn('btn-success', data)
+
+        @self.app.route('/form3')
+        def test_button_map():
+            form = HelloForm()
+            return render_template_string('''
+            {% from 'bootstrap/form.html' import render_form %}
+            {{ render_form(form, button_map={'submit': 'warning'}) }}
+            ''', form=form)
+
+        response = self.client.get('/form3')
+        data = response.get_data(as_text=True)
+        self.assertNotIn('btn-primary', data)
+        self.assertIn('btn-warning', data)

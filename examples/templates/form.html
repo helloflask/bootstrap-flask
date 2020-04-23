@@ -2,13 +2,22 @@
 {% from 'bootstrap/form.html' import render_form, render_field, render_form_row %}
 
 {% block content %}
+
     <h1>render_form</h1>
     {{ render_form(form) }}
+
+    <h1>custom buttons: button_style + button_size</h1>
+    <p>{% raw %}{{ render_form(form, button_style='success', button_size='block') }}{% endraw %}</p>
+    {{ render_form(form, button_style='success', button_size='block') }}
+
+    <h1>custom buttons: button_map</h1>
+    <p>{% raw %}{{ render_form(button_form, button_map={'submit': 'primary', 'cancel': 'secondary', 'delete': 'danger'}) }}{% endraw %}</p>
+    {{ render_form(button_form, button_map={'submit': 'primary', 'cancel': 'secondary', 'delete': 'danger'}) }}
 
     <h1>render_field</h1>
     <form method="post">
     {{ form.csrf_token }}
-    {{ render_field(form.username) }}
+    {{ render_field(form.username, placeholder='test ofrm me') }}
     {{ render_field(form.password) }}
     {{ render_field(form.remember) }}
     {{ render_field(form.submit) }}
