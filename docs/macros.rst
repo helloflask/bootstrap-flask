@@ -152,7 +152,7 @@ API
                               left-column-size, right-column-size)``.
     :param enctype: ``<form>`` enctype attribute. If ``None``, will
                     automatically be set to ``multipart/form-data`` if a
-                    :class:`~wtforms.fields.FileField` is present in the form.
+                    :class:`~wtforms.fields.FileField` or :class:`~wtforms.fields.MultipleFileField` is present in the form.
     :param button_style: Accpet Bootstrap button style name (i.e. priamry, secondary, outline-success, etc.),
                     default to ``secondary`` (e.g. ``btn-secondary``). This will overwrite config ``BOOTSTRAP_BTN_STYLE``.
     :param button_size: Accept Bootstrap button size name: sm, md, lg, block, default to ``md``. This will 
