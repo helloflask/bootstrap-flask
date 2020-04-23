@@ -4,6 +4,8 @@ Changelog
 1.3.0
 ------
 
+Release date: 2020/4/23
+
 - Fix ``enctype`` attribute setting for WTForms ``MultipleFileField`` (`Flask-Bootstrap #198<https://github.com/mbr/flask-bootstrap/issues/198>`__).
 - Fix WTForms field class append bug when using ``render_kw={'class': 'my-class'}`` (`#53 <https://github.com/greyli/bootstrap-flask/issues/53>`__).
 - Fix WTForms field description not showing for ``BooleanField`` (`Flask-Bootstrap #197<https://github.com/mbr/flask-bootstrap/issues/197>`__).
