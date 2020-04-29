@@ -6,7 +6,8 @@ Changelog
 
 Release data: 2020/4/29
 
-- Fix extra space in class attribute when no ``field.render_kw.class`` presents (`#63 <https://github.com/greyli/bootstrap-flask/issues/63>`__).
+- Fix add ``field.render_kw.class`` to form label class attribute.
+- Fix append extra space in class attribute when no ``field.render_kw.class`` presents (`#63 <https://github.com/greyli/bootstrap-flask/issues/63>`__).
 
 1.3.0
 ------
