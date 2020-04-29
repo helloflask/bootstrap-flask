@@ -43,11 +43,13 @@ the necessary fix for required=False attributes, but will also not set the requi
         {% set kwargs = dict(required=True, **kwargs) %}
     {% endif %}
 
+    {% set extra_classes = ' ' + field.render_kw.class if field.render_kw.class else '' %}
+
     {% if field.widget.input_type == 'checkbox' %}
         {% call _hz_form_wrap(horizontal_columns, form_type, True, required=required) %}
             <div class="form-group form-check{% if form_type == "inline" %} form-check-inline{% endif %}">
                 <label class="form-check-label">
-                    {{ field(class_="form-check-input %s" % field.render_kw.class)|safe }} {{ field.label.text|safe }}
+                    {{ field(class_="form-check-input%s" % extra_classes)|safe }} {{ field.label.text|safe }}
                 </label>
                 {%- if field.description -%}
                     {% call _hz_form_wrap(horizontal_columns, form_type, required=required) %}
@@ -61,12 +63,12 @@ the necessary fix for required=False attributes, but will also not set the requi
      this is just a hack for now, until I can think of something better #}
         <div class="form-group {% if form_type == 'horizontal' %}row{% endif %}{% if required %} required{% endif %}">
             {%- if form_type == "inline" %}
-                {{ field.label(class="sr-only %s" % field.render_kw.class)|safe }}
+                {{ field.label(class="sr-only")|safe }}
             {% elif form_type == "horizontal" %}
                 {{ field.label(class="form-control-label " + (
-                " col-%s-%s %s" % (horizontal_columns[0:2], field.render_kw.class)))|safe }}
+                " col-%s-%s" % horizontal_columns[0:2]))|safe }}
             {%- else -%}
-                {{ field.label(class="form-control-label %s" % field.render_kw.class)|safe }}
+                {{ field.label(class="form-control-label")|safe }}
             {% endif %}
             {% if form_type == 'horizontal' %}
               <div class=" col-{{ horizontal_columns[0] }}-{{ horizontal_columns[2] }}">
@@ -91,7 +93,7 @@ the necessary fix for required=False attributes, but will also not set the requi
         {% call _hz_form_wrap(horizontal_columns, form_type, True, required=required) %}
             {% set default_button_style = button_style or config.BOOTSTRAP_BTN_STYLE %}
             {% set default_button_size = button_size or config.BOOTSTRAP_BTN_SIZE %}
-            {{ field(class='btn btn-%s btn-%s %s' % (button_map.get(field.name, default_button_style), default_button_size, field.render_kw.class), **field_kwargs) }}
+            {{ field(class='btn btn-%s btn-%s%s' % (button_map.get(field.name, default_button_style), default_button_size, extra_classes), **field_kwargs) }}
         {% endcall %}
     {%- elif field.type in ['FormField', 'FieldList'] -%}
         {# note: FormFields are tricky to get right and complex setups requiring
@@ -116,15 +118,15 @@ the necessary fix for required=False attributes, but will also not set the requi
                 {{ field.label(class="sr-only")|safe }}
                 {% if field.type == 'FileField' %}
                     {% if field.errors %}
-                        {{ field(class="form-control-file is-invalid %s" % field.render_kw.class, **kwargs)|safe }}
+                        {{ field(class="form-control-file is-invalid%s" % extra_classes, **kwargs)|safe }}
                     {% else %}
-                        {{ field(class="form-control-file %s" % field.render_kw.class, **kwargs)|safe }}
+                        {{ field(class="form-control-file%s" % extra_classes, **kwargs)|safe }}
                     {% endif %}
                 {% else %}
                     {% if field.errors %}
-                        {{ field(class="form-control mb-2 mr-sm-2 mb-sm-0 is-invalid %s" % field.render_kw.class, **kwargs)|safe }}
+                        {{ field(class="form-control mb-2 mr-sm-2 mb-sm-0 is-invalid%s" % extra_classes, **kwargs)|safe }}
                     {% else %}
-                        {{ field(class="form-control mb-2 mr-sm-2 mb-sm-0 %s" % field.render_kw.class, **kwargs)|safe }}
+                        {{ field(class="form-control mb-2 mr-sm-2 mb-sm-0%s" % extra_classes, **kwargs)|safe }}
                     {% endif %}
                 {% endif %}
             {% elif form_type == "horizontal" %}
@@ -132,15 +134,15 @@ the necessary fix for required=False attributes, but will also not set the requi
                 <div class=" col-{{ horizontal_columns[0] }}-{{ horizontal_columns[2] }}">
                     {% if field.type == 'FileField' %}
                         {% if field.errors %}
-                            {{ field(class="form-control-file is-invalid %s" % field.render_kw.class, **kwargs)|safe }}
+                            {{ field(class="form-control-file is-invalid%s" % extra_classes, **kwargs)|safe }}
                         {% else %}
-                            {{ field(class="form-control-file %s" % field.render_kw.class, **kwargs)|safe }}
+                            {{ field(class="form-control-file%s" % extra_classes, **kwargs)|safe }}
                         {% endif %}
                     {% else %}
                         {% if field.errors %}
-                            {{ field(class="form-control is-invalid %s" % field.render_kw.class, **kwargs)|safe }}
+                            {{ field(class="form-control is-invalid%s" % extra_classes, **kwargs)|safe }}
                         {% else %}
-                            {{ field(class="form-control %s" % field.render_kw.class, **kwargs)|safe }}
+                            {{ field(class="form-control%s" % extra_classes, **kwargs)|safe }}
                         {% endif %}
                     {% endif %}
                 </div>
@@ -159,15 +161,15 @@ the necessary fix for required=False attributes, but will also not set the requi
                 {{ field.label(class="form-control-label")|safe }}
                 {% if field.type == 'FileField' %}
                     {% if field.errors %}
-                        {{ field(class="form-control-file is-invalid %s" % field.render_kw.class, **kwargs)|safe }}
+                        {{ field(class="form-control-file is-invalid%s" % extra_classes, **kwargs)|safe }}
                     {% else %}
-                        {{ field(class="form-control-file %s" % field.render_kw.class, **kwargs)|safe }}
+                        {{ field(class="form-control-file%s" % extra_classes, **kwargs)|safe }}
                     {% endif %}
                 {% else %}
                     {% if field.errors %}
-                        {{ field(class="form-control is-invalid %s" % field.render_kw.class, **kwargs)|safe }}
+                        {{ field(class="form-control is-invalid%s" % extra_classes, **kwargs)|safe }}
                     {% else %}
-                        {{ field(class="form-control %s" % field.render_kw.class, **kwargs)|safe }}
+                        {{ field(class="form-control%s" % extra_classes, **kwargs)|safe }}
                     {% endif %}
                 {% endif %}
                 {%- if field.errors %}

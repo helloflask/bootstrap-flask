@@ -98,8 +98,8 @@ class BootstrapTestCase(unittest.TestCase):
 
         response = self.client.get('/field')
         data = response.get_data(as_text=True)
-        self.assertIn('<input class="form-control " id="username" name="username"', data)
-        self.assertIn('<input class="form-control " id="password" name="password"', data)
+        self.assertIn('<input class="form-control" id="username" name="username"', data)
+        self.assertIn('<input class="form-control" id="password" name="password"', data)
 
     def test_render_form(self):
         @self.app.route('/form')
@@ -112,8 +112,8 @@ class BootstrapTestCase(unittest.TestCase):
 
         response = self.client.get('/form')
         data = response.get_data(as_text=True)
-        self.assertIn('<input class="form-control " id="username" name="username"', data)
-        self.assertIn('<input class="form-control " id="password" name="password"', data)
+        self.assertIn('<input class="form-control" id="username" name="username"', data)
+        self.assertIn('<input class="form-control" id="password" name="password"', data)
 
     def test_render_form_row(self):
         @self.app.route('/form')
@@ -365,6 +365,8 @@ class BootstrapTestCase(unittest.TestCase):
     def test_form_render_kw_class(self):
 
         class TestForm(FlaskForm):
+            username = StringField('Username')
+            password = PasswordField('Password', render_kw={'class': 'my-password-class'})
             submit = SubmitField(render_kw={'class': 'my-awesome-class'})
 
         @self.app.route('/render_kw')
@@ -377,6 +379,9 @@ class BootstrapTestCase(unittest.TestCase):
 
         response = self.client.get('/render_kw')
         data = response.get_data(as_text=True)
+        self.assertIn('class="form-control"', data)
+        self.assertNotIn('class="form-control "', data)
+        self.assertIn('class="form-control my-password-class"', data)
         self.assertIn('my-awesome-class', data)
         self.assertIn('btn', data)
 
