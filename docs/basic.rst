@@ -16,6 +16,8 @@ you have to uninstall it and then reinstall this project:
     $ pip uninstall flask-bootstrap bootstrap-flask
     $ pip install bootstrap-flask
 
+.. tip:: See :doc:`migrate` to learn how to migrate from Flask-Bootstrap.
+
 Initialization
 --------------
 
