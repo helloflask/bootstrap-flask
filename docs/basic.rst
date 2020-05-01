@@ -8,6 +8,14 @@ Installation
 
     $ pip install bootstrap-flask
 
+This project can't work with Flask-Bootstrap at the same time. If you already install Flask-Bootstrap in same Python enviroment, 
+you have to uninstall it and then reinstall this project:
+
+.. code-block:: bash
+
+    $ pip uninstall flask-bootstrap bootstrap-flask
+    $ pip install bootstrap-flask
+
 Initialization
 --------------
 
@@ -51,29 +59,29 @@ For reasons of flexibility, Bootstrap-Flask doesn't include built-in base templa
 
     <!doctype html>
     <html lang="en">
-      <head>
-        {% block head %}
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        
-        {% block styles %}
-        <!-- Bootstrap CSS -->
-        {{ bootstrap.load_css() }}
-        {% endblock %}
-        
-        <title>Your page title</title>
-        {% endblock %}
-      </head>
-      <body>
-        <!-- Your page content -->
-        {% block content %}{% endblock %}
-        
-        {% block scripts %}
-        <!-- Optional JavaScript -->
-        {{ bootstrap.load_js() }}
-        {% endblock %}
-      </body>
+        <head>
+            {% block head %}
+            <!-- Required meta tags -->
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+            {% block styles %}
+                <!-- Bootstrap CSS -->
+                {{ bootstrap.load_css() }}
+            {% endblock %}
+
+            <title>Your page title</title>
+            {% endblock %}
+        </head>
+        <body>
+            <!-- Your page content -->
+            {% block content %}{% endblock %}
+
+            {% block scripts %}
+                <!-- Optional JavaScript -->
+                {{ bootstrap.load_js() }}
+            {% endblock %}
+        </body>
     </html>
 
 Use this in your templates folder (name it as ``base.html`` or ``layout.html`` etc.), and inherit it in child templates. See `Template Inheritance <http://flask.pocoo.org/docs/1.0/patterns/templateinheritance/>`_ for more details.
