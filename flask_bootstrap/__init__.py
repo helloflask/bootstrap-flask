@@ -20,7 +20,7 @@ else:
 
 # central definition of used versions
 VERSION_BOOTSTRAP = '4.3.1'
-VERSION_JQUERY = '3.3.1'
+VERSION_JQUERY = '3.4.1'
 VERSION_POPPER = '1.14.0'
 
 
