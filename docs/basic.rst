@@ -121,3 +121,18 @@ corresponding path and call them like any other macro:
     {{ render_form(form) }}
 
 Go to the :doc:`macros` page to see the detailed usage for these macros.
+
+Configurations
+---------------
+
++---------------------------+--------------------------------+-----------------------------------------------------------------------------+
+| Configuration Variable    | Default Value                  | Description                                                                 |
++===========================+================================+=============================================================================+
+| BOOTSTRAP_SERVE_LOCAL     | ``False``                      | If set to ``True``, local resources will be used for ``load_*`` methods.    |
++---------------------------+--------------------------------+-----------------------------------------------------------------------------+
+| BOOTSTRAP_BTN_STYLE       | ``'secondary'``                | Default form button style, will change to ``primary`` in next major release |
++---------------------------+--------------------------------+-----------------------------------------------------------------------------+
+| BOOTSTRAP_BTN_SIZE        | ``'md'``                       | Default form button size                                                    |
++---------------------------+--------------------------------+-----------------------------------------------------------------------------+
+
+.. tip:: See :ref:`button_customizatoin` to learn how to customize form buttons.
