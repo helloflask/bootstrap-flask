@@ -3,6 +3,9 @@
 
 {% block content %}
 
+    <h1>Example Form</h1>
+    {{ render_form(example_form) }}
+
     <h1>render_form</h1>
     {{ render_form(form) }}
 
@@ -17,7 +20,7 @@
     <h1>render_field</h1>
     <form method="post">
     {{ form.csrf_token }}
-    {{ render_field(form.username, placeholder='test ofrm me') }}
+    {{ render_field(form.username) }}
     {{ render_field(form.password) }}
     {{ render_field(form.remember) }}
     {{ render_field(form.submit) }}

@@ -5,6 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, BooleanField, PasswordField, IntegerField, TextField,\
     FormField, SelectField, FieldList
 from wtforms.validators import DataRequired, Length
+from wtforms.fields import *
 
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
@@ -21,6 +22,21 @@ app.config['BOOTSTRAP_BTN_SIZE'] = 'sm'
 
 bootstrap = Bootstrap(app)
 db = SQLAlchemy(app)
+
+
+class ExampleForm(FlaskForm):
+    """An example form that contains all the supported bootstrap style form fields."""
+    date = DateField(description="We'll never share your email with anyone else.")  # add help text with `description`
+    datetime = DateTimeField(render_kw={'placeholder': 'this is placeholder'})  # add HTML attribute with `render_kw`
+    image = FileField(render_kw={'class': 'my-class'})  # add your class
+    option = RadioField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')])
+    select = SelectField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')])
+    selectmulti = SelectMultipleField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')])
+    bio = TextAreaField()
+    title = StringField()
+    secret = PasswordField()
+    remember = BooleanField('Remember me')
+    submit = SubmitField()
 
 
 class HelloForm(FlaskForm):
@@ -69,7 +85,7 @@ def index():
 @app.route('/form', methods=['GET', 'POST'])
 def test_form():
     form = HelloForm()
-    return render_template('form.html', form=form, telephone_form=TelephoneForm(), contact_form=ContactForm(), im_form=IMForm(), button_form=ButtonForm())
+    return render_template('form.html', form=form, telephone_form=TelephoneForm(), contact_form=ContactForm(), im_form=IMForm(), button_form=ButtonForm(), example_form=ExampleForm())
 
 
 @app.route('/nav', methods=['GET', 'POST'])
