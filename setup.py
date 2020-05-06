@@ -1,20 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-    Bootstrap-Flask
-    ~~~~~~~~~~~~~~
-    :copyright: (c) 2017 by Grey Li.
-    :license: MIT, see LICENSE for more details.
+Bootstrap-Flask
+---------------
+
+[Bootstrap 4](https://getbootstrap.com) helper for Flask/Jinja2.
+
+If you come from Flask-Bootstrap, check out [this tutorial](https://bootstrap-flask.readthedocs.io/en/latest/migrate.html) on how to migrate to this extension.
+
+Go to [Github page](https://github.com/greyli/bootstrap-flask), which you
+can check for more details.
 """
-from os import path
-from codecs import open
 from setuptools import setup
-
-here = path.abspath(path.dirname(__file__))
-
-# Get the long description from the README file
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
-
 
 setup(
     name='Bootstrap-Flask',
@@ -24,7 +20,7 @@ setup(
     author='Grey Li',
     author_email='withlihui@gmail.com',
     description='Bootstrap helper for Flask/Jinja2.',
-    long_description=long_description,
+    long_description=__doc__,
     long_description_content_type='text/markdown',
     platforms='any',
     packages=['flask_bootstrap'],
