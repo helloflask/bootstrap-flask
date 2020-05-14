@@ -8,8 +8,7 @@ Installation
 
     $ pip install bootstrap-flask
 
-This project can't work with Flask-Bootstrap at the same time. If you already install Flask-Bootstrap in same Python enviroment, 
-you have to uninstall it and then reinstall this project:
+This project can't work with Flask-Bootstrap at the same time. If you have already installed Flask-Bootstrap in the same Python enviroment, you have to uninstall it and then reinstall this project:
 
 .. code-block:: bash
 
@@ -49,13 +48,13 @@ Call it in your base template, for example:
     {{ bootstrap.load_js() }}
     </body>
 
-You can pass ``version`` to pin the Bootstrap 4 version you want to use. Default to load files from CDN, set ``BOOTSTRAP_SERVE_LOCAL``
-to ``True`` to use built-in local files. However, it's recommended to manage Bootstrap resources by yourself.
+You can pass ``version`` to pin the Bootstrap 4 version you want to use. It defaults to load files from CDN. Set ``BOOTSTRAP_SERVE_LOCAL``
+to ``True`` to use built-in local files. However, it's recommended to let Bootstrap manage its resources by itself.
 
 Starter template
 -----------------
 
-For reasons of flexibility, Bootstrap-Flask doesn't include built-in base templates (this may change in the future). For now,  you must create it yourself. Be sure to use an HTML5 doctype and include a viewport meta tag for proper responsive behaviors. Here's an example base template:
+For reasons of flexibility, Bootstrap-Flask doesn't include built-in base templates (this may change in the future). For now,  you have to create a base template yourself. Be sure to use an HTML5 doctype and include a viewport meta tag for proper responsive behaviors. Here's an example base template:
 
 .. code-block:: html
 
@@ -86,7 +85,7 @@ For reasons of flexibility, Bootstrap-Flask doesn't include built-in base templa
         </body>
     </html>
 
-Use this in your templates folder (name it as ``base.html`` or ``layout.html`` etc.), and inherit it in child templates. See `Template Inheritance <http://flask.pocoo.org/docs/1.0/patterns/templateinheritance/>`_ for more details.
+Use this in your templates folder (suggested names are ``base.html`` or ``layout.html`` etc.), and inherit it in child templates. See `Template Inheritance <http://flask.pocoo.org/docs/1.0/patterns/templateinheritance/>`_ for more details on inheritance.
 
 Macros
 ------
