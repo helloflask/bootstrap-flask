@@ -1,36 +1,36 @@
 Migrate from Flask-Bootstrap
 =============================
 
-If you come from Flask-Bootstrap, looking for an alternative that support Bootstrap 4, well, then you
+If you come from Flask-Bootstrap, looking for an alternative that supports Bootstrap 4, well, then you
 are in the right palce.
 
-Bootstrap-Flask was origined as a fork of Flask-Bootstrap, but some APIs was changed, deleted and improved,
-some bugs was fixed, on top of all that, some new macros was added. This tutorial will go through all the 
-work you have to do for the migration.
+Bootstrap-Flask was origined as a fork of Flask-Bootstrap, but some APIs were changed, deleted and improved,
+some bugs were fixed, and on top of all that, some new macros were added. This tutorial will go through all the 
+steps to migrate from Flask-Bootstrap.
 
 Uninstall and Install
 ----------------------
-Flask-Bootstrap and Bootstrap-Flask can't live together, so you have to unisntall
-Flask-Bootstrap first, then install Bootstra-Flask:
+Flask-Bootstrap and Bootstrap-Flask can't live together, so you have to uninstall
+Flask-Bootstrap first and then install Bootstra-Flask:
 
 .. code-block:: bash
 
     $ pip uninstall flask-bootstrap
     $ pip install bootstap-flask
 
-if you accidently installed both of them, you will need to uninstall them first:
+if you accidently installed both of them, you will need to uninstall them both first:
 
 .. code-block:: bash
 
     $ pip uninstall flask-bootstrap bootstrap-flask
     $ pip install bootstap-flask
 
-if you want to use both Flask-Bootstrap and Bootstrap-Flask for different project, you can use virtual envrioment.
+If you want to use both Flask-Bootstrap and Bootstrap-Flask for different projects, you can use virtual enviroment.
 
-Initilize the Extension
+Initialize the Extension
 ------------------------
 
-The initilization of this extension is the same with Flask-Bootstrap, the package name still be ``flask_boostrap``,
+The initialization of this extension is the same as with Flask-Bootstrap. The package's name is still ``flask_bootstrap``,
 in order to follow the rule of Flask extension development and easy the pain of migration.
 
 .. code-block:: python
@@ -45,8 +45,8 @@ in order to follow the rule of Flask extension development and easy the pain of 
 Create Base Template
 ---------------------
 
-In Flask-Bootstrap, there is a built-in base template called ``bootstrap/base.html``. Now you have to create it
-by yourself, here is a starter example for you:
+In Flask-Bootstrap, there is a built-in base template called ``bootstrap/base.html``. This extension does not provide one. You have to create it
+by yourself; an example starter is given here:
 
 .. code-block:: html
 
@@ -77,14 +77,13 @@ by yourself, here is a starter example for you:
         </body>
     </html>
 
-Just create a file called ``base.html`` inside your ``templates`` folder, copy the content above into it. There
-are two resource hepler method used in the example template above (i.e. ``bootstrap.load_css()`` and ``bootstrap.load_js()``).
-They will generate ``<href></href>`` and ``<script></script>`` codes to include Bootstrap's CSS and JavaScript files. Default
-to load the resources from CDN (provide by jsDelivr), if you set configuration variable ``BOOTSTRAP_SERVE_LOCAL`` to ``True``,
-then the local resources inside the package folder will be used.
+Just create a file called ``base.html`` inside your ``templates`` folder, copy the contents above into it. There
+are two resource helper methods used in the example template above (i.e. ``bootstrap.load_css()`` and ``bootstrap.load_js()``).
+They will generate ``<href></href>`` and ``<script></script>`` codes to include Bootstrap's CSS and JavaScript files. These default
+to load the resources from CDN (provide by jsDelivr). If you set the configuration variable ``BOOTSTRAP_SERVE_LOCAL`` to ``True`` the local resources inside the package folder will be used instead.
 
-It's optional to use these resources methods, you can write these codes by yourself to load Boostrap resoures in your application's
-staic folder, or from a different CDN provider that you want to use.
+It's optional to use these resources methods, you can write the codes by yourself to load Boostrap resources in your application's
+static folder, or from a different CDN provider that you want to use.
 
 Change Template and Macro Name
 -------------------------------
@@ -115,7 +114,7 @@ to:
 
     {% from 'bootstrap/form.html' import render_form, render_field %}
 
-The macros below was removed (or not supported yet):
+The macros below were removed (or not supported yet):
 
 - ie8()
 - icon()

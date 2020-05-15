@@ -105,7 +105,7 @@ API
     :param button_map: A dictionary, mapping button field name to Bootstrap button style names. For example, 
                       ``{'submit': 'success'}``. This will overwrite ``button_style`` and ``BOOTSTRAP_BTN_STYLE``.
 
-.. tip:: See :ref:`button_customizatoin` to learn how to customize form buttons.
+.. tip:: See :ref:`button_customization` to learn how to customize form buttons.
 
 render_form()
 ---------------
