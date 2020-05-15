@@ -49,7 +49,8 @@ Call it in your base template, for example:
     </body>
 
 You can pass ``version`` to pin the Bootstrap 4 version you want to use. It defaults to load files from CDN. Set ``BOOTSTRAP_SERVE_LOCAL``
-to ``True`` to use built-in local files. However, it's recommended to let Bootstrap manage its resources by itself.
+to ``True`` to use built-in local files. However, these methods are optional, you can also write ``<href></href>``
+and ``<script></script>`` tags to include Bootstrap resources (from your ``static`` folder or CDN) manually by yourself.
 
 Starter template
 -----------------
