@@ -23,7 +23,7 @@ if you accidently installed both of them, you will need to uninstall them both f
 .. code-block:: bash
 
     $ pip uninstall flask-bootstrap bootstrap-flask
-    $ pip install bootstap-flask
+    $ pip install bootstrap-flask
 
 If you want to use both Flask-Bootstrap and Bootstrap-Flask for different projects, you can use virtual enviroment.
 
