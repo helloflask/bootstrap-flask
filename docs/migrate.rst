@@ -16,7 +16,7 @@ Flask-Bootstrap first and then install Bootstra-Flask:
 .. code-block:: bash
 
     $ pip uninstall flask-bootstrap
-    $ pip install bootstap-flask
+    $ pip install bootstrap-flask
 
 if you accidently installed both of them, you will need to uninstall them both first:
 
