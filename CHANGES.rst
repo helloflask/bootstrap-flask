@@ -4,6 +4,8 @@ Changelog
 1.3.2
 ------
 
+Release data: 2020/5/30
+
 - Support display error message for ``RadioField`` and ``BooleanField``, display description for ``RadioField``.
 
 

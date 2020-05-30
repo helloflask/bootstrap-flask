@@ -478,8 +478,8 @@ class BootstrapTestCase(unittest.TestCase):
     def test_error_message_for_radiofield_and_booleanfield(self):
         class TestForm(FlaskForm):
             remember = BooleanField('Remember me', validators=[DataRequired()])
-            option = RadioField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')], validators=[DataRequired()])
-    
+            option = RadioField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')],
+                                validators=[DataRequired()])
 
         @self.app.route('/error', methods=['GET', 'POST'])
         def error():
