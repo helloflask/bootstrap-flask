@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+1.3.2
+------
+
+- Support display error message for ``RadioField`` and ``BooleanField``, display description for ``RadioField``.
+
+
 1.3.1
 ------
 

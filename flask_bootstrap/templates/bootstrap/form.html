@@ -48,10 +48,14 @@ the necessary fix for required=False attributes, but will also not set the requi
     {% if field.widget.input_type == 'checkbox' %}
         {% call _hz_form_wrap(horizontal_columns, form_type, True, required=required) %}
             <div class="form-group form-check{% if form_type == "inline" %} form-check-inline{% endif %}">
+                {{ field(class_="form-check-input is-invalid%s" % extra_classes)|safe }} {{ field.label.text|safe }}
                 <label class="form-check-label">
-                    {{ field(class_="form-check-input%s" % extra_classes)|safe }} {{ field.label.text|safe }}
                 </label>
-                {%- if field.description -%}
+                {%- if field.errors %}
+                    {%- for error in field.errors %}
+                        <div class="invalid-feedback" style="display: block;">{{ error }}</div>
+                    {%- endfor %}
+                {%- elif field.description -%}
                     {% call _hz_form_wrap(horizontal_columns, form_type, required=required) %}
                         <small class="form-text text-muted">{{ field.description|safe }}</small>
                     {% endcall %}
@@ -84,7 +88,14 @@ the necessary fix for required=False attributes, but will also not set the requi
         {#% endcall %#}
         {% if form_type == 'horizontal' %}
           </div>
-          {% endif %}
+        {% endif %}
+        {%- if field.errors %}
+            {%- for error in field.errors %}
+                <div class="invalid-feedback" style="display: block;">{{ error }}</div>
+            {%- endfor %}
+        {%- elif field.description -%}
+            <small class="form-text text-muted">{{ field.description|safe }}</small>
+        {%- endif %} 
         </div>
     {%- elif field.type == 'SubmitField' -%}
         {# deal with jinja scoping issues? #}

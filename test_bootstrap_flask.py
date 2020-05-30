@@ -2,7 +2,7 @@ import unittest
 
 from flask import Flask, render_template_string, current_app, request, flash
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, BooleanField, PasswordField, FileField, MultipleFileField
+from wtforms import StringField, SubmitField, BooleanField, PasswordField, FileField, MultipleFileField, RadioField
 from wtforms.validators import DataRequired, Length
 
 from flask_bootstrap import Bootstrap
@@ -474,3 +474,24 @@ class BootstrapTestCase(unittest.TestCase):
         data = response.get_data(as_text=True)
         self.assertNotIn('btn-primary', data)
         self.assertIn('btn-warning', data)
+
+    def test_error_message_for_radiofield_and_booleanfield(self):
+        class TestForm(FlaskForm):
+            remember = BooleanField('Remember me', validators=[DataRequired()])
+            option = RadioField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')], validators=[DataRequired()])
+    
+
+        @self.app.route('/error', methods=['GET', 'POST'])
+        def error():
+            form = TestForm()
+            if form.validate_on_submit():
+                pass
+            return render_template_string('''
+            {% from 'bootstrap/form.html' import render_form %}
+            {{ render_form(form) }}
+            ''', form=form)
+
+        response = self.client.post('/error', follow_redirects=True)
+        data = response.get_data(as_text=True)
+        self.assertIn('This field is required', data)
+        self.assertIn('Not a valid choice', data)
