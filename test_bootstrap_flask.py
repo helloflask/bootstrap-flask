@@ -549,7 +549,8 @@ class BootstrapTestCase(unittest.TestCase):
             titles = [('id', '#'), ('text', 'Message')]
             return render_template_string('''
                                     {% from 'bootstrap/table.html' import render_table %}
-                                    {{ render_table(titles, messages, table_classes='table-striped', header_classes='thead-dark', caption='Messages') }}
+                                    {{ render_table(titles, messages, table_classes='table-striped',
+                                    header_classes='thead-dark', caption='Messages') }}
                                     ''', titles=titles, messages=messages)
 
         response = self.client.get('/table')
@@ -579,7 +580,8 @@ class BootstrapTestCase(unittest.TestCase):
             titles = [('id', '#'), ('text', 'Message')]
             return render_template_string('''
                                     {% from 'bootstrap/table.html' import render_table %}
-                                    {{ render_table(titles, messages, is_responsive=True, responsive_class='table-responsive-sm') }}
+                                    {{ render_table(titles, messages, is_responsive=True,
+                                    responsive_class='table-responsive-sm') }}
                                     ''', titles=titles, messages=messages)
 
         response = self.client.get('/table')
