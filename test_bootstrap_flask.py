@@ -495,3 +495,94 @@ class BootstrapTestCase(unittest.TestCase):
         data = response.get_data(as_text=True)
         self.assertIn('This field is required', data)
         self.assertIn('Not a valid choice', data)
+
+    def test_render_simple_table(self):
+        db = SQLAlchemy(self.app)
+
+        class Message(db.Model):
+            id = db.Column(db.Integer, primary_key=True)
+            text = db.Column(db.Text)
+
+        @self.app.route('/table')
+        def test():
+            db.drop_all()
+            db.create_all()
+            for i in range(10):
+                m = Message(text='Test message {}'.format(i+1))
+                db.session.add(m)
+            db.session.commit()
+            page = request.args.get('page', 1, type=int)
+            pagination = Message.query.paginate(page, per_page=10)
+            messages = pagination.items
+            titles = [('id', '#'), ('text', 'Message')]
+            return render_template_string('''
+                                    {% from 'bootstrap/table.html' import render_table %}
+                                    {{ render_table(titles, messages) }}
+                                    ''', titles=titles, messages=messages)
+
+        response = self.client.get('/table')
+        data = response.get_data(as_text=True)
+        self.assertIn('<table class="table">', data)
+        self.assertIn('<th scope="col">#</th>', data)
+        self.assertIn('<th scope="col">Message</th>', data)
+        self.assertIn('<th scope="col">Message</th>', data)
+        self.assertIn('<th scope="row">1</th>', data)
+        self.assertIn('<td>Test message 1</td>', data)
+
+    def test_render_customized_table(self):
+        db = SQLAlchemy(self.app)
+
+        class Message(db.Model):
+            id = db.Column(db.Integer, primary_key=True)
+            text = db.Column(db.Text)
+
+        @self.app.route('/table')
+        def test():
+            db.drop_all()
+            db.create_all()
+            for i in range(10):
+                m = Message(text='Test message {}'.format(i+1))
+                db.session.add(m)
+            db.session.commit()
+            page = request.args.get('page', 1, type=int)
+            pagination = Message.query.paginate(page, per_page=10)
+            messages = pagination.items
+            titles = [('id', '#'), ('text', 'Message')]
+            return render_template_string('''
+                                    {% from 'bootstrap/table.html' import render_table %}
+                                    {{ render_table(titles, messages, table_classes='table-striped', header_classes='thead-dark', caption='Messages') }}
+                                    ''', titles=titles, messages=messages)
+
+        response = self.client.get('/table')
+        data = response.get_data(as_text=True)
+        self.assertIn('<table class="table table-striped">', data)
+        self.assertIn('<thead class="thead-dark">', data)
+        self.assertIn('<caption>Messages</caption>', data)
+
+    def test_render_responsive_table(self):
+        db = SQLAlchemy(self.app)
+
+        class Message(db.Model):
+            id = db.Column(db.Integer, primary_key=True)
+            text = db.Column(db.Text)
+
+        @self.app.route('/table')
+        def test():
+            db.drop_all()
+            db.create_all()
+            for i in range(10):
+                m = Message(text='Test message {}'.format(i+1))
+                db.session.add(m)
+            db.session.commit()
+            page = request.args.get('page', 1, type=int)
+            pagination = Message.query.paginate(page, per_page=10)
+            messages = pagination.items
+            titles = [('id', '#'), ('text', 'Message')]
+            return render_template_string('''
+                                    {% from 'bootstrap/table.html' import render_table %}
+                                    {{ render_table(titles, messages, is_responsive=True, responsive_class='table-responsive-sm') }}
+                                    ''', titles=titles, messages=messages)
+
+        response = self.client.get('/table')
+        data = response.get_data(as_text=True)
+        self.assertIn('<div class="table-responsive-sm">', data)
