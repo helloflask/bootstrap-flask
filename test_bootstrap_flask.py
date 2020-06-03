@@ -494,7 +494,6 @@ class BootstrapTestCase(unittest.TestCase):
         response = self.client.post('/error', follow_redirects=True)
         data = response.get_data(as_text=True)
         self.assertIn('This field is required', data)
-        self.assertIn('Not a valid choice', data)
 
     def test_render_simple_table(self):
         db = SQLAlchemy(self.app)
