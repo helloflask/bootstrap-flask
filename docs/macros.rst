@@ -401,3 +401,40 @@ If you want to use HTML in your message body, just warpper your message string w
     def test():
         flash(Markup('a info message with a link: <a href="/">Click me!</a>'), 'info')
         return your_template
+
+
+render_table()
+--------------
+Render a Bootstrap table
+
+Example
+~~~~~~~
+
+.. code-block:: jinja
+
+    {% from 'bootstrap/table.html' import render_table %}
+    {{ render_table(titles, data) }}
+
+
+API
+~~~~
+
+.. py:function:: render_table(titles,\
+                              data,\
+                              primary_key='id',\
+                              caption=None,\
+                              table_classes=None,\
+                              header_classes=None,\
+                              is_responsive=False,\
+                              responsive_class='table-responsive')
+
+    Render a bootstrap tables
+
+    :param titles: An iterable of tuples of the format (prop, label) e.g ``[('id', '#')]``
+    :param data: An iterable of data objects to render. Can be dicts or class objects.
+    :param primary_key: Primary key identifier for a single row
+    :param caption: A caption to attach to the table
+    :param table_classes: A string of classes to apply to the table e.g ``'table-small table-dark'``
+    :param header_classes: A string of classes to apply to the table header e.g ``'thead-dark'``
+    :param is_responsive: Whether to enable/disable table responsiveness
+    :param responsive_class: The responsive class to apply to the table. Default is ``'table-responsive'``

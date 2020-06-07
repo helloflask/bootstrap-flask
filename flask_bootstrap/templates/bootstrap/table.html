@@ -1,0 +1,33 @@
+{% macro render_table(titles, data, primary_key='id', caption=None, table_classes=None, header_classes=None, is_responsive=False, responsive_class='table-responsive') %}
+{% if is_responsive %}
+  <div class="{{ responsive_class }}">
+{% endif %}
+<table class="table{% if table_classes %}{{ ' ' + table_classes }}{% endif %}">
+  {% if caption %}
+    <caption>{{ caption }}</caption>
+  {% endif %}
+  <thead {% if header_classes %}class="{{ header_classes }}"{% endif %}>
+  <tr>
+    {% for title in titles %}
+      <th scope="col">{{ title[1] }}</th>
+    {% endfor %}
+  </tr>
+  </thead>
+  <tbody>
+  {% for row in data %}
+    <tr>
+      {% for title in titles %}
+        {% if title[0] == primary_key %}
+          <th scope="row">{{ row[title[0]] }}</th>
+        {% else %}
+          <td>{{ row[title[0]] }}</td>
+        {% endif %}
+      {% endfor %}
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% if is_responsive %}
+  </div>
+{% endif %}
+{% endmacro %}
