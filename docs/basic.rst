@@ -110,6 +110,8 @@ Macros
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
 | render_messages()         | bootstrap/utils.html           | Render flashed messages send by flash() fucntion                   |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
+| render_table()            | bootstrap/table.html           | Render a table with given data                                     |
++---------------------------+--------------------------------+--------------------------------------------------------------------+
 
 How to use these macros? It's quite simple, just import them from the
 corresponding path and call them like any other macro:
