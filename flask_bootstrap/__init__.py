@@ -24,6 +24,19 @@ VERSION_JQUERY = '3.4.1'
 VERSION_POPPER = '1.14.0'
 
 
+def get_table_titles(data, primary_key, primary_key_title):
+    """Detect and build the table titles tuple from ORM object, currently only support SQLAlchemy.
+    
+    .. versionadded:: 1.4.0
+    """
+    titles = []
+    for k in data[0].__table__.columns._data.keys():
+        if not k.startswith('_'):
+            titles.append((k, k.replace('_', ' ').title()))
+    titles[0] = (primary_key, primary_key_title)
+    return titles
+
+
 class Bootstrap(object):
     def __init__(self, app=None):
         if app is not None:
@@ -42,6 +55,7 @@ class Bootstrap(object):
         app.jinja_env.globals['bootstrap'] = self
         app.jinja_env.globals['bootstrap_is_hidden_field'] = \
             is_hidden_field_filter
+        app.jinja_env.globals['get_table_titles'] = get_table_titles
         app.jinja_env.add_extension('jinja2.ext.do')
         # default settings
         app.config.setdefault('BOOTSTRAP_SERVE_LOCAL', False)

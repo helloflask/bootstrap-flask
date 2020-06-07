@@ -1,5 +1,8 @@
-{% macro render_table(titles, data, primary_key='id', caption=None, table_classes=None, header_classes=None, is_responsive=False, responsive_class='table-responsive') %}
-{% if is_responsive %}
+{% macro render_table(data, titles=None, primary_key='id', primary_key_title='#', caption=None, table_classes=None, header_classes=None, responsive=False, responsive_class='table-responsive') %}
+{% if not titles %}
+{% set titles = get_table_titles(data, primary_key, primary_key_title) %}
+{% endif %}
+{% if responsive %}
   <div class="{{ responsive_class }}">
 {% endif %}
 <table class="table{% if table_classes %}{{ ' ' + table_classes }}{% endif %}">
@@ -27,7 +30,7 @@
   {% endfor %}
   </tbody>
 </table>
-{% if is_responsive %}
+{% if responsive %}
   </div>
 {% endif %}
 {% endmacro %}
