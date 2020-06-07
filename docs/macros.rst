@@ -405,7 +405,10 @@ If you want to use HTML in your message body, just warpper your message string w
 
 render_table()
 --------------
-Render a Bootstrap table
+
+Render a Bootstrap table.
+
+**Not released yet.**
 
 Example
 ~~~~~~~
@@ -413,28 +416,32 @@ Example
 .. code-block:: jinja
 
     {% from 'bootstrap/table.html' import render_table %}
-    {{ render_table(titles, data) }}
+
+    {{ render_table(data) }}
 
 
 API
 ~~~~
 
-.. py:function:: render_table(titles,\
-                              data,\
+.. py:function:: render_table(data,\
+                              titles=None,\
                               primary_key='id',\
+                              primary_key_title='#',\
                               caption=None,\
                               table_classes=None,\
                               header_classes=None,\
-                              is_responsive=False,\
+                              responsive=False,\
                               responsive_class='table-responsive')
 
-    Render a bootstrap tables
+    Render a Bootstrap table.
 
-    :param titles: An iterable of tuples of the format (prop, label) e.g ``[('id', '#')]``
     :param data: An iterable of data objects to render. Can be dicts or class objects.
-    :param primary_key: Primary key identifier for a single row
+    :param titles: An iterable of tuples of the format (prop, label) e.g ``[('id', '#')]``, if not provided, 
+                will automatically detect on provided data, currently only support SQLAlchemy object.
+    :param primary_key: Primary key identifier for a single row, default to ``id``.
+    :param primary_key_title: Primary key title for a single row, default to ``#``.
     :param caption: A caption to attach to the table
     :param table_classes: A string of classes to apply to the table e.g ``'table-small table-dark'``
     :param header_classes: A string of classes to apply to the table header e.g ``'thead-dark'``
-    :param is_responsive: Whether to enable/disable table responsiveness
+    :param responsive: Whether to enable/disable table responsiveness
     :param responsive_class: The responsive class to apply to the table. Default is ``'table-responsive'``
