@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% from 'bootstrap/table.html' import render_table %}
+
+{% block content %}
+<h1>Simple Table</h1>
+<p>{% raw %}{{ render_table(messages) }}{% endraw %}</p>
+{{ render_table(messages) }}
+
+<h1>Cutomized Table</h1>
+<p>{% raw %}{{ render_table(messages, titles, table_classes='table-striped', header_classes='thead-dark', caption='Messages') }}{% endraw %}</p>
+{{ render_table(messages, titles, table_classes='table-striped', header_classes='thead-dark', caption='Messages') }}
+
+<h1>Responsive Table</h1>
+<p>{% raw %}{{ render_table(messages, responsive=True, responsive_class='table-responsive-sm') }}{% endraw %}</p>
+{{ render_table(messages, responsive=True, responsive_class='table-responsive-sm') }}
+
+{% endblock %}

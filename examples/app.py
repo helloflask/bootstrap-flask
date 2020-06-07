@@ -75,6 +75,11 @@ class ContactForm(FlaskForm):
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.Text)
+    author = db.Column(db.String(100))
+    category = db.Column(db.String(100))
+    sender = db.Column(db.String(100))
+    create_time = db.Column(db.String(100))
 
 
 @app.route('/')
@@ -125,6 +130,26 @@ def test_flash():
     flash(Markup('A simple success alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.'), 'success')
     return render_template('flash.html')
 
+
+@app.route('/table')
+def test_table():
+    db.drop_all()
+    db.create_all()
+    for i in range(20):
+        m = Message(
+            text='Test message {}'.format(i+1),
+            author='Author {}'.format(i+1),
+            category='Category {}'.format(i+1),
+            sender='Sender {}'.format(i+1),
+            create_time='Today'
+            )
+        db.session.add(m)
+    db.session.commit()
+    page = request.args.get('page', 1, type=int)
+    pagination = Message.query.paginate(page, per_page=10)
+    messages = pagination.items
+    titles = [('id', '#'), ('text', 'Message'), ('author', 'Author'), ('category', 'Category'), ('sender', 'Sender'), ('create_time', 'Create Time')]
+    return render_template('table.html', messages=messages, titles=titles)
 
 if __name__ == '__main__':
     app.run(debug=True)
