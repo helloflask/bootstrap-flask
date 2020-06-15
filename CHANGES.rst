@@ -4,8 +4,7 @@ Changelog
 1.4
 ----
 
-Release data: --
-
+Release data: 6/15
 
 - Add ``render_table`` macro to render a Bootstrap table (`#71 <https://github.com/greyli/bootstrap-flask/pull/71>`__)
 

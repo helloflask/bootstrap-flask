@@ -408,8 +408,6 @@ render_table()
 
 Render a Bootstrap table.
 
-**Not released yet.**
-
 Example
 ~~~~~~~
 
@@ -440,8 +438,8 @@ API
                 will automatically detect on provided data, currently only support SQLAlchemy object.
     :param primary_key: Primary key identifier for a single row, default to ``id``.
     :param primary_key_title: Primary key title for a single row, default to ``#``.
-    :param caption: A caption to attach to the table
-    :param table_classes: A string of classes to apply to the table e.g ``'table-small table-dark'``
-    :param header_classes: A string of classes to apply to the table header e.g ``'thead-dark'``
-    :param responsive: Whether to enable/disable table responsiveness
-    :param responsive_class: The responsive class to apply to the table. Default is ``'table-responsive'``
+    :param caption: A caption to attach to the table.
+    :param table_classes: A string of classes to apply to the table (e.g ``'table-small table-dark'``).
+    :param header_classes: A string of classes to apply to the table header (e.g ``'thead-dark'``).
+    :param responsive: Whether to enable/disable table responsiveness.
+    :param responsive_class: The responsive class to apply to the table. Default is ``'table-responsive'``.

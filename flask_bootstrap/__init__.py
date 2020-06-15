@@ -26,7 +26,7 @@ VERSION_POPPER = '1.14.0'
 
 def get_table_titles(data, primary_key, primary_key_title):
     """Detect and build the table titles tuple from ORM object, currently only support SQLAlchemy.
-    
+
     .. versionadded:: 1.4.0
     """
     titles = []
