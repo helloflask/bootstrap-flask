@@ -619,3 +619,17 @@ class BootstrapTestCase(unittest.TestCase):
         self.assertIn('<th scope="col">Text</th>', data)
         self.assertIn('<th scope="row">1</th>', data)
         self.assertIn('<td>Test message 1</td>', data)
+
+
+    def test_build_table_titles_with_empty_data(self):
+        
+        @self.app.route('/table')
+        def test():
+            messages = []
+            return render_template_string('''
+                                    {% from 'bootstrap/table.html' import render_table %}
+                                    {{ render_table(messages) }}
+                                    ''', messages=messages)
+
+        response = self.client.get('/table')
+        self.assertEqual(response.status_code, 200)
