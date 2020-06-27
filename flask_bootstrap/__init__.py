@@ -29,6 +29,8 @@ def get_table_titles(data, primary_key, primary_key_title):
 
     .. versionadded:: 1.4.0
     """
+    if not data:
+        return []
     titles = []
     for k in data[0].__table__.columns._data.keys():
         if not k.startswith('_'):

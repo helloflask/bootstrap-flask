@@ -1,6 +1,11 @@
 Changelog
 ==========
 
+1.4.1
+------
+
+- Fix ``IndexError`` when using ``render_table`` with empty data.
+
 1.4
 ----
 
