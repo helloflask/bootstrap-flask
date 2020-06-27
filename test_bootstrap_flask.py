@@ -620,9 +620,8 @@ class BootstrapTestCase(unittest.TestCase):
         self.assertIn('<th scope="row">1</th>', data)
         self.assertIn('<td>Test message 1</td>', data)
 
-
     def test_build_table_titles_with_empty_data(self):
-        
+
         @self.app.route('/table')
         def test():
             messages = []
