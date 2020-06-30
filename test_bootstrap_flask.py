@@ -642,7 +642,7 @@ class BootstrapTestCase(unittest.TestCase):
 
         @self.app.route('/table/<message_id>/view')
         def test_view_message(message_id):
-            return f'Viewing {message_id}'
+            return 'Viewing {}'.format(message_id)
 
         @self.app.route('/table')
         def test():
