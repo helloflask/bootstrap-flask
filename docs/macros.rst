@@ -429,7 +429,12 @@ API
                               table_classes=None,\
                               header_classes=None,\
                               responsive=False,\
-                              responsive_class='table-responsive')
+                              responsive_class='table-responsive'
+                              show_actions=False,
+                              view_url=None,
+                              edit_url=None,
+                              delete_url=None,
+                              action_pk_placeholder=':primary_key')
 
     Render a Bootstrap table.
 
@@ -443,3 +448,8 @@ API
     :param header_classes: A string of classes to apply to the table header (e.g ``'thead-dark'``).
     :param responsive: Whether to enable/disable table responsiveness.
     :param responsive_class: The responsive class to apply to the table. Default is ``'table-responsive'``.
+    :param show_actions: Whether to display the actions column. Default is ``False``.
+    :param view_url: URL to use for the view action.
+    :param edit_url: URL to use for the edit action.
+    :param delete_url: URL to use for the delete action.
+    :param action_pk_placeholder: The placeholder which replaced by the primary key when build the action URLS. Default is ``':primary_key'``.

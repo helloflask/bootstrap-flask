@@ -632,3 +632,37 @@ class BootstrapTestCase(unittest.TestCase):
 
         response = self.client.get('/table')
         self.assertEqual(response.status_code, 200)
+
+    def test_render_table_with_actions(self):
+        db = SQLAlchemy(self.app)
+
+        class Message(db.Model):
+            id = db.Column(db.Integer, primary_key=True)
+            text = db.Column(db.Text)
+
+        @self.app.route('/table/<message_id>/view')
+        def test_view_message(message_id):
+            return f'Viewing {message_id}'
+
+        @self.app.route('/table')
+        def test():
+            db.drop_all()
+            db.create_all()
+            for i in range(10):
+                m = Message(text='Test message {}'.format(i+1))
+                db.session.add(m)
+            db.session.commit()
+            page = request.args.get('page', 1, type=int)
+            pagination = Message.query.paginate(page, per_page=10)
+            messages = pagination.items
+            titles = [('id', '#'), ('text', 'Message')]
+            return render_template_string('''
+                                    {% from 'bootstrap/table.html' import render_table %}
+                                    {{ render_table(messages, titles, show_actions=True,
+                                    view_url=url_for('test_view_message', message_id=':primary_key')) }}
+                                    ''', titles=titles, messages=messages)
+
+        response = self.client.get('/table')
+        data = response.get_data(as_text=True)
+        self.assertIn('<a href="/table/1/view">', data)
+        self.assertIn('<img src="/bootstrap/static/img/view.svg" alt="View">', data)
