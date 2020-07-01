@@ -14,4 +14,13 @@
 <p>{% raw %}{{ render_table(messages, responsive=True, responsive_class='table-responsive-sm') }}{% endraw %}</p>
 {{ render_table(messages, responsive=True, responsive_class='table-responsive-sm') }}
 
+<h1>Table with actions</h1>
+<p>{% raw %}{{ render_table(messages, show_actions=True,
+                            view_url=url_for('view_message', message_id=':primary_key'),
+                            edit_url=url_for('edit_message', message_id=':primary_key'),
+                            delete_url=url_for('delete_message', message_id=':primary_key')) }}{% endraw %}</p>
+{{ render_table(messages, show_actions=True,
+                view_url=url_for('view_message', message_id=':primary_key'),
+                edit_url=url_for('edit_message', message_id=':primary_key'),
+                delete_url=url_for('delete_message', message_id=':primary_key')) }}
 {% endblock %}

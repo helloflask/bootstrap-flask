@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, request, flash, Markup
+from flask import Flask, render_template, request, flash, Markup, jsonify
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, BooleanField, PasswordField, IntegerField, TextField,\
@@ -150,6 +150,22 @@ def test_table():
     messages = pagination.items
     titles = [('id', '#'), ('text', 'Message'), ('author', 'Author'), ('category', 'Category'), ('sender', 'Sender'), ('create_time', 'Create Time')]
     return render_template('table.html', messages=messages, titles=titles)
+
+
+@app.route('/table/<message_id>/view')
+def view_message(message_id):
+    return f'Viewing {message_id}'
+
+
+@app.route('/table/<message_id>/edit')
+def edit_message(message_id):
+    return f'Editing {message_id}'
+
+
+@app.route('/table/<message_id>/delete')
+def delete_message(message_id):
+    return f'Deleting {message_id}'
+
 
 if __name__ == '__main__':
     app.run(debug=True)
