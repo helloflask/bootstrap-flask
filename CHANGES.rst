@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+unreleased
+----------
+
+- Fix ``tox`` broken environments
+
+
 1.4.1
 ------
 
