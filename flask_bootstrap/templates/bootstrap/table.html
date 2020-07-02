@@ -12,12 +12,12 @@
                       edit_url=None,
                       delete_url=None,
                       action_pk_placeholder=':primary_key') %}
-{% if not titles %}
-{% set titles = get_table_titles(data, primary_key, primary_key_title) %}
-{% endif %}
-{% if responsive %}
-  <div class="{{ responsive_class }}">
-{% endif %}
+  {% if not titles %}
+    {% set titles = get_table_titles(data, primary_key, primary_key_title) %}
+  {% endif %}
+  {% if responsive %}
+    <div class="{{ responsive_class }}">
+  {% endif %}
 <table class="table{% if table_classes %}{{ ' ' + table_classes }}{% endif %}">
   {% if caption %}
     <caption>{{ caption }}</caption>
@@ -42,25 +42,26 @@
           <td>{{ row[title[0]] }}</td>
         {% endif %}
       {% endfor %}
-    {% if show_actions %}
-      <td>
-        {% if view_url %}
-          <a href="{{ view_url | replace(action_pk_placeholder, row[primary_key]) }}">
-            <img src="{{ url_for('bootstrap.static', filename='img/view.svg') }}" alt="View">
-          </a>
-        {% endif %}
-        {% if edit_url %}
-          <a href="{{ edit_url | replace(action_pk_placeholder, row[primary_key]) }}">
-            <img src="{{ url_for('bootstrap.static', filename='img/edit.svg') }}" alt="Edit">
-          </a>
-        {% endif %}
-        {% if delete_url %}
-          <a href="{{ delete_url | replace(action_pk_placeholder, row[primary_key]) }}">
-            <img src="{{ url_for('bootstrap.static', filename='img/delete.svg') }}" alt="Delete">
-          </a>
-        {% endif %}
-      </td>
-    {% endif %}
+      {% if show_actions %}
+        <td>
+          {% if view_url %}
+            <a href="{{ view_url | replace(action_pk_placeholder, row[primary_key]) }}">
+              <img src="{{ url_for('bootstrap.static', filename='img/view.svg') }}" alt="View">
+            </a>
+          {% endif %}
+          {% if edit_url %}
+            <a href="{{ edit_url | replace(action_pk_placeholder, row[primary_key]) }}">
+              <img src="{{ url_for('bootstrap.static', filename='img/edit.svg') }}" alt="Edit">
+            </a>
+          {% endif %}
+          {% if delete_url %}
+            <form action="{{ delete_url | replace(action_pk_placeholder, row[primary_key]) }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+              <input type="image" src="{{ url_for('bootstrap.static', filename='img/delete.svg') }}" alt="Delete">
+            </form>
+          {% endif %}
+        </td>
+      {% endif %}
     </tr>
   {% endfor %}
   </tbody>

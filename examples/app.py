@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, request, flash, Markup, jsonify
 
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, SubmitField, BooleanField, PasswordField, IntegerField, TextField,\
     FormField, SelectField, FieldList
 from wtforms.validators import DataRequired, Length
@@ -22,6 +22,7 @@ app.config['BOOTSTRAP_BTN_SIZE'] = 'sm'
 
 bootstrap = Bootstrap(app)
 db = SQLAlchemy(app)
+csrf = CSRFProtect(app)
 
 
 class ExampleForm(FlaskForm):
