@@ -5,6 +5,7 @@ unreleased
 ----------
 
 - Fix ``tox`` broken environments
+- Fix ``ResourceWarning`` in ``test_local_resources``  (`#78 <https://github.com/greyli/bootstrap-flask/pull/78>`__)
 
 
 1.4.1
