@@ -1,24 +1,22 @@
 Changelog
 ==========
 
-unreleased
-----------
-
-- Fix ``tox`` broken environments
-- Fix ``ResourceWarning`` in ``test_local_resources``  (`#78 <https://github.com/greyli/bootstrap-flask/pull/78>`__)
-
-
 1.4.1
 ------
 
-- Fix ``IndexError`` when using ``render_table`` with empty data.
+Release data: --
+
+- Fix ``tox`` broken environments
+- Fix ``ResourceWarning`` in ``test_local_resources``  (`#78 <https://github.com/greyli/bootstrap-flask/pull/78>`__)
+- Fix ``IndexError`` when using ``render_table`` with empty data (`#75 <https://github.com/greyli/bootstrap-flask/issues/75>`__).
+- Add support for actions column in ``render_table`` macro (`#76 <https://github.com/greyli/bootstrap-flask/issues/76>`__).
 
 1.4
 ----
 
 Release data: 6/15
 
-- Add ``render_table`` macro to render a Bootstrap table (`#71 <https://github.com/greyli/bootstrap-flask/pull/71>`__)
+- Add ``render_table`` macro to render a Bootstrap table (`#71 <https://github.com/greyli/bootstrap-flask/pull/71>`__).
 
 
 1.3.2
