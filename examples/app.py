@@ -163,7 +163,7 @@ def edit_message(message_id):
     return f'Editing {message_id}'
 
 
-@app.route('/table/<message_id>/delete')
+@app.route('/table/<message_id>/delete', methods=['POST'])
 def delete_message(message_id):
     return f'Deleting {message_id}'
 
