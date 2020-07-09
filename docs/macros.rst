@@ -429,11 +429,11 @@ API
                               table_classes=None,\
                               header_classes=None,\
                               responsive=False,\
-                              responsive_class='table-responsive'
-                              show_actions=False,
-                              view_url=None,
-                              edit_url=None,
-                              delete_url=None,
+                              responsive_class='table-responsive'\
+                              show_actions=False,\
+                              view_url=None,\
+                              edit_url=None,\
+                              delete_url=None,\
                               action_pk_placeholder=':primary_key')
 
     Render a Bootstrap table.
