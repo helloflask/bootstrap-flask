@@ -452,4 +452,4 @@ API
     :param view_url: URL to use for the view action.
     :param edit_url: URL to use for the edit action.
     :param delete_url: URL to use for the delete action.
-    :param action_pk_placeholder: The placeholder which replaced by the primary key when build the action URLS. Default is ``':primary_key'``.
+    :param action_pk_placeholder: The placeholder which replaced by the primary key when build the action URLs. Default is ``':primary_key'``.
