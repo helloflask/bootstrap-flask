@@ -80,7 +80,7 @@ by yourself; an example starter is given here:
 Just create a file called ``base.html`` inside your ``templates`` folder, copy the contents above into it. There
 are two resource helper methods used in the example template above (i.e. ``bootstrap.load_css()`` and ``bootstrap.load_js()``).
 They will generate ``<href></href>`` and ``<script></script>`` codes to include Bootstrap's CSS and JavaScript files. These default
-to load the resources from CDN (provide by jsDelivr). If you set the configuration variable ``BOOTSTRAP_SERVE_LOCAL`` to ``True`` the local resources inside the package folder will be used instead.
+to load the resources from CDN (provided by jsDelivr). If you set the configuration variable ``BOOTSTRAP_SERVE_LOCAL`` to ``True`` the local resources inside the package folder will be used instead.
 
 It's optional to use these resources methods, you can write the codes by yourself to load Boostrap resources in your application's
 static folder, or from a different CDN provider that you want to use.
@@ -99,7 +99,7 @@ The template ``bootstrap/wtf.html`` changed to ``bootstrap/form.html``, some mac
 +---------------------------+--------------------------------+
 | form_field()              | render_field()                 |
 +---------------------------+--------------------------------+
-| flashed_messages()        | render_message()               |
+| flashed_messages()        | render_messages()               |
 +---------------------------+--------------------------------+
 
 For example, you will need to change the import statement:
@@ -121,3 +121,5 @@ The macros below were removed (or not supported yet):
 - form_button()
 - analytics()
 - uanalytics()
+
+There are also some new macros were introduced, check them out at :ref:`macro_list` section.

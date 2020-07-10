@@ -88,6 +88,8 @@ For reasons of flexibility, Bootstrap-Flask doesn't include built-in base templa
 
 Use this in your templates folder (suggested names are ``base.html`` or ``layout.html`` etc.), and inherit it in child templates. See `Template Inheritance <http://flask.pocoo.org/docs/1.0/patterns/templateinheritance/>`_ for more details on inheritance.
 
+.. _macros_list:
+
 Macros
 ------
 
