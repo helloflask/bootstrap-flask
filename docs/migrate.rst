@@ -122,4 +122,4 @@ The macros below were removed (or not supported yet):
 - analytics()
 - uanalytics()
 
-There are also some new macros were introduced, check them out at :ref:`macro_list` section.
+There are also some new macros were introduced, check them out at :ref:`macros_list` section.
