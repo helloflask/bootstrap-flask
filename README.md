@@ -6,7 +6,7 @@ If you come from Flask-Bootstrap, check out [this tutorial](https://bootstrap-fl
 
 ## Links
 
-* [Documentation](https://bootstrap-flask.readthedocs.io/en/latest/)
+* [Documentation](https://bootstrap-flask.readthedocs.io)
 * [PyPI](https://pypi.org/project/Bootstrap-Flask/)
 * [Examples](https://github.com/greyli/bootstrap-flask/tree/master/examples)
 
