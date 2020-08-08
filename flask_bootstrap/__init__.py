@@ -63,6 +63,7 @@ class Bootstrap(object):
         app.config.setdefault('BOOTSTRAP_SERVE_LOCAL', False)
         app.config.setdefault('BOOTSTRAP_BTN_STYLE', 'secondary')
         app.config.setdefault('BOOTSTRAP_BTN_SIZE', 'md')
+        app.config.setdefault('BOOTSTRAP_BOOTSWATCH_THEME', None)
 
     @staticmethod
     def load_css(version=VERSION_BOOTSTRAP):
@@ -74,13 +75,25 @@ class Bootstrap(object):
         """
         css_filename = 'bootstrap.min.css'
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
+        bootswatch_theme = current_app.config['BOOTSTRAP_BOOTSWATCH_THEME']
 
         if serve_local:
-            css = '<link rel="stylesheet" href="%s" type="text/css">' % \
-                  url_for('bootstrap.static', filename='css/' + css_filename)
+            if not bootswatch_theme:
+                css = '<link rel="stylesheet" href="%s" type="text/css">' % \
+                    url_for('bootstrap.static', filename='css/' + css_filename)
+            else:
+                css = '<link rel="stylesheet" href="%s" type="text/css"' % \
+                    url_for(
+                        'bootstrap.static',
+                        filename='css/swatch/%s/%s' % (bootswatch_theme.lower(), css_filename)
+                    )
         else:
-            css = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/css/%s"' \
-                  ' type="text/css">' % (version, css_filename)
+            if not bootswatch_theme:
+                css = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/css/%s"' \
+                    ' type="text/css">' % (version, css_filename)
+            else:
+                css = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@%s/dist/%s/%s"' \
+                    ' type="text/css"' % (version, bootswatch_theme.lower(), css_filename)
         return Markup(css)
 
     @staticmethod
