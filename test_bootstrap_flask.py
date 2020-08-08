@@ -25,6 +25,11 @@ class BootstrapTestCase(unittest.TestCase):
         self.app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
         self.app.secret_key = 'for test'
         self.bootstrap = Bootstrap(self.app)  # noqa
+        self.bootswatch_themes = [
+            'cerulean', 'cosmo', 'cyborg', 'darkly', 'default', 'flatly', 'journal', 'litera',
+            'lumen', 'lux', 'materia', 'minty', 'pulse', 'sandstone', 'simplex', 'sketchy', 'slate',
+            'solar', 'spacelab', 'superhero', 'united', 'yeti'
+        ]
 
         @self.app.route('/')
         def index():
@@ -85,6 +90,28 @@ class BootstrapTestCase(unittest.TestCase):
         self.assertNotIn('/bootstrap/static/js/bootstrap.min.js', js_rv)
         self.assertIn('https://cdn.jsdelivr.net/npm/bootstrap', css_rv)
         self.assertIn('https://cdn.jsdelivr.net/npm/bootstrap', js_rv)
+
+    def test_bootswatch_local(self):
+        current_app.config['BOOTSTRAP_SERVE_LOCAL'] = True
+
+        for theme in self.bootswatch_themes:
+            current_app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = theme
+            data = self.client.get('/').get_data(as_text=True)
+            self.assertNotIn('https://cdn.jsdelivr.net/npm/bootswatch', data)
+            self.assertIn('swatch/%s/bootstrap.min.css' % theme, data)
+            with self.client.get('/bootstrap/static/css/swatch/%s/bootstrap.min.css' % theme) as css_response:
+                self.assertNotEqual(css_response.status_code, 404)
+
+    def test_bootswatch_cdn(self):
+        current_app.config['BOOTSTRAP_SERVE_LOCAL'] = False
+
+        for theme in self.bootswatch_themes:
+            current_app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = theme
+            data = self.client.get('/').get_data(as_text=True)
+            self.assertIn('https://cdn.jsdelivr.net/npm/bootswatch', data)
+            css_rv = self.bootstrap.load_css()
+            self.assertNotIn('/bootstrap/static/css/swatch/%s/bootstrap.min.css' % theme, data)
+            self.assertIn('https://cdn.jsdelivr.net/npm/bootswatch', css_rv)
 
     def test_render_field(self):
         @self.app.route('/field')
