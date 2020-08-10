@@ -125,6 +125,7 @@ Here is a more complicate example:
 
 It will overwrite ``button_style`` and ``BOOTSTRAP_BTN_STYLE``.
 
+
 .. _bootswatch_theme:
 
 Bootswatch Themes
