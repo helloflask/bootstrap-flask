@@ -77,16 +77,14 @@ class Bootstrap(object):
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
         bootswatch_theme = current_app.config['BOOTSTRAP_BOOTSWATCH_THEME']
 
+        if not bootswatch_theme:
+            base_path = 'css/'
+        else:
+            base_path = 'css/swatch/%s/' % bootswatch_theme.lower()
+
         if serve_local:
-            if not bootswatch_theme:
-                css = '<link rel="stylesheet" href="%s" type="text/css">' % \
-                    url_for('bootstrap.static', filename='css/' + css_filename)
-            else:
-                css = '<link rel="stylesheet" href="%s" type="text/css"' % \
-                    url_for(
-                        'bootstrap.static',
-                        filename='css/swatch/%s/%s' % (bootswatch_theme.lower(), css_filename)
-                    )
+            css = '<link rel="stylesheet" href="%s" type="text/css">' % \
+                url_for('bootstrap.static', filename=base_path + css_filename)
         else:
             if not bootswatch_theme:
                 css = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/css/%s"' \

@@ -109,6 +109,7 @@ class BootstrapTestCase(unittest.TestCase):
             current_app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = theme
             data = self.client.get('/').get_data(as_text=True)
             self.assertIn('https://cdn.jsdelivr.net/npm/bootswatch', data)
+            self.assertIn('dist/%s/bootstrap.min.css' % theme, data)
             css_rv = self.bootstrap.load_css()
             self.assertNotIn('/bootstrap/static/css/swatch/%s/bootstrap.min.css' % theme, data)
             self.assertIn('https://cdn.jsdelivr.net/npm/bootswatch', css_rv)
