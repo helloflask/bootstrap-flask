@@ -124,3 +124,23 @@ Here is a more complicate example:
     {{ render_form(form, {'submit': 'success', 'cancel': 'secondary', 'delete': 'danger'}) }}
 
 It will overwrite ``button_style`` and ``BOOTSTRAP_BTN_STYLE``.
+
+.. _bootswatch_theme:
+
+Bootswatch Themes
+-----------------
+
+`Bootswatch <https://bootswatch.com>`_ is a collection of free and open source themes for Bootstrap. If you are using ``bootstrap.load_css()`` to include 
+Bootstrap resources. Then you can set bootswatch theme with configuration variable ``BOOTSTRAP_BOOTSWATCH_THEME``.
+
+The available theme names are: 'cerulean', 'cosmo', 'cyborg', 'darkly', 'default', 'flatly', 'journal', 'litera',
+'lumen', 'lux', 'materia', 'minty', 'pulse', 'sandstone', 'simplex', 'sketchy', 'slate',
+'solar', 'spacelab', 'superhero', 'united', 'yeti'.
+
+Here is an example to use ``lumen`` theme:
+
+.. code-block:: python
+
+    app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = 'lumen'
+
+You can find these themes on `https://bootswatch.com <https://bootswatch.com>`_.

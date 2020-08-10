@@ -10,6 +10,7 @@ Release data: --
 - Fix ``ResourceWarning`` in ``test_local_resources``  (`#78 <https://github.com/greyli/bootstrap-flask/pull/78>`__)
 - Fix ``IndexError`` when using ``render_table`` with empty data (`#75 <https://github.com/greyli/bootstrap-flask/issues/75>`__).
 - Add support for actions column in ``render_table`` macro (`#76 <https://github.com/greyli/bootstrap-flask/issues/76>`__).
+- Add support for bootswatch theme via configuration ``BOOTSTRAP_BOOTSWATCH_THEME``.
 
 1.4
 ----

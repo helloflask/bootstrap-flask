@@ -138,7 +138,7 @@ Configurations
 +---------------------------+--------------------------------+----------------------------------------------------------------------------------------------+
 | BOOTSTRAP_BTN_SIZE        | ``'md'``                       | Default form button size                                                                     |
 +---------------------------+--------------------------------+----------------------------------------------------------------------------------------------+
-| BOOTSTRAP_BOOTSWATCH_THEME| ``None``                       | Bootswatch theme to use, see available themes at `bootswatch.com <https://bootswatch.com>`_  |
+| BOOTSTRAP_BOOTSWATCH_THEME| ``None``                       | Bootswatch theme to use, see available themes at :ref:`_bootswatch_theme`                    |
 +---------------------------+--------------------------------+----------------------------------------------------------------------------------------------+
 
 .. tip:: See :ref:`button_customizatoin` to learn how to customize form buttons.
