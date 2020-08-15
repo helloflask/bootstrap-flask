@@ -8,6 +8,7 @@
                       responsive=False,
                       responsive_class='table-responsive',
                       show_actions=False,
+                      actions_header='Actions',
                       view_url=None,
                       edit_url=None,
                       delete_url=None,
@@ -28,7 +29,7 @@
       <th scope="col">{{ title[1] }}</th>
     {% endfor %}
     {% if show_actions %}
-      <th scope="col">Actions</th>
+      <th scope="col">{{ actions_header }}</th>
     {% endif %}
   </tr>
   </thead>
