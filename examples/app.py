@@ -160,7 +160,7 @@ def test_table():
 
 @app.route('/table/<message_id>/view')
 def view_message(message_id):
-    message = Message.query.filter_by(id=message_id).first()
+    message = Message.query.get(message_id)
     if message:
         return f'Viewing {message_id} with text "{message.text}". Return to <a href="/table">table</a>.'
     return f'Could not view message {message_id} as it does not exist. Return to <a href="/table">table</a>.'
@@ -168,7 +168,7 @@ def view_message(message_id):
 
 @app.route('/table/<message_id>/edit')
 def edit_message(message_id):
-    message = Message.query.filter_by(id=message_id).first()
+    message = Message.query.get(message_id)
     if message:
         message.draft = not message.draft
         db.session.commit()
@@ -178,7 +178,7 @@ def edit_message(message_id):
 
 @app.route('/table/<message_id>/delete', methods=['POST'])
 def delete_message(message_id):
-    message = Message.query.filter_by(id=message_id).first()
+    message = Message.query.get(message_id)
     if message:
         db.session.delete(message)
         db.session.commit()
