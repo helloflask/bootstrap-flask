@@ -4,7 +4,7 @@ Bootstrap-Flask
 `Bootstrap 4 <https://getbootstrap.com>`_ helper for Flask/Jinja2.
 
 Contents
----------
+--------
 
 .. toctree::
    :maxdepth: 2
@@ -29,7 +29,7 @@ method, this part of the documentation is for you.
 
 
 Changelog
-----------
+---------
 
 .. toctree::
    :maxdepth: 2

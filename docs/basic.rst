@@ -1,5 +1,5 @@
 Basic Usage
-=============
+===========
 
 Installation
 ------------
@@ -53,7 +53,7 @@ to ``True`` to use built-in local files. However, these methods are optional, yo
 and ``<script></script>`` tags to include Bootstrap resources (from your ``static`` folder or CDN) manually by yourself.
 
 Starter template
------------------
+----------------
 
 For reasons of flexibility, Bootstrap-Flask doesn't include built-in base templates (this may change in the future). For now,  you have to create a base template yourself. Be sure to use an HTML5 doctype and include a viewport meta tag for proper responsive behaviors. Here's an example base template:
 
@@ -110,7 +110,7 @@ Macros
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
 | render_static()           | bootstrap/utils.html           | Render a resource reference code (i.e. ``<link>``, ``<script>``)   |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
-| render_messages()         | bootstrap/utils.html           | Render flashed messages send by flash() fucntion                   |
+| render_messages()         | bootstrap/utils.html           | Render flashed messages send by flash() function                   |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
 | render_table()            | bootstrap/table.html           | Render a table with given data                                     |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
@@ -127,7 +127,7 @@ corresponding path and call them like any other macro:
 Go to the :doc:`macros` page to see the detailed usage for these macros.
 
 Configurations
----------------
+--------------
 
 +---------------------------+--------------------------------+----------------------------------------------------------------------------------------------+
 | Configuration Variable    | Default Value                  | Description                                                                                  |

@@ -1,7 +1,7 @@
 Flask Sphinx Styles
 ===================
 
-This repository contains sphinx styles for Flask and Flask related
+This repository contains Sphinx styles for Flask and Flask related
 projects.  To use this style in your Sphinx documentation, follow
 this guide:
 
@@ -27,5 +27,5 @@ The following options exist for the flask_small theme:
                                 to be used as replacement for the
                                 h1 in the index.rst file.
    index_logo_height = 120px    height of the index logo
-   github_fork = ''             repository name on github for the
+   github_fork = ''             repository name on GitHub for the
                                 "fork me" badge

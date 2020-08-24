@@ -73,7 +73,7 @@ Or you can use ``button_style`` parameter when using ``render_form``, ``render_f
 
     {{ render_form(form, button_style='success') }}
 
-Smirily, you can use this way to control the button size. In Bootstrap 4, buttons can have 4 sizes:
+Similarly, you can use this way to control the button size. In Bootstrap 4, buttons can have 4 sizes:
 
 - btn-sm
 - btn-md (the default size)
@@ -131,8 +131,8 @@ It will overwrite ``button_style`` and ``BOOTSTRAP_BTN_STYLE``.
 Bootswatch Themes
 -----------------
 
-`Bootswatch <https://bootswatch.com>`_ is a collection of free and open source themes for Bootstrap. If you are using ``bootstrap.load_css()`` to include 
-Bootstrap resources. Then you can set bootswatch theme with configuration variable ``BOOTSTRAP_BOOTSWATCH_THEME``.
+`Bootswatch <https://bootswatch.com>`_ is a collection of free and open source themes for Bootstrap. If you are using ``bootstrap.load_css()`` to include
+Bootstrap resources. Then you can set Bootswatch theme with configuration variable ``BOOTSTRAP_BOOTSWATCH_THEME``.
 
 The available theme names are: 'cerulean', 'cosmo', 'cyborg', 'darkly', 'default', 'flatly', 'journal', 'litera',
 'lumen', 'lux', 'materia', 'minty', 'pulse', 'sandstone', 'simplex', 'sketchy', 'slate',
