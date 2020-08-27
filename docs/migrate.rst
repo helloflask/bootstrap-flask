@@ -2,30 +2,30 @@ Migrate from Flask-Bootstrap
 =============================
 
 If you come from Flask-Bootstrap, looking for an alternative that supports Bootstrap 4, well, then you
-are in the right palce.
+are in the right place.
 
-Bootstrap-Flask was origined as a fork of Flask-Bootstrap, but some APIs were changed, deleted and improved,
-some bugs were fixed, and on top of all that, some new macros were added. This tutorial will go through all the 
+Bootstrap-Flask originated as a fork of Flask-Bootstrap, but some APIs were changed, deleted and improved,
+some bugs were fixed, and on top of all that, some new macros were added. This tutorial will go through all the
 steps to migrate from Flask-Bootstrap.
 
 Uninstall and Install
 ----------------------
 Flask-Bootstrap and Bootstrap-Flask can't live together, so you have to uninstall
-Flask-Bootstrap first and then install Bootstra-Flask:
+Flask-Bootstrap first and then install Bootstrap-Flask:
 
 .. code-block:: bash
 
     $ pip uninstall flask-bootstrap
     $ pip install bootstrap-flask
 
-if you accidently installed both of them, you will need to uninstall them both first:
+if you accidentally installed both of them, you will need to uninstall them both first:
 
 .. code-block:: bash
 
     $ pip uninstall flask-bootstrap bootstrap-flask
     $ pip install bootstrap-flask
 
-If you want to use both Flask-Bootstrap and Bootstrap-Flask for different projects, you can use virtual enviroment.
+If you want to use both Flask-Bootstrap and Bootstrap-Flask for different projects, you can use virtual environment.
 
 Initialize the Extension
 ------------------------
@@ -82,7 +82,7 @@ are two resource helper methods used in the example template above (i.e. ``boots
 They will generate ``<href></href>`` and ``<script></script>`` codes to include Bootstrap's CSS and JavaScript files. These default
 to load the resources from CDN (provided by jsDelivr). If you set the configuration variable ``BOOTSTRAP_SERVE_LOCAL`` to ``True`` the local resources inside the package folder will be used instead.
 
-It's optional to use these resources methods, you can write the codes by yourself to load Boostrap resources in your application's
+It's optional to use these resources methods, you can write the codes by yourself to load Bootstrap resources in your application's
 static folder, or from a different CDN provider that you want to use.
 
 Change Template and Macro Name
