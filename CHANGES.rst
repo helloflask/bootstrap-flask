@@ -11,7 +11,7 @@ Release data: --
 - Fix ``IndexError`` when using ``render_table`` with empty data (`#75 <https://github.com/greyli/bootstrap-flask/issues/75>`__).
 - Add support for actions column in ``render_table`` macro (`#76 <https://github.com/greyli/bootstrap-flask/issues/76>`__).
 - Add support for Bootswatch theme via configuration ``BOOTSTRAP_BOOTSWATCH_THEME`` (`#88 <https://github.com/greyli/bootstrap-flask/pull/88>`__).
-- Fix checkbox render issue: put ``<input>`` inside the ``<label>``, only add ``is-invalid`` class when there are errors.
+- Fix checkbox render issue: add ``for`` attribute to link ``<label>`` with checkbox, only add ``is-invalid`` class when there are errors.
 
 1.4
 ---
