@@ -79,7 +79,7 @@ class Message(db.Model):
     text = db.Column(db.Text, nullable=False)
     author = db.Column(db.String(100), nullable=False)
     category = db.Column(db.String(100), nullable=False)
-    draft = db.Column(db.Boolean, nullable=False)
+    draft = db.Column(db.Boolean, default=False, nullable=False)
     create_time = db.Column(db.Integer, nullable=False, unique=True)
 
 
@@ -141,7 +141,6 @@ def before_first_request_func():
             text='Test message {}'.format(i+1),
             author='Author {}'.format(i+1),
             category='Category {}'.format(i+1),
-            draft=False,
             create_time=4321*(i+1)
             )
         if i % 4:
@@ -154,7 +153,7 @@ def test_table():
     page = request.args.get('page', 1, type=int)
     pagination = Message.query.paginate(page, per_page=10)
     messages = pagination.items
-    titles = [('id', '#'), ('text', 'Message'), ('author', 'Author'), ('category', 'Category'), ('draft', 'draft'), ('create_time', 'Create Time')]
+    titles = [('id', '#'), ('text', 'Message'), ('author', 'Author'), ('category', 'Category'), ('draft', 'Draft'), ('create_time', 'Create Time')]
     return render_template('table.html', messages=messages, titles=titles)
 
 
