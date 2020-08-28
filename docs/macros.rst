@@ -164,17 +164,33 @@ API
     :param render_kw: A dictionary, specifying custom attributes for the
                      ``<form>`` tag.
 
-.. py:function:: form_errors(form, hiddens=True)
+.. tip:: See :ref:`button_customizatoin` to learn how to customize form buttons.
 
-    Renders paragraphs containing form error messages. This is usually only used
-    to output hidden field form errors, as others are attached to the form
-    fields.
+
+render_hidden_errors()
+----------------------
+
+Render error messages for hidden fields.
+
+Example
+~~~~~~~~
+
+.. code-block:: jinja
+
+    {% from 'bootstrap/form.html' import render_form, render_hidden_errors %}
+
+    {{ render_form(form) }}
+    {{ render_hidden_errors(form) }}
+
+API
+~~~~
+
+.. py:function:: render_hidden_errors(form)
+
+    Renders error messages for hidden form field (``wtforms.HiddenField``).
 
     :param form: Form whose errors should be rendered.
-    :param hiddens: If ``True``, render errors of hidden fields as well. If
-                   ``'only'``, render *only* these.
 
-.. tip:: See :ref:`button_customizatoin` to learn how to customize form buttons.
 
 render_form_row()
 ------------------

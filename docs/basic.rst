@@ -100,6 +100,10 @@ Macros
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
 | render_form()             | bootstrap/form.html            | Render a WTForms form                                              |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
+| render_form_row()         | bootstrap/form.html            | Render a row of a grid form                                        |
++---------------------------+--------------------------------+--------------------------------------------------------------------+
+| render_hidden_errors()    | bootstrap/form.html            | Render error messages for hidden form field                        |
++---------------------------+--------------------------------+--------------------------------------------------------------------+
 | render_pager()            | bootstrap/pagination.html      | Render a basic Flask-SQLAlchemy pagniantion                        |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
 | render_pagination()       | bootstrap/pagination.html      | Render a standard Flask-SQLAlchemy pagination                      |

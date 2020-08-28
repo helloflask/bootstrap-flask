@@ -2,12 +2,25 @@
  its BSD License. Copyright (c) 2013, Marc Brinkmann. All rights reserved. #}
 
 {% macro form_errors(form, hiddens=True) %}
+    {# Deprecated since 1.5 and will be removed in 2.0 #}
     {%- if form.errors %}
         {%- for fieldname, errors in form.errors.items() %}
             {%- if bootstrap_is_hidden_field(form[fieldname]) and hiddens or
              not bootstrap_is_hidden_field(form[fieldname]) and hiddens != 'only' %}
                 {%- for error in errors %}
-                    <div class="invalid-feedback">{{ error }}</div>
+                    <div class="invalid-feedback" style="display: block;">{{ error }}</div>
+                {%- endfor %}
+            {%- endif %}
+        {%- endfor %}
+    {%- endif %}
+{%- endmacro %}
+
+{% macro render_hidden_errors(form) %}
+    {%- if form.errors %}
+        {%- for fieldname, errors in form.errors.items() %}
+            {%- if bootstrap_is_hidden_field(form[fieldname]) %}
+                {%- for error in errors %}
+                    <div class="invalid-feedback" style="display: block;">{{ error }}</div>
                 {%- endfor %}
             {%- endif %}
         {%- endfor %}
@@ -187,7 +200,7 @@ the necessary fix for required=False attributes, but will also not set the requi
                 {% endif %}
                 {%- if field.errors %}
                     {%- for error in field.errors %}
-                        <div class="invalid-feedback">{{ error }}</div>
+                        <div class="invalid-feedback" style="display: block;">{{ error }}</div>
                     {%- endfor %}
                 {%- elif field.description -%}
                     <small class="form-text text-muted">{{ field.description|safe }}</small>

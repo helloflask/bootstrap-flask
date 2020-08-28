@@ -10,11 +10,9 @@ from flask import current_app, Markup, Blueprint, url_for
 try:
     from wtforms.fields import HiddenField
 except ImportError:
-
     def is_hidden_field_filter(field):
         raise RuntimeError('WTForms is not installed.')
 else:
-
     def is_hidden_field_filter(field):
         return isinstance(field, HiddenField)
 
@@ -55,8 +53,7 @@ class Bootstrap(object):
         app.register_blueprint(blueprint)
 
         app.jinja_env.globals['bootstrap'] = self
-        app.jinja_env.globals['bootstrap_is_hidden_field'] = \
-            is_hidden_field_filter
+        app.jinja_env.globals['bootstrap_is_hidden_field'] = is_hidden_field_filter
         app.jinja_env.globals['get_table_titles'] = get_table_titles
         app.jinja_env.add_extension('jinja2.ext.do')
         # default settings
