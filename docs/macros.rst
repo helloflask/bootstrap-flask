@@ -177,10 +177,15 @@ Example
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/form.html' import render_form, render_hidden_errors %}
+    {% from 'bootstrap/form.html' import render_field, render_hidden_errors %}
 
-    {{ render_form(form) }}
-    {{ render_hidden_errors(form) }}
+    <form method="post">
+        {{ form.hidden_tag() }}
+        {{ render_hidden_errors(form) }}
+        {{ render_field(form.username) }}
+        {{ render_field(form.password) }}
+        {{ render_field(form.submit) }}
+    </form>
 
 API
 ~~~~

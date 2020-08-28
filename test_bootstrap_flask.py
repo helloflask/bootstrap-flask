@@ -2,7 +2,7 @@ import unittest
 
 from flask import Flask, render_template_string, current_app, request, flash
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, BooleanField, PasswordField, FileField, MultipleFileField, RadioField
+from wtforms import StringField, SubmitField, BooleanField, PasswordField, FileField, MultipleFileField, RadioField, HiddenField
 from wtforms.validators import DataRequired, Length
 
 from flask_bootstrap import Bootstrap
@@ -462,8 +462,8 @@ class BootstrapTestCase(unittest.TestCase):
         self.assertIn('btn-sm', data)
 
     def test_button_style(self):
-        self.assertEqual(current_app.config['BOOTSTRAP_BTN_STYLE'], 'secondary')
-        current_app.config['BOOTSTRAP_BTN_STYLE'] = 'primary'
+        self.assertEqual(current_app.config['BOOTSTRAP_BTN_STYLE'], 'primary')
+        current_app.config['BOOTSTRAP_BTN_STYLE'] = 'secondary'
 
         @self.app.route('/form')
         def test():
@@ -475,7 +475,7 @@ class BootstrapTestCase(unittest.TestCase):
 
         response = self.client.get('/form')
         data = response.get_data(as_text=True)
-        self.assertIn('btn-primary', data)
+        self.assertIn('btn-secondary', data)
 
         @self.app.route('/form2')
         def test_overwrite():
@@ -694,3 +694,26 @@ class BootstrapTestCase(unittest.TestCase):
         data = response.get_data(as_text=True)
         self.assertIn('<a href="/table/1/view">', data)
         self.assertIn('<img src="/bootstrap/static/img/view.svg" alt="View">', data)
+
+    def test_render_hidden_errors(self):
+        class TestForm(FlaskForm):
+            hide = HiddenField('Hide', validators=[DataRequired('Hide field is empty.')])
+            submit = SubmitField()
+
+        @self.app.route('/error', methods=['GET', 'POST'])
+        def error():
+            form = TestForm()
+            if form.validate_on_submit():
+                pass
+            return render_template_string('''
+            {% from 'bootstrap/form.html' import render_field, render_hidden_errors %}
+            <form method="post">
+                {{ form.hidden_tag() }}
+                {{ render_hidden_errors(form) }}
+                {{ render_field(form.submit) }}
+            </form>
+            ''', form=form)
+
+        response = self.client.post('/error', follow_redirects=True)
+        data = response.get_data(as_text=True)
+        self.assertIn('Hide field is empty.', data)
