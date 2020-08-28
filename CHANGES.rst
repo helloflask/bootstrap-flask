@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.4.1
------
+1.5
+---
 
 Release data: --
 
@@ -12,6 +12,7 @@ Release data: --
 - Add support for actions column in ``render_table`` macro (`#76 <https://github.com/greyli/bootstrap-flask/issues/76>`__).
 - Add support for Bootswatch theme via configuration ``BOOTSTRAP_BOOTSWATCH_THEME`` (`#88 <https://github.com/greyli/bootstrap-flask/pull/88>`__).
 - Fix checkbox render issue: add ``for`` attribute to link ``<label>`` with checkbox, only add ``is-invalid`` class when there are errors.
+- Change default button style class from ``btn-secondary`` to ``btn-primary`` (`#62 <https://github.com/greyli/bootstrap-flask/issues/62>`__).
 
 1.4
 ---
