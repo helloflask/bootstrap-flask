@@ -76,11 +76,11 @@ class ContactForm(FlaskForm):
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.Text)
-    author = db.Column(db.String(100))
-    category = db.Column(db.String(100))
-    sender = db.Column(db.String(100))
-    create_time = db.Column(db.String(100))
+    text = db.Column(db.Text, nullable=False)
+    author = db.Column(db.String(100), nullable=False)
+    category = db.Column(db.String(100), nullable=False)
+    draft = db.Column(db.Boolean, default=False, nullable=False)
+    create_time = db.Column(db.Integer, nullable=False, unique=True)
 
 
 @app.route('/')
@@ -132,8 +132,8 @@ def test_flash():
     return render_template('flash.html')
 
 
-@app.route('/table')
-def test_table():
+@app.before_first_request
+def before_first_request_func():
     db.drop_all()
     db.create_all()
     for i in range(20):
@@ -141,31 +141,48 @@ def test_table():
             text='Test message {}'.format(i+1),
             author='Author {}'.format(i+1),
             category='Category {}'.format(i+1),
-            sender='Sender {}'.format(i+1),
-            create_time='Today'
+            create_time=4321*(i+1)
             )
+        if i % 4:
+            m.draft = True
         db.session.add(m)
     db.session.commit()
+
+@app.route('/table')
+def test_table():
     page = request.args.get('page', 1, type=int)
     pagination = Message.query.paginate(page, per_page=10)
     messages = pagination.items
-    titles = [('id', '#'), ('text', 'Message'), ('author', 'Author'), ('category', 'Category'), ('sender', 'Sender'), ('create_time', 'Create Time')]
+    titles = [('id', '#'), ('text', 'Message'), ('author', 'Author'), ('category', 'Category'), ('draft', 'Draft'), ('create_time', 'Create Time')]
     return render_template('table.html', messages=messages, titles=titles)
 
 
 @app.route('/table/<message_id>/view')
 def view_message(message_id):
-    return f'Viewing {message_id}'
+    message = Message.query.get(message_id)
+    if message:
+        return f'Viewing {message_id} with text "{message.text}". Return to <a href="/table">table</a>.'
+    return f'Could not view message {message_id} as it does not exist. Return to <a href="/table">table</a>.'
 
 
 @app.route('/table/<message_id>/edit')
 def edit_message(message_id):
-    return f'Editing {message_id}'
+    message = Message.query.get(message_id)
+    if message:
+        message.draft = not message.draft
+        db.session.commit()
+        return f'Message {message_id} has been editted by toggling draft status. Return to <a href="/table">table</a>.'
+    return f'Message {message_id} did not exist and could therefore not be edited. Return to <a href="/table">table</a>.'
 
 
 @app.route('/table/<message_id>/delete', methods=['POST'])
 def delete_message(message_id):
-    return f'Deleting {message_id}'
+    message = Message.query.get(message_id)
+    if message:
+        db.session.delete(message)
+        db.session.commit()
+        return f'Message {message_id} has been deleted. Return to <a href="/table">table</a>.'
+    return f'Message {message_id} did not exist and could therefore not be deleted. Return to <a href="/table">table</a>.'
 
 
 if __name__ == '__main__':
