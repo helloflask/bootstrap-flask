@@ -2,7 +2,8 @@ import unittest
 
 from flask import Flask, render_template_string, current_app, request, flash
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, BooleanField, PasswordField, FileField, MultipleFileField, RadioField, HiddenField
+from wtforms import StringField, SubmitField, BooleanField, PasswordField, FileField,\
+    MultipleFileField, RadioField, HiddenField
 from wtforms.validators import DataRequired, Length
 
 from flask_bootstrap import Bootstrap
