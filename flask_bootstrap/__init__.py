@@ -63,6 +63,7 @@ class Bootstrap(object):
         app.config.setdefault('BOOTSTRAP_BOOTSWATCH_THEME', None)
         app.config.setdefault('BOOTSTRAP_ICON_SIZE', '1em')
         app.config.setdefault('BOOTSTRAP_ICON_COLOR', None)
+        app.config.setdefault('BOOTSTRAP_MSG_CATEGORY', 'primary')
 
     @staticmethod
     def load_css(version=VERSION_BOOTSTRAP):

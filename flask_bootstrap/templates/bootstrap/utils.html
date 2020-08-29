@@ -22,7 +22,7 @@
      'debug': 'primary',
      'notset': 'primary',
      'message': 'primary',
-    }, default_category='primary', dismissible=False, dismiss_animate=False) -%}
+    }, default_category=config.BOOTSTRAP_MSG_CATEGORY, dismissible=False, dismiss_animate=False) -%}
    
     {% with messages = messages or get_flashed_messages(with_categories=True) -%}
     {% if messages -%} {# don't output anything if there are no messages #}

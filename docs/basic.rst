@@ -140,7 +140,7 @@ Configurations
 +===========================+================================+==============================================================================================+
 | BOOTSTRAP_SERVE_LOCAL     | ``False``                      | If set to ``True``, local resources will be used for ``load_*`` methods.                     |
 +---------------------------+--------------------------------+----------------------------------------------------------------------------------------------+
-| BOOTSTRAP_BTN_STYLE       | ``'secondary'``                | Default form button style, will change to ``primary`` in next major release                  |
+| BOOTSTRAP_BTN_STYLE       | ``'primary'``                  | Default form button style, will change to ``primary`` in next major release                  |
 +---------------------------+--------------------------------+----------------------------------------------------------------------------------------------+
 | BOOTSTRAP_BTN_SIZE        | ``'md'``                       | Default form button size                                                                     |
 +---------------------------+--------------------------------+----------------------------------------------------------------------------------------------+
@@ -149,6 +149,8 @@ Configurations
 | BOOTSTRAP_ICON_COLOR      | ``'None'``                     | Default icon style                                                                           |
 +---------------------------+--------------------------------+----------------------------------------------------------------------------------------------+
 | BOOTSTRAP_BOOTSWATCH_THEME| ``None``                       | Bootswatch theme to use, see available themes at :ref:`bootswatch_theme`                     |
++---------------------------+--------------------------------+----------------------------------------------------------------------------------------------+
+| BOOTSTRAP_MSG_CATEGORY    | ``'primary'``                  | Default flash message category                                                               |
 +---------------------------+--------------------------------+----------------------------------------------------------------------------------------------+
 
 .. tip:: See :ref:`button_customizatoin` to learn how to customize form buttons.

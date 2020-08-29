@@ -395,7 +395,7 @@ API
 .. py:function:: render_messages(messages=None,\
                     container=False,\
                     transform={...},\
-                    default_category='primary',\
+                    default_category=config.BOOTSTRAP_MSG_CATEGORY,\
                     dismissible=False,\
                     dismiss_animate=False)
 

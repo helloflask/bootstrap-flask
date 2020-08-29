@@ -120,6 +120,7 @@ def test_static():
 
 @app.route('/flash', methods=['GET', 'POST'])
 def test_flash():
+    flash('A simple default alert—check it out!')
     flash('A simple primary alert—check it out!', 'primary')
     flash('A simple secondary alert—check it out!', 'secondary')
     flash('A simple success alert—check it out!', 'success')
