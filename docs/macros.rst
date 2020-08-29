@@ -27,8 +27,6 @@ API
 
 .. py:function:: render_nav_item(endpoint, text, badge='', use_li=False, **kwargs)
 
-    Render a Bootstrap nav item.
-
     :param endpoint: The endpoint used to generate URL.
     :param text: The text that will displayed on the item.
     :param badge: Badge text.
@@ -61,8 +59,6 @@ API
 
 .. py:function:: render_breadcrumb_item(endpoint, text, **kwargs)
 
-    Render a Bootstrap breadcrumb item.
-
     :param endpoint: The endpoint used to generate URL.
     :param text: The text that will displayed on the item.
     :param kwargs: Additional keyword arguments pass to ``url_for()``.
@@ -90,8 +86,6 @@ API
 
 .. py:function:: render_field(field, form_type="basic", horizontal_columns=('lg', 2, 10), button_style="", button_size="", button_map={})
 
-    Render a single form field.
-
     :param field: The form field (attribute) to render.
     :param form_type: One of ``basic``, ``inline`` or ``horizontal``. See the
                      Bootstrap docs for details on different form layouts.
@@ -109,7 +103,8 @@ API
 
 render_form()
 ---------------
-Render a form object create by Flask-WTF/WTForms.
+
+Render a form object create by Flask-WTF/WTForms, outputs a Bootstrap-markup form element.
 
 Example
 ~~~~~~~~
@@ -137,8 +132,6 @@ API
                     id="",\
                     novalidate=False,\
                     render_kw={})
-
-    Outputs Bootstrap-markup for a complete Flask-WTF form.
 
     :param form: The form to output.
     :param action: The URL to receive form data.
@@ -170,7 +163,7 @@ API
 render_hidden_errors()
 ----------------------
 
-Render error messages for hidden fields.
+Render error messages for hidden form field (``wtforms.HiddenField``).
 
 Example
 ~~~~~~~~
@@ -192,15 +185,13 @@ API
 
 .. py:function:: render_hidden_errors(form)
 
-    Renders error messages for hidden form field (``wtforms.HiddenField``).
-
     :param form: Form whose errors should be rendered.
 
 
 render_form_row()
 ------------------
 
-Render a row of a grid form.
+Render a row of a grid form with the given fields.
 
 Example
 ~~~~~~~~
@@ -231,8 +222,6 @@ API
                                  button_size="",\
                                  button_map={})
 
-    Render a bootstrap row with the given fields.
-
     :param fields: An iterable of fields to render in a row.
     :param row_class: Class to apply to the div intended to represent the row, like ``form-row``
                       or ``row``
@@ -249,10 +238,11 @@ API
 
 .. tip:: See :ref:`button_customizatoin` to learn how to customize form buttons.
 
+
 render_pager()
 -----------------
 
-Render a pagination object create by Flask-SQLAlchemy.
+Render a simple pager for query pagination object create by Flask-SQLAlchemy.
 
 Example
 ~~~~~~~~
@@ -263,7 +253,6 @@ Example
 
     {{ render_pager(pagination) }}
 
-
 API
 ~~~~
 
@@ -273,8 +262,6 @@ API
                       next=('Next <span aria-hidden="true">&rarr;</span>')|safe,\
                       align='',\
                       **kwargs)
-
-    Renders a simple pager for query pagination.
 
     :param pagination: :class:`~flask_sqlalchemy.Pagination` instance.
     :param fragment: Add URL fragment into link, such as ``#comment``.
@@ -287,7 +274,7 @@ API
 render_pagination()
 --------------------
 
-Render a pagination object create by Flask-SQLAlchemy.
+Render a standard pagination for query pagination object create by Flask-SQLAlchemy.
 
 Example
 ~~~~~~~~
@@ -311,8 +298,6 @@ API
                      fragment='',\
                      align='',\
                      **kwargs)
-
-    Render a standard pagination for query pagination.
 
     :param pagination: :class:`~flask_sqlalchemy.Pagination` instance.
     :param endpoint: Which endpoint to call when a page number is clicked.
@@ -352,8 +337,6 @@ API
 
 .. py:function:: render_static(type, filename_or_url, local=True)
 
-    Render a resource reference code (i.e. ``<link>``, ``<script>``).
-
     :param type: Resources type, one of ``css``, ``js``, ``icon``.
     :param filename_or_url: The name of the file, or the full URL when ``local`` set to ``False``.
     :param local: Load local resources or from the passed URL.
@@ -362,7 +345,7 @@ API
 render_messages()
 ------------------
 
-Render flashed messages send by ``flask.flash()``.
+Render Bootstrap alerts for flash messages send by ``flask.flash()``.
 
 Example
 ~~~~~~~~
@@ -399,8 +382,6 @@ API
                     dismissible=False,\
                     dismiss_animate=False)
 
-    Render Bootstrap alerts for flash messages send by ``flask.flash()``.
-
     :param messages: The messages to show. If not given, default to get from ``flask.get_flashed_messages(with_categories=True)``.
     :param container: If true, will output a complete ``<div class="container">`` element, otherwise just the messages each wrapped in a ``<div>``.
     :param transform: A dictionary of mappings for categories. Will be looked up case-insensitively. Default maps all Python loglevel names to Bootstrap CSS classes.
@@ -427,7 +408,7 @@ If you want to use HTML in your message body, just wrapper your message string w
 render_table()
 --------------
 
-Render a Bootstrap table.
+Render a Bootstrap table with given data.
 
 Example
 ~~~~~~~
@@ -456,8 +437,6 @@ API
                               edit_url=None,\
                               delete_url=None,\
                               action_pk_placeholder=':primary_key')
-
-    Render a Bootstrap table.
 
     :param data: An iterable of data objects to render. Can be dicts or class objects.
     :param titles: An iterable of tuples of the format (prop, label) e.g ``[('id', '#')]``, if not provided,
@@ -496,10 +475,9 @@ API
 
 .. py:function:: render_icon(name, size=config.BOOTSTRAP_ICON_SIZE, color=config.BOOTSTRAP_ICON_COLOR)
 
-    Render a Bootstrap icon.
-
     :param name: The name of icon, you can find all available names at `Bootstrap Icon <https://icons.getbootstrap.com/>`_.
     :param size: The size of icon, you can pass any vaild size value (e.g. ``32``/``'32px'``, ``1.5em``, etc.), default to
     use configuration ``BOOTSTRAP_ICON_SIZE`` (default value is `'1em'`).
     :param color: The color of icon, accept values are Bootstrap style name (one of ``['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'muted']``)
     or any valid color string (e.g. ``'red'``, ``'#ddd'`` or ``'(250, 250, 250)'``), default to use configuration ``BOOTSTRAP_ICON_COLOR`` (default value is ``None``).
+    

@@ -4,7 +4,7 @@ Changelog
 1.5
 ---
 
-Release data: --
+Release date: 2020/8/30
 
 - Fix ``tox`` broken environments.
 - Fix ``ResourceWarning`` in ``test_local_resources`` (`#78 <https://github.com/greyli/bootstrap-flask/pull/78>`__).
@@ -14,13 +14,13 @@ Release data: --
 - Fix checkbox render issue: add ``for`` attribute to link ``<label>`` with checkbox, only add ``is-invalid`` class when there are errors.
 - Change default button style class from ``btn-secondary`` to ``btn-primary`` (`#62 <https://github.com/greyli/bootstrap-flask/issues/62>`__).
 - Deprecated ``form_errors`` macro and it will be removed in 2.0, add ``render_hidden_errors`` macro as replacement.
-- Add ``render_icon`` macro to render Bootstrap icon with Bootstrap Icon SVG Sprite.
-
+- Add ``render_icon`` macro to render Bootstrap icon with Bootstrap Icon SVG Sprite (`#99 <https://github.com/greyli/bootstrap-flask/pull/99>`__).
+- Add configuration ``BOOTSTRAP_MSG_CATEGORY`` to set default message category.
 
 1.4
 ---
 
-Release data: 6/15
+Release date: 2020/6/15
 
 - Add ``render_table`` macro to render a Bootstrap table (`#71 <https://github.com/greyli/bootstrap-flask/pull/71>`__).
 
@@ -28,7 +28,7 @@ Release data: 6/15
 1.3.2
 -----
 
-Release data: 2020/5/30
+Release date: 2020/5/30
 
 - Support display error message for ``RadioField`` and ``BooleanField``, display description for ``RadioField``.
 
@@ -36,7 +36,7 @@ Release data: 2020/5/30
 1.3.1
 -----
 
-Release data: 2020/4/29
+Release date: 2020/4/29
 
 - Fix add ``field.render_kw.class`` to form label class attribute.
 - Fix append extra space in class attribute when no ``field.render_kw.class`` presents (`#63 <https://github.com/greyli/bootstrap-flask/issues/63>`__).
