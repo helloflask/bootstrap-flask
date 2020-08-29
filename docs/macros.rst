@@ -438,7 +438,6 @@ Example
 
     {{ render_table(data) }}
 
-
 API
 ~~~~
 
@@ -476,3 +475,31 @@ API
     :param edit_url: URL to use for the edit action.
     :param delete_url: URL to use for the delete action.
     :param action_pk_placeholder: The placeholder which replaced by the primary key when build the action URLs. Default is ``':primary_key'``.
+
+
+render_icon()
+-------------
+
+Render a Bootstrap icon.
+
+Example
+~~~~~~~
+
+.. code-block:: jinja
+
+    {% from 'bootstrap/utils.html' import render_icon %}
+
+    {{ render_icon('heart') }}
+
+API
+~~~~
+
+.. py:function:: render_icon(name, size=config.BOOTSTRAP_ICON_SIZE, color=config.BOOTSTRAP_ICON_COLOR)
+
+    Render a Bootstrap icon.
+
+    :param name: The name of icon, you can find all available names at `Bootstrap Icon <https://icons.getbootstrap.com/>`_.
+    :param size: The size of icon, you can pass any vaild size value (e.g. ``32``/``'32px'``, ``1.5em``, etc.), default to
+    use configuration ``BOOTSTRAP_ICON_SIZE`` (default value is `'1em'`).
+    :param color: The color of icon, accept values are Bootstrap style name (one of ``['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'muted']``)
+    or any valid color string (e.g. ``'red'``, ``'#ddd'`` or ``'(250, 250, 250)'``), default to use configuration ``BOOTSTRAP_ICON_COLOR`` (default value is ``None``).

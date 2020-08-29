@@ -52,3 +52,12 @@
     {% endif -%}
     {% endwith -%}
 {% endmacro -%}
+
+
+{% macro render_icon(name, size=config.BOOTSTRAP_ICON_SIZE, color=config.BOOTSTRAP_ICON_COLOR) %}
+{% set bootstrap_colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'muted'] %}
+<svg class="bi{% if not color %}"{% elif color in bootstrap_colors %} text-{{ color }}"{% else %}" style="color: {{ color }}"{% endif %}
+width="{{ size }}" height="{{ size }}" fill="currentColor">
+    <use xlink:href="{{ url_for('bootstrap.static', filename='icons/bootstrap-icons.svg') }}#{{ name }}"/>
+</svg>
+{% endmacro %}
