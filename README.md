@@ -2,7 +2,7 @@
 
 [Bootstrap 4](https://getbootstrap.com) helper for Flask/Jinja2.
 
-If you come from Flask-Bootstrap, check out [this tutorial](https://bootstrap-flask.readthedocs.io/en/latest/migrate.html) on how to migrate to this extension.
+If you come from Flask-Bootstrap, check out [this tutorial](https://bootstrap-flask.readthedocs.io/en/stable/migrate.html) on how to migrate to this extension.
 
 ## Links
 
