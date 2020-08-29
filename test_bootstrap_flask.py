@@ -717,3 +717,71 @@ class BootstrapTestCase(unittest.TestCase):
         response = self.client.post('/error', follow_redirects=True)
         data = response.get_data(as_text=True)
         self.assertIn('Hide field is empty.', data)
+
+    def test_render_icon(self):
+        @self.app.route('/icon')
+        def icon():
+            return render_template_string('''
+            {% from 'bootstrap/utils.html' import render_icon %}
+                {{ render_icon('heart') }}
+            ''')
+
+        @self.app.route('/icon-size')
+        def icon_size():
+            return render_template_string('''
+            {% from 'bootstrap/utils.html' import render_icon %}
+                {{ render_icon('heart', 32) }}
+            ''')
+
+        @self.app.route('/icon-style')
+        def icon_style():
+            return render_template_string('''
+            {% from 'bootstrap/utils.html' import render_icon %}
+                {{ render_icon('heart', color='primary') }}
+            ''')
+
+        @self.app.route('/icon-color')
+        def icon_color():
+            return render_template_string('''
+            {% from 'bootstrap/utils.html' import render_icon %}
+                {{ render_icon('heart', color='green') }}
+            ''')
+
+        response = self.client.get('/icon')
+        data = response.get_data(as_text=True)
+        self.assertIn('bootstrap-icons.svg#heart', data)
+        self.assertIn('width="1em"', data)
+        self.assertIn('height="1em"', data)
+
+        response = self.client.get('/icon-size')
+        data = response.get_data(as_text=True)
+        self.assertIn('bootstrap-icons.svg#heart', data)
+        self.assertIn('width="32"', data)
+        self.assertIn('height="32"', data)
+
+        response = self.client.get('/icon-style')
+        data = response.get_data(as_text=True)
+        self.assertIn('bootstrap-icons.svg#heart', data)
+        self.assertIn('text-primary', data)
+
+        response = self.client.get('/icon-color')
+        data = response.get_data(as_text=True)
+        self.assertIn('bootstrap-icons.svg#heart', data)
+        self.assertIn('style="color: green"', data)
+
+    def test_render_icon_config(self):
+        self.app.config['BOOTSTRAP_ICON_SIZE'] = 100
+        self.app.config['BOOTSTRAP_ICON_COLOR'] = 'success'
+
+        @self.app.route('/icon')
+        def icon():
+            return render_template_string('''
+            {% from 'bootstrap/utils.html' import render_icon %}
+                {{ render_icon('heart') }}
+            ''')
+
+        response = self.client.get('/icon')
+        data = response.get_data(as_text=True)
+        self.assertIn('width="100"', data)
+        self.assertIn('height="100"', data)
+        self.assertIn('text-success', data)
