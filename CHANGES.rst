@@ -14,6 +14,7 @@ Release data: --
 - Fix checkbox render issue: add ``for`` attribute to link ``<label>`` with checkbox, only add ``is-invalid`` class when there are errors.
 - Change default button style class from ``btn-secondary`` to ``btn-primary`` (`#62 <https://github.com/greyli/bootstrap-flask/issues/62>`__).
 - Deprecated ``form_errors`` macro and it will be removed in 2.0, add ``render_hidden_errors`` macro as replacement.
+- Add ``render_icon`` macro to render Bootstrap icon with Bootstrap Icon SVG Sprite.
 
 
 1.4
