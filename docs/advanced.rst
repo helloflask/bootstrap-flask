@@ -121,7 +121,7 @@ Here is a more complicate example:
 
     {% from 'bootstrap/form.html' import render_form %}
 
-    {{ render_form(form, {'submit': 'success', 'cancel': 'secondary', 'delete': 'danger'}) }}
+    {{ render_form(form, button_map={'submit': 'success', 'cancel': 'secondary', 'delete': 'danger'}) }}
 
 It will overwrite ``button_style`` and ``BOOTSTRAP_BTN_STYLE``.
 
