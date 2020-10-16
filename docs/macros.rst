@@ -477,7 +477,7 @@ API
 
     :param name: The name of icon, you can find all available names at `Bootstrap Icon <https://icons.getbootstrap.com/>`_.
     :param size: The size of icon, you can pass any vaild size value (e.g. ``32``/``'32px'``, ``1.5em``, etc.), default to
-    use configuration ``BOOTSTRAP_ICON_SIZE`` (default value is `'1em'`).
+                use configuration ``BOOTSTRAP_ICON_SIZE`` (default value is `'1em'`).
     :param color: The color of icon, follow the context with ``currentColor`` if not set. Accept values are Bootstrap style name
-    (one of ``['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'muted']``) or any valid color
-    string (e.g. ``'red'``, ``'#ddd'`` or ``'(250, 250, 250)'``), default to use configuration ``BOOTSTRAP_ICON_COLOR`` (default value is ``None``).
+                (one of ``['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'muted']``) or any valid color
+                string (e.g. ``'red'``, ``'#ddd'`` or ``'(250, 250, 250)'``), default to use configuration ``BOOTSTRAP_ICON_COLOR`` (default value is ``None``).
