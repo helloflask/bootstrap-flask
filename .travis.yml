@@ -10,11 +10,11 @@ python:
 # command to install dependencies
 install:
   - pip install .
-  - pip install coverage coveralls flake8 flask-wtf flask-sqlalchemy
+  - pip install coverage coveralls flake8 flask-wtf flask-sqlalchemy pytest pytest-runner
 
 # command to run tests
 script: 
   - coverage run --source=flask_bootstrap setup.py test
-  - flake8 flask_bootstrap test_bootstrap_flask.py
+  - flake8 flask_bootstrap tests
 
 after_success: coveralls
