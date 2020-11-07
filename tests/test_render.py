@@ -1,206 +1,98 @@
-import unittest
-
-from flask import Flask, render_template_string, current_app, request, flash
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, BooleanField, PasswordField, FileField,\
-    MultipleFileField, RadioField, HiddenField
-from wtforms.validators import DataRequired, Length
-
-from flask_bootstrap import Bootstrap
+from flask import current_app, flash, render_template_string, request
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf import FlaskForm
+from wtforms import BooleanField, FileField, HiddenField, MultipleFileField,\
+    PasswordField, RadioField, StringField, SubmitField
+from wtforms.validators import DataRequired
 
 
-class HelloForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
-    password = PasswordField('Password', validators=[DataRequired(), Length(8, 150)])
-    remember = BooleanField('Remember me')
-    submit = SubmitField()
-
-
-class BootstrapTestCase(unittest.TestCase):
-
-    def setUp(self):
-        self.app = Flask(__name__)
-        self.app.testing = True
-        self.app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'
-        self.app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-        self.app.secret_key = 'for test'
-        self.bootstrap = Bootstrap(self.app)  # noqa
-        self.bootswatch_themes = [
-            'cerulean', 'cosmo', 'cyborg', 'darkly', 'default', 'flatly', 'journal', 'litera',
-            'lumen', 'lux', 'materia', 'minty', 'pulse', 'sandstone', 'simplex', 'sketchy', 'slate',
-            'solar', 'spacelab', 'superhero', 'united', 'yeti'
-        ]
-
-        @self.app.route('/')
-        def index():
-            return render_template_string('{{ bootstrap.load_css() }}{{ bootstrap.load_js() }}')
-
-        self.context = self.app.test_request_context()
-        self.context.push()
-        self.client = self.app.test_client()
-
-    def tearDown(self):
-        self.context.pop()
-
-    def test_extension_init(self):
-        self.assertIn('bootstrap', current_app.extensions)
-
-    def test_load_css(self):
-        rv = self.bootstrap.load_css()
-        self.assertIn('bootstrap.min.css', rv)
-
-    def test_load_js(self):
-        rv = self.bootstrap.load_js()
-        self.assertIn('bootstrap.min.js', rv)
-
-    def test_local_resources(self):
-        current_app.config['BOOTSTRAP_SERVE_LOCAL'] = True
-
-        response = self.client.get('/')
-        data = response.get_data(as_text=True)
-        self.assertNotIn('https://cdn.jsdelivr.net/npm/bootstrap', data)
-        self.assertIn('bootstrap.min.js', data)
-        self.assertIn('bootstrap.min.css', data)
-        self.assertIn('jquery.min.js', data)
-
-        with self.client.get('/bootstrap/static/css/bootstrap.min.css') as css_response:
-            self.assertNotEqual(css_response.status_code, 404)
-        with self.client.get('/bootstrap/static/js/bootstrap.min.js') as js_response:
-            self.assertNotEqual(js_response.status_code, 404)
-        with self.client.get('/bootstrap/static/jquery.min.js') as jquery_response:
-            self.assertNotEqual(jquery_response.status_code, 404)
-
-        css_rv = self.bootstrap.load_css()
-        js_rv = self.bootstrap.load_js()
-        self.assertIn('/bootstrap/static/css/bootstrap.min.css', css_rv)
-        self.assertIn('/bootstrap/static/js/bootstrap.min.js', js_rv)
-        self.assertNotIn('https://cdn.jsdelivr.net/npm/bootstrap', css_rv)
-        self.assertNotIn('https://cdn.jsdelivr.net/npm/bootstrap', js_rv)
-
-    def test_cdn_resources(self):
-        response = self.client.get('/')
-        data = response.get_data(as_text=True)
-        self.assertIn('https://cdn.jsdelivr.net/npm/bootstrap', data)
-        self.assertIn('bootstrap.min.js', data)
-        self.assertIn('bootstrap.min.css', data)
-
-        css_rv = self.bootstrap.load_css()
-        js_rv = self.bootstrap.load_js()
-        self.assertNotIn('/bootstrap/static/css/bootstrap.min.css', css_rv)
-        self.assertNotIn('/bootstrap/static/js/bootstrap.min.js', js_rv)
-        self.assertIn('https://cdn.jsdelivr.net/npm/bootstrap', css_rv)
-        self.assertIn('https://cdn.jsdelivr.net/npm/bootstrap', js_rv)
-
-    def test_bootswatch_local(self):
-        current_app.config['BOOTSTRAP_SERVE_LOCAL'] = True
-
-        for theme in self.bootswatch_themes:
-            current_app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = theme
-            data = self.client.get('/').get_data(as_text=True)
-            self.assertNotIn('https://cdn.jsdelivr.net/npm/bootswatch', data)
-            self.assertIn('swatch/%s/bootstrap.min.css' % theme, data)
-            with self.client.get('/bootstrap/static/css/swatch/%s/bootstrap.min.css' % theme) as css_response:
-                self.assertNotEqual(css_response.status_code, 404)
-
-    def test_bootswatch_cdn(self):
-        current_app.config['BOOTSTRAP_SERVE_LOCAL'] = False
-
-        for theme in self.bootswatch_themes:
-            current_app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = theme
-            data = self.client.get('/').get_data(as_text=True)
-            self.assertIn('https://cdn.jsdelivr.net/npm/bootswatch', data)
-            self.assertIn('dist/%s/bootstrap.min.css' % theme, data)
-            css_rv = self.bootstrap.load_css()
-            self.assertNotIn('/bootstrap/static/css/swatch/%s/bootstrap.min.css' % theme, data)
-            self.assertIn('https://cdn.jsdelivr.net/npm/bootswatch', css_rv)
-
-    def test_render_field(self):
-        @self.app.route('/field')
+class TestRender(object):
+    def test_render_field(self, app, client, hello_form):
+        @app.route('/field')
         def test():
-            form = HelloForm()
+            form = hello_form()
             return render_template_string('''
             {% from 'bootstrap/form.html' import render_field %}
             {{ render_field(form.username) }}
             {{ render_field(form.password) }}
             ''', form=form)
 
-        response = self.client.get('/field')
+        response = client.get('/field')
         data = response.get_data(as_text=True)
-        self.assertIn('<input class="form-control" id="username" name="username"', data)
-        self.assertIn('<input class="form-control" id="password" name="password"', data)
+        assert '<input class="form-control" id="username" name="username"' in data
+        assert '<input class="form-control" id="password" name="password"' in data
 
-    def test_render_form(self):
-        @self.app.route('/form')
+    def test_render_form(self, app, client, hello_form):
+        @app.route('/form')
         def test():
-            form = HelloForm()
+            form = hello_form()
             return render_template_string('''
                     {% from 'bootstrap/form.html' import render_form %}
                     {{ render_form(form) }}
                     ''', form=form)
 
-        response = self.client.get('/form')
+        response = client.get('/form')
         data = response.get_data(as_text=True)
-        self.assertIn('<input class="form-control" id="username" name="username"', data)
-        self.assertIn('<input class="form-control" id="password" name="password"', data)
+        assert '<input class="form-control" id="username" name="username"' in data
+        assert '<input class="form-control" id="password" name="password"' in data
 
-    def test_render_form_row(self):
-        @self.app.route('/form')
+    def test_render_form_row(self, app, client, hello_form):
+        @app.route('/form')
         def test():
-            form = HelloForm()
+            form = hello_form()
             return render_template_string('''
                     {% from 'bootstrap/form.html' import render_form_row %}
                     {{ render_form_row([form.username, form.password]) }}
                     ''', form=form)
-        response = self.client.get('/form')
+        response = client.get('/form')
         data = response.get_data(as_text=True)
-        self.assertIn('<div class="form-row">', data)
-        self.assertIn('<div class="col">', data)
+        assert '<div class="form-row">' in data
+        assert '<div class="col">' in data
 
-    def test_render_form_row_row_class(self):
-        @self.app.route('/form')
+    def test_render_form_row_row_class(self, app, client, hello_form):
+        @app.route('/form')
         def test():
-            form = HelloForm()
+            form = hello_form()
             return render_template_string('''
                     {% from 'bootstrap/form.html' import render_form_row %}
                     {{ render_form_row([form.username, form.password], row_class='row') }}
                     ''', form=form)
-        response = self.client.get('/form')
+        response = client.get('/form')
         data = response.get_data(as_text=True)
-        self.assertIn('<div class="row">', data)
+        assert '<div class="row">' in data
 
-    def test_render_form_row_col_class_default(self):
-        @self.app.route('/form')
+    def test_render_form_row_col_class_default(self, app, client, hello_form):
+        @app.route('/form')
         def test():
-            form = HelloForm()
+            form = hello_form()
             return render_template_string('''
                     {% from 'bootstrap/form.html' import render_form_row %}
                     {{ render_form_row([form.username, form.password], col_class_default='col-md-6') }}
                     ''', form=form)
-        response = self.client.get('/form')
+        response = client.get('/form')
         data = response.get_data(as_text=True)
-        self.assertIn('<div class="col-md-6">', data)
+        assert '<div class="col-md-6">' in data
 
-    def test_render_form_row_col_map(self):
-        @self.app.route('/form')
+    def test_render_form_row_col_map(self, app, client, hello_form):
+        @app.route('/form')
         def test():
-            form = HelloForm()
+            form = hello_form()
             return render_template_string('''
                     {% from 'bootstrap/form.html' import render_form_row %}
                     {{ render_form_row([form.username, form.password], col_map={'username': 'col-md-6'}) }}
                     ''', form=form)
-        response = self.client.get('/form')
+        response = client.get('/form')
         data = response.get_data(as_text=True)
-        self.assertIn('<div class="col">', data)
-        self.assertIn('<div class="col-md-6">', data)
+        assert '<div class="col">' in data
+        assert '<div class="col-md-6">' in data
 
-    def test_render_pager(self):
-        db = SQLAlchemy(self.app)
+    def test_render_pager(self, app, client):
+        db = SQLAlchemy(app)
 
         class Message(db.Model):
             id = db.Column(db.Integer, primary_key=True)
 
-        @self.app.route('/pager')
+        @app.route('/pager')
         def test():
             db.drop_all()
             db.create_all()
@@ -216,27 +108,27 @@ class BootstrapTestCase(unittest.TestCase):
                             {{ render_pager(pagination) }}
                             ''', pagination=pagination, messages=messages)
 
-        response = self.client.get('/pager')
+        response = client.get('/pager')
         data = response.get_data(as_text=True)
-        self.assertIn('<nav aria-label="Page navigation">', data)
-        self.assertIn('Previous', data)
-        self.assertIn('Next', data)
-        self.assertIn('<li class="page-item disabled">', data)
+        assert '<nav aria-label="Page navigation">' in data
+        assert 'Previous' in data
+        assert 'Next' in data
+        assert '<li class="page-item disabled">' in data
 
-        response = self.client.get('/pager?page=2')
+        response = client.get('/pager?page=2')
         data = response.get_data(as_text=True)
-        self.assertIn('<nav aria-label="Page navigation">', data)
-        self.assertIn('Previous', data)
-        self.assertIn('Next', data)
-        self.assertNotIn('<li class="page-item disabled">', data)
+        assert '<nav aria-label="Page navigation">' in data
+        assert 'Previous' in data
+        assert 'Next' in data
+        assert '<li class="page-item disabled">' not in data
 
-    def test_render_pagination(self):
-        db = SQLAlchemy(self.app)
+    def test_render_pagination(self, app, client):
+        db = SQLAlchemy(app)
 
         class Message(db.Model):
             id = db.Column(db.Integer, primary_key=True)
 
-        @self.app.route('/pagination')
+        @app.route('/pagination')
         def test():
             db.drop_all()
             db.create_all()
@@ -252,45 +144,45 @@ class BootstrapTestCase(unittest.TestCase):
                                     {{ render_pagination(pagination) }}
                                     ''', pagination=pagination, messages=messages)
 
-        response = self.client.get('/pagination')
+        response = client.get('/pagination')
         data = response.get_data(as_text=True)
-        self.assertIn('<nav aria-label="Page navigation">', data)
-        self.assertIn('<a class="page-link" href="#">1 <span class="sr-only">(current)</span></a>', data)
-        self.assertIn('10</a>', data)
+        assert '<nav aria-label="Page navigation">' in data
+        assert '<a class="page-link" href="#">1 <span class="sr-only">(current)</span></a>' in data
+        assert '10</a>' in data
 
-        response = self.client.get('/pagination?page=2')
+        response = client.get('/pagination?page=2')
         data = response.get_data(as_text=True)
-        self.assertIn('<nav aria-label="Page navigation">', data)
-        self.assertIn('1</a>', data)
-        self.assertIn('<a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>', data)
-        self.assertIn('10</a>', data)
+        assert '<nav aria-label="Page navigation">' in data
+        assert '1</a>' in data
+        assert '<a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>' in data
+        assert '10</a>' in data
 
-    def test_render_nav_item(self):
-        @self.app.route('/nav_item')
+    def test_render_nav_item(self, app, client):
+        @app.route('/nav_item')
         def test():
             return render_template_string('''
                     {% from 'bootstrap/nav.html' import render_nav_item %}
                     {{ render_nav_item('test', 'Home') }}
                     ''')
 
-        response = self.client.get('/nav_item')
+        response = client.get('/nav_item')
         data = response.get_data(as_text=True)
-        self.assertIn('<a class="nav-item nav-link active"', data)
+        assert '<a class="nav-item nav-link active"' in data
 
-    def test_render_breadcrumb_item(self):
-        @self.app.route('/breadcrumb_item')
+    def test_render_breadcrumb_item(self, app, client):
+        @app.route('/breadcrumb_item')
         def test():
             return render_template_string('''
                     {% from 'bootstrap/nav.html' import render_breadcrumb_item %}
                     {{ render_breadcrumb_item('test', 'Home') }}
                     ''')
 
-        response = self.client.get('/breadcrumb_item')
+        response = client.get('/breadcrumb_item')
         data = response.get_data(as_text=True)
-        self.assertIn('<li class="breadcrumb-item active"  aria-current="page">', data)
+        assert '<li class="breadcrumb-item active"  aria-current="page">' in data
 
-    def test_render_static(self):
-        @self.app.route('/test_static')
+    def test_render_static(self, app, client):
+        @app.route('/test_static')
         def test():
             return render_template_string('''
                             {% from 'bootstrap/utils.html' import render_static %}
@@ -299,14 +191,14 @@ class BootstrapTestCase(unittest.TestCase):
                             {{ render_static('icon', 'test.ico') }}
                             ''')
 
-        response = self.client.get('/test_static')
+        response = client.get('/test_static')
         data = response.get_data(as_text=True)
-        self.assertIn('<link rel="stylesheet" href="/static/test.css" type="text/css">', data)
-        self.assertIn('<script type="text/javascript" src="/static/test.js"></script>', data)
-        self.assertIn('<link rel="icon" href="/static/test.ico">', data)
+        assert '<link rel="stylesheet" href="/static/test.css" type="text/css">' in data
+        assert '<script type="text/javascript" src="/static/test.js"></script>' in data
+        assert '<link rel="icon" href="/static/test.ico">' in data
 
-    def test_render_messages(self):
-        @self.app.route('/messages')
+    def test_render_messages(self, app, client):
+        @app.route('/messages')
         def test_messages():
             flash('test message', 'danger')
             return render_template_string('''
@@ -314,7 +206,7 @@ class BootstrapTestCase(unittest.TestCase):
                             {{ render_messages() }}
                             ''')
 
-        @self.app.route('/container')
+        @app.route('/container')
         def test_container():
             flash('test message', 'danger')
             return render_template_string('''
@@ -322,7 +214,7 @@ class BootstrapTestCase(unittest.TestCase):
                             {{ render_messages(container=True) }}
                             ''')
 
-        @self.app.route('/dismissible')
+        @app.route('/dismissible')
         def test_dismissible():
             flash('test message', 'danger')
             return render_template_string('''
@@ -330,7 +222,7 @@ class BootstrapTestCase(unittest.TestCase):
                             {{ render_messages(dismissible=True) }}
                             ''')
 
-        @self.app.route('/dismiss_animate')
+        @app.route('/dismiss_animate')
         def test_dismiss_animate():
             flash('test message', 'danger')
             return render_template_string('''
@@ -338,35 +230,35 @@ class BootstrapTestCase(unittest.TestCase):
                             {{ render_messages(dismissible=True, dismiss_animate=True) }}
                             ''')
 
-        response = self.client.get('/messages')
+        response = client.get('/messages')
         data = response.get_data(as_text=True)
-        self.assertIn('<div class="alert alert-danger"', data)
+        assert '<div class="alert alert-danger"' in data
 
-        response = self.client.get('/container')
+        response = client.get('/container')
         data = response.get_data(as_text=True)
-        self.assertIn('<div class="container flashed-messages">', data)
+        assert '<div class="container flashed-messages">' in data
 
-        response = self.client.get('/dismissible')
+        response = client.get('/dismissible')
         data = response.get_data(as_text=True)
-        self.assertIn('alert-dismissible', data)
-        self.assertIn('<button type="button" class="close" data-dismiss="alert"', data)
-        self.assertNotIn('fade show', data)
+        assert 'alert-dismissible' in data
+        assert '<button type="button" class="close" data-dismiss="alert"' in data
+        assert 'fade show' not in data
 
-        response = self.client.get('/dismiss_animate')
+        response = client.get('/dismiss_animate')
         data = response.get_data(as_text=True)
-        self.assertIn('alert-dismissible', data)
-        self.assertIn('<button type="button" class="close" data-dismiss="alert"', data)
-        self.assertIn('fade show', data)
+        assert 'alert-dismissible', data
+        assert '<button type="button" class="close" data-dismiss="alert"' in data
+        assert 'fade show' in data
 
     # test WTForm fields for render_form and render_field
-    def test_render_form_enctype(self):
+    def test_render_form_enctype(self, app, client):
         class SingleUploadForm(FlaskForm):
             avatar = FileField('Avatar')
 
         class MultiUploadForm(FlaskForm):
             photos = MultipleFileField('Multiple photos')
 
-        @self.app.route('/single')
+        @app.route('/single')
         def single():
             form = SingleUploadForm()
             return render_template_string('''
@@ -374,7 +266,7 @@ class BootstrapTestCase(unittest.TestCase):
             {{ render_form(form) }}
             ''', form=form)
 
-        @self.app.route('/multi')
+        @app.route('/multi')
         def multi():
             form = SingleUploadForm()
             return render_template_string('''
@@ -382,23 +274,23 @@ class BootstrapTestCase(unittest.TestCase):
             {{ render_form(form) }}
             ''', form=form)
 
-        response = self.client.get('/single')
+        response = client.get('/single')
         data = response.get_data(as_text=True)
-        self.assertIn('multipart/form-data', data)
+        assert 'multipart/form-data' in data
 
-        response = self.client.get('/multi')
+        response = client.get('/multi')
         data = response.get_data(as_text=True)
-        self.assertIn('multipart/form-data', data)
+        assert 'multipart/form-data' in data
 
     # test render_kw class for WTForms field
-    def test_form_render_kw_class(self):
+    def test_form_render_kw_class(self, app, client):
 
         class TestForm(FlaskForm):
             username = StringField('Username')
             password = PasswordField('Password', render_kw={'class': 'my-password-class'})
             submit = SubmitField(render_kw={'class': 'my-awesome-class'})
 
-        @self.app.route('/render_kw')
+        @app.route('/render_kw')
         def render_kw():
             form = TestForm()
             return render_template_string('''
@@ -406,21 +298,21 @@ class BootstrapTestCase(unittest.TestCase):
             {{ render_form(form) }}
             ''', form=form)
 
-        response = self.client.get('/render_kw')
+        response = client.get('/render_kw')
         data = response.get_data(as_text=True)
-        self.assertIn('class="form-control"', data)
-        self.assertNotIn('class="form-control "', data)
-        self.assertIn('class="form-control my-password-class"', data)
-        self.assertIn('my-awesome-class', data)
-        self.assertIn('btn', data)
+        assert 'class="form-control"' in data
+        assert 'class="form-control "' not in data
+        assert 'class="form-control my-password-class"' in data
+        assert 'my-awesome-class' in data
+        assert 'btn' in data
 
     # test WTForm field description for BooleanField
-    def test_form_description_for_booleanfield(self):
+    def test_form_description_for_booleanfield(self, app, client):
 
         class TestForm(FlaskForm):
             remember = BooleanField('Remember me', description='Just check this')
 
-        @self.app.route('/description')
+        @app.route('/description')
         def description():
             form = TestForm()
             return render_template_string('''
@@ -428,89 +320,89 @@ class BootstrapTestCase(unittest.TestCase):
             {{ render_form(form) }}
             ''', form=form)
 
-        response = self.client.get('/description')
+        response = client.get('/description')
         data = response.get_data(as_text=True)
-        self.assertIn('Remember me', data)
-        self.assertIn('<small class="form-text text-muted">Just check this</small>', data)
+        assert 'Remember me' in data
+        assert '<small class="form-text text-muted">Just check this</small>' in data
 
-    def test_button_size(self):
-        self.assertEqual(current_app.config['BOOTSTRAP_BTN_SIZE'], 'md')
+    def test_button_size(self, app, client, hello_form):
+        assert current_app.config['BOOTSTRAP_BTN_SIZE'] == 'md'
         current_app.config['BOOTSTRAP_BTN_SIZE'] = 'lg'
 
-        @self.app.route('/form')
+        @app.route('/form')
         def test():
-            form = HelloForm()
+            form = hello_form()
             return render_template_string('''
             {% from 'bootstrap/form.html' import render_form %}
             {{ render_form(form) }}
             ''', form=form)
 
-        response = self.client.get('/form')
+        response = client.get('/form')
         data = response.get_data(as_text=True)
-        self.assertIn('btn-lg', data)
+        assert 'btn-lg' in data
 
-        @self.app.route('/form2')
+        @app.route('/form2')
         def test_overwrite():
-            form = HelloForm()
+            form = hello_form()
             return render_template_string('''
             {% from 'bootstrap/form.html' import render_form %}
             {{ render_form(form, button_size='sm') }}
             ''', form=form)
 
-        response = self.client.get('/form2')
+        response = client.get('/form2')
         data = response.get_data(as_text=True)
-        self.assertNotIn('btn-lg', data)
-        self.assertIn('btn-sm', data)
+        assert 'btn-lg' not in data
+        assert 'btn-sm' in data
 
-    def test_button_style(self):
-        self.assertEqual(current_app.config['BOOTSTRAP_BTN_STYLE'], 'primary')
+    def test_button_style(self, app, client, hello_form):
+        assert current_app.config['BOOTSTRAP_BTN_STYLE'] == 'primary'
         current_app.config['BOOTSTRAP_BTN_STYLE'] = 'secondary'
 
-        @self.app.route('/form')
+        @app.route('/form')
         def test():
-            form = HelloForm()
+            form = hello_form()
             return render_template_string('''
             {% from 'bootstrap/form.html' import render_form %}
             {{ render_form(form) }}
             ''', form=form)
 
-        response = self.client.get('/form')
+        response = client.get('/form')
         data = response.get_data(as_text=True)
-        self.assertIn('btn-secondary', data)
+        assert 'btn-secondary' in data
 
-        @self.app.route('/form2')
+        @app.route('/form2')
         def test_overwrite():
-            form = HelloForm()
+            form = hello_form()
             return render_template_string('''
             {% from 'bootstrap/form.html' import render_form %}
             {{ render_form(form, button_style='success') }}
             ''', form=form)
 
-        response = self.client.get('/form2')
+        response = client.get('/form2')
         data = response.get_data(as_text=True)
-        self.assertNotIn('btn-primary', data)
-        self.assertIn('btn-success', data)
+        assert 'btn-primary' not in data
+        assert 'btn-success' in data
 
-        @self.app.route('/form3')
+        @app.route('/form3')
         def test_button_map():
-            form = HelloForm()
+            form = hello_form()
             return render_template_string('''
             {% from 'bootstrap/form.html' import render_form %}
             {{ render_form(form, button_map={'submit': 'warning'}) }}
             ''', form=form)
 
-        response = self.client.get('/form3')
+        response = client.get('/form3')
         data = response.get_data(as_text=True)
-        self.assertNotIn('btn-primary', data)
-        self.assertIn('btn-warning', data)
+        assert 'btn-primary' not in data
+        assert 'btn-warning' in data
 
-    def test_error_message_for_radiofield_and_booleanfield(self):
+    def test_error_message_for_radiofield_and_booleanfield(self, app, client):
         class TestForm(FlaskForm):
             remember = BooleanField('Remember me', validators=[DataRequired()])
             option = RadioField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')],
                                 validators=[DataRequired()])
 
-        @self.app.route('/error', methods=['GET', 'POST'])
+        @app.route('/error', methods=['GET', 'POST'])
         def error():
             form = TestForm()
             if form.validate_on_submit():
@@ -520,18 +412,18 @@ class BootstrapTestCase(unittest.TestCase):
             {{ render_form(form) }}
             ''', form=form)
 
-        response = self.client.post('/error', follow_redirects=True)
+        response = client.post('/error', follow_redirects=True)
         data = response.get_data(as_text=True)
-        self.assertIn('This field is required', data)
+        assert 'This field is required' in data
 
-    def test_render_simple_table(self):
-        db = SQLAlchemy(self.app)
+    def test_render_simple_table(self, app, client):
+        db = SQLAlchemy(app)
 
         class Message(db.Model):
             id = db.Column(db.Integer, primary_key=True)
             text = db.Column(db.Text)
 
-        @self.app.route('/table')
+        @app.route('/table')
         def test():
             db.drop_all()
             db.create_all()
@@ -548,23 +440,23 @@ class BootstrapTestCase(unittest.TestCase):
                                     {{ render_table(messages, titles) }}
                                     ''', titles=titles, messages=messages)
 
-        response = self.client.get('/table')
+        response = client.get('/table')
         data = response.get_data(as_text=True)
-        self.assertIn('<table class="table">', data)
-        self.assertIn('<th scope="col">#</th>', data)
-        self.assertIn('<th scope="col">Message</th>', data)
-        self.assertIn('<th scope="col">Message</th>', data)
-        self.assertIn('<th scope="row">1</th>', data)
-        self.assertIn('<td>Test message 1</td>', data)
+        assert '<table class="table">' in data
+        assert '<th scope="col">#</th>' in data
+        assert '<th scope="col">Message</th>' in data
+        assert '<th scope="col">Message</th>' in data
+        assert '<th scope="row">1</th>' in data
+        assert '<td>Test message 1</td>' in data
 
-    def test_render_customized_table(self):
-        db = SQLAlchemy(self.app)
+    def test_render_customized_table(self, app, client):
+        db = SQLAlchemy(app)
 
         class Message(db.Model):
             id = db.Column(db.Integer, primary_key=True)
             text = db.Column(db.Text)
 
-        @self.app.route('/table')
+        @app.route('/table')
         def test():
             db.drop_all()
             db.create_all()
@@ -582,20 +474,20 @@ class BootstrapTestCase(unittest.TestCase):
                                     header_classes='thead-dark', caption='Messages') }}
                                     ''', titles=titles, messages=messages)
 
-        response = self.client.get('/table')
+        response = client.get('/table')
         data = response.get_data(as_text=True)
-        self.assertIn('<table class="table table-striped">', data)
-        self.assertIn('<thead class="thead-dark">', data)
-        self.assertIn('<caption>Messages</caption>', data)
+        assert '<table class="table table-striped">' in data
+        assert '<thead class="thead-dark">' in data
+        assert '<caption>Messages</caption>' in data
 
-    def test_render_responsive_table(self):
-        db = SQLAlchemy(self.app)
+    def test_render_responsive_table(self, app, client):
+        db = SQLAlchemy(app)
 
         class Message(db.Model):
             id = db.Column(db.Integer, primary_key=True)
             text = db.Column(db.Text)
 
-        @self.app.route('/table')
+        @app.route('/table')
         def test():
             db.drop_all()
             db.create_all()
@@ -613,18 +505,18 @@ class BootstrapTestCase(unittest.TestCase):
                                     responsive_class='table-responsive-sm') }}
                                     ''', titles=titles, messages=messages)
 
-        response = self.client.get('/table')
+        response = client.get('/table')
         data = response.get_data(as_text=True)
-        self.assertIn('<div class="table-responsive-sm">', data)
+        assert '<div class="table-responsive-sm">' in data
 
-    def test_build_table_titles(self):
-        db = SQLAlchemy(self.app)
+    def test_build_table_titles(self, app, client):
+        db = SQLAlchemy(app)
 
         class Message(db.Model):
             id = db.Column(db.Integer, primary_key=True)
             text = db.Column(db.Text)
 
-        @self.app.route('/table')
+        @app.route('/table')
         def test():
             db.drop_all()
             db.create_all()
@@ -640,18 +532,18 @@ class BootstrapTestCase(unittest.TestCase):
                                     {{ render_table(messages) }}
                                     ''', messages=messages)
 
-        response = self.client.get('/table')
+        response = client.get('/table')
         data = response.get_data(as_text=True)
-        self.assertIn('<table class="table">', data)
-        self.assertIn('<th scope="col">#</th>', data)
-        self.assertIn('<th scope="col">Text</th>', data)
-        self.assertIn('<th scope="col">Text</th>', data)
-        self.assertIn('<th scope="row">1</th>', data)
-        self.assertIn('<td>Test message 1</td>', data)
+        assert '<table class="table">' in data
+        assert '<th scope="col">#</th>' in data
+        assert '<th scope="col">Text</th>' in data
+        assert '<th scope="col">Text</th>' in data
+        assert '<th scope="row">1</th>' in data
+        assert '<td>Test message 1</td>' in data
 
-    def test_build_table_titles_with_empty_data(self):
+    def test_build_table_titles_with_empty_data(self, app, client):
 
-        @self.app.route('/table')
+        @app.route('/table')
         def test():
             messages = []
             return render_template_string('''
@@ -659,21 +551,21 @@ class BootstrapTestCase(unittest.TestCase):
                                     {{ render_table(messages) }}
                                     ''', messages=messages)
 
-        response = self.client.get('/table')
-        self.assertEqual(response.status_code, 200)
+        response = client.get('/table')
+        assert response.status_code == 200
 
-    def test_render_table_with_actions(self):
-        db = SQLAlchemy(self.app)
+    def test_render_table_with_actions(self, app, client):
+        db = SQLAlchemy(app)
 
         class Message(db.Model):
             id = db.Column(db.Integer, primary_key=True)
             text = db.Column(db.Text)
 
-        @self.app.route('/table/<message_id>/view')
+        @app.route('/table/<message_id>/view')
         def test_view_message(message_id):
             return 'Viewing {}'.format(message_id)
 
-        @self.app.route('/table')
+        @app.route('/table')
         def test():
             db.drop_all()
             db.create_all()
@@ -691,17 +583,17 @@ class BootstrapTestCase(unittest.TestCase):
                                     view_url=url_for('test_view_message', message_id=':primary_key')) }}
                                     ''', titles=titles, messages=messages)
 
-        response = self.client.get('/table')
+        response = client.get('/table')
         data = response.get_data(as_text=True)
-        self.assertIn('<a href="/table/1/view">', data)
-        self.assertIn('<img src="/bootstrap/static/img/view.svg" alt="View">', data)
+        assert '<a href="/table/1/view">' in data
+        assert '<img src="/bootstrap/static/img/view.svg" alt="View">' in data
 
-    def test_render_hidden_errors(self):
+    def test_render_hidden_errors(self, app, client):
         class TestForm(FlaskForm):
             hide = HiddenField('Hide', validators=[DataRequired('Hide field is empty.')])
             submit = SubmitField()
 
-        @self.app.route('/error', methods=['GET', 'POST'])
+        @app.route('/error', methods=['GET', 'POST'])
         def error():
             form = TestForm()
             if form.validate_on_submit():
@@ -715,74 +607,74 @@ class BootstrapTestCase(unittest.TestCase):
             </form>
             ''', form=form)
 
-        response = self.client.post('/error', follow_redirects=True)
+        response = client.post('/error', follow_redirects=True)
         data = response.get_data(as_text=True)
-        self.assertIn('Hide field is empty.', data)
+        assert 'Hide field is empty.' in data
 
-    def test_render_icon(self):
-        @self.app.route('/icon')
+    def test_render_icon(self, app, client):
+        @app.route('/icon')
         def icon():
             return render_template_string('''
             {% from 'bootstrap/utils.html' import render_icon %}
                 {{ render_icon('heart') }}
             ''')
 
-        @self.app.route('/icon-size')
+        @app.route('/icon-size')
         def icon_size():
             return render_template_string('''
             {% from 'bootstrap/utils.html' import render_icon %}
                 {{ render_icon('heart', 32) }}
             ''')
 
-        @self.app.route('/icon-style')
+        @app.route('/icon-style')
         def icon_style():
             return render_template_string('''
             {% from 'bootstrap/utils.html' import render_icon %}
                 {{ render_icon('heart', color='primary') }}
             ''')
 
-        @self.app.route('/icon-color')
+        @app.route('/icon-color')
         def icon_color():
             return render_template_string('''
             {% from 'bootstrap/utils.html' import render_icon %}
                 {{ render_icon('heart', color='green') }}
             ''')
 
-        response = self.client.get('/icon')
+        response = client.get('/icon')
         data = response.get_data(as_text=True)
-        self.assertIn('bootstrap-icons.svg#heart', data)
-        self.assertIn('width="1em"', data)
-        self.assertIn('height="1em"', data)
+        assert 'bootstrap-icons.svg#heart' in data
+        assert 'width="1em"' in data
+        assert 'height="1em"' in data
 
-        response = self.client.get('/icon-size')
+        response = client.get('/icon-size')
         data = response.get_data(as_text=True)
-        self.assertIn('bootstrap-icons.svg#heart', data)
-        self.assertIn('width="32"', data)
-        self.assertIn('height="32"', data)
+        assert 'bootstrap-icons.svg#heart' in data
+        assert 'width="32"' in data
+        assert 'height="32"' in data
 
-        response = self.client.get('/icon-style')
+        response = client.get('/icon-style')
         data = response.get_data(as_text=True)
-        self.assertIn('bootstrap-icons.svg#heart', data)
-        self.assertIn('text-primary', data)
+        assert 'bootstrap-icons.svg#heart' in data
+        assert 'text-primary' in data
 
-        response = self.client.get('/icon-color')
+        response = client.get('/icon-color')
         data = response.get_data(as_text=True)
-        self.assertIn('bootstrap-icons.svg#heart', data)
-        self.assertIn('style="color: green"', data)
+        assert 'bootstrap-icons.svg#heart' in data
+        assert 'style="color: green"' in data
 
-    def test_render_icon_config(self):
-        self.app.config['BOOTSTRAP_ICON_SIZE'] = 100
-        self.app.config['BOOTSTRAP_ICON_COLOR'] = 'success'
+    def test_render_icon_config(self, app, client):
+        app.config['BOOTSTRAP_ICON_SIZE'] = 100
+        app.config['BOOTSTRAP_ICON_COLOR'] = 'success'
 
-        @self.app.route('/icon')
+        @app.route('/icon')
         def icon():
             return render_template_string('''
             {% from 'bootstrap/utils.html' import render_icon %}
                 {{ render_icon('heart') }}
             ''')
 
-        response = self.client.get('/icon')
+        response = client.get('/icon')
         data = response.get_data(as_text=True)
-        self.assertIn('width="100"', data)
-        self.assertIn('height="100"', data)
-        self.assertIn('text-success', data)
+        assert 'width="100"' in data
+        assert 'height="100"' in data
+        assert 'text-success' in data
