@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
-"""
-    flask_bootstrap
-    ~~~~~~~~~~~~~~
-    :copyright: (c) 2017 by Grey Li.
-    :license: MIT, see LICENSE for more details.
+"""Init Flask-Bootstrap.
+
+:copyright: (c) 2017 by Grey Li.
+:license: MIT, see LICENSE for more details.
 """
 from flask import current_app, Markup, Blueprint, url_for
 
@@ -23,7 +21,9 @@ VERSION_POPPER = '1.14.0'
 
 
 def get_table_titles(data, primary_key, primary_key_title):
-    """Detect and build the table titles tuple from ORM object, currently only support SQLAlchemy.
+    """Detect and build the table titles tuple from ORM object.
+
+    Currently only supported for SQLAlchemy.
 
     .. versionadded:: 1.4.0
     """
@@ -37,19 +37,23 @@ def get_table_titles(data, primary_key, primary_key_title):
     return titles
 
 
-class Bootstrap(object):
+class Bootstrap():
+    """Init Bootstrap class."""
+
     def __init__(self, app=None):
         if app is not None:
             self.init_app(app)
 
     def init_app(self, app):
-
+        """Init Bootstrap application."""
         if not hasattr(app, 'extensions'):
             app.extensions = {}
         app.extensions['bootstrap'] = self
 
-        blueprint = Blueprint('bootstrap', __name__, template_folder='templates',
-                              static_folder='static', static_url_path='/bootstrap' + app.static_url_path)
+        blueprint = Blueprint('bootstrap', __name__,
+                              template_folder='templates',
+                              static_folder='static',
+                              static_url_path='/bootstrap'+app.static_url_path)
         app.register_blueprint(blueprint)
 
         app.jinja_env.globals['bootstrap'] = self
@@ -87,17 +91,21 @@ class Bootstrap(object):
                 url_for('bootstrap.static', filename=base_path + css_filename)
         else:
             if not bootswatch_theme:
-                css = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/css/%s"' \
+                css = '<link rel="stylesheet" href="https://' \
+                    'cdn.jsdelivr.net/npm/bootstrap@%s/dist/css/%s"' \
                     ' type="text/css">' % (version, css_filename)
             else:
-                css = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@%s/dist/%s/%s"' \
-                    ' type="text/css">' % (version, bootswatch_theme.lower(), css_filename)
+                css = '<link rel="stylesheet" href="https://' \
+                    'cdn.jsdelivr.net/npm/bootswatch@%s/dist/%s/%s"' \
+                    ' type="text/css">' % (version, bootswatch_theme.lower(),
+                                          css_filename)
         return Markup(css)
 
     @staticmethod
     def load_js(version=VERSION_BOOTSTRAP, jquery_version=VERSION_JQUERY,
-                popper_version=VERSION_POPPER, with_jquery=True, with_popper=True):
-        """Load Bootstrap and related library's js resources with given version.
+                popper_version=VERSION_POPPER, with_jquery=True,
+                with_popper=True):
+        """Load Bootstrap and related library's js resources for given version.
 
         .. versionadded:: 0.1.0
 
@@ -114,26 +122,31 @@ class Bootstrap(object):
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
 
         if serve_local:
-            js = '<script src="%s"></script>' % url_for('bootstrap.static', filename='js/' + js_filename)
+            js = '<script src="%s"></script>' \
+                 % url_for('bootstrap.static', filename='js/' + js_filename)
         else:
-            js = '<script src="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/js/%s">' \
-                 '</script>' % (version, js_filename)
+            js = '<script src="https://cdn.jsdelivr.net/npm/' \
+                'bootstrap@%s/dist/js/%s"></script>' % (version, js_filename)
 
         if with_jquery:
             if serve_local:
-                jquery = '<script src="%s"></script>' % url_for('bootstrap.static', filename=jquery_filename)
+                jquery = '<script src="%s"></script>' \
+                    % url_for('bootstrap.static', filename=jquery_filename)
             else:
-                jquery = '<script src="https://cdn.jsdelivr.net/npm/jquery@%s/dist/%s">' \
-                 '</script>' % (jquery_version, jquery_filename)
+                jquery = '<script src="https://cdn.jsdelivr.net/npm/' \
+                    'jquery@%s/dist/%s"></script>' % (jquery_version,
+                                                      jquery_filename)
         else:
             jquery = ''
 
         if with_popper:
             if serve_local:
-                popper = '<script src="%s"></script>' % url_for('bootstrap.static', filename=popper_filename)
+                popper = '<script src="%s"></script>' \
+                     % url_for('bootstrap.static', filename=popper_filename)
             else:
-                popper = '<script src="https://cdn.jsdelivr.net/npm/popper.js@%s/dist/umd/%s">' \
-                     '</script>' % (popper_version, popper_filename)
+                popper = '<script src="https://cdn.jsdelivr.net/npm/' \
+                    'popper.js@%s/dist/umd/%s"></script>' % (popper_version,
+                                                             popper_filename)
         else:
             popper = ''
         return Markup('''%s

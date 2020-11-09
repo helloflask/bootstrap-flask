@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
-"""
-Bootstrap-Flask
----------------
+"""Setup Bootstrap-Flask.
 
 [Bootstrap 4](https://getbootstrap.com) helper for Flask/Jinja2.
 
-If you come from Flask-Bootstrap, check out [this tutorial](https://bootstrap-flask.readthedocs.io/en/latest/migrate.html) on how to migrate to this extension.
+If you come from Flask-Bootstrap, check out
+[this tutorial](https://bootstrap-flask.readthedocs.io/en/latest/migrate.html)
+on how to migrate to this extension.
 
 Go to [GitHub page](https://github.com/greyli/bootstrap-flask), which you
 can check for more details.

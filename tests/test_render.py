@@ -6,7 +6,7 @@ from wtforms import BooleanField, FileField, HiddenField, MultipleFileField,\
 from wtforms.validators import DataRequired
 
 
-class TestRender(object):
+class TestRender():
     def test_render_field(self, app, client, hello_form):
         @app.route('/field')
         def test():
@@ -399,7 +399,8 @@ class TestRender(object):
     def test_error_message_for_radiofield_and_booleanfield(self, app, client):
         class TestForm(FlaskForm):
             remember = BooleanField('Remember me', validators=[DataRequired()])
-            option = RadioField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')],
+            option = RadioField(choices=[('dog', 'Dog'), ('cat', 'Cat'),
+                                         ('bird', 'Bird'), ('alien', 'Alien')],
                                 validators=[DataRequired()])
 
         @app.route('/error', methods=['GET', 'POST'])

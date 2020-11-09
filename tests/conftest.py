@@ -7,8 +7,10 @@ from wtforms.validators import DataRequired, Length
 
 
 class HelloForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
-    password = PasswordField('Password', validators=[DataRequired(), Length(8, 150)])
+    username = StringField('Username', validators=[DataRequired(),
+                                                   Length(1, 20)])
+    password = PasswordField('Password', validators=[DataRequired(),
+                                                     Length(8, 150)])
     remember = BooleanField('Remember me')
     submit = SubmitField()
 
@@ -21,9 +23,10 @@ def hello_form():
 @pytest.fixture
 def bootswatch_themes():
     themes = [
-        'cerulean', 'cosmo', 'cyborg', 'darkly', 'default', 'flatly', 'journal', 'litera',
-        'lumen', 'lux', 'materia', 'minty', 'pulse', 'sandstone', 'simplex', 'sketchy', 'slate',
-        'solar', 'spacelab', 'superhero', 'united', 'yeti'
+        'cerulean', 'cosmo', 'cyborg', 'darkly', 'default', 'flatly',
+        'journal', 'litera', 'lumen', 'lux', 'materia', 'minty', 'pulse',
+        'sandstone', 'simplex', 'sketchy', 'slate', 'solar', 'spacelab',
+        'superhero', 'united', 'yeti'
     ]
     return themes
 
@@ -38,7 +41,8 @@ def app():
 
     @app.route('/')
     def index():
-        return render_template_string('{{ bootstrap.load_css() }}{{ bootstrap.load_js() }}')
+        return render_template_string('{{ bootstrap.load_css() }}'
+                                      '{{ bootstrap.load_js() }}')
 
     yield app
 
