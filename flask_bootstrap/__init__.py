@@ -91,7 +91,7 @@ class Bootstrap(object):
                     ' type="text/css">' % (version, css_filename)
             else:
                 css = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@%s/dist/%s/%s"' \
-                    ' type="text/css"' % (version, bootswatch_theme.lower(), css_filename)
+                    ' type="text/css">' % (version, bootswatch_theme.lower(), css_filename)
         return Markup(css)
 
     @staticmethod
