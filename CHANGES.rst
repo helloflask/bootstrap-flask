@@ -1,6 +1,15 @@
 Changelog
 =========
 
+1.5.1
+-----
+
+Release date: 2020/11/9
+
+- Fix missing end angle bracket for bootswatch CSS link tag (`#110 <https://github.com/greyli/bootstrap-flask/issues/110>`__).
+- Migrate tests to pytest (`#109 <https://github.com/greyli/bootstrap-flask/pull/109>`__).
+
+
 1.5
 ---
 
@@ -16,6 +25,7 @@ Release date: 2020/8/30
 - Deprecated ``form_errors`` macro and it will be removed in 2.0, add ``render_hidden_errors`` macro as replacement.
 - Add ``render_icon`` macro to render Bootstrap icon with Bootstrap Icon SVG Sprite (`#99 <https://github.com/greyli/bootstrap-flask/pull/99>`__).
 - Add configuration ``BOOTSTRAP_MSG_CATEGORY`` to set default message category.
+
 
 1.4
 ---
