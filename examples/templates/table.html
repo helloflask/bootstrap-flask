@@ -2,23 +2,23 @@
 {% from 'bootstrap/table.html' import render_table %}
 
 {% block content %}
-<h1>Simple Table</h1>
-<p>{% raw %}{{ render_table(messages) }}{% endraw %}</p>
+<h2>Simple Table</h2>
+<pre>{% raw %}{{ render_table(messages) }}{% endraw %}</pre>
 {{ render_table(messages) }}
 
-<h1>Cutomized Table</h1>
-<p>{% raw %}{{ render_table(messages, titles, table_classes='table-striped', header_classes='thead-dark', caption='Messages') }}{% endraw %}</p>
+<h2>Cutomized Table</h2>
+<pre>{% raw %}{{ render_table(messages, titles, table_classes='table-striped', header_classes='thead-dark', caption='Messages') }}{% endraw %}</pre>
 {{ render_table(messages, titles, table_classes='table-striped', header_classes='thead-dark', caption='Messages') }}
 
-<h1>Responsive Table</h1>
-<p>{% raw %}{{ render_table(messages, responsive=True, responsive_class='table-responsive-sm') }}{% endraw %}</p>
+<h2>Responsive Table</h2>
+<pre>{% raw %}{{ render_table(messages, responsive=True, responsive_class='table-responsive-sm') }}{% endraw %}</pre>
 {{ render_table(messages, responsive=True, responsive_class='table-responsive-sm') }}
 
-<h1>Table with actions</h1>
-<p>{% raw %}{{ render_table(messages, show_actions=True,
-                            view_url=url_for('view_message', message_id=':primary_key'),
-                            edit_url=url_for('edit_message', message_id=':primary_key'),
-                            delete_url=url_for('delete_message', message_id=':primary_key')) }}{% endraw %}</p>
+<h2>Table with actions</h2>
+<pre>{% raw %}{{ render_table(messages, show_actions=True,
+                view_url=url_for('view_message', message_id=':primary_key'),
+                edit_url=url_for('edit_message', message_id=':primary_key'),
+                delete_url=url_for('delete_message', message_id=':primary_key')) }}{% endraw %}</pre>
 {{ render_table(messages, show_actions=True,
                 view_url=url_for('view_message', message_id=':primary_key'),
                 edit_url=url_for('edit_message', message_id=':primary_key'),
