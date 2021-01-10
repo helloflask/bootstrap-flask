@@ -84,6 +84,23 @@ class Message(db.Model):
     create_time = db.Column(db.Integer, nullable=False, unique=True)
 
 
+@app.before_first_request
+def before_first_request_func():
+    db.drop_all()
+    db.create_all()
+    for i in range(20):
+        m = Message(
+            text='Test message {}'.format(i+1),
+            author='Author {}'.format(i+1),
+            category='Category {}'.format(i+1),
+            create_time=4321*(i+1)
+            )
+        if i % 4:
+            m.draft = True
+        db.session.add(m)
+    db.session.commit()
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -102,12 +119,6 @@ def test_nav():
 
 @app.route('/pagination', methods=['GET', 'POST'])
 def test_pagination():
-    db.drop_all()
-    db.create_all()
-    for i in range(100):
-        m = Message()
-        db.session.add(m)
-    db.session.commit()
     page = request.args.get('page', 1, type=int)
     pagination = Message.query.paginate(page, per_page=10)
     messages = pagination.items
@@ -133,22 +144,6 @@ def test_flash():
     flash(Markup('A simple success alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.'), 'success')
     return render_template('flash.html')
 
-
-@app.before_first_request
-def before_first_request_func():
-    db.drop_all()
-    db.create_all()
-    for i in range(20):
-        m = Message(
-            text='Test message {}'.format(i+1),
-            author='Author {}'.format(i+1),
-            category='Category {}'.format(i+1),
-            create_time=4321*(i+1)
-            )
-        if i % 4:
-            m.draft = True
-        db.session.add(m)
-    db.session.commit()
 
 @app.route('/table')
 def test_table():
