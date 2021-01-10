@@ -125,11 +125,6 @@ def test_pagination():
     return render_template('pagination.html', pagination=pagination, messages=messages)
 
 
-@app.route('/static', methods=['GET', 'POST'])
-def test_static():
-    return render_template('static.html')
-
-
 @app.route('/flash', methods=['GET', 'POST'])
 def test_flash():
     flash('A simple default alert—check it out!')
