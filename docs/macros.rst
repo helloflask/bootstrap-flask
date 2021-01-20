@@ -66,7 +66,7 @@ API
 render_field()
 ----------------
 
-Render a form field create by Flask-WTF/WTForms.
+Render a form input for form field created by Flask-WTF/WTForms.
 
 Example
 ~~~~~~~~
@@ -104,7 +104,7 @@ API
 render_form()
 ---------------
 
-Render a form object create by Flask-WTF/WTForms, outputs a Bootstrap-markup form element.
+Render a complete form element for form object created by Flask-WTF/WTForms.
 
 Example
 ~~~~~~~~
@@ -242,7 +242,7 @@ API
 render_pager()
 -----------------
 
-Render a simple pager for query pagination object create by Flask-SQLAlchemy.
+Render a simple pager for query pagination object created by Flask-SQLAlchemy.
 
 Example
 ~~~~~~~~
@@ -274,7 +274,7 @@ API
 render_pagination()
 --------------------
 
-Render a standard pagination for query pagination object create by Flask-SQLAlchemy.
+Render a standard pagination for query pagination object created by Flask-SQLAlchemy.
 
 Example
 ~~~~~~~~
