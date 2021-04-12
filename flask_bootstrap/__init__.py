@@ -30,7 +30,7 @@ def get_table_titles(data, primary_key, primary_key_title):
     if not data:
         return []
     titles = []
-    for k in data[0].__table__.columns._data.keys():
+    for k in data[0].__table__.columns.keys():
         if not k.startswith('_'):
             titles.append((k, k.replace('_', ' ').title()))
     titles[0] = (primary_key, primary_key_title)
