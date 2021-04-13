@@ -1,6 +1,14 @@
 Changelog
 =========
 
+1.5.2
+-----
+
+Release date: 2021/4/13
+
+- Fix `render_table` macro for SQLAlchemy >= 1.4 (`#124 <https://github.com/greyli/bootstrap-flask/issues/124>`__).
+
+
 1.5.1
 -----
 
