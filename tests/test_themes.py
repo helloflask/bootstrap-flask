@@ -29,7 +29,7 @@ themes = [
 
 
 class TestThemes:
-    @pytest.mark.parametrize("theme", themes)
+    @pytest.mark.parametrize('theme', themes)
     def test_bootswatch_local(self, theme, client):
         current_app.config['BOOTSTRAP_SERVE_LOCAL'] = True
         current_app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = theme
@@ -39,7 +39,7 @@ class TestThemes:
         with client.get('/bootstrap/static/css/swatch/%s/bootstrap.min.css' % theme) as css_response:
             assert css_response.status_code != 404
 
-    @pytest.mark.parametrize("theme", themes)
+    @pytest.mark.parametrize('theme', themes)
     def test_bootswatch_cdn(self, theme, client, bootstrap):
         current_app.config['BOOTSTRAP_SERVE_LOCAL'] = False
         current_app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = theme

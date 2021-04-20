@@ -2,7 +2,7 @@ import pytest
 from flask import current_app
 
 
-@pytest.mark.usefixtures("client")
+@pytest.mark.usefixtures('client')
 class TestBootstrap:
     def test_extension_init(self, bootstrap):
         assert 'bootstrap' in current_app.extensions
@@ -57,7 +57,7 @@ class TestBootstrap:
         assert 'https://cdn.jsdelivr.net/npm/bootstrap' in js_rv
     
     @pytest.mark.parametrize(
-        ["with_jquery", "with_popper"],
+        ['with_jquery', 'with_popper'],
         [
             (True, True),
             (False, False),
