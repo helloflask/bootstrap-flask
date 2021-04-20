@@ -55,3 +55,19 @@ class TestBootstrap:
         assert '/bootstrap/static/js/bootstrap.min.js' not in js_rv
         assert 'https://cdn.jsdelivr.net/npm/bootstrap' in css_rv
         assert 'https://cdn.jsdelivr.net/npm/bootstrap' in js_rv
+    
+    @pytest.mark.parametrize(
+        ["with_jquery", "with_popper"],
+        [
+            (True, True),
+            (False, False),
+            (True, False),
+            (False, True),
+        ]
+    )
+    def test_load_js_args(self, with_jquery, with_popper, bootstrap, client):
+        current_app.config['BOOTSTRAP_SERVE_LOCAL'] = True
+        js_rv = bootstrap.load_js(with_jquery=with_jquery, with_popper=with_popper)
+
+        assert ('jquery.min.js' in js_rv) == with_jquery
+        assert ('popper.min.js' in js_rv) == with_popper
