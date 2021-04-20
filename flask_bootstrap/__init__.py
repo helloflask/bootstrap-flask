@@ -7,7 +7,7 @@
 """
 from flask import current_app, Markup, Blueprint, url_for
 
-try:
+try: # pragma: no cover
     from wtforms.fields import HiddenField
 except ImportError:
     def is_hidden_field_filter(field):
