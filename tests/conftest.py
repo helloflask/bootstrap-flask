@@ -18,16 +18,6 @@ def hello_form():
     return HelloForm
 
 
-@pytest.fixture
-def bootswatch_themes():
-    themes = [
-        'cerulean', 'cosmo', 'cyborg', 'darkly', 'default', 'flatly', 'journal', 'litera',
-        'lumen', 'lux', 'materia', 'minty', 'pulse', 'sandstone', 'simplex', 'sketchy', 'slate',
-        'solar', 'spacelab', 'superhero', 'united', 'yeti'
-    ]
-    return themes
-
-
 @pytest.fixture(autouse=True)
 def app():
     app = Flask(__name__)
