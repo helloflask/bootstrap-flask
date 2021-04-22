@@ -1,4 +1,5 @@
 name: build
+
 on:
   push:
     branches:
@@ -6,6 +7,7 @@ on:
   pull_request:
     branches:
       - master
+
 jobs:
   lint:
     name: lint
@@ -20,7 +22,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python: ['2.7, '3.5', '3.6', '3.7', '3.8', '3.9']
+        python: [2.7, 3.5, 3.6, 3.7, 3.8, 3.9]
       fail-fast: false
     runs-on: ${{ matrix.os }}
     steps:
