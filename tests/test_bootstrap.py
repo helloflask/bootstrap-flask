@@ -55,7 +55,7 @@ class TestBootstrap:
         assert '/bootstrap/static/js/bootstrap.min.js' not in js_rv
         assert 'https://cdn.jsdelivr.net/npm/bootstrap' in css_rv
         assert 'https://cdn.jsdelivr.net/npm/bootstrap' in js_rv
-    
+
     @pytest.mark.parametrize(
         ['with_jquery', 'with_popper'],
         [
