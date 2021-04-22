@@ -2,7 +2,7 @@
 
 ![PyPI - License](https://img.shields.io/pypi/l/bootstrap-flask)
 [![Current version on PyPI](https://img.shields.io/pypi/v/bootstrap-flask)](https://pypi.org/project/bootstrap-flask/)
-[![Build Status](https://travis-ci.org/greyli/bootstrap-flask.svg?branch=master)](https://travis-ci.org/greyli/bootstrap-flask)
+[![Build status](https://github.com/greyli/bootstrap-flask/workflows/build/badge.svg)](https://github.com/greyli/bootstrap-flask/actions)
 [![Coverage Status](https://coveralls.io/repos/github/greyli/bootstrap-flask/badge.svg?branch=master)](https://coveralls.io/github/greyli/bootstrap-flask?branch=master)
 
 Bootstrap 4 helper for Flask/Jinja2.
