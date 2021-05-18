@@ -1,6 +1,19 @@
 Changelog
 =========
 
+
+1.5.3
+-----
+
+Release date: 2021/5/18
+
+- Fix class for horizontal form label (`#131 <https://github.com/greyli/bootstrap-flask/pull/131>`__).
+- Fix hidden field label issue for ``render_field`` macro (`#130 <https://github.com/greyli/bootstrap-flask/pull/130>`__).
+- Refactor tests (`#125 <https://github.com/greyli/bootstrap-flask/pull/125>`__).
+
+Thanks to @Demetriex and @Yuxiaoy1.
+
+
 1.5.2
 -----
 
