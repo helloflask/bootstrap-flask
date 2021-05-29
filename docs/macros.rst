@@ -436,6 +436,7 @@ API
                               view_url=None,\
                               edit_url=None,\
                               delete_url=None,\
+                              new_url=None,\
                               action_pk_placeholder=':primary_key')
 
     :param data: An iterable of data objects to render. Can be dicts or class objects.
@@ -453,6 +454,7 @@ API
     :param view_url: URL to use for the view action.
     :param edit_url: URL to use for the edit action.
     :param delete_url: URL to use for the delete action.
+    :param new_url: URL to use for the create action (new in version 1.6.0).
     :param action_pk_placeholder: The placeholder which replaced by the primary key when build the action URLs. Default is ``':primary_key'``.
 
 

@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.6.0
+-----
+
+- Add ``new_url`` parameter for ``render_table`` macro. When passing an URL to the ``new_url`` parameter,
+the ``render_table`` macro will create a icon (link) on the action header.
+
 
 1.5.3
 -----
