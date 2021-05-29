@@ -177,6 +177,11 @@ def delete_message(message_id):
     return f'Message {message_id} did not exist and could therefore not be deleted. Return to <a href="/table">table</a>.'
 
 
+@app.route('/table/new-message')
+def new_message():
+    return 'Here is the new message page. Return to <a href="/table">table</a>.'
+
+
 @app.route('/icon')
 def test_icon():
     return render_template('icon.html')

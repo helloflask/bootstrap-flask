@@ -12,6 +12,7 @@
                       view_url=None,
                       edit_url=None,
                       delete_url=None,
+                      new_url=None,
                       action_pk_placeholder=':primary_key') %}
   {% if not titles %}
     {% set titles = get_table_titles(data, primary_key, primary_key_title) %}
@@ -29,7 +30,9 @@
       <th scope="col">{{ title[1] }}</th>
     {% endfor %}
     {% if show_actions %}
-      <th scope="col">{{ actions_title }}</th>
+      <th scope="col">{{ actions_title }}
+        {%if new_url %}<a href="{{ new_url }}"><img src="{{ url_for('bootstrap.static', filename='img/new.svg') }}" alt="New"></a>{% endif %}
+      </th>
     {% endif %}
   </tr>
   </thead>
