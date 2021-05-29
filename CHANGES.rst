@@ -21,8 +21,8 @@ Release date: -
 
 Release date: 2021/5/29
 
-- Add ``new_url`` parameter for ``render_table`` macro. When passing an URL to the ``new_url`` parameter, the ``render_table`` macro will create a icon (link) on the action header  (`#131 <https://github.com/greyli/bootstrap-flask/pull/133>`__).
-- Fix the dispaly of delete icon for ``render_table`` marco (`#131 <https://github.com/greyli/bootstrap-flask/pull/132>`__).
+- Add a ``new_url`` parameter for the ``render_table`` macro. When passing an URL to the ``new_url`` parameter, the ``render_table`` macro will create an icon (link) on the action header  (`#133 <https://github.com/greyli/bootstrap-flask/pull/133>`__).
+- Fix the display of the delete icon for ``render_table`` macro (`#132 <https://github.com/greyli/bootstrap-flask/pull/132>`__).
 
 
 1.5.3
