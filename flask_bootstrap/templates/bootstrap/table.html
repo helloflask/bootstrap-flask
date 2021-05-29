@@ -54,7 +54,7 @@
           {% if delete_url %}
             <form style="display:inline" action="{{ delete_url | replace(action_pk_placeholder, row[primary_key]) }}" method="post">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-              <input type="image" src="{{ url_for('bootstrap.static', filename='img/delete.svg') }}" alt="Delete">
+              <input type="image" class="align-middle" src="{{ url_for('bootstrap.static', filename='img/delete.svg') }}" alt="Delete">
             </form>
           {% endif %}
         </td>
