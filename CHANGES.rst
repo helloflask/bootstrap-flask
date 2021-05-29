@@ -1,11 +1,22 @@
 Changelog
 =========
 
+
+2.0.0
+-----
+
+Release date: -
+
+- Drop Python 2 and 3.5 support.
+
+
 1.6.0
 -----
 
-- Add ``new_url`` parameter for ``render_table`` macro. When passing an URL to the ``new_url`` parameter,
-the ``render_table`` macro will create a icon (link) on the action header.
+Release date: 2021/5/29
+
+- Add ``new_url`` parameter for ``render_table`` macro. When passing an URL to the ``new_url`` parameter, the ``render_table`` macro will create a icon (link) on the action header  (`#131 <https://github.com/greyli/bootstrap-flask/pull/133>`__).
+- Fix the dispaly of delete icon for ``render_table`` marco (`#131 <https://github.com/greyli/bootstrap-flask/pull/132>`__).
 
 
 1.5.3
@@ -16,8 +27,6 @@ Release date: 2021/5/18
 - Fix class for horizontal form label (`#131 <https://github.com/greyli/bootstrap-flask/pull/131>`__).
 - Fix hidden field label issue for ``render_field`` macro (`#130 <https://github.com/greyli/bootstrap-flask/pull/130>`__).
 - Refactor tests (`#125 <https://github.com/greyli/bootstrap-flask/pull/125>`__).
-
-Thanks to @Demetriex and @Yuxiaoy1.
 
 
 1.5.2
