@@ -433,6 +433,7 @@ API
                               responsive_class='table-responsive',\
                               show_actions=False,\
                               actions_title='Actions',\
+                              custom_actions=None,\
                               view_url=None,\
                               edit_url=None,\
                               delete_url=None,\
@@ -451,6 +452,9 @@ API
     :param responsive_class: The responsive class to apply to the table. Default is ``'table-responsive'``.
     :param show_actions: Whether to display the actions column. Default is ``False``.
     :param actions_title: Title for the actions column header. Default is ``'Actions'``.
+    :param custom_actions: A list of tuples for creating custom action buttons, where each tuple contains
+                ('Title Text displayed on hover', 'bootstrap icon name', 'url_for()')
+                (e.g.``[('Run', 'play-fill', url_for('run_report', report_id=':primary_key'))]``).
     :param view_url: URL to use for the view action.
     :param edit_url: URL to use for the edit action.
     :param delete_url: URL to use for the delete action.
