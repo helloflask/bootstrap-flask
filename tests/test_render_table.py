@@ -171,12 +171,15 @@ class TestPagination:
             return render_template_string('''
                                     {% from 'bootstrap/table.html' import render_table %}
                                     {{ render_table(messages, titles, show_actions=True,
+                                    custom_actions=[('Resend', 'bootstrap-reboot', url_for('test_resend_message', message_id=':primary_key'))], 
                                     view_url=url_for('test_view_message', message_id=':primary_key'),
                                     new_url=url_for('test_create_message')) }}
                                     ''', titles=titles, messages=messages)
 
         response = client.get('/table')
         data = response.get_data(as_text=True)
+        assert 'icons/bootstrap-icons.svg#bootstrap-reboot' in data
+        assert 'href="/table/1/resend" title="Resend">' in data
         assert '<a href="/table/1/view">' in data
         assert '<a href="/table/new-message">' in data
         assert '<img src="/bootstrap/static/img/new.svg" alt="New">' in data
