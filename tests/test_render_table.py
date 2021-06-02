@@ -147,6 +147,10 @@ class TestPagination:
         class Message(db.Model):
             id = db.Column(db.Integer, primary_key=True)
             text = db.Column(db.Text)
+            
+        @app.route('/table/<message_id>/resend')
+        def test_resend_message(message_id):
+            return 'Re-sending {}'.format(message_id)
 
         @app.route('/table/<message_id>/view')
         def test_view_message(message_id):
