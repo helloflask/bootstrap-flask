@@ -175,7 +175,9 @@ class TestPagination:
             return render_template_string('''
                 {% from 'bootstrap/table.html' import render_table %}
                 {{ render_table(messages, titles, show_actions=True,
-                custom_actions=[('Resend', 'bootstrap-reboot', url_for('test_resend_message', message_id=':primary_key'))],
+                custom_actions=[
+                    ('Resend', 'bootstrap-reboot', url_for('test_resend_message', message_id=':primary_key'))
+                ],
                 view_url=url_for('test_view_message', message_id=':primary_key'),
                 new_url=url_for('test_create_message')) }}
             ''', titles=titles, messages=messages)
