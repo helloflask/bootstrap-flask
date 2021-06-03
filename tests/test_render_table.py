@@ -183,7 +183,8 @@ class TestPagination:
         response = client.get('/table')
         data = response.get_data(as_text=True)
         assert 'icons/bootstrap-icons.svg#bootstrap-reboot' in data
-        assert 'href="/table/1/resend" title="Resend">' in data
+        assert 'href="/table/1/resend"' in data
+        assert 'title="Resend">' in data
         assert '<a href="/table/1/view">' in data
         assert '<a href="/table/new-message">' in data
         assert '<img src="/bootstrap/static/img/new.svg" alt="New">' in data
