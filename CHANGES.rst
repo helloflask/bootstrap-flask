@@ -13,7 +13,7 @@ Release date: -
 1.6.1
 -----
 
-Release date: 2021/6/2
+Release date: -
 
 - Add a ``custom_actions`` parameter for the ``render_table`` macro. When passing a list of tuples ``[(title, bootstrap icon, link)]`` to the ``custom_actions`` parameter, the ``render_table`` macro will create an icon (link) on the action header for each tuple in the list. The title text (first index of each tuple) will show when hovering over each ``custom_actions`` button.
 
