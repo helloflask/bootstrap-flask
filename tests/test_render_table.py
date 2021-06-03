@@ -148,6 +148,10 @@ class TestPagination:
             id = db.Column(db.Integer, primary_key=True)
             text = db.Column(db.Text)
 
+        @app.route('/table/<message_id>/resend')
+        def test_resend_message(message_id):
+            return 'Re-sending {}'.format(message_id)
+
         @app.route('/table/<message_id>/view')
         def test_view_message(message_id):
             return 'Viewing {}'.format(message_id)
@@ -169,14 +173,20 @@ class TestPagination:
             messages = pagination.items
             titles = [('id', '#'), ('text', 'Message')]
             return render_template_string('''
-                                    {% from 'bootstrap/table.html' import render_table %}
-                                    {{ render_table(messages, titles, show_actions=True,
-                                    view_url=url_for('test_view_message', message_id=':primary_key'),
-                                    new_url=url_for('test_create_message')) }}
-                                    ''', titles=titles, messages=messages)
+                {% from 'bootstrap/table.html' import render_table %}
+                {{ render_table(messages, titles, show_actions=True,
+                custom_actions=[
+                    ('Resend', 'bootstrap-reboot', url_for('test_resend_message', message_id=':primary_key'))
+                ],
+                view_url=url_for('test_view_message', message_id=':primary_key'),
+                new_url=url_for('test_create_message')) }}
+            ''', titles=titles, messages=messages)
 
         response = client.get('/table')
         data = response.get_data(as_text=True)
+        assert 'icons/bootstrap-icons.svg#bootstrap-reboot' in data
+        assert 'href="/table/1/resend"' in data
+        assert 'title="Resend">' in data
         assert '<a href="/table/1/view">' in data
         assert '<a href="/table/new-message">' in data
         assert '<img src="/bootstrap/static/img/new.svg" alt="New">' in data

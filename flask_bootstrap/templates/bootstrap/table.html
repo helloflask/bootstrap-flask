@@ -9,6 +9,7 @@
                       responsive_class='table-responsive',
                       show_actions=False,
                       actions_title='Actions',
+                      custom_actions=None,
                       view_url=None,
                       edit_url=None,
                       delete_url=None,
@@ -37,6 +38,9 @@
   </tr>
   </thead>
   <tbody>
+  {% if custom_actions %}
+    {% from 'bootstrap/utils.html' import render_icon %}
+  {% endif %}
   {% for row in data %}
     <tr>
       {% for title in titles %}
@@ -48,6 +52,14 @@
       {% endfor %}
       {% if show_actions %}
         <td>
+          {% if custom_actions %}
+            {% for (action_name, action_icon, action_url) in custom_actions %}
+                <a style="font-size: 18px;" 
+                   class="text-dark text-decoration-none" 
+                   href="{{ action_url | replace(action_pk_placeholder, row[primary_key]) }}" 
+                   title="{{ action_name }}">{{ render_icon(action_icon) }}</a>
+            {% endfor %}
+          {% endif %}
           {% if view_url %}
             <a href="{{ view_url | replace(action_pk_placeholder, row[primary_key]) }}"><img src="{{ url_for('bootstrap.static', filename='img/view.svg') }}" alt="View"></a>
           {% endif %}
