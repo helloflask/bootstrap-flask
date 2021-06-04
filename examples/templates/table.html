@@ -18,7 +18,8 @@
 <pre>{% raw %}{{ render_table(messages, show_actions=True,
                 view_url=url_for('view_message', message_id=':primary_key'),
                 edit_url=url_for('edit_message', message_id=':primary_key'),
-                delete_url=url_for('delete_message', message_id=':primary_key')) }}{% endraw %}</pre>
+                delete_url=url_for('delete_message', message_id=':primary_key')
+                new_url=url_for('new_message')) }}{% endraw %}</pre>
 {{ render_table(messages, show_actions=True,
                 view_url=url_for('view_message', message_id=':primary_key'),
                 edit_url=url_for('edit_message', message_id=':primary_key'),
