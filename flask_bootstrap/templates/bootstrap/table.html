@@ -18,81 +18,81 @@
                       delete_url=None,
                       new_url=None,
                       action_pk_placeholder=':primary_key') %}
-  {% if not titles %}
+{% if not titles %}
     {% set titles = get_table_titles(data, primary_key, primary_key_title) %}
-  {% endif %}
-  {% if responsive %}
+{% endif %}
+{% if responsive %}
     <div class="{{ responsive_class }}">
-  {% endif %}
+{% endif %}
 <table class="table{% if table_classes %}{{ ' ' + table_classes }}{% endif %}">
-  {% if caption %}
+    {% if caption %}
     <caption>{{ caption }}</caption>
-  {% endif %}
-  <thead {% if header_classes %}class="{{ header_classes }}"{% endif %}>
-  <tr>
+    {% endif %}
+    <thead {% if header_classes %}class="{{ header_classes }}"{% endif %}>
+    <tr>
     {% for title in titles %}
-      <th scope="col">{{ title[1] }}</th>
+        <th scope="col">{{ title[1] }}</th>
     {% endfor %}
     {% if show_actions %}
-      <th scope="col">{{ actions_title }}
+        <th scope="col">{{ actions_title }}
         {% if new_url %}<a class="action-icon text-decoration-none" href="{{ new_url }}" title="New">
-          {{ render_icon('plus-circle-fill') }}
+            {{ render_icon('plus-circle-fill') }}
         </a>{% endif %}
-      </th>
+        </th>
     {% endif %}
-  </tr>
-  </thead>
-  <tbody>
-  {% for row in data %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in data %}
     <tr>
-      {% for title in titles %}
+        {% for title in titles %}
         {% if title[0] == primary_key %}
-          <th scope="row">{{ row[title[0]] }}</th>
+            <th scope="row">{{ row[title[0]] }}</th>
         {% else %}
-          <td>{{ row[title[0]] }}</td>
+            <td>{{ row[title[0]] }}</td>
         {% endif %}
-      {% endfor %}
-      {% if show_actions %}
+        {% endfor %}
+        {% if show_actions %}
         <td>
-          {% if custom_actions %}
+            {% if custom_actions %}
             {% for (action_name, action_icon, action_url) in custom_actions %}
                 <a class="action-icon text-decoration-none"
-                   href="{{ action_url | replace(action_pk_placeholder, row[primary_key]) }}" 
-                   title="{{ action_name }}">{{ render_icon(action_icon) }}</a>
+                    href="{{ action_url | replace(action_pk_placeholder, row[primary_key]) }}" 
+                    title="{{ action_name }}">{{ render_icon(action_icon) }}</a>
             {% endfor %}
-          {% endif %}
-          {% if view_url %}
+            {% endif %}
+            {% if view_url %}
             <a class="action-icon text-decoration-none"
-               href="{{ view_url | replace(action_pk_placeholder, row[primary_key]) }}"
-               title="View">
-               {{ render_icon('eye-fill') }}
+                href="{{ view_url | replace(action_pk_placeholder, row[primary_key]) }}"
+                title="View">
+                {{ render_icon('eye-fill') }}
             </a>
-          {% endif %}
-          {% if edit_url %}
+            {% endif %}
+            {% if edit_url %}
             <a class="action-icon text-decoration-none"
-               href="{{ edit_url | replace(action_pk_placeholder, row[primary_key]) }}"
-               title="Edit">
-               {{ render_icon('pencil-fill') }}
+                href="{{ edit_url | replace(action_pk_placeholder, row[primary_key]) }}"
+                title="Edit">
+                {{ render_icon('pencil-fill') }}
             </a>
-          {% endif %}
-          {% if delete_url %}
+            {% endif %}
+            {% if delete_url %}
             <form style="display:inline" action="{{ delete_url | replace(action_pk_placeholder, row[primary_key]) }}" method="post">
-              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-              <a class="action-icon text-decoration-none"
-                 href="javascript:{}"
-                 onclick="this.closest('form').submit();return false;"
-                 title="Delete">
-                 {{ render_icon('trash-fill') }}
-              </a>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <a class="action-icon text-decoration-none"
+                    href="javascript:{}"
+                    onclick="this.closest('form').submit();return false;"
+                    title="Delete">
+                    {{ render_icon('trash-fill') }}
+                </a>
             </form>
-          {% endif %}
+            {% endif %}
         </td>
-      {% endif %}
+        {% endif %}
     </tr>
-  {% endfor %}
-  </tbody>
+    {% endfor %}
+    </tbody>
 </table>
 {% if responsive %}
-  </div>
+    </div>
 {% endif %}
 {% endmacro %}
