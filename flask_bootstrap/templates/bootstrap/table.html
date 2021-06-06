@@ -1,3 +1,6 @@
+{% from 'bootstrap/utils.html' import render_icon %}
+
+
 {% macro render_table(data,
                       titles=None,
                       primary_key='id',
@@ -32,15 +35,14 @@
     {% endfor %}
     {% if show_actions %}
       <th scope="col">{{ actions_title }}
-        {%if new_url %}<a href="{{ new_url }}"><img src="{{ url_for('bootstrap.static', filename='img/new.svg') }}" alt="New"></a>{% endif %}
+        {% if new_url %}<a class="action-icon text-decoration-none" href="{{ new_url }}" title="New">
+          {{ render_icon('plus-circle-fill') }}
+        </a>{% endif %}
       </th>
     {% endif %}
   </tr>
   </thead>
   <tbody>
-  {% if custom_actions %}
-    {% from 'bootstrap/utils.html' import render_icon %}
-  {% endif %}
   {% for row in data %}
     <tr>
       {% for title in titles %}
@@ -54,22 +56,34 @@
         <td>
           {% if custom_actions %}
             {% for (action_name, action_icon, action_url) in custom_actions %}
-                <a style="font-size: 18px;" 
-                   class="text-dark text-decoration-none" 
+                <a class="action-icon text-decoration-none"
                    href="{{ action_url | replace(action_pk_placeholder, row[primary_key]) }}" 
                    title="{{ action_name }}">{{ render_icon(action_icon) }}</a>
             {% endfor %}
           {% endif %}
           {% if view_url %}
-            <a href="{{ view_url | replace(action_pk_placeholder, row[primary_key]) }}"><img src="{{ url_for('bootstrap.static', filename='img/view.svg') }}" alt="View"></a>
+            <a class="action-icon text-decoration-none"
+               href="{{ view_url | replace(action_pk_placeholder, row[primary_key]) }}"
+               title="View">
+               {{ render_icon('eye-fill') }}
+            </a>
           {% endif %}
           {% if edit_url %}
-            <a href="{{ edit_url | replace(action_pk_placeholder, row[primary_key]) }}"><img src="{{ url_for('bootstrap.static', filename='img/edit.svg') }}" alt="Edit"></a>
+            <a class="action-icon text-decoration-none"
+               href="{{ edit_url | replace(action_pk_placeholder, row[primary_key]) }}"
+               title="Edit">
+               {{ render_icon('pencil-fill') }}
+            </a>
           {% endif %}
           {% if delete_url %}
             <form style="display:inline" action="{{ delete_url | replace(action_pk_placeholder, row[primary_key]) }}" method="post">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-              <input type="image" class="align-middle" src="{{ url_for('bootstrap.static', filename='img/delete.svg') }}" alt="Delete">
+              <a class="action-icon text-decoration-none"
+                 href="javascript:{}"
+                 onclick="this.closest('form').submit();return false;"
+                 title="Delete">
+                 {{ render_icon('trash-fill') }}
+              </a>
             </form>
           {% endif %}
         </td>
