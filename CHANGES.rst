@@ -10,6 +10,12 @@ Release date: -
 - Drop Python 2 and 3.5 support.
 
 
+1.7.1
+-----
+
+Release date: -
+
+
 1.7.0
 -----
 
