@@ -16,13 +16,13 @@
 
 <h2>Table with actions</h2>
 <pre>{% raw %}{{ render_table(messages, show_actions=True,
-                view_url=url_for('view_message', message_id=':primary_key'),
-                edit_url=url_for('edit_message', message_id=':primary_key'),
-                delete_url=url_for('delete_message', message_id=':primary_key')
+                view_url=url_for('view_message', message_id=':id'),
+                edit_url=url_for('edit_message', message_id=':id'),
+                delete_url=url_for('delete_message', message_id=':id')
                 new_url=url_for('new_message')) }}{% endraw %}</pre>
 {{ render_table(messages, show_actions=True,
-                view_url=url_for('view_message', message_id=':primary_key'),
-                edit_url=url_for('edit_message', message_id=':primary_key'),
-                delete_url=url_for('delete_message', message_id=':primary_key'),
+                view_url=url_for('view_message', message_id=':id'),
+                edit_url=url_for('edit_message', message_id=':id'),
+                delete_url=url_for('delete_message', message_id=':id'),
                 new_url=url_for('new_message')) }}
 {% endblock %}
