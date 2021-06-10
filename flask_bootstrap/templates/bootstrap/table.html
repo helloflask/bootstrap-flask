@@ -1,5 +1,10 @@
 {% from 'bootstrap/utils.html' import render_icon %}
 
+{% macro deprecate_old_pk_placeholder() %}
+    {{ warn('The default action primary key placeholder has changed to ":id", please update.
+        The support to the old value (":primary_key") will be removed in version 2.0.') }}
+{% endmacro %}
+
 
 {% macro render_table(data,
                       titles=None,
@@ -17,7 +22,7 @@
                       edit_url=None,
                       delete_url=None,
                       new_url=None,
-                      action_pk_placeholder=':primary_key') %}
+                      action_pk_placeholder=':id') %}
 {% if not titles %}
     {% set titles = get_table_titles(data, primary_key, primary_key_title) %}
 {% endif %}
@@ -56,12 +61,20 @@
         <td>
             {% if custom_actions %}
             {% for (action_name, action_icon, action_url) in custom_actions %}
+                {% if ':primary_key' in action_url %}
+                    {% set action_pk_placeholder = ':primary_key' %}
+                    {% set w = deprecate_old_pk_placeholder() %}
+                {% endif %}
                 <a class="action-icon text-decoration-none"
                     href="{{ action_url | replace(action_pk_placeholder, row[primary_key]) }}" 
                     title="{{ action_name }}">{{ render_icon(action_icon) }}</a>
             {% endfor %}
             {% endif %}
             {% if view_url %}
+                {% if ':primary_key' in view_url %}
+                    {% set action_pk_placeholder = ':primary_key' %}
+                    {% set w = deprecate_old_pk_placeholder() %}
+                {% endif %}
             <a class="action-icon text-decoration-none"
                 href="{{ view_url | replace(action_pk_placeholder, row[primary_key]) }}"
                 title="View">
@@ -69,6 +82,10 @@
             </a>
             {% endif %}
             {% if edit_url %}
+                {% if ':primary_key' in edit_url %}
+                    {% set action_pk_placeholder = ':primary_key' %}
+                    {% set w = deprecate_old_pk_placeholder() %}
+                {% endif %}
             <a class="action-icon text-decoration-none"
                 href="{{ edit_url | replace(action_pk_placeholder, row[primary_key]) }}"
                 title="Edit">
@@ -76,6 +93,10 @@
             </a>
             {% endif %}
             {% if delete_url %}
+                {% if ':primary_key' in delete_url %}
+                    {% set action_pk_placeholder = ':primary_key' %}
+                    {% set w = deprecate_old_pk_placeholder() %}
+                {% endif %}
             <form style="display:inline" action="{{ delete_url | replace(action_pk_placeholder, row[primary_key]) }}" method="post">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <a class="action-icon text-decoration-none"

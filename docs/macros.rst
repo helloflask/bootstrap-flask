@@ -438,7 +438,7 @@ API
                               edit_url=None,\
                               delete_url=None,\
                               new_url=None,\
-                              action_pk_placeholder=':primary_key')
+                              action_pk_placeholder=':id')
 
     :param data: An iterable of data objects to render. Can be dicts or class objects.
     :param titles: An iterable of tuples of the format (prop, label) e.g ``[('id', '#')]``, if not provided,
@@ -454,12 +454,16 @@ API
     :param actions_title: Title for the actions column header. Default is ``'Actions'``.
     :param custom_actions: A list of tuples for creating custom action buttons, where each tuple contains
                 ('Title Text displayed on hover', 'bootstrap icon name', 'url_for()')
-                (e.g.``[('Run', 'play-fill', url_for('run_report', report_id=':primary_key'))]``).
+                (e.g.``[('Run', 'play-fill', url_for('run_report', report_id=':id'))]``).
     :param view_url: URL to use for the view action.
     :param edit_url: URL to use for the edit action.
     :param delete_url: URL to use for the delete action.
     :param new_url: URL to use for the create action (new in version 1.6.0).
-    :param action_pk_placeholder: The placeholder which replaced by the primary key when build the action URLs. Default is ``':primary_key'``.
+    :param action_pk_placeholder: The placeholder which replaced by the primary key when build the action URLs. Default is ``':id'``.
+
+.. tip:: The default value of ``action_pk_placeholder`` changed to ``:id`` in version 1.7.0.
+    The old value (``:primary_key``) will be removed in version 2.0. Currently, you can't
+    use ``int`` converter on the URL variable of primary key. 
 
 
 render_icon()

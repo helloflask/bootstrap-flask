@@ -5,6 +5,8 @@
     :copyright: (c) 2017 by Grey Li.
     :license: MIT, see LICENSE for more details.
 """
+import warnings
+
 from flask import current_app, Markup, Blueprint, url_for
 
 try:  # pragma: no cover
@@ -55,6 +57,7 @@ class Bootstrap(object):
         app.jinja_env.globals['bootstrap'] = self
         app.jinja_env.globals['bootstrap_is_hidden_field'] = is_hidden_field_filter
         app.jinja_env.globals['get_table_titles'] = get_table_titles
+        app.jinja_env.globals['warn'] = warnings.warn
         app.jinja_env.add_extension('jinja2.ext.do')
         # default settings
         app.config.setdefault('BOOTSTRAP_SERVE_LOCAL', False)
