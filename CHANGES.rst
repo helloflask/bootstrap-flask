@@ -21,10 +21,17 @@ Release date: -
 
 Release date: 2021/6/10
 
-- Add a ``custom_actions`` parameter for the ``render_table`` macro. When passing a list of tuples ``[(title, bootstrap icon, link)]`` to the ``custom_actions`` parameter, the ``render_table`` macro will create an icon (link) on the action column for each tuple in the list. The title text (first index of each tuple) will show when hovering over each ``custom_actions`` button.
+- Add a ``custom_actions`` parameter for the ``render_table`` macro. When passing a
+list of tuples ``[(title, bootstrap icon, link)]`` to the ``custom_actions`` parameter,
+the ``render_table`` macro will create an icon (link) on the action column for each
+tuple in the list. The title text (first index of each tuple) will show when hovering
+over each ``custom_actions`` button (`#134 <https://github.com/greyli/bootstrap-flask/pull/134>`__).
 - Update Bootstrap Icons to v1.5.0.
-- Improve action icons for ``render_table``, now the icons can be styled with ``action-icon`` class.
-- Change the default ``action_pk_placeholder`` to ``':id'``. The support to the old value will be removed in version 2.0.
+- Improve action icons for ``render_table``, now the icons can be styled with the
+``action-icon`` CSS class (`#137 <https://github.com/greyli/bootstrap-flask/pull/137>`__).
+- Change the default ``action_pk_placeholder`` to ``':id'``. The support to the old
+value will be removed in version 2.0
+(`#138 <https://github.com/greyli/bootstrap-flask/pull/138>`__).
 
 
 1.6.0
