@@ -192,14 +192,14 @@ class TestPagination:
         assert 'href="/table/new-message"' in data
 
     def test_customize_icon_title_of_table_actions(self, app, client):
-        
+
         app.config['BOOTSTRAP_TABLE_VIEW_TITLE'] = 'Read'
         app.config['BOOTSTRAP_TABLE_EDIT_TITLE'] = 'Update'
         app.config['BOOTSTRAP_TABLE_DELETE_TITLE'] = 'Remove'
         app.config['BOOTSTRAP_TABLE_NEW_TITLE'] = 'Create'
 
         db = SQLAlchemy(app)
-        csrf = CSRFProtect(app)
+        CSRFProtect(app)
 
         class Message(db.Model):
             id = db.Column(db.Integer, primary_key=True)
