@@ -1,5 +1,6 @@
 from flask import render_template_string, request
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf import CSRFProtect
 
 
 class TestPagination:
@@ -189,3 +190,41 @@ class TestPagination:
         assert 'title="Resend">' in data
         assert 'href="/table/1/view"' in data
         assert 'href="/table/new-message"' in data
+
+    def test_customize_icon_title_of_table_actions(self, app, client):
+        
+        app.config['BOOTSTRAP_TABLE_VIEW_TITLE'] = 'Read'
+        app.config['BOOTSTRAP_TABLE_EDIT_TITLE'] = 'Update'
+        app.config['BOOTSTRAP_TABLE_DELETE_TITLE'] = 'Remove'
+        app.config['BOOTSTRAP_TABLE_NEW_TITLE'] = 'Create'
+
+        db = SQLAlchemy(app)
+        csrf = CSRFProtect(app)
+
+        class Message(db.Model):
+            id = db.Column(db.Integer, primary_key=True)
+            text = db.Column(db.Text)
+
+        @app.route('/table')
+        def test():
+            db.drop_all()
+            db.create_all()
+            for i in range(10):
+                m = Message(text='Test message {}'.format(i+1))
+                db.session.add(m)
+            db.session.commit()
+            page = request.args.get('page', 1, type=int)
+            pagination = Message.query.paginate(page, per_page=10)
+            messages = pagination.items
+            return render_template_string('''
+                                    {% from 'bootstrap/table.html' import render_table %}
+                                    {{ render_table(messages, show_actions=True, view_url='/view', edit_url='/edit',
+                                     delete_url='/delete', new_url='/new') }}
+                                    ''', messages=messages)
+
+        response = client.get('/table')
+        data = response.get_data(as_text=True)
+        assert 'title="Read">' in data
+        assert 'title="Update">' in data
+        assert 'title="Remove">' in data
+        assert 'title="Create">' in data

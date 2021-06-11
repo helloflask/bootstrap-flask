@@ -40,7 +40,7 @@
     {% endfor %}
     {% if show_actions %}
         <th scope="col">{{ actions_title }}
-        {% if new_url %}<a class="action-icon text-decoration-none" href="{{ new_url }}" title="New">
+        {% if new_url %}<a class="action-icon text-decoration-none" href="{{ new_url }}" title="{{ config['BOOTSTRAP_TABLE_NEW_TITLE'] }}">
             {{ render_icon('plus-circle-fill') }}
         </a>{% endif %}
         </th>
@@ -77,7 +77,7 @@
                 {% endif %}
             <a class="action-icon text-decoration-none"
                 href="{{ view_url | replace(action_pk_placeholder, row[primary_key]) }}"
-                title="View">
+                title="{{ config['BOOTSTRAP_TABLE_VIEW_TITLE'] }}">
                 {{ render_icon('eye-fill') }}
             </a>
             {% endif %}
@@ -88,7 +88,7 @@
                 {% endif %}
             <a class="action-icon text-decoration-none"
                 href="{{ edit_url | replace(action_pk_placeholder, row[primary_key]) }}"
-                title="Edit">
+                title="{{ config['BOOTSTRAP_TABLE_EDIT_TITLE'] }}">
                 {{ render_icon('pencil-fill') }}
             </a>
             {% endif %}
@@ -102,7 +102,7 @@
                 <a class="action-icon text-decoration-none"
                     href="javascript:{}"
                     onclick="this.closest('form').submit();return false;"
-                    title="Delete">
+                    title="{{ config['BOOTSTRAP_TABLE_DELETE_TITLE'] }}">
                     {{ render_icon('trash-fill') }}
                 </a>
             </form>
