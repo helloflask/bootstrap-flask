@@ -15,6 +15,10 @@ Release date: -
 
 Release date: -
 
+- Add configuration ``BOOTSTRAP_TABLE_VIEW_TITLE``, ``BOOTSTRAP_TABLE_EDIT_TITLE``,
+``BOOTSTRAP_TABLE_DELETE_TITLE``, ``BOOTSTRAP_TABLE_NEW_TITLE`` to support changing
+the icon title of table actions.
+
 
 1.7.0
 -----
