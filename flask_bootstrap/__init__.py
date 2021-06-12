@@ -67,6 +67,10 @@ class Bootstrap(object):
         app.config.setdefault('BOOTSTRAP_ICON_SIZE', '1em')
         app.config.setdefault('BOOTSTRAP_ICON_COLOR', None)
         app.config.setdefault('BOOTSTRAP_MSG_CATEGORY', 'primary')
+        app.config.setdefault('BOOTSTRAP_TABLE_VIEW_TITLE', 'View')
+        app.config.setdefault('BOOTSTRAP_TABLE_EDIT_TITLE', 'Edit')
+        app.config.setdefault('BOOTSTRAP_TABLE_DELETE_TITLE', 'Delete')
+        app.config.setdefault('BOOTSTRAP_TABLE_NEW_TITLE', 'New')
 
     @staticmethod
     def load_css(version=VERSION_BOOTSTRAP):
