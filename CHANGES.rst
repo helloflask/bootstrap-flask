@@ -15,6 +15,7 @@ Release date: -
 
 Release date: -
 
+- Fix bootswatch theme bug: remove theme name ``'default'`` (`#141 <https://github.com/greyli/bootstrap-flask/pull/141>`__).
 
 1.7.0
 -----
