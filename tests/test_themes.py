@@ -7,7 +7,6 @@ themes = [
     'cosmo',
     'cyborg',
     'darkly',
-    'default',
     'flatly',
     'journal',
     'litera',

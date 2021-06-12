@@ -15,6 +15,7 @@ Release date: -
 
 Release date: -
 
+- Fix bootswatch theme bug: remove theme name ``'default'`` (`#141 <https://github.com/greyli/bootstrap-flask/pull/141>`__).
 - Add configuration ``BOOTSTRAP_TABLE_VIEW_TITLE``, ``BOOTSTRAP_TABLE_EDIT_TITLE``,
 ``BOOTSTRAP_TABLE_DELETE_TITLE``, ``BOOTSTRAP_TABLE_NEW_TITLE`` to support changing
 the icon title of table actions.
