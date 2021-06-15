@@ -1,10 +1,11 @@
 import pytest
 from flask import current_app
 from flask_bootstrap import (
-    VERSION_BOOTSTRAP, VERSION_JQUERY, VERSION_POPPER, 
-    BOOTSTRAP_CSS_INTEGRITY, BOOTSTRAP_JS_INTEGRITY, 
+    VERSION_BOOTSTRAP, VERSION_JQUERY, VERSION_POPPER,
+    BOOTSTRAP_CSS_INTEGRITY, BOOTSTRAP_JS_INTEGRITY,
     JQUERY_INTEGRITY, POPPER_INTEGRITY
 )
+
 
 @pytest.mark.usefixtures('client')
 class TestBootstrap:
@@ -14,8 +15,8 @@ class TestBootstrap:
     def test_load_css_with_default_versions(self, bootstrap):
         rv = bootstrap.load_css()
         bootstrap_css = ('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/css/%s"'
-            ' integrity="%s" crossorigin="anonymous">' % (VERSION_BOOTSTRAP, 'bootstrap.min.css', 
-            BOOTSTRAP_CSS_INTEGRITY))
+                         ' integrity="%s" crossorigin="anonymous">' % (VERSION_BOOTSTRAP, 'bootstrap.min.css',
+                                                                       BOOTSTRAP_CSS_INTEGRITY))
         assert bootstrap_css in rv
 
     def test_load_css_with_non_default_versions(self, bootstrap):
@@ -32,14 +33,14 @@ class TestBootstrap:
     def test_load_js_with_default_versions(self, bootstrap):
         rv = bootstrap.load_js()
         bootstrap_js = ('<script src="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/js/%s"'
-                        ' integrity="%s" crossorigin="anonymous"></script>' % 
+                        ' integrity="%s" crossorigin="anonymous"></script>' %
                         (VERSION_BOOTSTRAP, 'bootstrap.min.js', BOOTSTRAP_JS_INTEGRITY))
         jquery_js = ('<script src="https://cdn.jsdelivr.net/npm/jquery@%s/dist/%s"'
-                        ' integrity="%s" crossorigin="anonymous"></script>' % 
-                        (VERSION_JQUERY, 'jquery.min.js', JQUERY_INTEGRITY))
+                     ' integrity="%s" crossorigin="anonymous"></script>' %
+                     (VERSION_JQUERY, 'jquery.min.js', JQUERY_INTEGRITY))
         popper_js = ('<script src="https://cdn.jsdelivr.net/npm/popper.js@%s/dist/umd/%s"'
-                        ' integrity="%s" crossorigin="anonymous"></script>' % 
-                        (VERSION_POPPER, 'popper.min.js', POPPER_INTEGRITY))
+                     ' integrity="%s" crossorigin="anonymous"></script>' %
+                     (VERSION_POPPER, 'popper.min.js', POPPER_INTEGRITY))
         assert bootstrap_js in rv
         assert jquery_js in rv
         assert popper_js in rv
@@ -52,11 +53,11 @@ class TestBootstrap:
             assert 'integrity="' not in rv
             assert 'crossorigin="anonymous"' not in rv
 
-        rv = bootstrap.load_js(version='1.2.3', jquery_version='1.2.3', 
-            popper_version='1.2.3')
+        rv = bootstrap.load_js(version='1.2.3', jquery_version='1.2.3',
+                               popper_version='1.2.3')
         _check_assertions(rv)
-        rv = bootstrap.load_js(version='5.0.0', jquery_version='5.0.0', 
-            popper_version='5.0.0')
+        rv = bootstrap.load_js(version='5.0.0', jquery_version='5.0.0',
+                               popper_version='5.0.0')
         _check_assertions(rv)
 
     def test_local_resources(self, bootstrap, client):
