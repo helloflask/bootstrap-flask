@@ -40,6 +40,10 @@ def get_table_titles(data, primary_key, primary_key_title):
 
 
 def flask_wtf_installed():
+    """Detect if Flask-WTF is installed or not.
+
+    .. versionadded:: 1.7.1
+    """
     return 'csrf' in current_app.extensions
 
 
