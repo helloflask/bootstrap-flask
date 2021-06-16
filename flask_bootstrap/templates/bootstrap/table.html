@@ -39,6 +39,9 @@
         <th scope="col">{{ title[1] }}</th>
     {% endfor %}
     {% if show_actions %}
+        {% if flask_wtf_installed() %}
+        {% set _ = warn('Flask-WTF is not installed when using render_table actions.', stacklevel=2) %}
+        {% endif %}
         <th scope="col">{{ actions_title }}
         {% if new_url %}<a class="action-icon text-decoration-none" href="{{ new_url }}" title="{{ config['BOOTSTRAP_TABLE_NEW_TITLE'] }}">
             {{ render_icon('plus-circle-fill') }}

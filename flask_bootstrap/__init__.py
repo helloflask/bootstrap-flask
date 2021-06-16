@@ -39,6 +39,10 @@ def get_table_titles(data, primary_key, primary_key_title):
     return titles
 
 
+def flask_wtf_installed():
+    return 'csrf' in current_app.extensions
+
+
 class Bootstrap(object):
     def __init__(self, app=None):
         if app is not None:
@@ -58,6 +62,7 @@ class Bootstrap(object):
         app.jinja_env.globals['bootstrap_is_hidden_field'] = is_hidden_field_filter
         app.jinja_env.globals['get_table_titles'] = get_table_titles
         app.jinja_env.globals['warn'] = warnings.warn
+        app.jinja_env.globals['flask_wtf_installed'] = flask_wtf_installed
         app.jinja_env.add_extension('jinja2.ext.do')
         # default settings
         app.config.setdefault('BOOTSTRAP_SERVE_LOCAL', False)
