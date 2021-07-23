@@ -184,7 +184,7 @@ class TestPagination:
                 {{ render_table(messages, titles, model=model, show_actions=True,
                 custom_actions=[
                     (
-                        'Resend', 
+                        'Resend',
                         'bootstrap-reboot',
                         ('test_resend_message', [('recipient', ':recipient'), ('message_id', ':id')])
                     )
@@ -195,7 +195,6 @@ class TestPagination:
 
         response = client.get('/table')
         data = response.get_data(as_text=True)
-        print(data)
         assert 'icons/bootstrap-icons.svg#bootstrap-reboot' in data
         assert 'href="/table/john_doe/1/resend"' in data
         assert 'title="Resend">' in data
@@ -229,10 +228,10 @@ class TestPagination:
             messages = pagination.items
             return render_template_string('''
                 {% from 'bootstrap/table.html' import render_table %}
-                {{ render_table(messages, model=model, show_actions=True, 
-                view_url='/view', 
-                edit_url='/edit', 
-                delete_url='/delete', 
+                {{ render_table(messages, model=model, show_actions=True,
+                view_url='/view',
+                edit_url='/edit',
+                delete_url='/delete',
                 new_url='/new') }}
                 ''', model=Message, messages=messages)
 
