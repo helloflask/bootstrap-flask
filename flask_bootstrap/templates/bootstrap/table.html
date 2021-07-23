@@ -1,10 +1,30 @@
-{% from 'bootstrap/utils.html' import render_icon %}
+{% from 'bootstrap/utils.html' import render_icon, arg_url_for %}
 
 {% macro deprecate_old_pk_placeholder() %}
     {{ warn('The default action primary key placeholder has changed to ":id", please update.
         The support to the old value (":primary_key") will be removed in version 2.0.') }}
 {% endmacro %}
 
+{% macro build_url(endpoint, model, pk, kwargs) %}
+    {% with url_params = {} -%}
+        {%- do url_params.update(request.view_args if not endpoint else {}),
+            url_params.update(request.args if not endpoint else {}) -%}
+        {% with record = model.query.get(pk) %}
+            {% for kwarg, value in kwargs %}
+                {% if value.startswith(':') and '.' in value %}
+                    {%- set value = value[1:].split('.') -%}
+                    {%- do url_params.update({kwarg: record[value[0]][value[1]]}) -%}
+                {% elif value.startswith(':') %}
+                    {%- set value = value[1:] -%}
+                    {%- do url_params.update({kwarg: record[value]}) -%}
+                {% else %}
+                    {%- do url_params.update({kwarg: value}) -%}
+                {% endif %}
+            {% endfor %}
+        {% endwith -%}
+        {{ arg_url_for(endpoint, url_params) }}
+    {%- endwith %}
+{%- endmacro %}
 
 {% macro render_table(data,
                       titles=None,
@@ -15,6 +35,7 @@
                       header_classes=None,
                       responsive=False,
                       responsive_class='table-responsive',
+                      model=None,
                       show_actions=False,
                       actions_title='Actions',
                       custom_actions=None,
@@ -40,9 +61,11 @@
     {% endfor %}
     {% if show_actions %}
         <th scope="col">{{ actions_title }}
-        {% if new_url %}<a class="action-icon text-decoration-none" href="{{ new_url }}" title="{{ config['BOOTSTRAP_TABLE_NEW_TITLE'] }}">
+        {% if new_url %}
+            <a class="action-icon text-decoration-none" href="{{ new_url }}" title="{{ config['BOOTSTRAP_TABLE_NEW_TITLE'] }}">
             {{ render_icon('plus-circle-fill') }}
-        </a>{% endif %}
+            </a>
+        {% endif %}
         </th>
     {% endif %}
     </tr>
@@ -61,43 +84,61 @@
         <td>
             {% if custom_actions %}
             {% for (action_name, action_icon, action_url) in custom_actions %}
-                {% if ':primary_key' in action_url %}
+                {% if ':primary_key' in action_url|join('') %}
                     {% set action_pk_placeholder = ':primary_key' %}
                     {% set w = deprecate_old_pk_placeholder() %}
                 {% endif %}
                 <a class="action-icon text-decoration-none"
-                    href="{{ action_url | replace(action_pk_placeholder, row[primary_key]) }}" 
+                   {% if action_url is string %}
+                    href="{{ action_url }}"
+                   {% else %}
+                    href="{{ build_url(action_url[0], model, row[primary_key], action_url[1])|trim }}"
+                   {% endif %}
                     title="{{ action_name }}">{{ render_icon(action_icon) }}</a>
             {% endfor %}
             {% endif %}
             {% if view_url %}
-                {% if ':primary_key' in view_url %}
+                {% if ':primary_key' in view_url|join('') %}
                     {% set action_pk_placeholder = ':primary_key' %}
                     {% set w = deprecate_old_pk_placeholder() %}
                 {% endif %}
-            <a class="action-icon text-decoration-none"
-                href="{{ view_url | replace(action_pk_placeholder, row[primary_key]) }}"
-                title="{{ config['BOOTSTRAP_TABLE_VIEW_TITLE'] }}">
-                {{ render_icon('eye-fill') }}
-            </a>
+                <a class="action-icon text-decoration-none"
+                   {% if view_url is string %}
+                    href="{{ view_url }}"
+                   {% else %}
+                    href="{{ build_url(view_url[0], model, row[primary_key], view_url[1])|trim }}"
+                   {% endif %}
+                    title="{{ config['BOOTSTRAP_TABLE_VIEW_TITLE'] }}">
+                    {{ render_icon('eye-fill') }}
+                </a>
             {% endif %}
-            {% if edit_url %}
-                {% if ':primary_key' in edit_url %}
+            {% if edit_url -%}
+                {% if ':primary_key' in edit_url|join('') %}
                     {% set action_pk_placeholder = ':primary_key' %}
                     {% set w = deprecate_old_pk_placeholder() %}
                 {% endif %}
-            <a class="action-icon text-decoration-none"
-                href="{{ edit_url | replace(action_pk_placeholder, row[primary_key]) }}"
-                title="{{ config['BOOTSTRAP_TABLE_EDIT_TITLE'] }}">
-                {{ render_icon('pencil-fill') }}
-            </a>
-            {% endif %}
+                <a class="action-icon text-decoration-none"
+                   {% if edit_url is string %}
+                    href="{{ edit_url }}"
+                   {% else %}
+                    href="{{ build_url(edit_url[0], model, row[primary_key], edit_url[1])|trim }}"
+                   {% endif %}
+                    title="{{ config['BOOTSTRAP_TABLE_EDIT_TITLE'] }}">
+                    {{ render_icon('pencil-fill') }}
+                </a>
+            {%- endif %}
             {% if delete_url %}
-                {% if ':primary_key' in delete_url %}
+                {% if ':primary_key' in delete_url|join('') %}
                     {% set action_pk_placeholder = ':primary_key' %}
                     {% set w = deprecate_old_pk_placeholder() %}
                 {% endif %}
-            <form style="display:inline" action="{{ delete_url | replace(action_pk_placeholder, row[primary_key]) }}" method="post">
+            <form style="display:inline"
+                  {% if delete_url is string %}
+                   action="{{ delete_url }}"
+                  {% else %}
+                   action="{{ build_url(delete_url[0], model, row[primary_key], delete_url[1])|trim }}"
+                  {% endif %}
+                   method="post">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <a class="action-icon text-decoration-none"
                     href="javascript:{}"
