@@ -1,7 +1,7 @@
 Advanced Usage
 ===============
 
-.. _button_customizatoin:
+.. _button_customization:
 
 Form Button Customization
 --------------------------

@@ -161,4 +161,4 @@ Configurations
 | BOOTSTRAP_TABLE_NEW_TITLE   | ``'New'``                      | Default title for new icon of table actions                                                  |
 +-----------------------------+--------------------------------+----------------------------------------------------------------------------------------------+
 
-.. tip:: See :ref:`button_customizatoin` to learn how to customize form buttons.
+.. tip:: See :ref:`button_customization` to learn how to customize form buttons.
