@@ -17,8 +17,8 @@ Release date: -
 
 - Fix bootswatch theme bug: remove theme name ``'default'`` (`#141 <https://github.com/greyli/bootstrap-flask/pull/141>`__).
 - Add configuration ``BOOTSTRAP_TABLE_VIEW_TITLE``, ``BOOTSTRAP_TABLE_EDIT_TITLE``,
-``BOOTSTRAP_TABLE_DELETE_TITLE``, ``BOOTSTRAP_TABLE_NEW_TITLE`` to support changing
-the icon title of table actions.
+  ``BOOTSTRAP_TABLE_DELETE_TITLE``, ``BOOTSTRAP_TABLE_NEW_TITLE`` to support changing
+  the icon title of table actions.
 - Fix bug preventing usage of Flask's default path converters (`#146 <https://github.com/greyli/bootstrap-flask/pull/146>`__).
 
 
@@ -28,16 +28,16 @@ the icon title of table actions.
 Release date: 2021/6/10
 
 - Add a ``custom_actions`` parameter for the ``render_table`` macro. When passing a
-list of tuples ``[(title, bootstrap icon, link)]`` to the ``custom_actions`` parameter,
-the ``render_table`` macro will create an icon (link) on the action column for each
-tuple in the list. The title text (first index of each tuple) will show when hovering
-over each ``custom_actions`` button (`#134 <https://github.com/greyli/bootstrap-flask/pull/134>`__).
+  list of tuples ``[(title, bootstrap icon, link)]`` to the ``custom_actions`` parameter,
+  the ``render_table`` macro will create an icon (link) on the action column for each
+  tuple in the list. The title text (first index of each tuple) will show when hovering
+  over each ``custom_actions`` button (`#134 <https://github.com/greyli/bootstrap-flask/pull/134>`__).
 - Update Bootstrap Icons to v1.5.0.
 - Improve action icons for ``render_table``, now the icons can be styled with the
-``action-icon`` CSS class (`#137 <https://github.com/greyli/bootstrap-flask/pull/137>`__).
+  ``action-icon`` CSS class (`#137 <https://github.com/greyli/bootstrap-flask/pull/137>`__).
 - Change the default ``action_pk_placeholder`` to ``':id'``. The support to the old
-value will be removed in version 2.0
-(`#138 <https://github.com/greyli/bootstrap-flask/pull/138>`__).
+  value will be removed in version 2.0
+  (`#138 <https://github.com/greyli/bootstrap-flask/pull/138>`__).
 
 
 1.6.0
@@ -117,16 +117,18 @@ Release date: 2020/4/29
 - Fix add ``field.render_kw.class`` to form label class attribute.
 - Fix append extra space in class attribute when no ``field.render_kw.class`` presents (`#63 <https://github.com/greyli/bootstrap-flask/issues/63>`__).
 
+
 1.3.0
 -----
 
 Release date: 2020/4/23
 
-- Fix ``enctype`` attribute setting for WTForms ``MultipleFileField`` (`Flask-Bootstrap #198<https://github.com/mbr/flask-bootstrap/issues/198>`__).
+- Fix ``enctype`` attribute setting for WTForms ``MultipleFileField`` (`Flask-Bootstrap #198 <https://github.com/mbr/flask-bootstrap/issues/198>`__).
 - Fix WTForms field class append bug when using ``render_kw={'class': 'my-class'}`` (`#53 <https://github.com/greyli/bootstrap-flask/issues/53>`__).
-- Fix WTForms field description not showing for ``BooleanField`` (`Flask-Bootstrap #197<https://github.com/mbr/flask-bootstrap/issues/197>`__).
+- Fix WTForms field description not showing for ``BooleanField`` (`Flask-Bootstrap #197 <https://github.com/mbr/flask-bootstrap/issues/197>`__).
 - Add configuration variable ``BOOTSTRAP_BTN_STYLE``(default to ``primary``) and ``BOOTSTRAP_BTN_SIZE``(default to ``md``) to set default form button style and size globally.
 - Add parameter ``button_style`` and ``button_map`` for ``render_form`` and ``render_field`` to set button style and size.
+
 
 1.2.0
 -----
@@ -135,6 +137,7 @@ Release date: 2019/12/5
 
 - Add macro ``render_messages`` for rendering flashed messages.
 - Fix rendering bug for WTForms ``FormField`` (`#34 <https://github.com/greyli/bootstrap-flask/issues/34>`__).
+
 
 1.1.0
 -----
@@ -185,6 +188,7 @@ Release date: 2018/8/7
 
 - Fix unmatched built-in jQuery filename. (`#8 <https://github.com/greyli/bootstrap-flask/issues/8>`__)
 
+
 1.0.5
 ------
 
@@ -200,6 +204,7 @@ Release date: 2018/7/24
 
 -  Add missing ``<script>`` tag in resources URL. (`#3 <https://github.com/greyli/bootstrap-flask/issues/3>`__)
 
+
 1.0.3
 -----
 
@@ -208,12 +213,14 @@ Release date: 2018/7/22
 -  Built-in resources will be used when ``FLASK_ENV`` set to ``development``.
 -  Change CDN provider to jsDelivr.
 
+
 1.0.2
 -----
 
 Release date: 2018/7/21
 
 -  Include ``popper.js`` before ``bootstrap.js`` in ``bootstrap.load_js()``. (`#2 <https://github.com/greyli/bootstrap-flask/issues/2>`__)
+
 
 1.0.1
 -----
@@ -222,6 +229,7 @@ Release date: 2018/7/1
 
 -  Fix local resources path error
 -  Add basic unit tests
+
 
 1.0
 ---

@@ -157,7 +157,7 @@ API
     :param render_kw: A dictionary, specifying custom attributes for the
                      ``<form>`` tag.
 
-.. tip:: See :ref:`button_customizatoin` to learn how to customize form buttons.
+.. tip:: See :ref:`button_customization` to learn how to customize form buttons.
 
 
 render_hidden_errors()
@@ -236,7 +236,7 @@ API
     :param button_map: A dictionary, mapping button field name to Bootstrap button style names. For example,
                       ``{'submit': 'success'}``. This will overwrite ``button_style`` and ``BOOTSTRAP_BTN_STYLE``.
 
-.. tip:: See :ref:`button_customizatoin` to learn how to customize form buttons.
+.. tip:: See :ref:`button_customization` to learn how to customize form buttons.
 
 
 render_pager()
@@ -457,7 +457,7 @@ API
     :param actions_title: Title for the actions column header. Default is ``'Actions'``.
     :param custom_actions: A list of tuples for creating custom action buttons, where each tuple contains
                 ('Title Text displayed on hover', 'bootstrap icon name', 'url_for()')
-                (e.g.``[('Run', 'play-fill', url_for('run_report', report_id=':id'))]``).
+                (e.g. ``[('Run', 'play-fill', url_for('run_report', report_id=':id'))]``).
     :param view_url: URL to use for the view action.
     :param edit_url: URL to use for the edit action.
     :param delete_url: URL to use for the delete action.
