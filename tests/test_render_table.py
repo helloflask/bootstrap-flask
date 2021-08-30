@@ -16,7 +16,7 @@ class TestPagination:
             db.drop_all()
             db.create_all()
             for i in range(10):
-                m = Message(text='Test message {}'.format(i+1))
+                m = Message(text=f'Test message {i+1}')
                 db.session.add(m)
             db.session.commit()
             page = request.args.get('page', 1, type=int)
@@ -49,7 +49,7 @@ class TestPagination:
             db.drop_all()
             db.create_all()
             for i in range(10):
-                m = Message(text='Test message {}'.format(i+1))
+                m = Message(text=f'Test message {i+1}')
                 db.session.add(m)
             db.session.commit()
             page = request.args.get('page', 1, type=int)
@@ -80,7 +80,7 @@ class TestPagination:
             db.drop_all()
             db.create_all()
             for i in range(10):
-                m = Message(text='Test message {}'.format(i+1))
+                m = Message(text=f'Test message {i+1}')
                 db.session.add(m)
             db.session.commit()
             page = request.args.get('page', 1, type=int)
@@ -109,7 +109,7 @@ class TestPagination:
             db.drop_all()
             db.create_all()
             for i in range(10):
-                m = Message(text='Test message {}'.format(i+1))
+                m = Message(text=f'Test message {i+1}')
                 db.session.add(m)
             db.session.commit()
             page = request.args.get('page', 1, type=int)
@@ -151,11 +151,11 @@ class TestPagination:
 
         @app.route('/table/<message_id>/resend')
         def test_resend_message(message_id):
-            return 'Re-sending {}'.format(message_id)
+            return f'Re-sending {message_id}'
 
         @app.route('/table/<message_id>/view')
         def test_view_message(message_id):
-            return 'Viewing {}'.format(message_id)
+            return f'Viewing {message_id}'
 
         @app.route('/table/new-message')
         def test_create_message():
@@ -166,7 +166,7 @@ class TestPagination:
             db.drop_all()
             db.create_all()
             for i in range(10):
-                m = Message(text='Test message {}'.format(i+1))
+                m = Message(text=f'Test message {i+1}')
                 db.session.add(m)
             db.session.commit()
             page = request.args.get('page', 1, type=int)
@@ -210,7 +210,7 @@ class TestPagination:
             db.drop_all()
             db.create_all()
             for i in range(10):
-                m = Message(text='Test message {}'.format(i+1))
+                m = Message(text=f'Test message {i+1}')
                 db.session.add(m)
             db.session.commit()
             page = request.args.get('page', 1, type=int)

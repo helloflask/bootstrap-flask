@@ -50,8 +50,9 @@ class Bootstrap(object):
             app.extensions = {}
         app.extensions['bootstrap'] = self
 
-        blueprint = Blueprint('bootstrap', __name__, template_folder='templates',
-                              static_folder='static', static_url_path='/bootstrap' + app.static_url_path)
+        blueprint = Blueprint('bootstrap', __name__, static_folder='static',
+                              static_url_path=f'/bootstrap{app.static_url_path}',
+                              template_folder='templates')
         app.register_blueprint(blueprint)
 
         app.jinja_env.globals['bootstrap'] = self
@@ -87,18 +88,20 @@ class Bootstrap(object):
         if not bootswatch_theme:
             base_path = 'css/'
         else:
-            base_path = 'css/swatch/%s/' % bootswatch_theme.lower()
+            base_path = f'css/swatch/{bootswatch_theme.lower()}/'
 
         if serve_local:
-            css = '<link rel="stylesheet" href="%s" type="text/css">' % \
-                url_for('bootstrap.static', filename=base_path + css_filename)
+            url = url_for('bootstrap.static', filename=f'{base_path}{css_filename}')
+            css = f'<link rel="stylesheet" type="text/css" href="{url}">'
         else:
             if not bootswatch_theme:
-                css = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/css/%s"' \
-                    ' type="text/css">' % (version, css_filename)
+                css = '<link rel="stylesheet" type="text/css" href="' \
+                    'https://cdn.jsdelivr.net/npm/bootstrap@' \
+                    f'{version}/dist/css/{css_filename}">'
             else:
-                css = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@%s/dist/%s/%s"' \
-                    ' type="text/css">' % (version, bootswatch_theme.lower(), css_filename)
+                css = '<link rel="stylesheet" type="text/css" href="' \
+                    'https://cdn.jsdelivr.net/npm/bootswatch@' \
+                    f'{version}/dist/{bootswatch_theme.lower()}/{css_filename}">'
         return Markup(css)
 
     @staticmethod
@@ -121,28 +124,31 @@ class Bootstrap(object):
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
 
         if serve_local:
-            js = '<script src="%s"></script>' % url_for('bootstrap.static', filename='js/' + js_filename)
+            url = url_for('bootstrap.static', filename=f'js/{js_filename}')
+            js = f'<script src="{url}"></script>'
         else:
-            js = '<script src="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/js/%s">' \
-                 '</script>' % (version, js_filename)
+            js = '<script src="https://cdn.jsdelivr.net/npm/bootstrap@' \
+                f'{version}/dist/js/{js_filename}"></script>'
 
         if with_jquery:
             if serve_local:
-                jquery = '<script src="%s"></script>' % url_for('bootstrap.static', filename=jquery_filename)
+                url = url_for('bootstrap.static', filename=jquery_filename)
+                jquery = f'<script src="{url}"></script>'
             else:
-                jquery = '<script src="https://cdn.jsdelivr.net/npm/jquery@%s/dist/%s">' \
-                 '</script>' % (jquery_version, jquery_filename)
+                jquery = '<script src="https://cdn.jsdelivr.net/npm/jquery@' \
+                    f'{jquery_version}/dist/{jquery_filename}"></script>'
         else:
             jquery = ''
 
         if with_popper:
             if serve_local:
-                popper = '<script src="%s"></script>' % url_for('bootstrap.static', filename=popper_filename)
+                url = url_for('bootstrap.static', filename=popper_filename)
+                popper = f'<script src="{url}"></script>'
             else:
-                popper = '<script src="https://cdn.jsdelivr.net/npm/popper.js@%s/dist/umd/%s">' \
-                     '</script>' % (popper_version, popper_filename)
+                popper = '<script src="https://cdn.jsdelivr.net/npm/popper.js@' \
+                    f'{popper_version}/dist/umd/{popper_filename}"></script>'
         else:
             popper = ''
-        return Markup('''%s
-    %s
-    %s''' % (jquery, popper, js))
+        return Markup(f'''{jquery}
+    {popper}
+    {js}''')
