@@ -19,6 +19,7 @@ Release date: -
 - Add configuration ``BOOTSTRAP_TABLE_VIEW_TITLE``, ``BOOTSTRAP_TABLE_EDIT_TITLE``,
 ``BOOTSTRAP_TABLE_DELETE_TITLE``, ``BOOTSTRAP_TABLE_NEW_TITLE`` to support changing
 the icon title of table actions.
+- Fix bug preventing usage of Flask's default path converters (`#146 <https://github.com/greyli/bootstrap-flask/pull/146>`__).
 
 
 1.7.0

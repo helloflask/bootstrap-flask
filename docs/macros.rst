@@ -431,6 +431,7 @@ API
                               header_classes=None,\
                               responsive=False,\
                               responsive_class='table-responsive',\
+                              query=None,\
                               show_actions=False,\
                               actions_title='Actions',\
                               custom_actions=None,\
@@ -450,6 +451,8 @@ API
     :param header_classes: A string of classes to apply to the table header (e.g ``'thead-dark'``).
     :param responsive: Whether to enable/disable table responsiveness.
     :param responsive_class: The responsive class to apply to the table. Default is ``'table-responsive'``.
+    :param query: The query originating from the target Model. This allows for proper usage of Flask's default
+                path converter types (ie. ``str``, ``int``).
     :param show_actions: Whether to display the actions column. Default is ``False``.
     :param actions_title: Title for the actions column header. Default is ``'Actions'``.
     :param custom_actions: A list of tuples for creating custom action buttons, where each tuple contains
