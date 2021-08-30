@@ -181,7 +181,7 @@ class TestPagination:
             titles = [('id', '#'), ('text', 'Message')]
             return render_template_string('''
                 {% from 'bootstrap/table.html' import render_table %}
-                {{ render_table(messages, titles, model=model, show_actions=True,
+                {{ render_table(messages, titles, query=query, show_actions=True,
                 custom_actions=[
                     (
                         'Resend',
@@ -191,7 +191,7 @@ class TestPagination:
                 ],
                 view_url=('test_view_message', [('sender', ':sender'), ('message_id', ':id')]),
                 new_url=url_for('test_create_message')) }}
-            ''', titles=titles, model=Message, messages=messages)
+            ''', titles=titles, query=Message.query, messages=messages)
 
         response = client.get('/table')
         data = response.get_data(as_text=True)
@@ -228,12 +228,12 @@ class TestPagination:
             messages = pagination.items
             return render_template_string('''
                 {% from 'bootstrap/table.html' import render_table %}
-                {{ render_table(messages, model=model, show_actions=True,
+                {{ render_table(messages, query=query, show_actions=True,
                 view_url='/view',
                 edit_url='/edit',
                 delete_url='/delete',
                 new_url='/new') }}
-                ''', model=Message, messages=messages)
+                ''', query=Message.query, messages=messages)
 
         response = client.get('/table')
         data = response.get_data(as_text=True)

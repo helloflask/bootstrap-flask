@@ -5,11 +5,11 @@
         The support to the old value (":primary_key") will be removed in version 2.0.') }}
 {% endmacro %}
 
-{% macro build_url(endpoint, model, pk, kwargs) %}
+{% macro build_url(endpoint, query, pk, kwargs) %}
     {% with url_params = {} -%}
         {%- do url_params.update(request.view_args if not endpoint else {}),
             url_params.update(request.args if not endpoint else {}) -%}
-        {% with record = model.query.get(pk) %}
+        {% with record = query.get(pk) %}
             {% for kwarg, value in kwargs %}
                 {% if value.startswith(':') and '.' in value %}
                     {%- set value = value[1:].split('.') -%}
@@ -35,7 +35,7 @@
                       header_classes=None,
                       responsive=False,
                       responsive_class='table-responsive',
-                      model=None,
+                      query=None,
                       show_actions=False,
                       actions_title='Actions',
                       custom_actions=None,
@@ -92,7 +92,7 @@
                    {% if action_url is string %}
                     href="{{ action_url }}"
                    {% else %}
-                    href="{{ build_url(action_url[0], model, row[primary_key], action_url[1])|trim }}"
+                    href="{{ build_url(action_url[0], query, row[primary_key], action_url[1])|trim }}"
                    {% endif %}
                     title="{{ action_name }}">{{ render_icon(action_icon) }}</a>
             {% endfor %}
@@ -106,7 +106,7 @@
                    {% if view_url is string %}
                     href="{{ view_url }}"
                    {% else %}
-                    href="{{ build_url(view_url[0], model, row[primary_key], view_url[1])|trim }}"
+                    href="{{ build_url(view_url[0], query, row[primary_key], view_url[1])|trim }}"
                    {% endif %}
                     title="{{ config['BOOTSTRAP_TABLE_VIEW_TITLE'] }}">
                     {{ render_icon('eye-fill') }}
@@ -121,7 +121,7 @@
                    {% if edit_url is string %}
                     href="{{ edit_url }}"
                    {% else %}
-                    href="{{ build_url(edit_url[0], model, row[primary_key], edit_url[1])|trim }}"
+                    href="{{ build_url(edit_url[0], query, row[primary_key], edit_url[1])|trim }}"
                    {% endif %}
                     title="{{ config['BOOTSTRAP_TABLE_EDIT_TITLE'] }}">
                     {{ render_icon('pencil-fill') }}
@@ -136,7 +136,7 @@
                   {% if delete_url is string %}
                    action="{{ delete_url }}"
                   {% else %}
-                   action="{{ build_url(delete_url[0], model, row[primary_key], delete_url[1])|trim }}"
+                   action="{{ build_url(delete_url[0], query, row[primary_key], delete_url[1])|trim }}"
                   {% endif %}
                    method="post">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
