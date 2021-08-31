@@ -451,17 +451,22 @@ API
     :param header_classes: A string of classes to apply to the table header (e.g ``'thead-dark'``).
     :param responsive: Whether to enable/disable table responsiveness.
     :param responsive_class: The responsive class to apply to the table. Default is ``'table-responsive'``.
-    :param query: The query originating from the target Model. This allows for proper usage of Flask's default
-                path converter types (ie. ``str``, ``int``).
+    :param query: The query originating from the target Model. Used to build custom_action, view, edit, delete, and
+                new urls. This allows for proper usage of Flask's default path converter types (i.e. ``str``, ``int``)
+                (e.g. ``Model.query``, ``Model.query.filter_by(active=True)``). When using this tuples are accepted in
+                place of view, edit, delete, new, and custom_actions urls. Defaults to ``None`` to allow for
+                backwards-compatibility. Tuple format:
+                ``('route_name', [('db_model_fieldname', ':url_parameter_name')])``. ``db_model_fieldname`` may also
+                contain dots to access relationships and their fields (e.g. ``db_model_relationship_field.name``).
     :param show_actions: Whether to display the actions column. Default is ``False``.
     :param actions_title: Title for the actions column header. Default is ``'Actions'``.
     :param custom_actions: A list of tuples for creating custom action buttons, where each tuple contains
                 ('Title Text displayed on hover', 'bootstrap icon name', 'url_for()')
-                (e.g. ``[('Run', 'play-fill', url_for('run_report', report_id=':id'))]``).
-    :param view_url: URL to use for the view action.
-    :param edit_url: URL to use for the edit action.
-    :param delete_url: URL to use for the delete action.
-    :param new_url: URL to use for the create action (new in version 1.6.0).
+                (e.g. ``[('Run', 'play-fill', ('run_report', [('report_id', ':id')]))]``).
+    :param view_url: URL or tuple (see :param:`query`) to use for the view action.
+    :param edit_url: URL or tuple (see :param:`query`) to use for the edit action.
+    :param delete_url: URL or tuple (see :param:`query`) to use for the delete action.
+    :param new_url: URL or tuple (see :param:`query`) to use for the create action (new in version 1.6.0).
     :param action_pk_placeholder: The placeholder which replaced by the primary key when build the action URLs. Default is ``':id'``.
 
 .. tip:: The default value of ``action_pk_placeholder`` changed to ``:id`` in version 1.7.0.

@@ -84,15 +84,15 @@
         <td>
             {% if custom_actions %}
             {% for (action_name, action_icon, action_url) in custom_actions %}
-                {% if ':primary_key' in action_url|join('') %}
+                {% if ':primary_key' in action_url | join('') %}
                     {% set action_pk_placeholder = ':primary_key' %}
                     {% set w = deprecate_old_pk_placeholder() %}
                 {% endif %}
                 <a class="action-icon text-decoration-none"
                    {% if action_url is string %}
-                    href="{{ action_url }}"
+                    href="{{ action_url | replace(action_pk_placeholder, row[primary_key]) }}"
                    {% else %}
-                    href="{{ build_url(action_url[0], query, row[primary_key], action_url[1])|trim }}"
+                    href="{{ build_url(action_url[0], query, row[primary_key], action_url[1]) | trim }}"
                    {% endif %}
                     title="{{ action_name }}">{{ render_icon(action_icon) }}</a>
             {% endfor %}
