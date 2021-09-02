@@ -431,7 +431,7 @@ API
                               header_classes=None,\
                               responsive=False,\
                               responsive_class='table-responsive',\
-                              query=None,\
+                              model=None,\
                               show_actions=False,\
                               actions_title='Actions',\
                               custom_actions=None,\
