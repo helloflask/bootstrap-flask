@@ -1,5 +1,6 @@
 {#  This file was part of Flask-Bootstrap and was modified under the terms of
  its BSD License. Copyright (c) 2013, Marc Brinkmann. All rights reserved. #}
+{% from 'bootstrap/utils.html' import arg_url_for %}
 
 {% macro render_pager(pagination,
                       fragment='',
@@ -24,16 +25,6 @@
     </nav>
 {%- endmacro %}
 
-{% macro _arg_url_for(endpoint, base) %}
-    {# calls url_for() with a given endpoint and **base as the parameters,
-   additionally passing on all keyword_arguments (may overwrite existing ones)
- #}
-    {%- with kargs = base.copy() -%}
-        {%- do kargs.update(kwargs) -%}
-        {{ url_for(endpoint, **kargs) }}
-    {%- endwith %}
-{%- endmacro %}
-
 {% macro render_pagination(pagination,
                            endpoint=None,
                            prev=('&laquo;')|safe,
@@ -55,7 +46,7 @@
                     {# prev and next are only show if a symbol has been passed. #}
                     {% if prev != None -%}
                         <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
-                            <a class="page-link" href="{{ _arg_url_for(endpoint, url_args, page=pagination.prev_num) if pagination.has_prev else '#' }}{{ fragment }}">{{ prev }}</a>
+                            <a class="page-link" href="{{ arg_url_for(endpoint, url_args, page=pagination.prev_num) if pagination.has_prev else '#' }}{{ fragment }}">{{ prev }}</a>
                         </li>
                     {%- endif -%}
 
@@ -63,7 +54,7 @@
                         {% if page %}
                             {% if page != pagination.page %}
                                 <li class="page-item">
-                                    <a class="page-link" href="{{ _arg_url_for(endpoint, url_args, page=page) }}{{ fragment }}">{{ page }}</a>
+                                    <a class="page-link" href="{{ arg_url_for(endpoint, url_args, page=page) }}{{ fragment }}">{{ page }}</a>
                                 </li>
                             {% else %}
                                 <li class="page-item active">
@@ -77,7 +68,7 @@
 
                     {% if next != None -%}
                         <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
-                            <a class="page-link" href="{{ _arg_url_for(endpoint, url_args, page=pagination.next_num) if pagination.has_next else '#' }}{{ fragment }}">{{ next }}</a>
+                            <a class="page-link" href="{{ arg_url_for(endpoint, url_args, page=pagination.next_num) if pagination.has_next else '#' }}{{ fragment }}">{{ next }}</a>
                         </li>
                     {%- endif -%}
                 </ul>

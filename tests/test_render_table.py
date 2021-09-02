@@ -147,15 +147,17 @@ class TestPagination:
 
         class Message(db.Model):
             id = db.Column(db.Integer, primary_key=True)
+            sender = db.Column(db.String(20))
+            recipient = db.Column(db.String(20))
             text = db.Column(db.Text)
 
-        @app.route('/table/<message_id>/resend')
-        def test_resend_message(message_id):
-            return 'Re-sending {}'.format(message_id)
+        @app.route('/table/<string:recipient>/<int:message_id>/resend')
+        def test_resend_message(recipient, message_id):
+            return 'Re-sending {} to {}'.format(message_id, recipient)
 
-        @app.route('/table/<message_id>/view')
-        def test_view_message(message_id):
-            return 'Viewing {}'.format(message_id)
+        @app.route('/table/<string:sender>/<int:message_id>/view')
+        def test_view_message(sender, message_id):
+            return 'Viewing {} from {}'.format(message_id, sender)
 
         @app.route('/table/new-message')
         def test_create_message():
@@ -166,7 +168,11 @@ class TestPagination:
             db.drop_all()
             db.create_all()
             for i in range(10):
-                m = Message(text='Test message {}'.format(i+1))
+                m = Message(
+                    text='Test message {}'.format(i+1),
+                    sender='me',
+                    recipient='john_doe'
+                )
                 db.session.add(m)
             db.session.commit()
             page = request.args.get('page', 1, type=int)
@@ -175,20 +181,24 @@ class TestPagination:
             titles = [('id', '#'), ('text', 'Message')]
             return render_template_string('''
                 {% from 'bootstrap/table.html' import render_table %}
-                {{ render_table(messages, titles, show_actions=True,
+                {{ render_table(messages, titles, model=model, show_actions=True,
                 custom_actions=[
-                    ('Resend', 'bootstrap-reboot', url_for('test_resend_message', message_id=':id'))
+                    (
+                        'Resend',
+                        'bootstrap-reboot',
+                        ('test_resend_message', [('recipient', ':recipient'), ('message_id', ':id')])
+                    )
                 ],
-                view_url=url_for('test_view_message', message_id=':id'),
+                view_url=('test_view_message', [('sender', ':sender'), ('message_id', ':id')]),
                 new_url=url_for('test_create_message')) }}
-            ''', titles=titles, messages=messages)
+            ''', titles=titles, model=Message, messages=messages)
 
         response = client.get('/table')
         data = response.get_data(as_text=True)
         assert 'icons/bootstrap-icons.svg#bootstrap-reboot' in data
-        assert 'href="/table/1/resend"' in data
+        assert 'href="/table/john_doe/1/resend"' in data
         assert 'title="Resend">' in data
-        assert 'href="/table/1/view"' in data
+        assert 'href="/table/me/1/view"' in data
         assert 'href="/table/new-message"' in data
 
     def test_customize_icon_title_of_table_actions(self, app, client):
@@ -217,10 +227,13 @@ class TestPagination:
             pagination = Message.query.paginate(page, per_page=10)
             messages = pagination.items
             return render_template_string('''
-                                    {% from 'bootstrap/table.html' import render_table %}
-                                    {{ render_table(messages, show_actions=True, view_url='/view', edit_url='/edit',
-                                     delete_url='/delete', new_url='/new') }}
-                                    ''', messages=messages)
+                {% from 'bootstrap/table.html' import render_table %}
+                {{ render_table(messages, model=model, show_actions=True,
+                view_url='/view',
+                edit_url='/edit',
+                delete_url='/delete',
+                new_url='/new') }}
+                ''', model=Message, messages=messages)
 
         response = client.get('/table')
         data = response.get_data(as_text=True)
