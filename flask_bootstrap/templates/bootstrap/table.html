@@ -5,7 +5,7 @@
 {% endmacro %}
 
 {% macro deprecate_action_url_string() %}
-    {{ warn('Passing an string as action URL is deprecated. You will need to pass an URL tuple to URL arguments, see the API docs of render_table for more details. The support to URL string will be removed in version 2.0.') }}
+    {{ warn('Passing an string as action URL for view_url/edit_url/delete_url/custom_actions is deprecated. You will need to pass an URL tuple to URL arguments, see the API docs of render_table for more details. The support to URL string will be removed in version 2.0.') }}
 {% endmacro %}
 
 {% macro build_url(endpoint, model, pk, kwargs) %}
@@ -68,8 +68,14 @@
     {% if show_actions %}
         <th scope="col">{{ actions_title }}
         {% if new_url %}
-            <a class="action-icon text-decoration-none" href="{{ new_url }}" title="{{ config['BOOTSTRAP_TABLE_NEW_TITLE'] }}">
-            {{ render_icon('plus-circle-fill') }}
+            <a class="action-icon text-decoration-none"
+                {% if new_url.startswith('/') %}
+                href="{{ new_url }}"
+                {% else %}
+                href="{{ url_for(new_url) }}"
+                {% endif %}
+                title="{{ config['BOOTSTRAP_TABLE_NEW_TITLE'] }}">
+                {{ render_icon('plus-circle-fill') }}
             </a>
         {% endif %}
         </th>
