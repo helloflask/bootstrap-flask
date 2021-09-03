@@ -102,48 +102,48 @@
             {% endfor %}
             {% endif %}
             {% if view_url %}
-                {% if ':primary_key' in view_url|join('') %}
+                {% if ':primary_key' in view_url | join('') %}
                     {% set action_pk_placeholder = ':primary_key' %}
                     {% set w = deprecate_old_pk_placeholder() %}
                 {% endif %}
                 <a class="action-icon text-decoration-none"
                    {% if view_url is string %}
                    {% set w = deprecate_action_url_string() %}
-                    href="{{ view_url }}"
+                    href="{{ view_url | replace(action_pk_placeholder, row[primary_key]) }}"
                    {% else %}
-                    href="{{ build_url(view_url[0], model, row[primary_key], view_url[1])|trim }}"
+                    href="{{ build_url(view_url[0], model, row[primary_key], view_url[1]) | trim }}"
                    {% endif %}
                     title="{{ config['BOOTSTRAP_TABLE_VIEW_TITLE'] }}">
                     {{ render_icon('eye-fill') }}
                 </a>
             {% endif %}
             {% if edit_url -%}
-                {% if ':primary_key' in edit_url|join('') %}
+                {% if ':primary_key' in edit_url | join('') %}
                     {% set action_pk_placeholder = ':primary_key' %}
                     {% set w = deprecate_old_pk_placeholder() %}
                 {% endif %}
                 <a class="action-icon text-decoration-none"
                    {% if edit_url is string %}
                    {% set w = deprecate_action_url_string() %}
-                    href="{{ edit_url }}"
+                    href="{{ edit_url | replace(action_pk_placeholder, row[primary_key]) }}"
                    {% else %}
-                    href="{{ build_url(edit_url[0], model, row[primary_key], edit_url[1])|trim }}"
+                    href="{{ build_url(edit_url[0], model, row[primary_key], edit_url[1]) | trim }}"
                    {% endif %}
                     title="{{ config['BOOTSTRAP_TABLE_EDIT_TITLE'] }}">
                     {{ render_icon('pencil-fill') }}
                 </a>
             {%- endif %}
             {% if delete_url %}
-                {% if ':primary_key' in delete_url|join('') %}
+                {% if ':primary_key' in delete_url | join('') %}
                     {% set action_pk_placeholder = ':primary_key' %}
                     {% set w = deprecate_old_pk_placeholder() %}
                 {% endif %}
             <form style="display:inline"
                   {% if delete_url is string %}
                   {% set w = deprecate_action_url_string() %}
-                   action="{{ delete_url }}"
+                   action="{{ delete_url | replace(action_pk_placeholder, row[primary_key]) }}"
                   {% else %}
-                   action="{{ build_url(delete_url[0], model, row[primary_key], delete_url[1])|trim }}"
+                   action="{{ build_url(delete_url[0], model, row[primary_key], delete_url[1]) | trim }}"
                   {% endif %}
                    method="post">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>

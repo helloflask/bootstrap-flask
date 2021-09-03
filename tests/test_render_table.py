@@ -163,6 +163,10 @@ class TestPagination:
         def test_create_message():
             return 'New message'
 
+        @app.route('/messages/<id>/edit')
+        def edit_message(id):
+            return 'Editing message {}'.format(id)
+
         @app.route('/table')
         def test():
             db.drop_all()
@@ -190,6 +194,7 @@ class TestPagination:
                     )
                 ],
                 view_url=('test_view_message', [('sender', ':sender'), ('message_id', ':id')]),
+                edit_url=url_for('edit_message', id=':id'),
                 new_url=url_for('test_create_message')) }}
             ''', titles=titles, model=Message, messages=messages)
 
@@ -199,6 +204,7 @@ class TestPagination:
         assert 'href="/table/john_doe/1/resend"' in data
         assert 'title="Resend">' in data
         assert 'href="/table/me/1/view"' in data
+        assert 'href="/messages/1/edit"' in data
         assert 'href="/table/new-message"' in data
 
     def test_customize_icon_title_of_table_actions(self, app, client):
