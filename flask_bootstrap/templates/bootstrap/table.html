@@ -9,6 +9,9 @@
 {% endmacro %}
 
 {% macro build_url(endpoint, model, pk, kwargs) %}
+    {% if model == None %}
+        {{ raise("The model argument can't be None when setting action URLs.") }}
+    {% endif %}
     {% with url_params = {} -%}
         {%- do url_params.update(request.view_args if not endpoint else {}),
             url_params.update(request.args if not endpoint else {}) -%}
