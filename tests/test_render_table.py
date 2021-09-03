@@ -143,6 +143,8 @@ class TestPagination:
         assert response.status_code == 200
 
     def test_render_table_with_actions(self, app, client):
+        app.jinja_env.globals['csrf_token'] = lambda: ''
+
         db = SQLAlchemy(app)
 
         class Message(db.Model):
@@ -159,13 +161,37 @@ class TestPagination:
         def test_view_message(sender, message_id):
             return 'Viewing {} from {}'.format(message_id, sender)
 
+        @app.route('/table/<string:sender>/<int:message_id>/edit')
+        def test_edit_message(sender, message_id):
+            return 'Editing {} from {}'.format(message_id, sender)
+
+        @app.route('/table/<string:sender>/<int:message_id>/delete')
+        def test_delete_message(sender, message_id):
+            return 'Deleting {} from {}'.format(message_id, sender)
+
         @app.route('/table/new-message')
         def test_create_message():
             return 'New message'
 
-        @app.route('/messages/<id>/edit')
-        def edit_message(id):
-            return 'Editing message {}'.format(id)
+        @app.route('/new-message')
+        def new_message():
+            return 'Create message'
+
+        @app.route('/messages/<message_id>/edit')
+        def edit_message(message_id):
+            return 'Editing message {}'.format(message_id)
+
+        @app.route('/messages/<message_id>/view')
+        def view_message(message_id):
+            return 'Viewing message {}'.format(message_id)
+
+        @app.route('/messages/<message_id>/delete')
+        def delete_message(message_id):
+            return 'Deleting message {}'.format(message_id)
+
+        @app.route('/messages/<message_id>/resend')
+        def resend_message(message_id):
+            return 'Re-sending message'.format(message_id)
 
         @app.route('/table')
         def test():
@@ -185,6 +211,7 @@ class TestPagination:
             titles = [('id', '#'), ('text', 'Message')]
             return render_template_string('''
                 {% from 'bootstrap/table.html' import render_table %}
+                # URL arguments with URL tuple
                 {{ render_table(messages, titles, model=model, show_actions=True,
                 custom_actions=[
                     (
@@ -194,8 +221,25 @@ class TestPagination:
                     )
                 ],
                 view_url=('test_view_message', [('sender', ':sender'), ('message_id', ':id')]),
-                edit_url=url_for('edit_message', id=':id'),
-                new_url=url_for('test_create_message')) }}
+                edit_url=('test_edit_message', [('sender', ':sender'), ('message_id', ':id')]),
+                delete_url=('test_delete_message', [('sender', ':sender'), ('message_id', ':id')]),
+                new_url=('test_create_message')
+                ) }}
+
+                # URL arguments with URL string (deprecated (except new_url), will be removed in 2.0)
+                {{ render_table(messages, titles, show_actions=True,
+                custom_actions=[
+                    (
+                        'Resend',
+                        'bootstrap-reboot',
+                        url_for('resend_message', message_id=':id')
+                    )
+                ],
+                view_url=url_for('view_message', message_id=':id'),
+                delete_url=url_for('delete_message', message_id=':id'),
+                edit_url=url_for('edit_message', message_id=':id'),
+                new_url=url_for('new_message')
+                ) }}
             ''', titles=titles, model=Message, messages=messages)
 
         response = client.get('/table')
@@ -204,8 +248,13 @@ class TestPagination:
         assert 'href="/table/john_doe/1/resend"' in data
         assert 'title="Resend">' in data
         assert 'href="/table/me/1/view"' in data
-        assert 'href="/messages/1/edit"' in data
+        assert 'action="/table/me/1/delete"' in data
+        assert 'href="/table/me/1/edit"' in data
         assert 'href="/table/new-message"' in data
+        assert 'href="/messages/1/edit"' in data
+        assert 'href="/messages/1/view"' in data
+        assert 'action="/messages/1/delete"' in data
+        assert 'href="/new-message"' in data
 
     def test_customize_icon_title_of_table_actions(self, app, client):
 
