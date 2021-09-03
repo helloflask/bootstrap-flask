@@ -1,8 +1,11 @@
 {% from 'bootstrap/utils.html' import render_icon, arg_url_for %}
 
 {% macro deprecate_old_pk_placeholder() %}
-    {{ warn('The default action primary key placeholder has changed to ":id", please update.
-        The support to the old value (":primary_key") will be removed in version 2.0.') }}
+    {{ warn('The default action primary key placeholder has changed to ":id", please update. The support to the old value (":primary_key") will be removed in version 2.0.') }}
+{% endmacro %}
+
+{% macro deprecate_action_url_string() %}
+    {{ warn('Passing an string as action URL is deprecated. You will need to pass an URL tuple to URL arguments, see the API docs of render_table for more details. The support to URL string will be removed in version 2.0.') }}
 {% endmacro %}
 
 {% macro build_url(endpoint, model, pk, kwargs) %}
@@ -90,6 +93,7 @@
                 {% endif %}
                 <a class="action-icon text-decoration-none"
                    {% if action_url is string %}
+                   {% set w = deprecate_action_url_string() %}
                     href="{{ action_url | replace(action_pk_placeholder, row[primary_key]) }}"
                    {% else %}
                     href="{{ build_url(action_url[0], model, row[primary_key], action_url[1]) | trim }}"
@@ -104,6 +108,7 @@
                 {% endif %}
                 <a class="action-icon text-decoration-none"
                    {% if view_url is string %}
+                   {% set w = deprecate_action_url_string() %}
                     href="{{ view_url }}"
                    {% else %}
                     href="{{ build_url(view_url[0], model, row[primary_key], view_url[1])|trim }}"
@@ -119,6 +124,7 @@
                 {% endif %}
                 <a class="action-icon text-decoration-none"
                    {% if edit_url is string %}
+                   {% set w = deprecate_action_url_string() %}
                     href="{{ edit_url }}"
                    {% else %}
                     href="{{ build_url(edit_url[0], model, row[primary_key], edit_url[1])|trim }}"
@@ -134,6 +140,7 @@
                 {% endif %}
             <form style="display:inline"
                   {% if delete_url is string %}
+                  {% set w = deprecate_action_url_string() %}
                    action="{{ delete_url }}"
                   {% else %}
                    action="{{ build_url(delete_url[0], model, row[primary_key], delete_url[1])|trim }}"
