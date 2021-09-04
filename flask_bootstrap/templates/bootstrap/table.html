@@ -1,7 +1,7 @@
 {% from 'bootstrap/utils.html' import render_icon, arg_url_for %}
 
 {% macro deprecate_placeholder_url() %}
-    {{ warn('Passing an URL with primary key palceholder for view_url/edit_url/delete_url/custom_actions is deprecated. You will need to pass an fixed URL or an URL tuple to URL arguments, see the API docs of render_table for more details. The support to URL string will be removed in version 2.0.') }}
+    {{ warn('Passing an URL with primary key palceholder for view_url/edit_url/delete_url/custom_actions is deprecated. You will need to pass an fixed URL or an URL tuple to URL arguments, see the docs for more details (https://bootstrap-flask.readthedocs.io/en/stable/macros.html#render-table). The support to URL string will be removed in version 2.0.') }}
 {% endmacro %}
 
 {% macro build_url(endpoint, model, pk, url_tuples) %}
@@ -147,6 +147,9 @@
                    action="{{ build_url(delete_url[0], model, row[primary_key], delete_url[1]) | trim }}"
                   {% endif %}
                    method="post">
+                  {% if csrf_token is undefined %}
+                  {{ raise('You have to enable the CSRFProtect extension from Flask-WTF to use delete_url, see the docs for more details (https://bootstrap-flask.readthedocs.io/en/stable/macros.html#render-table).') }}
+                  {% endif %}
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <a class="action-icon text-decoration-none"
                     href="javascript:{}"
