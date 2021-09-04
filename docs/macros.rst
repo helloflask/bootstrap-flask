@@ -413,6 +413,13 @@ Render a Bootstrap table with given data.
 Example
 ~~~~~~~
 
+.. code-block:: python
+
+    @app.route('/test')
+    def test():
+        data = Message.query.all()
+        return render_template('test.html', data=data)
+
 .. code-block:: jinja
 
     {% from 'bootstrap/table.html' import render_table %}
@@ -431,15 +438,14 @@ API
                               header_classes=None,\
                               responsive=False,\
                               responsive_class='table-responsive',\
-                              model=None,\
                               show_actions=False,\
                               actions_title='Actions',\
+                              model=None,\                              
                               custom_actions=None,\
                               view_url=None,\
                               edit_url=None,\
                               delete_url=None,\
-                              new_url=None,\
-                              action_pk_placeholder=':id')
+                              new_url=None)
 
     :param data: An iterable of data objects to render. Can be dicts or class objects.
     :param titles: An iterable of tuples of the format (prop, label) e.g ``[('id', '#')]``, if not provided,
@@ -451,26 +457,70 @@ API
     :param header_classes: A string of classes to apply to the table header (e.g ``'thead-dark'``).
     :param responsive: Whether to enable/disable table responsiveness.
     :param responsive_class: The responsive class to apply to the table. Default is ``'table-responsive'``.
-    :param model: The model used to build custom_action, view, edit, delete, and new urls. This allows for proper
-                usage of Flask's default path converter types (i.e. ``str``, ``int``) (e.g. ``Model``). When using
-                this tuples are accepted in place of view, edit, delete, new, and custom_actions urls. Defaults to
-                ``None`` to allow for backwards-compatibility. Tuple format:
-                ``('route_name', [('db_model_fieldname', ':url_parameter_name')])``. ``db_model_fieldname`` may also
-                contain dots to access relationships and their fields (e.g. ``db_model_relationship_field.name``).
     :param show_actions: Whether to display the actions column. Default is ``False``.
+    :param model: The model used to build custom_action, view, edit, delete URLs.
     :param actions_title: Title for the actions column header. Default is ``'Actions'``.
     :param custom_actions: A list of tuples for creating custom action buttons, where each tuple contains
-                ('Title Text displayed on hover', 'bootstrap icon name', 'url_for()')
+                ('Title Text displayed on hover', 'bootstrap icon name', 'URL tuple')
                 (e.g. ``[('Run', 'play-fill', ('run_report', [('report_id', ':id')]))]``).
-    :param view_url: URL or tuple (see :param:`model`) to use for the view action.
-    :param edit_url: URL or tuple (see :param:`model`) to use for the edit action.
-    :param delete_url: URL or tuple (see :param:`model`) to use for the delete action.
-    :param new_url: URL or tuple (see :param:`model`) to use for the create action (new in version 1.6.0).
-    :param action_pk_placeholder: The placeholder which replaced by the primary key when build the action URLs. Default is ``':id'``.
+    :param view_url: URL string or URL tuple in ``('endpoint', [('url_parameter_name', ':db_model_fieldname')])``
+                to use for the view action.
+    :param edit_url: URL string or URL tuple in ``('endpoint', [('url_parameter_name', ':db_model_fieldname')])``
+                to use for the edit action.
+    :param delete_url: URL string or URL tuple in ``('endpoint', [('url_parameter_name', ':db_model_fieldname')])``
+                to use for the delete action.
+    :param new_url: URL string or endpoint to use for the create action (new in version 1.6.0).
 
-.. tip:: The default value of ``action_pk_placeholder`` changed to ``:id`` in version 1.7.0.
-    The old value (``:primary_key``) will be removed in version 2.0. Currently, you can't
-    use ``int`` converter on the URL variable of primary key. 
+To set the URLs for table actions, you will need to pass an URL tuple in the form of
+``('endpoint', [('url_parameter_name', ':db_model_fieldname')])``:
+
+- ``endpoint``: endpoint of the view, normally the name of the view function
+- ``[('url_parameter_name', ':db_model_fieldname')]``: a list of two-element tuples, the tuple should contain the
+  URL parameter name and the corresponding field name in the database model (starts with a ``:`` mark to indicate
+  it's a variable, otherwise it will becomes a fixed value). `db_model_fieldname`` may also contain dots to access
+  relationships and their fields (e.g. ``user.name``).
+
+Remember to set the ``model`` when setting this URLs, so that Bootstrap-Flask will know where to get the actual value
+when building the URL.
+
+For example, for the view below:
+
+.. code-block:: python
+
+    class Message(Model):
+        id = Column(primary_key=True)
+
+    @app.route('/messages/<int:message_id>')
+    def view_message(message_id):
+        pass
+
+To pass the URL point to this view for ``view_url``, the value will be: ``view_url=('view_message', [('message_id', ':id')])``.
+Here is the full example:
+
+.. code-block:: python
+
+    @app.route('/test')
+    def test():
+        data = Message.query.all()
+        return render_template('test.html', data=data, Message=Message)
+
+.. code-block:: jinja
+
+    {% from 'bootstrap/table.html' import render_table %}
+
+    {{ render_table(data, model=Message, view_url=('view_message', [('message_id', ':id')])) }}
+
+The following arguments are expect to accpet an URL tuple:
+
+- ``custom_actions``
+- ``view_url``
+- ``edit_url``
+- ``delete_url``
+
+You can also pass a fiexd URL string, but use a primary key placeholder in the URL is deprecated and will be removed
+in version 2.0.
+
+The ``new_url`` expects a fixed URL string or an endpoint.
 
 
 render_icon()

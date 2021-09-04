@@ -24,6 +24,10 @@ VERSION_JQUERY = '3.4.1'
 VERSION_POPPER = '1.14.0'
 
 
+def raise_helper(message):  # pragma: no cover
+    raise RuntimeError(message)
+
+
 def get_table_titles(data, primary_key, primary_key_title):
     """Detect and build the table titles tuple from ORM object, currently only support SQLAlchemy.
 
@@ -58,6 +62,7 @@ class Bootstrap(object):
         app.jinja_env.globals['bootstrap_is_hidden_field'] = is_hidden_field_filter
         app.jinja_env.globals['get_table_titles'] = get_table_titles
         app.jinja_env.globals['warn'] = warnings.warn
+        app.jinja_env.globals['raise'] = raise_helper
         app.jinja_env.add_extension('jinja2.ext.do')
         # default settings
         app.config.setdefault('BOOTSTRAP_SERVE_LOCAL', False)
