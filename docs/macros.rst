@@ -520,7 +520,21 @@ The following arguments are expect to accpet an URL tuple:
 You can also pass a fiexd URL string, but use a primary key placeholder in the URL is deprecated and will be removed
 in version 2.0.
 
-The ``new_url`` expects a fixed URL string or an endpoint.
+When setting the ``delete_url``, you will also need to enable the CSRFProtect extension provided by Flask-WTF, so that
+the CSRF protection can be added to the delete button:
+
+.. code-block:: text
+
+    $ pip install flask-wtf
+
+.. code-block:: python
+
+    from flask_wtf import CSRFProtect
+
+    csrf = CSRFProtect(app)
+
+By default, it will enable the CSRF token check for all the POST requests, read more about this extension in its
+`documentation <https://flask-wtf.readthedocs.io/en/0.15.x/csrf/>`_.
 
 
 render_icon()
