@@ -116,8 +116,8 @@ class Bootstrap(object):
                        (version, bootswatch_theme.lower(), css_filename))
         return Markup(css)
 
-    @staticmethod  # noqa: C901
-    def load_js(version=VERSION_BOOTSTRAP, jquery_version=VERSION_JQUERY,
+    @staticmethod
+    def load_js(version=VERSION_BOOTSTRAP, jquery_version=VERSION_JQUERY,  # noqa: C901
                 popper_version=VERSION_POPPER, with_jquery=True, with_popper=True,
                 bootstrap_sri=None, jquery_sri=None, popper_sri=None):
         """Load Bootstrap and related library's js resources with given version.
