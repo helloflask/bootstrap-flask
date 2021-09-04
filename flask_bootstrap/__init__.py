@@ -18,10 +18,14 @@ else:
     def is_hidden_field_filter(field):
         return isinstance(field, HiddenField)
 
-# central definition of used versions
+# central definition of used versions and SRI hashes
 VERSION_BOOTSTRAP = '4.3.1'
 VERSION_JQUERY = '3.4.1'
 VERSION_POPPER = '1.14.0'
+BOOTSTRAP_CSS_INTEGRITY = 'sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T'
+BOOTSTRAP_JS_INTEGRITY = 'sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM'
+JQUERY_INTEGRITY = 'sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh'
+POPPER_INTEGRITY = 'sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ'
 
 
 def raise_helper(message):  # pragma: no cover
@@ -78,7 +82,7 @@ class Bootstrap(object):
         app.config.setdefault('BOOTSTRAP_TABLE_NEW_TITLE', 'New')
 
     @staticmethod
-    def load_css(version=VERSION_BOOTSTRAP):
+    def load_css(version=VERSION_BOOTSTRAP, bootstrap_sri=None):
         """Load Bootstrap's css resources with given version.
 
         .. versionadded:: 0.1.0
@@ -89,26 +93,38 @@ class Bootstrap(object):
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
         bootswatch_theme = current_app.config['BOOTSTRAP_BOOTSWATCH_THEME']
 
+        if version == VERSION_BOOTSTRAP and serve_local is False and bootstrap_sri is None:
+            bootstrap_sri = BOOTSTRAP_CSS_INTEGRITY
+
         if not bootswatch_theme:
             base_path = 'css/'
         else:
             base_path = 'css/swatch/%s/' % bootswatch_theme.lower()
 
         if serve_local:
-            css = '<link rel="stylesheet" href="%s" type="text/css">' % \
-                url_for('bootstrap.static', filename=base_path + css_filename)
+            if bootstrap_sri:
+                css = ('<link rel="stylesheet" href="%s" integrity="%s" crossorigin="anonymous">' %
+                       (url_for('bootstrap.static', filename=base_path + css_filename), bootstrap_sri))
+            else:
+                css = ('<link rel="stylesheet" href="%s">' %
+                       url_for('bootstrap.static', filename=base_path + css_filename))
         else:
             if not bootswatch_theme:
-                css = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/css/%s"' \
-                    ' type="text/css">' % (version, css_filename)
+                if bootstrap_sri:
+                    css = ('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/css/%s"'
+                           ' integrity="%s" crossorigin="anonymous">' % (version, css_filename, bootstrap_sri))
+                else:
+                    css = ('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/css/%s">' %
+                           (version, css_filename))
             else:
-                css = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@%s/dist/%s/%s"' \
-                    ' type="text/css">' % (version, bootswatch_theme.lower(), css_filename)
+                css = ('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@%s/dist/%s/%s">' %
+                       (version, bootswatch_theme.lower(), css_filename))
         return Markup(css)
 
     @staticmethod
-    def load_js(version=VERSION_BOOTSTRAP, jquery_version=VERSION_JQUERY,
-                popper_version=VERSION_POPPER, with_jquery=True, with_popper=True):
+    def load_js(version=VERSION_BOOTSTRAP, jquery_version=VERSION_JQUERY,  # noqa: C901
+                popper_version=VERSION_POPPER, with_jquery=True, with_popper=True,
+                bootstrap_sri=None, jquery_sri=None, popper_sri=None):
         """Load Bootstrap and related library's js resources with given version.
 
         .. versionadded:: 0.1.0
@@ -125,27 +141,60 @@ class Bootstrap(object):
 
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
 
+        if version == VERSION_BOOTSTRAP and serve_local is False and bootstrap_sri is None:
+            bootstrap_sri = BOOTSTRAP_JS_INTEGRITY
+        if jquery_version == VERSION_JQUERY and serve_local is False and jquery_sri is None:
+            jquery_sri = JQUERY_INTEGRITY
+
+        if popper_version == VERSION_POPPER and serve_local is False and popper_sri is None:
+            popper_sri = POPPER_INTEGRITY
         if serve_local:
-            js = '<script src="%s"></script>' % url_for('bootstrap.static', filename='js/' + js_filename)
+            if bootstrap_sri:
+                js = ('<script src="%s" integrity="%s" crossorigin="anonymous"></script>' %
+                      (url_for('bootstrap.static', filename='js/' + js_filename), bootstrap_sri))
+            else:
+                js = '<script src="%s"></script>' % url_for('bootstrap.static', filename='js/' + js_filename)
         else:
-            js = '<script src="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/js/%s">' \
-                 '</script>' % (version, js_filename)
+            if bootstrap_sri:
+                js = ('<script src="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/js/%s"'
+                      ' integrity="%s" crossorigin="anonymous"></script>' % (version, js_filename, bootstrap_sri))
+            else:
+                js = ('<script src="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/js/%s">'
+                      '</script>' % (version, js_filename))
 
         if with_jquery:
             if serve_local:
-                jquery = '<script src="%s"></script>' % url_for('bootstrap.static', filename=jquery_filename)
+                if jquery_sri:
+                    jquery = ('<script src="%s" integrity="%s" crossorigin="anonymous"></script>' %
+                              (url_for('bootstrap.static', filename=jquery_filename), jquery_sri))
+                else:
+                    jquery = '<script src="%s"></script>' % url_for('bootstrap.static', filename=jquery_filename)
             else:
-                jquery = '<script src="https://cdn.jsdelivr.net/npm/jquery@%s/dist/%s">' \
-                 '</script>' % (jquery_version, jquery_filename)
+                if jquery_sri:
+                    jquery = ('<script src="https://cdn.jsdelivr.net/npm/jquery@%s/dist/%s"'
+                              ' integrity="%s" crossorigin="anonymous"></script>' %
+                              (jquery_version, jquery_filename, jquery_sri))
+                else:
+                    jquery = ('<script src="https://cdn.jsdelivr.net/npm/jquery@%s/dist/%s">'
+                              '</script>' % (jquery_version, jquery_filename))
         else:
             jquery = ''
 
         if with_popper:
             if serve_local:
-                popper = '<script src="%s"></script>' % url_for('bootstrap.static', filename=popper_filename)
+                if popper_sri:
+                    popper = ('<script src="%s" integrity="%s" crossorigin="anonymous"></script>' %
+                              (url_for('bootstrap.static', filename=popper_filename), popper_sri))
+                else:
+                    popper = '<script src="%s"></script>' % url_for('bootstrap.static', filename=popper_filename)
             else:
-                popper = '<script src="https://cdn.jsdelivr.net/npm/popper.js@%s/dist/umd/%s">' \
-                     '</script>' % (popper_version, popper_filename)
+                if popper_sri:
+                    popper = ('<script src="https://cdn.jsdelivr.net/npm/popper.js@%s/dist/umd/%s"'
+                              ' integrity="%s" crossorigin="anonymous"></script>' %
+                              (popper_version, popper_filename, popper_sri))
+                else:
+                    popper = ('<script src="https://cdn.jsdelivr.net/npm/popper.js@%s/dist/umd/%s">'
+                              '</script>' % (popper_version, popper_filename))
         else:
             popper = ''
         return Markup('''%s
