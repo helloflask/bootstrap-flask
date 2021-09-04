@@ -24,7 +24,7 @@ VERSION_JQUERY = '3.4.1'
 VERSION_POPPER = '1.14.0'
 
 
-def raise_helper(message):
+def raise_helper(message):  # pragma: no cover
     raise RuntimeError(message)
 
 
