@@ -22,7 +22,6 @@ Release date: -
 - Introduce a new and better way to pass table action URLs to support the usage of ``Flask``'s path converters
   (`#146 <https://github.com/greyli/bootstrap-flask/pull/146>`__).
 
-
 1.7.0
 -----
 

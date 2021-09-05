@@ -1,7 +1,7 @@
 {% from 'bootstrap/utils.html' import render_icon, arg_url_for %}
 
 {% macro deprecate_placeholder_url() %}
-    {{ warn('Passing an URL with primary key palceholder for view_url/edit_url/delete_url/custom_actions is deprecated. You will need to pass an fixed URL or an URL tuple to URL arguments, see the docs for more details (https://bootstrap-flask.readthedocs.io/en/stable/macros.html#render-table). The support to URL string will be removed in version 2.0.') }}
+    {{ warn('Passing an URL with primary key palceholder for view_url/edit_url/delete_url/custom_actions is deprecated. You will need to pass an fixed URL or an URL tuple to URL arguments, see the docs for more details (https://bootstrap-flask.readthedocs.io/en/stable/macros.html#render-table). The support to URL string will be removed in version 2.0.', stacklevel=2) }}
 {% endmacro %}
 
 {% macro build_url(endpoint, model, pk, url_tuples) %}
@@ -94,10 +94,10 @@
             {% for (action_name, action_icon, action_url) in custom_actions %}
                 {% if ':primary_key' in action_url | join('') %}
                     {% set action_pk_placeholder = ':primary_key' %}
-                    {% set _ = deprecate_placeholder_url() %}
                 {% endif %}
                 <a class="action-icon text-decoration-none"
                    {% if action_url is string %}
+                    {% if ':' in action_url %}{% set _ = deprecate_placeholder_url() %}{% endif %}
                     href="{{ action_url | replace(action_pk_placeholder, row[primary_key]) }}"
                    {% else %}
                     href="{{ build_url(action_url[0], model, row[primary_key], action_url[1]) | trim }}"
@@ -108,10 +108,10 @@
             {% if view_url %}
                 {% if ':primary_key' in view_url | join('') %}
                     {% set action_pk_placeholder = ':primary_key' %}
-                    {% set _ = deprecate_placeholder_url() %}
                 {% endif %}
                 <a class="action-icon text-decoration-none"
                    {% if view_url is string %}
+                    {% if ':' in view_url %}{% set _ = deprecate_placeholder_url() %}{% endif %}
                     href="{{ view_url | replace(action_pk_placeholder, row[primary_key]) }}"
                    {% else %}
                     href="{{ build_url(view_url[0], model, row[primary_key], view_url[1]) | trim }}"
@@ -123,10 +123,10 @@
             {% if edit_url -%}
                 {% if ':primary_key' in edit_url | join('') %}
                     {% set action_pk_placeholder = ':primary_key' %}
-                    {% set w = deprecate_placeholder_url() %}
                 {% endif %}
                 <a class="action-icon text-decoration-none"
                    {% if edit_url is string %}
+                    {% if ':' in edit_url %}{% set _ = deprecate_placeholder_url() %}{% endif %}
                     href="{{ edit_url | replace(action_pk_placeholder, row[primary_key]) }}"
                    {% else %}
                     href="{{ build_url(edit_url[0], model, row[primary_key], edit_url[1]) | trim }}"
@@ -138,10 +138,10 @@
             {% if delete_url %}
                 {% if ':primary_key' in delete_url | join('') %}
                     {% set action_pk_placeholder = ':primary_key' %}
-                    {% set _ = deprecate_placeholder_url() %}
                 {% endif %}
             <form style="display:inline"
                   {% if delete_url is string %}
+                   {% if ':' in delete_url %}{% set _ = deprecate_placeholder_url() %}{% endif %}
                    action="{{ delete_url | replace(action_pk_placeholder, row[primary_key]) }}"
                   {% else %}
                    action="{{ build_url(delete_url[0], model, row[primary_key], delete_url[1]) | trim }}"
