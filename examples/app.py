@@ -152,10 +152,10 @@ def test_table():
     pagination = Message.query.paginate(page, per_page=10)
     messages = pagination.items
     titles = [('id', '#'), ('text', 'Message'), ('author', 'Author'), ('category', 'Category'), ('draft', 'Draft'), ('create_time', 'Create Time')]
-    return render_template('table.html', messages=messages, titles=titles)
+    return render_template('table.html', messages=messages, titles=titles, Message=Message)
 
 
-@app.route('/table/<message_id>/view')
+@app.route('/table/<int:message_id>/view')
 def view_message(message_id):
     message = Message.query.get(message_id)
     if message:
@@ -163,7 +163,7 @@ def view_message(message_id):
     return f'Could not view message {message_id} as it does not exist. Return to <a href="/table">table</a>.'
 
 
-@app.route('/table/<message_id>/edit')
+@app.route('/table/<int:message_id>/edit')
 def edit_message(message_id):
     message = Message.query.get(message_id)
     if message:
@@ -173,7 +173,7 @@ def edit_message(message_id):
     return f'Message {message_id} did not exist and could therefore not be edited. Return to <a href="/table">table</a>.'
 
 
-@app.route('/table/<message_id>/delete', methods=['POST'])
+@app.route('/table/<int:message_id>/delete', methods=['POST'])
 def delete_message(message_id):
     message = Message.query.get(message_id)
     if message:
@@ -181,6 +181,11 @@ def delete_message(message_id):
         db.session.commit()
         return f'Message {message_id} has been deleted. Return to <a href="/table">table</a>.'
     return f'Message {message_id} did not exist and could therefore not be deleted. Return to <a href="/table">table</a>.'
+
+
+@app.route('/table/<int:message_id>/like')
+def like_message(message_id):
+    return f'Liked the message {message_id}. Return to <a href="/table">table</a>.'
 
 
 @app.route('/table/new-message')
