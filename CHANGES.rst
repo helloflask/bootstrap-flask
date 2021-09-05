@@ -18,8 +18,8 @@ Release date: 2021/9/5
 - Fix bootswatch theme bug: remove theme name ``'default'`` (`#141 <https://github.com/greyli/bootstrap-flask/pull/141>`__).
 - Add configuration ``BOOTSTRAP_TABLE_VIEW_TITLE``, ``BOOTSTRAP_TABLE_EDIT_TITLE``,
   ``BOOTSTRAP_TABLE_DELETE_TITLE``, ``BOOTSTRAP_TABLE_NEW_TITLE`` to support changing
-  the icon title of table actions.
-- Introduce a new and better way to pass table action URLs to support the usage of ``Flask``'s path converters
+  the icon title of table actions (`#140 <https://github.com/greyli/bootstrap-flask/pull/140>`__).
+- Introduce a new and better way to pass table action URLs
   (`#146 <https://github.com/greyli/bootstrap-flask/pull/146>`__, `#151 <https://github.com/greyli/bootstrap-flask/pull/151>`__).
 - Deprecate ``action_pk_placeholder`` and placeholder action URLs in ``render_table``.
 - Support SRI for JS/CSS resources (`#142 <https://github.com/greyli/bootstrap-flask/pull/142>`__).
