@@ -11,4 +11,4 @@ def test_render_breadcrumb_item(app, client):
 
     response = client.get('/breadcrumb_item')
     data = response.get_data(as_text=True)
-    assert '<li class="breadcrumb-item active"  aria-current="page">' in data
+    assert '<li class="breadcrumb-item active" aria-current="page">' in data
