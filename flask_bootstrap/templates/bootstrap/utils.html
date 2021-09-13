@@ -61,3 +61,13 @@
     <use xlink:href="{{ url_for('bootstrap.static', filename='icons/bootstrap-icons.svg') }}#{{ name }}"/>
 </svg>
 {% endmacro %}
+
+{% macro arg_url_for(endpoint, base) %}
+    {# calls url_for() with a given endpoint and **base as the parameters,
+   additionally passing on all keyword_arguments (may overwrite existing ones)
+ #}
+    {%- with kargs = base.copy() -%}
+        {%- do kargs.update(kwargs) -%}
+        {{ url_for(endpoint, **kargs) }}
+    {%- endwith %}
+{%- endmacro %}
