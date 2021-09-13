@@ -16,7 +16,7 @@ class TestRenderTable:
             db.drop_all()
             db.create_all()
             for i in range(10):
-                m = Message(text='Test message {}'.format(i+1))
+                m = Message(text=f'Test message {i+1}')
                 db.session.add(m)
             db.session.commit()
             page = request.args.get('page', 1, type=int)
@@ -49,7 +49,7 @@ class TestRenderTable:
             db.drop_all()
             db.create_all()
             for i in range(10):
-                m = Message(text='Test message {}'.format(i+1))
+                m = Message(text=f'Test message {i+1}')
                 db.session.add(m)
             db.session.commit()
             page = request.args.get('page', 1, type=int)
@@ -80,7 +80,7 @@ class TestRenderTable:
             db.drop_all()
             db.create_all()
             for i in range(10):
-                m = Message(text='Test message {}'.format(i+1))
+                m = Message(text=f'Test message {i+1}')
                 db.session.add(m)
             db.session.commit()
             page = request.args.get('page', 1, type=int)
@@ -109,7 +109,7 @@ class TestRenderTable:
             db.drop_all()
             db.create_all()
             for i in range(10):
-                m = Message(text='Test message {}'.format(i+1))
+                m = Message(text=f'Test message {i+1}')
                 db.session.add(m)
             db.session.commit()
             page = request.args.get('page', 1, type=int)
@@ -310,7 +310,7 @@ class TestRenderTable:
             db.drop_all()
             db.create_all()
             for i in range(10):
-                m = Message(text='Test message {}'.format(i+1))
+                m = Message(text=f'Test message {i+1}')
                 db.session.add(m)
             db.session.commit()
             page = request.args.get('page', 1, type=int)

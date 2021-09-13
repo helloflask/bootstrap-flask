@@ -58,8 +58,9 @@ class Bootstrap(object):
             app.extensions = {}
         app.extensions['bootstrap'] = self
 
-        blueprint = Blueprint('bootstrap', __name__, template_folder='templates',
-                              static_folder='static', static_url_path='/bootstrap' + app.static_url_path)
+        blueprint = Blueprint('bootstrap', __name__, static_folder='static',
+                              static_url_path=f'/bootstrap{app.static_url_path}',
+                              template_folder='templates')
         app.register_blueprint(blueprint)
 
         app.jinja_env.globals['bootstrap'] = self
@@ -99,7 +100,7 @@ class Bootstrap(object):
         if not bootswatch_theme:
             base_path = 'css/'
         else:
-            base_path = 'css/swatch/%s/' % bootswatch_theme.lower()
+            base_path = f'css/swatch/{bootswatch_theme.lower()}/'
 
         if serve_local:
             if bootstrap_sri:
@@ -197,6 +198,6 @@ class Bootstrap(object):
                               '</script>' % (popper_version, popper_filename))
         else:
             popper = ''
-        return Markup('''%s
-    %s
-    %s''' % (jquery, popper, js))
+        return Markup(f'''{jquery}
+    {popper}
+    {js}''')

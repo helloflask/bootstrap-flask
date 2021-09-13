@@ -96,9 +96,9 @@ def before_first_request_func():
     db.create_all()
     for i in range(20):
         m = Message(
-            text='Test message {}'.format(i+1),
-            author='Author {}'.format(i+1),
-            category='Category {}'.format(i+1),
+            text=f'Test message {i+1}',
+            author=f'Author {i+1}',
+            category=f'Category {i+1}',
             create_time=4321*(i+1)
             )
         if i % 4:
