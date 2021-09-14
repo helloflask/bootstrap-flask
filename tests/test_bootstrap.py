@@ -3,7 +3,7 @@ from flask import current_app
 from flask_bootstrap import (
     VERSION_BOOTSTRAP, VERSION_JQUERY, VERSION_POPPER,
     BOOTSTRAP_CSS_INTEGRITY, BOOTSTRAP_JS_INTEGRITY,
-    JQUERY_INTEGRITY, POPPER_INTEGRITY
+    JQUERY_INTEGRITY, POPPER_INTEGRITY, CDN_BASE
 )
 
 
@@ -14,9 +14,8 @@ class TestBootstrap:
 
     def test_load_css_with_default_versions(self, bootstrap):
         rv = bootstrap.load_css()
-        bootstrap_css = ('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/css/%s"'
-                         ' integrity="%s" crossorigin="anonymous">' % (VERSION_BOOTSTRAP, 'bootstrap.min.css',
-                                                                       BOOTSTRAP_CSS_INTEGRITY))
+        bootstrap_css = f'<link rel="stylesheet" href="{CDN_BASE}/bootstrap@{VERSION_BOOTSTRAP}/' \
+                        f'dist/css/bootstrap.min.css" integrity="{BOOTSTRAP_CSS_INTEGRITY}" crossorigin="anonymous">'
         assert bootstrap_css in rv
 
     def test_load_css_with_non_default_versions(self, bootstrap):
@@ -32,15 +31,12 @@ class TestBootstrap:
 
     def test_load_js_with_default_versions(self, bootstrap):
         rv = bootstrap.load_js()
-        bootstrap_js = ('<script src="https://cdn.jsdelivr.net/npm/bootstrap@%s/dist/js/%s"'
-                        ' integrity="%s" crossorigin="anonymous"></script>' %
-                        (VERSION_BOOTSTRAP, 'bootstrap.min.js', BOOTSTRAP_JS_INTEGRITY))
-        jquery_js = ('<script src="https://cdn.jsdelivr.net/npm/jquery@%s/dist/%s"'
-                     ' integrity="%s" crossorigin="anonymous"></script>' %
-                     (VERSION_JQUERY, 'jquery.min.js', JQUERY_INTEGRITY))
-        popper_js = ('<script src="https://cdn.jsdelivr.net/npm/popper.js@%s/dist/umd/%s"'
-                     ' integrity="%s" crossorigin="anonymous"></script>' %
-                     (VERSION_POPPER, 'popper.min.js', POPPER_INTEGRITY))
+        bootstrap_js = f'<script src="{CDN_BASE}/bootstrap@{VERSION_BOOTSTRAP}/dist/js/bootstrap.min.js"' \
+                       f' integrity="{BOOTSTRAP_JS_INTEGRITY}" crossorigin="anonymous"></script>'
+        jquery_js = f'<script src="{CDN_BASE}/jquery@{VERSION_JQUERY}/dist/jquery.min.js"' \
+                    f' integrity="{JQUERY_INTEGRITY}" crossorigin="anonymous"></script>'
+        popper_js = f'<script src="{CDN_BASE}/popper.js@{VERSION_POPPER}/dist/umd/popper.min.js"' \
+                    f' integrity="{POPPER_INTEGRITY}" crossorigin="anonymous"></script>'
         assert bootstrap_js in rv
         assert jquery_js in rv
         assert popper_js in rv
@@ -65,7 +61,7 @@ class TestBootstrap:
 
         response = client.get('/')
         data = response.get_data(as_text=True)
-        assert 'https://cdn.jsdelivr.net/npm/bootstrap' not in data
+        assert f'{CDN_BASE}/bootstrap' not in data
         assert 'bootstrap.min.js' in data
         assert 'bootstrap.min.css' in data
         assert 'jquery.min.js' in data
@@ -83,8 +79,8 @@ class TestBootstrap:
         js_rv = bootstrap.load_js()
         assert '/bootstrap/static/css/bootstrap.min.css' in css_rv
         assert '/bootstrap/static/js/bootstrap.min.js' in js_rv
-        assert 'https://cdn.jsdelivr.net/npm/bootstrap' not in css_rv
-        assert 'https://cdn.jsdelivr.net/npm/bootstrap' not in js_rv
+        assert f'{CDN_BASE}/bootstrap' not in css_rv
+        assert f'{CDN_BASE}/bootstrap' not in js_rv
         assert 'integrity="' not in css_rv
         assert 'crossorigin="anonymous"' not in css_rv
         assert 'integrity="' not in js_rv
@@ -101,8 +97,8 @@ class TestBootstrap:
         )
         assert '/bootstrap/static/css/bootstrap.min.css' in css_rv
         assert '/bootstrap/static/js/bootstrap.min.js' in js_rv
-        assert 'https://cdn.jsdelivr.net/npm/bootstrap' not in css_rv
-        assert 'https://cdn.jsdelivr.net/npm/bootstrap' not in js_rv
+        assert f'{CDN_BASE}/bootstrap' not in css_rv
+        assert f'{CDN_BASE}/bootstrap' not in js_rv
         assert 'integrity="sha384-bootstrap-sri"' in css_rv
         assert 'crossorigin="anonymous"' in css_rv
         assert 'integrity="sha384-bootstrap-sri"' in js_rv
@@ -116,7 +112,7 @@ class TestBootstrap:
         response = client.get('/')
         data = response.get_data(as_text=True)
         assert current_app.config['BOOTSTRAP_SERVE_LOCAL'] is not True
-        assert 'https://cdn.jsdelivr.net/npm/bootstrap' in data
+        assert f'{CDN_BASE}/bootstrap' in data
         assert 'bootstrap.min.js' in data
         assert 'bootstrap.min.css' in data
 
@@ -124,10 +120,10 @@ class TestBootstrap:
         js_rv = bootstrap.load_js()
         assert '/bootstrap/static/css/bootstrap.min.css' not in css_rv
         assert '/bootstrap/static/js/bootstrap.min.js' not in js_rv
-        assert 'https://cdn.jsdelivr.net/npm/bootstrap' in css_rv
-        assert 'https://cdn.jsdelivr.net/npm/bootstrap' in js_rv
+        assert f'{CDN_BASE}/bootstrap' in css_rv
+        assert f'{CDN_BASE}/bootstrap' in js_rv
 
-    def test_cdn_resources_with_custom_sri_hash(self, bootstrap, client):
+    def test_cdn_resources_with_custom_sri_hash(self, bootstrap):
         current_app.config['BOOTSTRAP_SERVE_LOCAL'] = False
 
         css_rv = bootstrap.load_css(bootstrap_sri='sha384-bootstrap-sri')
@@ -166,7 +162,7 @@ class TestBootstrap:
             (False, True),
         ]
     )
-    def test_load_js_args(self, with_jquery, with_popper, bootstrap, client):
+    def test_load_js_args(self, with_jquery, with_popper, bootstrap):
         current_app.config['BOOTSTRAP_SERVE_LOCAL'] = True
         js_rv = bootstrap.load_js(with_jquery=with_jquery, with_popper=with_popper)
 
