@@ -159,19 +159,19 @@ class TestRenderTable:
 
         @app.route('/messages/<message_id>/edit')
         def edit_message(message_id):
-            return 'Editing message {}'.format(message_id)
+            return f'Editing message {message_id}'
 
         @app.route('/messages/<message_id>/view')
         def view_message(message_id):
-            return 'Viewing message {}'.format(message_id)
+            return f'Viewing message {message_id}'
 
         @app.route('/messages/<message_id>/delete')
         def delete_message(message_id):
-            return 'Deleting message {}'.format(message_id)
+            return f'Deleting message {message_id}'
 
         @app.route('/messages/<message_id>/resend')
         def resend_message(message_id):
-            return 'Re-sending message {}'.format(message_id)
+            return f'Re-sending message {message_id}'
 
         @app.route('/table')
         def test():
@@ -179,7 +179,7 @@ class TestRenderTable:
             db.create_all()
             for i in range(10):
                 m = Message(
-                    text='Test message {}'.format(i+1),
+                    text=f'Test message {i+1}',
                     sender='me',
                     recipient='john_doe'
                 )
@@ -229,19 +229,19 @@ class TestRenderTable:
 
         @app.route('/table/<string:recipient>/<int:message_id>/resend')
         def test_resend_message(recipient, message_id):
-            return 'Re-sending {} to {}'.format(message_id, recipient)
+            return f'Re-sending {message_id} to {recipient}'
 
         @app.route('/table/<string:sender>/<int:message_id>/view')
         def test_view_message(sender, message_id):
-            return 'Viewing {} from {}'.format(message_id, sender)
+            return f'Viewing {message_id} from {sender}'
 
         @app.route('/table/<string:sender>/<int:message_id>/edit')
         def test_edit_message(sender, message_id):
-            return 'Editing {} from {}'.format(message_id, sender)
+            return f'Editing {message_id} from {sender}'
 
         @app.route('/table/<string:sender>/<int:message_id>/delete')
         def test_delete_message(sender, message_id):
-            return 'Deleting {} from {}'.format(message_id, sender)
+            return f'Deleting {message_id} from {sender}'
 
         @app.route('/table/new-message')
         def test_create_message():
@@ -253,7 +253,7 @@ class TestRenderTable:
             db.create_all()
             for i in range(10):
                 m = Message(
-                    text='Test message {}'.format(i+1),
+                    text=f'Test message {i+1}',
                     sender='me',
                     recipient='john_doe'
                 )
