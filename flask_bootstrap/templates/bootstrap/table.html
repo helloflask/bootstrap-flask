@@ -56,7 +56,7 @@
     {% if caption %}
     <caption>{{ caption }}</caption>
     {% endif %}
-    <thead {% if header_classes %}class="{{ header_classes }}"{% endif %}>
+    <thead{% if header_classes %} class="{{ header_classes }}"{% endif %}>
     <tr>
     {% for title in titles %}
         <th scope="col">{{ title[1] }}</th>
