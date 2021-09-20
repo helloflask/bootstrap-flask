@@ -21,7 +21,7 @@ def test_render_field(app, client, hello_form):
     assert '<input class="form-control" id="password" name="password"' in data
 
 
-def test_render_field_with_classes(app, client, hello_form):
+def test_render_field_with_render_kw_classes(app, client, hello_form):
     @app.route('/render_kw_class')
     def test_render_kw_class():
         form = hello_form()
@@ -37,11 +37,12 @@ def test_render_field_with_classes(app, client, hello_form):
 
     response = client.get('/render_kw_class')
     data = response.get_data(as_text=True)
-    print(data)
     assert '<input class="form-control render_kw_class" id="name" name="name"' in data
     assert '<input class="form-control test" id="username" name="username"' in data
     assert '<input class="form-control test" id="password" name="password"' in data
 
+
+def test_render_field_with_kwargs(app, client, hello_form):
     @app.route('/kwargs_class')
     def test_kwargs_class():
         form = hello_form()
@@ -53,6 +54,23 @@ def test_render_field_with_classes(app, client, hello_form):
 
     response = client.get('/kwargs_class')
     data = response.get_data(as_text=True)
-    print(data)
     assert '<input class="form-control test" id="username" name="username"' in data
     assert '<input class="form-control test" id="password" name="password"' in data
+
+    @app.route('/general_kwargs')
+    def test_general_kwargs():
+        form = hello_form()
+        return render_template_string('''
+        {% from 'bootstrap/form.html' import render_field %}
+        {{ render_field(form.username, placeholder='test') }}
+        {{ render_field(form.password, placeholder='test') }}
+        {{ render_field(form.remember, class='test', value='n') }}
+        {{ render_field(form.submit, value='test') }}
+        ''', form=form)
+
+    response = client.get('/general_kwargs')
+    data = response.get_data(as_text=True)
+    assert '<input class="form-control" id="username" name="username" placeholder="test"' in data
+    assert '<input class="form-control" id="password" name="password" placeholder="test"' in data
+    assert '<input class="form-check-input test" id="remember" name="remember" type="checkbox" value="n"' in data
+    assert '<input class="btn btn-primary btn-md" id="submit" name="submit" type="submit" value="test"' in data
