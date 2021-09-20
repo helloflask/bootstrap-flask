@@ -81,6 +81,24 @@ Example
         {{ render_field(form.submit) }}
     </form>
 
+You can pass any HTTP attributes as extra keyword arguements like ``class`` or ``placeholder``:
+
+.. code-block:: jinja
+
+    {% from 'bootstrap/form.html' import render_field %}
+
+    <form method="post">
+        {{ form.csrf_token() }}
+        {{ render_field(form.username, class='myClass') }}
+        {{ render_field(form.password, placeholder='Your Password') }}
+        {{ render_field(form.submit) }}
+    </form>
+
+Notice the ``class`` value here will overwrite the ``render_kw={'class': '...'}`` you defined in
+the form class. Bootstrap-Flask will combine the class value you passed with the ``class`` key of
+the ``render_kw`` dict or the ``class`` keyword argments with Bootstrap classes.
+
+
 API
 ~~~~
 

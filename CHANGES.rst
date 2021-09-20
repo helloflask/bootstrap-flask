@@ -8,6 +8,8 @@ Changelog
 Release date: -
 
 - Drop Python 2 and 3.5 support.
+- Combine ``class`` argument of ``render_field`` or ``field.render_kw.class`` with Bootstrap classes
+   (`#159 <https://github.com/greyli/bootstrap-flask/pull/159>`__).
 
 
 1.8.0
