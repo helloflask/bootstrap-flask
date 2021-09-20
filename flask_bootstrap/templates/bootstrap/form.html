@@ -56,7 +56,16 @@ the necessary fix for required=False attributes, but will also not set the requi
         {% set kwargs = dict(required=True, **kwargs) %}
     {% endif %}
 
-    {% set extra_classes = ' ' + field.render_kw.class if field.render_kw.class else '' %}
+    {# combine render_kw class or class/class_ argument with Bootstrap classes #}
+    {% set render_kw_class = ' ' + field.render_kw.class if field.render_kw.class else '' %}
+    {% set class = kwargs.pop('class', '') or kwargs.pop('class_', '') %}
+    {% if class %}
+        {# override render_kw class when class/class_ presents as keyword argument #}
+        {% set render_kw_class = '' %}
+        {% set render_kw_class_ = '' %}
+        {% set class = ' ' + class %}
+    {% endif %}
+    {% set extra_classes = render_kw_class + class %}
 
     {% if field.widget.input_type == 'checkbox' %}
         {% call _hz_form_wrap(horizontal_columns, form_type, True, required=required) %}
