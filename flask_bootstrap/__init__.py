@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-    flask_bootstrap
-    ~~~~~~~~~~~~~~
-    :copyright: (c) 2017 by Grey Li.
-    :license: MIT, see LICENSE for more details.
-"""
 import warnings
 
 from flask import current_app, Markup, Blueprint, url_for
@@ -18,14 +11,6 @@ else:
     def is_hidden_field_filter(field):
         return isinstance(field, HiddenField)
 
-# central definition of used versions and SRI hashes
-VERSION_BOOTSTRAP = '4.3.1'
-VERSION_JQUERY = '3.4.1'
-VERSION_POPPER = '1.14.0'
-BOOTSTRAP_CSS_INTEGRITY = 'sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T'
-BOOTSTRAP_JS_INTEGRITY = 'sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM'
-JQUERY_INTEGRITY = 'sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh'
-POPPER_INTEGRITY = 'sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ'
 CDN_BASE = 'https://cdn.jsdelivr.net/npm'
 
 
@@ -48,7 +33,26 @@ def get_table_titles(data, primary_key, primary_key_title):
     return titles
 
 
-class Bootstrap(object):
+class _Bootstrap:
+    """
+    Base extension class for different Bootstrap versions.
+
+    .. versionadded:: 2.0.0
+    """
+
+    bootstrap_version = None
+    jquery_version = None
+    popper_version = None
+    bootstrap_css_integrity = None
+    bootstrap_js_integrity = None
+    jquery_integrity = None
+    popper_integrity = None
+    static_folder = None
+    bootstrap_css_filename = 'bootstrap.min.css'
+    bootstrap_js_filename = 'bootstrap.min.js'
+    jquery_filename = 'jquery.min.js'
+    popper_filename = 'popper.min.js'
+
     def __init__(self, app=None):
         if app is not None:
             self.init_app(app)
@@ -59,7 +63,7 @@ class Bootstrap(object):
             app.extensions = {}
         app.extensions['bootstrap'] = self
 
-        blueprint = Blueprint('bootstrap', __name__, static_folder='static',
+        blueprint = Blueprint('bootstrap', __name__, static_folder=f'static/{self.static_folder}',
                               static_url_path=f'/bootstrap{app.static_url_path}',
                               template_folder='templates')
         app.register_blueprint(blueprint)
@@ -83,32 +87,30 @@ class Bootstrap(object):
         app.config.setdefault('BOOTSTRAP_TABLE_DELETE_TITLE', 'Delete')
         app.config.setdefault('BOOTSTRAP_TABLE_NEW_TITLE', 'New')
 
-    @staticmethod
-    def load_css(version=VERSION_BOOTSTRAP, bootstrap_sri=None):
+    def load_css(self, version=None, bootstrap_sri=None):
         """Load Bootstrap's css resources with given version.
 
         .. versionadded:: 0.1.0
 
         :param version: The version of Bootstrap.
         """
-        css_filename = 'bootstrap.min.css'
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
         bootswatch_theme = current_app.config['BOOTSTRAP_BOOTSWATCH_THEME']
-
-        if version == VERSION_BOOTSTRAP and serve_local is False and bootstrap_sri is None:
-            bootstrap_sri = BOOTSTRAP_CSS_INTEGRITY
+        if version is None:
+            version = self.bootstrap_version
+        bootstrap_sri = self._get_sri('bootstrap_css', version, bootstrap_sri)
 
         if serve_local:
             if not bootswatch_theme:
                 base_path = 'css/'
             else:
                 base_path = f'css/swatch/{bootswatch_theme.lower()}/'
-            boostrap_url = url_for('bootstrap.static', filename=f'{base_path}{css_filename}')
+            boostrap_url = url_for('bootstrap.static', filename=f'{base_path}{self.bootstrap_css_filename}')
         else:
             if bootswatch_theme:
-                boostrap_url = f'{CDN_BASE}/bootswatch@{version}/dist/{bootswatch_theme.lower()}/{css_filename}'
+                boostrap_url = f'{CDN_BASE}/bootswatch@{version}/dist/{bootswatch_theme.lower()}/{self.bootstrap_css_filename}'
             else:
-                boostrap_url = f'{CDN_BASE}/bootstrap@{version}/dist/css/{css_filename}'
+                boostrap_url = f'{CDN_BASE}/bootstrap@{version}/dist/css/{self.bootstrap_css_filename}'
 
         if bootstrap_sri and not bootswatch_theme:
             css = f'<link rel="stylesheet" href="{boostrap_url}" integrity="{bootstrap_sri}" crossorigin="anonymous">'
@@ -116,65 +118,143 @@ class Bootstrap(object):
             css = f'<link rel="stylesheet" href="{boostrap_url}">'
         return Markup(css)
 
-    @staticmethod
-    def load_js(version=VERSION_BOOTSTRAP, jquery_version=VERSION_JQUERY,  # noqa: C901
-                popper_version=VERSION_POPPER, with_jquery=True, with_popper=True,
+    def _get_js_script(self, version, name, sri):
+        """Get <script> tag for JavaScipt resources."""
+        serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
+        paths = {
+            'bootstrap': f'js/{self.bootstrap_js_filename}',
+            'jquery': f'{self.jquery_filename}',
+            'popper.js': f'umd/{self.popper_filename}',
+        }
+        if serve_local:
+            url = url_for('bootstrap.static', filename=paths[name])
+        else:
+            url = f'{CDN_BASE}/{name}@{version}/dist/{paths[name]}'
+        if sri:
+            return f'<script src="{url}" integrity="{sri}" crossorigin="anonymous"></script>'
+        else:
+            return f'<script src="{url}"></script>'
+
+    def _get_sri(self, name, version, sri):
+        serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
+        sris = {
+            'bootstrap_css': self.bootstrap_css_integrity,
+            'bootstrap_js': self.bootstrap_js_integrity,
+            'jquery': self.jquery_integrity,
+            'popper': self.popper_integrity,
+        }
+        versions = {
+            'bootstrap_css': self.bootstrap_version,
+            'bootstrap_js': self.bootstrap_version,
+            'jquery': self.jquery_version,
+            'popper': self.popper_version
+        }
+        if sri is not None:
+            return sri
+        if version == versions[name] and serve_local is False:
+            return sris[name]
+        else:
+            return None
+
+    def load_js(self, version=None, jquery_version=None,  # noqa: C901
+                popper_version=None, with_jquery=True, with_popper=True,
                 bootstrap_sri=None, jquery_sri=None, popper_sri=None):
         """Load Bootstrap and related library's js resources with given version.
 
         .. versionadded:: 0.1.0
 
         :param version: The version of Bootstrap.
-        :param jquery_version: The version of jQuery.
+        :param jquery_version: The version of jQuery (only needed with Bootstrap 4).
         :param popper_version: The version of Popper.js.
-        :param with_jquery: Include jQuery or not.
+        :param with_jquery: Include jQuery or not (only needed with Bootstrap 4).
         :param with_popper: Include Popper.js or not.
         """
-        bootstrap_filename = 'bootstrap.min.js'
-        jquery_filename = 'jquery.min.js'
-        popper_filename = 'popper.min.js'
+        if version is None:
+            version = self.bootstrap_version
+        if popper_version is None:
+            popper_version = self.popper_version
 
-        serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
-
-        if version == VERSION_BOOTSTRAP and serve_local is False and bootstrap_sri is None:
-            bootstrap_sri = BOOTSTRAP_JS_INTEGRITY
-        if jquery_version == VERSION_JQUERY and serve_local is False and jquery_sri is None:
-            jquery_sri = JQUERY_INTEGRITY
-        if popper_version == VERSION_POPPER and serve_local is False and popper_sri is None:
-            popper_sri = POPPER_INTEGRITY
-
-        if serve_local:
-            bootstrap_url = url_for('bootstrap.static', filename=f'js/{bootstrap_filename}')
+        bootstrap_sri = self._get_sri('bootstrap_js', version, bootstrap_sri)
+        popper_sri = self._get_sri('popper', popper_version, popper_sri)
+        bootstrap = self._get_js_script(version, 'bootstrap', bootstrap_sri)
+        popper = self._get_js_script(popper_version, 'popper.js', popper_sri) if with_popper else ''
+        if version.startswith('4'):
+            if jquery_version is None:
+                jquery_version = self.jquery_version
+            jquery_sri = self._get_sri('jquery', jquery_version, jquery_sri)
+            jquery = self._get_js_script(jquery_version, 'jquery', jquery_sri) if with_jquery else ''
+            return Markup(f'''{jquery}
+        {popper}
+        {bootstrap}''')
         else:
-            bootstrap_url = f'{CDN_BASE}/bootstrap@{version}/dist/js/{bootstrap_filename}'
-        if bootstrap_sri:
-            bootstrap = f'<script src="{bootstrap_url}" integrity="{bootstrap_sri}" crossorigin="anonymous"></script>'
-        else:
-            bootstrap = f'<script src="{bootstrap_url}"></script>'
+            return Markup(f'''{popper}
+        {bootstrap}''')
 
-        if with_jquery:
-            if serve_local:
-                jquery_url = url_for('bootstrap.static', filename=jquery_filename)
-            else:
-                jquery_url = f'{CDN_BASE}/jquery@{jquery_version}/dist/{jquery_filename}'
-            if jquery_sri:
-                jquery = f'<script src="{jquery_url}" integrity="{jquery_sri}" crossorigin="anonymous"></script>'
-            else:
-                jquery = f'<script src="{jquery_url}"></script>'
-        else:
-            jquery = ''
 
-        if with_popper:
-            if serve_local:
-                popper_url = url_for('bootstrap.static', filename=popper_filename)
-            else:
-                popper_url = f'{CDN_BASE}/popper.js@{popper_version}/dist/umd/{popper_filename}'
-            if popper_sri:
-                popper = f'<script src="{popper_url}" integrity="{popper_sri}" crossorigin="anonymous"></script>'
-            else:
-                popper = f'<script src="{popper_url}"></script>'
-        else:
-            popper = ''
-        return Markup(f'''{jquery}
-    {popper}
-    {bootstrap}''')
+class Bootstrap(_Bootstrap):
+    """
+    Extension class for Bootstrap 4.
+
+    Initilize the extension::
+
+        from flask import Flask
+        from flask_bootstrap import Bootstrap
+
+        app = Flask(__name__)
+        bootstrap = Bootstrap(app)
+
+    Or with the application factory::
+
+        from flask import Flask
+        from flask_bootstrap import Bootstrap
+
+        bootstrap = Bootstrap()
+
+        def create_app():
+            app = Flask(__name__)
+            bootstrap.init_app(app)
+
+    .. versionchanged:: 2.0.0
+       Move common logic to base class ``_Bootstrap``.
+    """
+    bootstrap_version = '4.3.1'
+    jquery_version = '3.4.1'
+    popper_version = '1.14.0'
+    bootstrap_css_integrity = 'sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T'
+    bootstrap_js_integrity = 'sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM'
+    jquery_integrity = 'sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh'
+    popper_integrity = 'sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ'
+    static_folder = 'bootstrap4'
+
+
+class Bootstrap5(_Bootstrap):
+    """
+    Base class for Bootstrap 5.
+
+    Initilize the extension::
+
+        from flask import Flask
+        from flask_bootstrap import Bootstrap5
+
+        app = Flask(__name__)
+        bootstrap = Bootstrap5(app)
+
+    Or with the application factory::
+
+        from flask import Flask
+        from flask_bootstrap import Bootstrap5
+
+        bootstrap = Bootstrap5()
+
+        def create_app():
+            app = Flask(__name__)
+            bootstrap5.init_app(app)
+
+    .. versionadded:: 2.0.0
+    """
+    bootstrap_version = '5.1.1'
+    popper_version = '2.9.3'
+    bootstrap_css_integrity = 'sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU'
+    bootstrap_js_integrity = 'sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/'
+    popper_integrity = 'sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN'
+    static_folder = 'bootstrap5'
