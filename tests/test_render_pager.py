@@ -2,7 +2,7 @@ from flask import render_template_string, request
 from flask_sqlalchemy import SQLAlchemy
 
 
-def test_render_pager(app, client):
+def test_render_pager(bootstrap, app, client):
     db = SQLAlchemy(app)
 
     class Message(db.Model):

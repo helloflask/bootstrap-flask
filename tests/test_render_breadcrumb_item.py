@@ -1,7 +1,8 @@
+import pytest
 from flask import render_template_string
 
 
-def test_render_breadcrumb_item_active(app, client):
+def test_render_breadcrumb_item_active(bootstrap, app, client):
     @app.route('/not_active_item')
     def foo():
         return render_template_string('''

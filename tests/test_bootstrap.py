@@ -1,10 +1,6 @@
 import pytest
 from flask import current_app
-from flask_bootstrap import (
-    VERSION_BOOTSTRAP, VERSION_JQUERY, VERSION_POPPER,
-    BOOTSTRAP_CSS_INTEGRITY, BOOTSTRAP_JS_INTEGRITY,
-    JQUERY_INTEGRITY, POPPER_INTEGRITY, CDN_BASE
-)
+from flask_bootstrap import CDN_BASE
 
 
 @pytest.mark.usefixtures('client')
@@ -14,8 +10,8 @@ class TestBootstrap:
 
     def test_load_css_with_default_versions(self, bootstrap):
         rv = bootstrap.load_css()
-        bootstrap_css = f'<link rel="stylesheet" href="{CDN_BASE}/bootstrap@{VERSION_BOOTSTRAP}/' \
-                        f'dist/css/bootstrap.min.css" integrity="{BOOTSTRAP_CSS_INTEGRITY}" crossorigin="anonymous">'
+        bootstrap_css = f'<link rel="stylesheet" href="{CDN_BASE}/bootstrap@{bootstrap.bootstrap_version}/' \
+                        f'dist/css/bootstrap.min.css" integrity="{bootstrap.bootstrap_css_integrity}" crossorigin="anonymous">'
         assert bootstrap_css in rv
 
     def test_load_css_with_non_default_versions(self, bootstrap):
@@ -24,19 +20,19 @@ class TestBootstrap:
             assert 'integrity="' not in rv
             assert 'crossorigin="anonymous"' not in rv
 
-        rv = bootstrap.load_css(version='1.2.3')
+        rv = bootstrap.load_css(version='4.5.6')
         _check_assertions(rv)
         rv = bootstrap.load_css(version='5.0.0')
         _check_assertions(rv)
 
     def test_load_js_with_default_versions(self, bootstrap):
         rv = bootstrap.load_js()
-        bootstrap_js = f'<script src="{CDN_BASE}/bootstrap@{VERSION_BOOTSTRAP}/dist/js/bootstrap.min.js"' \
-                       f' integrity="{BOOTSTRAP_JS_INTEGRITY}" crossorigin="anonymous"></script>'
-        jquery_js = f'<script src="{CDN_BASE}/jquery@{VERSION_JQUERY}/dist/jquery.min.js"' \
-                    f' integrity="{JQUERY_INTEGRITY}" crossorigin="anonymous"></script>'
-        popper_js = f'<script src="{CDN_BASE}/popper.js@{VERSION_POPPER}/dist/umd/popper.min.js"' \
-                    f' integrity="{POPPER_INTEGRITY}" crossorigin="anonymous"></script>'
+        bootstrap_js = f'<script src="{CDN_BASE}/bootstrap@{bootstrap.bootstrap_version}/dist/js/bootstrap.min.js"' \
+                       f' integrity="{bootstrap.bootstrap_js_integrity}" crossorigin="anonymous"></script>'
+        jquery_js = f'<script src="{CDN_BASE}/jquery@{bootstrap.jquery_version}/dist/jquery.min.js"' \
+                    f' integrity="{bootstrap.jquery_integrity}" crossorigin="anonymous"></script>'
+        popper_js = f'<script src="{CDN_BASE}/popper.js@{bootstrap.popper_version}/dist/umd/popper.min.js"' \
+                    f' integrity="{bootstrap.popper_integrity}" crossorigin="anonymous"></script>'
         assert bootstrap_js in rv
         assert jquery_js in rv
         assert popper_js in rv
@@ -49,11 +45,11 @@ class TestBootstrap:
             assert 'integrity="' not in rv
             assert 'crossorigin="anonymous"' not in rv
 
-        rv = bootstrap.load_js(version='1.2.3', jquery_version='1.2.3',
-                               popper_version='1.2.3')
+        rv = bootstrap.load_js(version='4.5.6', jquery_version='4.5.6',
+                               popper_version='4.5.6')
         _check_assertions(rv)
-        rv = bootstrap.load_js(version='5.0.0', jquery_version='5.0.0',
-                               popper_version='5.0.0')
+        rv = bootstrap.load_js(version='4.0.0', jquery_version='4.0.0',
+                               popper_version='4.0.0')
         _check_assertions(rv)
 
     def test_local_resources(self, bootstrap, client):

@@ -1,6 +1,6 @@
 import pytest
 from flask import Flask, render_template_string
-from flask_bootstrap import Bootstrap
+from flask_bootstrap import Bootstrap, Bootstrap5
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, PasswordField, StringField, SubmitField, HiddenField
 from wtforms.validators import DataRequired, Length
@@ -35,9 +35,14 @@ def app():
     yield app
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture
 def bootstrap(app):
     yield Bootstrap(app)
+
+
+@pytest.fixture
+def bootstrap5(app):
+    yield Bootstrap5(app)
 
 
 @pytest.fixture
