@@ -1,0 +1,73 @@
+{% macro render_static(type, filename_or_url, local=True) %}
+    {% if local -%}{% set filename_or_url = url_for('static', filename=filename_or_url) %}{%- endif %}
+    {% if type == 'css' -%}
+        <link rel="stylesheet" href="{{ filename_or_url }}" type="text/css">
+    {%- elif type == 'js' -%}
+        <script type="text/javascript" src="{{ filename_or_url }}"></script>
+    {%- elif type == 'icon' -%}
+        <link rel="icon" href="{{ filename_or_url }}">
+    {%- endif %}
+{% endmacro %}
+
+{#  This macro was part of Flask-Bootstrap and was modified under the terms of
+    its BSD License. Copyright (c) 2013, Marc Brinkmann. All rights reserved. #}
+
+{# versionadded: New in 1.2.0 #}
+
+{% macro render_messages(messages=None, container=False, transform={
+     'critical': 'danger',
+     'error': 'danger',
+     'info': 'info',
+     'warning': 'warning',
+     'debug': 'primary',
+     'notset': 'primary',
+     'message': 'primary',
+    }, default_category=config.BOOTSTRAP_MSG_CATEGORY, dismissible=False, dismiss_animate=False) -%}
+   
+    {% with messages = messages or get_flashed_messages(with_categories=True) -%}
+    {% if messages -%} {# don't output anything if there are no messages #}
+
+    {% if container -%}
+    <!-- begin message block -->
+    <div class="container flashed-messages">
+        <div class="row">
+            <div class="col-md-12">
+    {% endif -%}
+
+    {% for cat, msg in messages %}
+        <div class="alert alert-{{ transform.get(cat.lower(), cat or default_category) }}{% if dismissible %} alert-dismissible {% if dismiss_animate %}fade show{% endif %}{% endif %}" role="alert">
+    {% if dismissible %}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{% endif %}
+           {{ msg }}
+         </div>
+    {%- endfor -%}
+
+    {% if container %}
+            </div>
+        </div>
+    </div>
+    <!-- end message block -->
+    {% endif -%}
+
+    {% endif -%}
+    {% endwith -%}
+{% endmacro -%}
+
+
+{% macro render_icon(name, size=config.BOOTSTRAP_ICON_SIZE, color=config.BOOTSTRAP_ICON_COLOR) %}
+{% set bootstrap_colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'muted'] %}
+<svg class="bi{% if not color %}"{% elif color in bootstrap_colors %} text-{{ color }}"{% else %}" style="color: {{ color }}"{% endif %}
+ width="{{ size }}" height="{{ size }}" fill="currentColor">
+    <use xlink:href="{{ url_for('bootstrap.static', filename='icons/bootstrap-icons.svg') }}#{{ name }}"/>
+</svg>
+{% endmacro %}
+
+{% macro arg_url_for(endpoint, base) %}
+    {# calls url_for() with a given endpoint and **base as the parameters,
+   additionally passing on all keyword_arguments (may overwrite existing ones)
+ #}
+    {%- with kargs = base.copy() -%}
+        {%- do kargs.update(kwargs) -%}
+        {{ url_for(endpoint, **kargs) }}
+    {%- endwith %}
+{%- endmacro %}
