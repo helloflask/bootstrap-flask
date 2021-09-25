@@ -37,6 +37,7 @@ def test_bootswatch_local(bootstrap, theme, client):
     with client.get(f'/bootstrap/static/css/swatch/{theme}/bootstrap.min.css') as css_response:
         assert css_response.status_code != 404
 
+
 @pytest.mark.parametrize('theme', themes)
 def test_bootswatch_cdn(bootstrap, theme, client):
     current_app.config['BOOTSTRAP_SERVE_LOCAL'] = False

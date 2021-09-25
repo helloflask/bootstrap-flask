@@ -102,15 +102,16 @@ class _Bootstrap:
 
         if serve_local:
             if not bootswatch_theme:
-                base_path = 'css/'
+                base_path = 'css'
             else:
-                base_path = f'css/swatch/{bootswatch_theme.lower()}/'
-            boostrap_url = url_for('bootstrap.static', filename=f'{base_path}{self.bootstrap_css_filename}')
+                base_path = f'css/swatch/{bootswatch_theme.lower()}'
+            boostrap_url = url_for('bootstrap.static', filename=f'{base_path}/{self.bootstrap_css_filename}')
         else:
-            if bootswatch_theme:
-                boostrap_url = f'{CDN_BASE}/bootswatch@{version}/dist/{bootswatch_theme.lower()}/{self.bootstrap_css_filename}'
+            if not bootswatch_theme:
+                base_path = f'{CDN_BASE}/bootstrap@{version}/dist/css'
             else:
-                boostrap_url = f'{CDN_BASE}/bootstrap@{version}/dist/css/{self.bootstrap_css_filename}'
+                base_path = f'{CDN_BASE}/bootswatch@{version}/dist/{bootswatch_theme.lower()}'
+            boostrap_url = f'{base_path}/{self.bootstrap_css_filename}'
 
         if bootstrap_sri and not bootswatch_theme:
             css = f'<link rel="stylesheet" href="{boostrap_url}" integrity="{bootstrap_sri}" crossorigin="anonymous">'

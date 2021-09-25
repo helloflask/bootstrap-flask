@@ -11,7 +11,8 @@ class TestBootstrap:
     def test_load_css_with_default_versions(self, bootstrap):
         rv = bootstrap.load_css()
         bootstrap_css = f'<link rel="stylesheet" href="{CDN_BASE}/bootstrap@{bootstrap.bootstrap_version}/' \
-                        f'dist/css/bootstrap.min.css" integrity="{bootstrap.bootstrap_css_integrity}" crossorigin="anonymous">'
+                        f'dist/css/bootstrap.min.css" integrity="{bootstrap.bootstrap_css_integrity}" ' \
+                        'crossorigin="anonymous">'
         assert bootstrap_css in rv
 
     def test_load_css_with_non_default_versions(self, bootstrap):

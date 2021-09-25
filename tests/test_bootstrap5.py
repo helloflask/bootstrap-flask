@@ -6,12 +6,13 @@ from flask_bootstrap import CDN_BASE
 @pytest.mark.usefixtures('client')
 class TestBootstrap5:
     def test_extension_init(self, bootstrap5):
-            assert 'bootstrap' in current_app.extensions
+        assert 'bootstrap' in current_app.extensions
 
     def test_load_css_with_default_versions(self, bootstrap5):
         rv = bootstrap5.load_css()
         bootstrap_css = f'<link rel="stylesheet" href="{CDN_BASE}/bootstrap@{bootstrap5.bootstrap_version}/' \
-                        f'dist/css/bootstrap.min.css" integrity="{bootstrap5.bootstrap_css_integrity}" crossorigin="anonymous">'
+                        f'dist/css/bootstrap.min.css" integrity="{bootstrap5.bootstrap_css_integrity}" ' \
+                        'crossorigin="anonymous">'
         assert bootstrap_css in rv
 
     def test_load_css_with_non_default_versions(self, bootstrap5):
@@ -27,8 +28,9 @@ class TestBootstrap5:
 
     def test_load_js_with_default_versions(self, bootstrap5):
         rv = bootstrap5.load_js()
-        bootstrap_js = f'<script src="{CDN_BASE}/bootstrap@{bootstrap5.bootstrap_version}/dist/js/bootstrap.min.js"' \
-                        f' integrity="{bootstrap5.bootstrap_js_integrity}" crossorigin="anonymous"></script>'
+        bootstrap_js = f'<script src="{CDN_BASE}/bootstrap@{bootstrap5.bootstrap_version}/dist/js/' \
+                       f'bootstrap.min.js" integrity="{bootstrap5.bootstrap_js_integrity}" ' \
+                       'crossorigin="anonymous"></script>'
         jquery_js = f'<script src="{CDN_BASE}/jquery@{bootstrap5.jquery_version}/dist/jquery.min.js"' \
                     f' integrity="{bootstrap5.jquery_integrity}" crossorigin="anonymous"></script>'
         popper_js = f'<script src="{CDN_BASE}/popper.js@{bootstrap5.popper_version}/dist/umd/popper.min.js"' \
