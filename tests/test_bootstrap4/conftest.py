@@ -1,7 +1,7 @@
 import pytest
-from flask_bootstrap import Bootstrap
+from flask_bootstrap import Bootstrap4
 
 
 @pytest.fixture(autouse=True)
 def bootstrap(app):
-    yield Bootstrap(app)
+    yield Bootstrap4(app)

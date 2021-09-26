@@ -192,7 +192,7 @@ class _Bootstrap:
         {bootstrap}''')
 
 
-class Bootstrap(_Bootstrap):
+class Bootstrap4(_Bootstrap):
     """
     Extension class for Bootstrap 4.
 
@@ -259,3 +259,13 @@ class Bootstrap5(_Bootstrap):
     bootstrap_js_integrity = 'sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/'
     popper_integrity = 'sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN'
     static_folder = 'bootstrap5'
+
+
+class Bootstrap(Bootstrap4):
+    def __init__(self, app):
+        super().__init__(app=app)
+        warnings.warn(
+            'For Bootstrap 4, please import and use "Bootstrap4" class, the "Bootstrap" class '
+            'is deprecated and will be removed in 3.0.',
+            stacklevel=2
+        )

@@ -5,6 +5,14 @@ from flask_bootstrap import CDN_BASE
 
 @pytest.mark.usefixtures('client')
 class TestBootstrap:
+    def test_deprecate_bootstrap_class(self):
+        from flask_bootstrap import Bootstrap
+        from flask import Flask
+
+        app = Flask(__name__)
+        with pytest.warns(UserWarning):
+            bootstrap = Bootstrap(app)  # noqa: F841
+
     def test_extension_init(self):
         assert 'bootstrap' in current_app.extensions
 
