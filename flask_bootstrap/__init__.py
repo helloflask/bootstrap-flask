@@ -125,6 +125,7 @@ class _Bootstrap:
         paths = {
             'bootstrap': f'js/{self.bootstrap_js_filename}',
             'jquery': f'{self.jquery_filename}',
+            '@popperjs/core': f'umd/{self.popper_filename}',
             'popper.js': f'umd/{self.popper_filename}',
         }
         if serve_local:
@@ -178,7 +179,7 @@ class _Bootstrap:
         bootstrap_sri = self._get_sri('bootstrap_js', version, bootstrap_sri)
         popper_sri = self._get_sri('popper', popper_version, popper_sri)
         bootstrap = self._get_js_script(version, 'bootstrap', bootstrap_sri)
-        popper = self._get_js_script(popper_version, 'popper.js', popper_sri) if with_popper else ''
+        popper = self._get_js_script(popper_version, self.popper_name, popper_sri) if with_popper else ''
         if version.startswith('4'):
             if jquery_version is None:
                 jquery_version = self.jquery_version
@@ -225,6 +226,7 @@ class Bootstrap4(_Bootstrap):
     bootstrap_js_integrity = 'sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM'
     jquery_integrity = 'sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh'
     popper_integrity = 'sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ'
+    popper_name = 'popper.js'
     static_folder = 'bootstrap4'
 
 
@@ -257,7 +259,8 @@ class Bootstrap5(_Bootstrap):
     popper_version = '2.9.3'
     bootstrap_css_integrity = 'sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU'
     bootstrap_js_integrity = 'sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/'
-    popper_integrity = 'sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN'
+    popper_integrity = 'sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp'
+    popper_name = '@popperjs/core'
     static_folder = 'bootstrap5'
 
 

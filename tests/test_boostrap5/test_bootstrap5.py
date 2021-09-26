@@ -33,7 +33,7 @@ class TestBootstrap5:
                        'crossorigin="anonymous"></script>'
         jquery_js = f'<script src="{CDN_BASE}/jquery@{bootstrap.jquery_version}/dist/jquery.min.js"' \
                     f' integrity="{bootstrap.jquery_integrity}" crossorigin="anonymous"></script>'
-        popper_js = f'<script src="{CDN_BASE}/popper.js@{bootstrap.popper_version}/dist/umd/popper.min.js"' \
+        popper_js = f'<script src="{CDN_BASE}/@popperjs/core@{bootstrap.popper_version}/dist/umd/popper.min.js"' \
                     f' integrity="{bootstrap.popper_integrity}" crossorigin="anonymous"></script>'
         assert bootstrap_js in rv
         assert jquery_js not in rv
