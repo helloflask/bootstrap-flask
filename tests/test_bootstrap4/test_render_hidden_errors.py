@@ -15,7 +15,7 @@ def test_render_hidden_errors(app, client):
         if form.validate_on_submit():
             pass
         return render_template_string('''
-        {% from 'bootstrap/form.html' import render_field, render_hidden_errors %}
+        {% from 'bootstrap4/form.html' import render_field, render_hidden_errors %}
         <form method="post">
             {{ form.hidden_tag() }}
             {{ render_hidden_errors(form) }}

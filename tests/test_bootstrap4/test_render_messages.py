@@ -6,7 +6,7 @@ def test_render_messages(app, client):
     def test_messages():
         flash('test message', 'danger')
         return render_template_string('''
-                        {% from 'bootstrap/utils.html' import render_messages %}
+                        {% from 'bootstrap4/utils.html' import render_messages %}
                         {{ render_messages() }}
                         ''')
 
@@ -14,7 +14,7 @@ def test_render_messages(app, client):
     def test_container():
         flash('test message', 'danger')
         return render_template_string('''
-                        {% from 'bootstrap/utils.html' import render_messages %}
+                        {% from 'bootstrap4/utils.html' import render_messages %}
                         {{ render_messages(container=True) }}
                         ''')
 
@@ -22,7 +22,7 @@ def test_render_messages(app, client):
     def test_dismissible():
         flash('test message', 'danger')
         return render_template_string('''
-                        {% from 'bootstrap/utils.html' import render_messages %}
+                        {% from 'bootstrap4/utils.html' import render_messages %}
                         {{ render_messages(dismissible=True) }}
                         ''')
 
@@ -30,7 +30,7 @@ def test_render_messages(app, client):
     def test_dismiss_animate():
         flash('test message', 'danger')
         return render_template_string('''
-                        {% from 'bootstrap/utils.html' import render_messages %}
+                        {% from 'bootstrap4/utils.html' import render_messages %}
                         {{ render_messages(dismissible=True, dismiss_animate=True) }}
                         ''')
 

@@ -20,7 +20,7 @@ def test_render_pager(app, client):
         pagination = Message.query.paginate(page, per_page=10)
         messages = pagination.items
         return render_template_string('''
-                        {% from 'bootstrap/pagination.html' import render_pager %}
+                        {% from 'bootstrap4/pagination.html' import render_pager %}
                         {{ render_pager(pagination) }}
                         ''', pagination=pagination, messages=messages)
 

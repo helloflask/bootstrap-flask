@@ -5,14 +5,14 @@ def test_render_breadcrumb_item_active(app, client):
     @app.route('/not_active_item')
     def foo():
         return render_template_string('''
-                {% from 'bootstrap/nav.html' import render_breadcrumb_item %}
+                {% from 'bootstrap4/nav.html' import render_breadcrumb_item %}
                 {{ render_breadcrumb_item('bar', 'Bar') }}
                 ''')
 
     @app.route('/active_item')
     def bar():
         return render_template_string('''
-                {% from 'bootstrap/nav.html' import render_breadcrumb_item %}
+                {% from 'bootstrap4/nav.html' import render_breadcrumb_item %}
                 {{ render_breadcrumb_item('bar', 'Bar') }}
                 ''')
 

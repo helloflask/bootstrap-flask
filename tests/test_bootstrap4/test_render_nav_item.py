@@ -5,7 +5,7 @@ def test_render_nav_item_active(app, client):
     @app.route('/active')
     def foo():
         return render_template_string('''
-                {% from 'bootstrap/nav.html' import render_nav_item %}
+                {% from 'bootstrap4/nav.html' import render_nav_item %}
                 {{ render_nav_item('foo', 'Foo') }}
                 ''')
 
@@ -16,7 +16,7 @@ def test_render_nav_item_active(app, client):
     @app.route('/not_active')
     def bar():
         return render_template_string('''
-                {% from 'bootstrap/nav.html' import render_nav_item %}
+                {% from 'bootstrap4/nav.html' import render_nav_item %}
                 {{ render_nav_item('foo', 'Foo') }}
                 ''')
 

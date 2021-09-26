@@ -23,7 +23,7 @@ def test_render_simple_table(app, client):
         messages = pagination.items
         titles = [('id', '#'), ('text', 'Message')]
         return render_template_string('''
-                                {% from 'bootstrap/table.html' import render_table %}
+                                {% from 'bootstrap4/table.html' import render_table %}
                                 {{ render_table(messages, titles) }}
                                 ''', titles=titles, messages=messages)
 
@@ -57,7 +57,7 @@ def test_render_customized_table(app, client):
         messages = pagination.items
         titles = [('id', '#'), ('text', 'Message')]
         return render_template_string('''
-                                {% from 'bootstrap/table.html' import render_table %}
+                                {% from 'bootstrap4/table.html' import render_table %}
                                 {{ render_table(messages, titles, table_classes='table-striped',
                                 header_classes='thead-dark', caption='Messages') }}
                                 ''', titles=titles, messages=messages)
@@ -89,7 +89,7 @@ def test_render_responsive_table(app, client):
         messages = pagination.items
         titles = [('id', '#'), ('text', 'Message')]
         return render_template_string('''
-                                {% from 'bootstrap/table.html' import render_table %}
+                                {% from 'bootstrap4/table.html' import render_table %}
                                 {{ render_table(messages, titles, responsive=True,
                                 responsive_class='table-responsive-sm') }}
                                 ''', titles=titles, messages=messages)
@@ -118,7 +118,7 @@ def test_build_table_titles(app, client):
         pagination = Message.query.paginate(page, per_page=10)
         messages = pagination.items
         return render_template_string('''
-                                {% from 'bootstrap/table.html' import render_table %}
+                                {% from 'bootstrap4/table.html' import render_table %}
                                 {{ render_table(messages) }}
                                 ''', messages=messages)
 
@@ -138,7 +138,7 @@ def test_build_table_titles_with_empty_data(app, client):
     def test():
         messages = []
         return render_template_string('''
-                                {% from 'bootstrap/table.html' import render_table %}
+                                {% from 'bootstrap4/table.html' import render_table %}
                                 {{ render_table(messages) }}
                                 ''', messages=messages)
 
@@ -194,7 +194,7 @@ def test_render_table_with_actions(app, client):  # noqa: C901
         messages = pagination.items
         titles = [('id', '#'), ('text', 'Message')]
         return render_template_string('''
-            {% from 'bootstrap/table.html' import render_table %}
+            {% from 'bootstrap4/table.html' import render_table %}
             # URL arguments with URL string (deprecated (except new_url), will be removed in 2.0)
             {{ render_table(messages, titles, show_actions=True,
             custom_actions=[
@@ -269,7 +269,7 @@ def test_render_table_with_actions_and_url_tuple(app, client):  # noqa: C901
         messages = pagination.items
         titles = [('id', '#'), ('text', 'Message')]
         return render_template_string('''
-            {% from 'bootstrap/table.html' import render_table %}
+            {% from 'bootstrap4/table.html' import render_table %}
             # URL arguments with URL tuple
             {{ render_table(messages, titles, model=model, show_actions=True,
             custom_actions=[
@@ -323,7 +323,7 @@ def test_customize_icon_title_of_table_actions(app, client):
         pagination = Message.query.paginate(page, per_page=10)
         messages = pagination.items
         return render_template_string('''
-            {% from 'bootstrap/table.html' import render_table %}
+            {% from 'bootstrap4/table.html' import render_table %}
             {{ render_table(messages, model=model, show_actions=True,
             view_url='/view',
             edit_url='/edit',

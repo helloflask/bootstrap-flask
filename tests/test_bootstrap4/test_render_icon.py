@@ -5,28 +5,28 @@ def test_render_icon(app, client):
     @app.route('/icon')
     def icon():
         return render_template_string('''
-        {% from 'bootstrap/utils.html' import render_icon %}
+        {% from 'bootstrap4/utils.html' import render_icon %}
             {{ render_icon('heart') }}
         ''')
 
     @app.route('/icon-size')
     def icon_size():
         return render_template_string('''
-        {% from 'bootstrap/utils.html' import render_icon %}
+        {% from 'bootstrap4/utils.html' import render_icon %}
             {{ render_icon('heart', 32) }}
         ''')
 
     @app.route('/icon-style')
     def icon_style():
         return render_template_string('''
-        {% from 'bootstrap/utils.html' import render_icon %}
+        {% from 'bootstrap4/utils.html' import render_icon %}
             {{ render_icon('heart', color='primary') }}
         ''')
 
     @app.route('/icon-color')
     def icon_color():
         return render_template_string('''
-        {% from 'bootstrap/utils.html' import render_icon %}
+        {% from 'bootstrap4/utils.html' import render_icon %}
             {{ render_icon('heart', color='green') }}
         ''')
 
@@ -60,7 +60,7 @@ def test_render_icon_config(app, client):
     @app.route('/icon')
     def icon():
         return render_template_string('''
-        {% from 'bootstrap/utils.html' import render_icon %}
+        {% from 'bootstrap4/utils.html' import render_icon %}
             {{ render_icon('heart') }}
         ''')
 

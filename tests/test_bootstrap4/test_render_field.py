@@ -6,7 +6,7 @@ def test_render_field(app, client, hello_form):
     def test():
         form = hello_form()
         return render_template_string('''
-        {% from 'bootstrap/form.html' import render_field %}
+        {% from 'bootstrap4/form.html' import render_field %}
         {{ render_field(form.csrf_token) }}
         {{ render_field(form.hidden) }}
         {{ render_field(form.username) }}
@@ -29,7 +29,7 @@ def test_render_field_with_render_kw_classes(app, client, hello_form):
         form.username.render_kw = {'class': 'render_kw_class'}
         form.password.render_kw = {'class': 'render_kw_class'}
         return render_template_string('''
-        {% from 'bootstrap/form.html' import render_field %}
+        {% from 'bootstrap4/form.html' import render_field %}
         {{ render_field(form.name) }}
         {{ render_field(form.username, class_='test') }}
         {{ render_field(form.password, class='test') }}
@@ -47,7 +47,7 @@ def test_render_field_with_kwargs(app, client, hello_form):
     def test_kwargs_class():
         form = hello_form()
         return render_template_string('''
-        {% from 'bootstrap/form.html' import render_field %}
+        {% from 'bootstrap4/form.html' import render_field %}
         {{ render_field(form.username, class_='test') }}
         {{ render_field(form.password, class='test') }}
         ''', form=form)
@@ -61,7 +61,7 @@ def test_render_field_with_kwargs(app, client, hello_form):
     def test_general_kwargs():
         form = hello_form()
         return render_template_string('''
-        {% from 'bootstrap/form.html' import render_field %}
+        {% from 'bootstrap4/form.html' import render_field %}
         {{ render_field(form.username, placeholder='test') }}
         {{ render_field(form.password, placeholder='test') }}
         {{ render_field(form.remember, class='test', value='n') }}

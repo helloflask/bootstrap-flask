@@ -10,7 +10,7 @@ def test_render_form(app, client, hello_form):
     def test():
         form = hello_form()
         return render_template_string('''
-                {% from 'bootstrap/form.html' import render_form %}
+                {% from 'bootstrap4/form.html' import render_form %}
                 {{ render_form(form) }}
                 ''', form=form)
 
@@ -30,7 +30,7 @@ def test_form_description_for_booleanfield(app, client):
     def description():
         form = TestForm()
         return render_template_string('''
-        {% from 'bootstrap/form.html' import render_form %}
+        {% from 'bootstrap4/form.html' import render_form %}
         {{ render_form(form) }}
         ''', form=form)
 
@@ -52,7 +52,7 @@ def test_render_form_enctype(app, client):
     def single():
         form = SingleUploadForm()
         return render_template_string('''
-        {% from 'bootstrap/form.html' import render_form %}
+        {% from 'bootstrap4/form.html' import render_form %}
         {{ render_form(form) }}
         ''', form=form)
 
@@ -60,7 +60,7 @@ def test_render_form_enctype(app, client):
     def multi():
         form = SingleUploadForm()
         return render_template_string('''
-        {% from 'bootstrap/form.html' import render_form %}
+        {% from 'bootstrap4/form.html' import render_form %}
         {{ render_form(form) }}
         ''', form=form)
 
@@ -85,7 +85,7 @@ def test_form_render_kw_class(app, client):
     def render_kw():
         form = TestForm()
         return render_template_string('''
-        {% from 'bootstrap/form.html' import render_form %}
+        {% from 'bootstrap4/form.html' import render_form %}
         {{ render_form(form) }}
         ''', form=form)
 
@@ -106,7 +106,7 @@ def test_button_size(app, client, hello_form):
     def test():
         form = hello_form()
         return render_template_string('''
-        {% from 'bootstrap/form.html' import render_form %}
+        {% from 'bootstrap4/form.html' import render_form %}
         {{ render_form(form) }}
         ''', form=form)
 
@@ -118,7 +118,7 @@ def test_button_size(app, client, hello_form):
     def test_overwrite():
         form = hello_form()
         return render_template_string('''
-        {% from 'bootstrap/form.html' import render_form %}
+        {% from 'bootstrap4/form.html' import render_form %}
         {{ render_form(form, button_size='sm') }}
         ''', form=form)
 
@@ -136,7 +136,7 @@ def test_button_style(app, client, hello_form):
     def test():
         form = hello_form()
         return render_template_string('''
-        {% from 'bootstrap/form.html' import render_form %}
+        {% from 'bootstrap4/form.html' import render_form %}
         {{ render_form(form) }}
         ''', form=form)
 
@@ -148,7 +148,7 @@ def test_button_style(app, client, hello_form):
     def test_overwrite():
         form = hello_form()
         return render_template_string('''
-        {% from 'bootstrap/form.html' import render_form %}
+        {% from 'bootstrap4/form.html' import render_form %}
         {{ render_form(form, button_style='success') }}
         ''', form=form)
 
@@ -161,7 +161,7 @@ def test_button_style(app, client, hello_form):
     def test_button_map():
         form = hello_form()
         return render_template_string('''
-        {% from 'bootstrap/form.html' import render_form %}
+        {% from 'bootstrap4/form.html' import render_form %}
         {{ render_form(form, button_map={'submit': 'warning'}) }}
         ''', form=form)
 
@@ -183,7 +183,7 @@ def test_error_message_for_radiofield_and_booleanfield(app, client):
         if form.validate_on_submit():
             pass
         return render_template_string('''
-        {% from 'bootstrap/form.html' import render_form %}
+        {% from 'bootstrap4/form.html' import render_form %}
         {{ render_form(form) }}
         ''', form=form)
 
