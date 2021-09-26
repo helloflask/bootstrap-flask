@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, request, flash, Markup, jsonify
+from flask import Flask, render_template, request, flash, Markup
 
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, SubmitField, BooleanField, PasswordField, IntegerField, TextField,\
