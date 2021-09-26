@@ -6,7 +6,7 @@ Type these commands in the terminal:
 .. code-block:: bash
 
     $ git clone https://github.com/greyli/bootstrap-flask.git
-    $ cd bootstrap-flask/examples
+    $ cd bootstrap-flask/examples/bootstrap4
     $ pip install -r requirements.txt
     $ flask run
 

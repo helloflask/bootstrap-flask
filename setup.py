@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
 """
 Bootstrap-Flask
 ---------------
 
-[Bootstrap 4](https://getbootstrap.com) helper for Flask/Jinja2.
+Bootstrap-Flask is a collection of Jinja macros for Bootstrap and Flask.
+It helps you to render Flask-related objects and data to Bootstrap HTML more easily.
 
 If you come from Flask-Bootstrap, check out
 [this tutorial](https://bootstrap-flask.readthedocs.io/en/latest/migrate.html)
@@ -21,7 +21,7 @@ setup(
     license='MIT',
     author='Grey Li',
     author_email='withlihui@gmail.com',
-    description='Bootstrap helper for Flask/Jinja2.',
+    description='Bootstrap helper for Flask.',
     long_description=__doc__,
     long_description_content_type='text/markdown',
     platforms='any',

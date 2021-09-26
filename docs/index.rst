@@ -1,7 +1,7 @@
 Bootstrap-Flask
 ===============
 
-`Bootstrap 4 <https://getbootstrap.com>`_ helper for Flask/Jinja2.
+`Bootstrap <https://getbootstrap.com>`_ helper for Flask.
 
 
 Contents
@@ -62,7 +62,7 @@ Then run tests with tox:
 Authors
 -------
 
-Maintainer: `Grey Li <http://greyli.com>`_
+Maintainer: `Grey Li <https://github.com/greyli>`_
 
 See also the list of
 `contributors <https://github.com/greyli/bootstrap-flask/contributors>`_
@@ -74,5 +74,3 @@ License
 
 This project is licensed under the MIT License (see the
 ``LICENSE`` file for details).
-
-Some macros were part of `Flask-Bootstrap <https://github.com/mbr/flask-bootstrap>`_ and were modified under the terms of its BSD License.
