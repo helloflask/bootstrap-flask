@@ -104,7 +104,7 @@ class _Bootstrap:
             if not bootswatch_theme:
                 base_path = 'css'
             else:
-                base_path = f'css/swatch/{bootswatch_theme.lower()}'
+                base_path = f'css/bootswatch/{bootswatch_theme.lower()}'
             boostrap_url = url_for('bootstrap.static', filename=f'{base_path}/{self.bootstrap_css_filename}')
         else:
             if not bootswatch_theme:
