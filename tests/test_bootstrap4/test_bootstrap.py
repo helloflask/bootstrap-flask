@@ -5,7 +5,7 @@ from flask_bootstrap import CDN_BASE
 
 @pytest.mark.usefixtures('client')
 class TestBootstrap:
-    def test_extension_init(self, bootstrap):
+    def test_extension_init(self):
         assert 'bootstrap' in current_app.extensions
 
     def test_load_css_with_default_versions(self, bootstrap):

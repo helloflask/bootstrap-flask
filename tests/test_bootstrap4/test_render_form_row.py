@@ -1,7 +1,7 @@
 from flask import render_template_string
 
 
-def test_render_form_row(bootstrap, app, client, hello_form):
+def test_render_form_row(app, client, hello_form):
     @app.route('/form')
     def test():
         form = hello_form()
@@ -15,7 +15,7 @@ def test_render_form_row(bootstrap, app, client, hello_form):
     assert '<div class="col">' in data
 
 
-def test_render_form_row_row_class(bootstrap, app, client, hello_form):
+def test_render_form_row_row_class(app, client, hello_form):
     @app.route('/form')
     def test():
         form = hello_form()
@@ -28,7 +28,7 @@ def test_render_form_row_row_class(bootstrap, app, client, hello_form):
     assert '<div class="row">' in data
 
 
-def test_render_form_row_col_class_default(bootstrap, app, client, hello_form):
+def test_render_form_row_col_class_default(app, client, hello_form):
     @app.route('/form')
     def test():
         form = hello_form()
@@ -41,7 +41,7 @@ def test_render_form_row_col_class_default(bootstrap, app, client, hello_form):
     assert '<div class="col-md-6">' in data
 
 
-def test_render_form_row_col_map(bootstrap, app, client, hello_form):
+def test_render_form_row_col_map(app, client, hello_form):
     @app.route('/form')
     def test():
         form = hello_form()

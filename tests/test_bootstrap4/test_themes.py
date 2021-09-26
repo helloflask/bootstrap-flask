@@ -28,7 +28,7 @@ themes = [
 
 
 @pytest.mark.parametrize('theme', themes)
-def test_bootswatch_local(bootstrap, theme, client):
+def test_bootswatch_local(theme, client):
     current_app.config['BOOTSTRAP_SERVE_LOCAL'] = True
     current_app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = theme
     data = client.get('/').get_data(as_text=True)

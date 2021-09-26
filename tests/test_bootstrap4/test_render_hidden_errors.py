@@ -4,7 +4,7 @@ from wtforms import HiddenField, SubmitField
 from wtforms.validators import DataRequired
 
 
-def test_render_hidden_errors(bootstrap, app, client):
+def test_render_hidden_errors(app, client):
     class TestForm(FlaskForm):
         hide = HiddenField('Hide', validators=[DataRequired('Hide field is empty.')])
         submit = SubmitField()

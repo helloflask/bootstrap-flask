@@ -1,7 +1,7 @@
 from flask import render_template_string
 
 
-def test_render_icon(bootstrap, app, client):
+def test_render_icon(app, client):
     @app.route('/icon')
     def icon():
         return render_template_string('''
@@ -53,7 +53,7 @@ def test_render_icon(bootstrap, app, client):
     assert 'style="color: green"' in data
 
 
-def test_render_icon_config(bootstrap, app, client):
+def test_render_icon_config(app, client):
     app.config['BOOTSTRAP_ICON_SIZE'] = 100
     app.config['BOOTSTRAP_ICON_COLOR'] = 'success'
 

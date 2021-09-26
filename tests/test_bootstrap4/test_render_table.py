@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
 
 
-def test_render_simple_table(bootstrap, app, client):
+def test_render_simple_table(app, client):
     db = SQLAlchemy(app)
 
     class Message(db.Model):
@@ -37,7 +37,7 @@ def test_render_simple_table(bootstrap, app, client):
     assert '<td>Test message 1</td>' in data
 
 
-def test_render_customized_table(bootstrap, app, client):
+def test_render_customized_table(app, client):
     db = SQLAlchemy(app)
 
     class Message(db.Model):
@@ -69,7 +69,7 @@ def test_render_customized_table(bootstrap, app, client):
     assert '<caption>Messages</caption>' in data
 
 
-def test_render_responsive_table(bootstrap, app, client):
+def test_render_responsive_table(app, client):
     db = SQLAlchemy(app)
 
     class Message(db.Model):
@@ -99,7 +99,7 @@ def test_render_responsive_table(bootstrap, app, client):
     assert '<div class="table-responsive-sm">' in data
 
 
-def test_build_table_titles(bootstrap, app, client):
+def test_build_table_titles(app, client):
     db = SQLAlchemy(app)
 
     class Message(db.Model):
@@ -132,7 +132,7 @@ def test_build_table_titles(bootstrap, app, client):
     assert '<td>Test message 1</td>' in data
 
 
-def test_build_table_titles_with_empty_data(bootstrap, app, client):
+def test_build_table_titles_with_empty_data(app, client):
 
     @app.route('/table')
     def test():
@@ -146,7 +146,7 @@ def test_build_table_titles_with_empty_data(bootstrap, app, client):
     assert response.status_code == 200
 
 
-def test_render_table_with_actions(bootstrap, app, client):  # noqa: C901
+def test_render_table_with_actions(app, client):  # noqa: C901
     app.jinja_env.globals['csrf_token'] = lambda: ''
 
     db = SQLAlchemy(app)
@@ -221,7 +221,7 @@ def test_render_table_with_actions(bootstrap, app, client):  # noqa: C901
     assert 'href="/new-message"' in data
 
 
-def test_render_table_with_actions_and_url_tuple(bootstrap, app, client):  # noqa: C901
+def test_render_table_with_actions_and_url_tuple(app, client):  # noqa: C901
     app.jinja_env.globals['csrf_token'] = lambda: ''
 
     db = SQLAlchemy(app)
@@ -297,7 +297,7 @@ def test_render_table_with_actions_and_url_tuple(bootstrap, app, client):  # noq
     assert 'href="/table/new-message"' in data
 
 
-def test_customize_icon_title_of_table_actions(bootstrap, app, client):
+def test_customize_icon_title_of_table_actions(app, client):
 
     app.config['BOOTSTRAP_TABLE_VIEW_TITLE'] = 'Read'
     app.config['BOOTSTRAP_TABLE_EDIT_TITLE'] = 'Update'

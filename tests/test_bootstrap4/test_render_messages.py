@@ -1,7 +1,7 @@
 from flask import flash, render_template_string
 
 
-def test_render_messages(bootstrap, app, client):
+def test_render_messages(app, client):
     @app.route('/messages')
     def test_messages():
         flash('test message', 'danger')

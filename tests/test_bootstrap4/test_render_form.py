@@ -5,7 +5,7 @@ from wtforms import BooleanField, FileField, MultipleFileField,\
 from wtforms.validators import DataRequired
 
 
-def test_render_form(bootstrap, app, client, hello_form):
+def test_render_form(app, client, hello_form):
     @app.route('/form')
     def test():
         form = hello_form()
@@ -21,7 +21,7 @@ def test_render_form(bootstrap, app, client, hello_form):
 
 
 # test WTForm field description for BooleanField
-def test_form_description_for_booleanfield(bootstrap, app, client):
+def test_form_description_for_booleanfield(app, client):
 
     class TestForm(FlaskForm):
         remember = BooleanField('Remember me', description='Just check this')
@@ -41,7 +41,7 @@ def test_form_description_for_booleanfield(bootstrap, app, client):
 
 
 # test WTForm fields for render_form and render_field
-def test_render_form_enctype(bootstrap, app, client):
+def test_render_form_enctype(app, client):
     class SingleUploadForm(FlaskForm):
         avatar = FileField('Avatar')
 
@@ -74,7 +74,7 @@ def test_render_form_enctype(bootstrap, app, client):
 
 
 # test render_kw class for WTForms field
-def test_form_render_kw_class(bootstrap, app, client):
+def test_form_render_kw_class(app, client):
 
     class TestForm(FlaskForm):
         username = StringField('Username')
@@ -98,7 +98,7 @@ def test_form_render_kw_class(bootstrap, app, client):
     assert 'btn' in data
 
 
-def test_button_size(bootstrap, app, client, hello_form):
+def test_button_size(app, client, hello_form):
     assert current_app.config['BOOTSTRAP_BTN_SIZE'] == 'md'
     current_app.config['BOOTSTRAP_BTN_SIZE'] = 'lg'
 
@@ -128,7 +128,7 @@ def test_button_size(bootstrap, app, client, hello_form):
     assert 'btn-sm' in data
 
 
-def test_button_style(bootstrap, app, client, hello_form):
+def test_button_style(app, client, hello_form):
     assert current_app.config['BOOTSTRAP_BTN_STYLE'] == 'primary'
     current_app.config['BOOTSTRAP_BTN_STYLE'] = 'secondary'
 
@@ -171,7 +171,7 @@ def test_button_style(bootstrap, app, client, hello_form):
     assert 'btn-warning' in data
 
 
-def test_error_message_for_radiofield_and_booleanfield(bootstrap, app, client):
+def test_error_message_for_radiofield_and_booleanfield(app, client):
     class TestForm(FlaskForm):
         remember = BooleanField('Remember me', validators=[DataRequired()])
         option = RadioField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')],
