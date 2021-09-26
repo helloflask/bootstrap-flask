@@ -7,7 +7,7 @@ from wtforms import StringField, SubmitField, BooleanField, PasswordField, Integ
 from wtforms.validators import DataRequired, Length
 from wtforms.fields import *
 
-from flask_bootstrap import Bootstrap4
+from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -27,7 +27,7 @@ app.config['BOOTSTRAP_TABLE_EDIT_TITLE'] = 'Update'
 app.config['BOOTSTRAP_TABLE_DELETE_TITLE'] = 'Remove'
 app.config['BOOTSTRAP_TABLE_NEW_TITLE'] = 'Create'
 
-bootstrap = Bootstrap4(app)
+bootstrap = Bootstrap5(app)
 db = SQLAlchemy(app)
 csrf = CSRFProtect(app)
 
