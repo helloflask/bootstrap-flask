@@ -256,10 +256,10 @@ class Bootstrap5(_Bootstrap):
     .. versionadded:: 2.0.0
     """
     bootstrap_version = '5.1.1'
-    popper_version = '2.9.3'
+    popper_version = '2.10.1'
     bootstrap_css_integrity = 'sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU'
     bootstrap_js_integrity = 'sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/'
-    popper_integrity = 'sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp'
+    popper_integrity = 'sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN'
     popper_name = '@popperjs/core'
     static_folder = 'bootstrap5'
 
