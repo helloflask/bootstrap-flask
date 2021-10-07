@@ -12,7 +12,7 @@ Example
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/nav.html' import render_nav_item %}
+    {% from 'bootstrap4/nav.html' import render_nav_item %}
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="navbar-nav mr-auto">
@@ -43,7 +43,7 @@ Example
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/nav.html' import render_breadcrumb_item %}
+    {% from 'bootstrap4/nav.html' import render_breadcrumb_item %}
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -72,7 +72,7 @@ Example
 ~~~~~~~~
 .. code-block:: jinja
 
-    {% from 'bootstrap/form.html' import render_field %}
+    {% from 'bootstrap4/form.html' import render_field %}
 
     <form method="post">
         {{ form.csrf_token() }}
@@ -85,7 +85,7 @@ You can pass any HTTP attributes as extra keyword arguements like ``class`` or `
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/form.html' import render_field %}
+    {% from 'bootstrap4/form.html' import render_field %}
 
     <form method="post">
         {{ form.csrf_token() }}
@@ -129,7 +129,7 @@ Example
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/form.html' import render_form %}
+    {% from 'bootstrap4/form.html' import render_form %}
 
     {{ render_form(form) }}
 
@@ -188,7 +188,7 @@ Example
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/form.html' import render_field, render_hidden_errors %}
+    {% from 'bootstrap4/form.html' import render_field, render_hidden_errors %}
 
     <form method="post">
         {{ form.hidden_tag() }}
@@ -216,7 +216,7 @@ Example
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/form.html' import render_form_row %}
+    {% from 'bootstrap4/form.html' import render_form_row %}
 
     <form method="post">
         {{ form.csrf_token() }}
@@ -267,7 +267,7 @@ Example
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/pagination.html' import render_pager %}
+    {% from 'bootstrap4/pagination.html' import render_pager %}
 
     {{ render_pager(pagination) }}
 
@@ -299,7 +299,7 @@ Example
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/pagination.html' import render_pagination %}
+    {% from 'bootstrap4/pagination.html' import render_pagination %}
 
     {{ render_pagination(pagination) }}
 
@@ -346,7 +346,7 @@ Example
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/utils.html' import render_static %}
+    {% from 'bootstrap4/utils.html' import render_static %}
 
     {{ render_static('css', 'style.css') }}
 
@@ -384,7 +384,7 @@ Render the messages in your base template (normally below the navbar):
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/utils.html' import render_messages %}
+    {% from 'bootstrap4/utils.html' import render_messages %}
 
     <nav>...</nav>
     {{ render_messages() }}
@@ -440,7 +440,7 @@ Example
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/table.html' import render_table %}
+    {% from 'bootstrap4/table.html' import render_table %}
 
     {{ render_table(data) }}
 
@@ -524,7 +524,7 @@ Here is the full example:
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/table.html' import render_table %}
+    {% from 'bootstrap4/table.html' import render_table %}
 
     {{ render_table(data, model=Message, view_url=('view_message', [('message_id', ':id')])) }}
 
@@ -565,7 +565,7 @@ Example
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/utils.html' import render_icon %}
+    {% from 'bootstrap4/utils.html' import render_icon %}
 
     {{ render_icon('heart') }}
 

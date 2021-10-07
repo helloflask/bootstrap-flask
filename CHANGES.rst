@@ -13,7 +13,8 @@ Release date: -
 - Add initial support for Bootstrap 5 (`#161 <https://github.com/greyli/bootstrap-flask/pull/161>`__):
   - Add ``Bootstrap4`` class and deprecate ``Bootstrap``.
   - Add ``Bootstrap5`` class for Bootstrap 5 support.
-  - Move Bootstrap 4-related files to `bootstrap4` subfolder, and deprecate template path ``bootstrap/``.
+  - Move Bootstrap 4-related files to ``bootstrap4`` subfolder, and deprecate template path ``bootstrap/``.
+  - Bootstrap 4 macros are in the ``bootstrap4/`` template folder, and Bootstrap 5 macros are in ``bootstrap5/``.
   - Add seperate tests, templates, static files, and examples for Bootstrap 5.
 
 
