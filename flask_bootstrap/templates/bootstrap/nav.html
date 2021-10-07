@@ -1,19 +1,2 @@
-{% macro render_nav_item(endpoint, text, badge='', use_li=False) %}
-    {% if use_li %}<li class="nav-item">{% endif %}
-    <a class="{% if not use_li %}nav-item {% endif %}nav-link{% if request.endpoint and request.endpoint == endpoint %} active{% endif %}"
-       href="{{ url_for(endpoint, **kwargs) }}">
-        {{ text }} {% if badge %}<span class="badge badge-light">{{ badge }}</span>{% endif %}
-    </a>
-    {% if use_li %}</li>{% endif %}
-{% endmacro %}
-
-{% macro render_breadcrumb_item(endpoint, text) %}
-    {% set active = True if request.endpoint and request.endpoint == endpoint else False %}
-    <li class="breadcrumb-item{% if active %} active" aria-current="page"{% else %}"{% endif %}>
-        {% if active %}
-            {{ text }}
-        {% else %}
-        <a href="{{ url_for(endpoint, **kwargs) }}">{{ text }}</a>
-        {% endif %}
-    </li>
-{% endmacro %}
+{{ warn('For Bootstrap 4, please import macros from "bootstrap4/" path (e.g. "from \'bootstrap4/nav.html\' import render_nav_item"), the "bootstrap/" path is deprecated and will be removed in version 3.0.', stacklevel=2) }}
+{% extends 'bootstrap4/nav.html' %}

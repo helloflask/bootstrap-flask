@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+The messages above were rendered with the following code:
+<pre>
+{% raw %}{{ render_messages(container=False, dismissible=True) }}{% endraw %}
+</pre>
+{% endblock %}

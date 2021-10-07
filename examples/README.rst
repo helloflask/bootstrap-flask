@@ -8,6 +8,19 @@ Type these commands in the terminal:
     $ git clone https://github.com/greyli/bootstrap-flask.git
     $ cd bootstrap-flask/examples
     $ pip install -r requirements.txt
-    $ flask run
+
+Then based on the Bootstrap version you want to use to run the application.
+
+Bootstrap 4:
+
+.. code-block:: bash
+
+    $ python bootstrap4/app.py
+
+Bootstrap 5:
+
+.. code-block:: bash
+
+    $ python bootstrap5/app.py
 
 Now go to http://localhost:5000.

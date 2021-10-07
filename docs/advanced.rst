@@ -69,7 +69,7 @@ Or you can use ``button_style`` parameter when using ``render_form``, ``render_f
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/form.html' import render_form %}
+    {% from 'bootstrap4/form.html' import render_form %}
 
     {{ render_form(form, button_style='success') }}
 
@@ -92,10 +92,10 @@ Now you can use a configuration variable called ``BOOTSTRAP_BTN_STYLE`` to set g
 .. code-block:: python
 
     from flask import Flask
-    from flask_bootstrap import Bootstrap
+    from flask_bootstrap import Bootstrap4
 
     app = Flask(__name__)
-    bootstrap = Bootstrap(app)
+    bootstrap = Bootstrap4(app)
 
     app.config['BOOTSTRAP_BTN_SIZE'] = 'sm'  # default to 'md'
 
@@ -103,7 +103,7 @@ there also a parameter called ``button_size`` in form related macros (it will ov
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/form.html' import render_form %}
+    {% from 'bootstrap4/form.html' import render_form %}
 
     {{ render_form(form, button_size='lg') }}
 
@@ -119,7 +119,7 @@ Here is a more complicate example:
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/form.html' import render_form %}
+    {% from 'bootstrap4/form.html' import render_form %}
 
     {{ render_form(form, button_map={'submit': 'success', 'cancel': 'secondary', 'delete': 'danger'}) }}
 
@@ -137,6 +137,8 @@ Bootstrap resources. Then you can set Bootswatch theme with configuration variab
 The available theme names are: 'cerulean', 'cosmo', 'cyborg', 'darkly', 'flatly', 'journal', 'litera',
 'lumen', 'lux', 'materia', 'minty', 'pulse', 'sandstone', 'simplex', 'sketchy', 'slate',
 'solar', 'spacelab', 'superhero', 'united', 'yeti'.
+
+For Bootstrap 5, besides these, you can also use: 'morph', 'quartz', 'vapor', 'zephyr'.
 
 Here is an example to use ``lumen`` theme:
 

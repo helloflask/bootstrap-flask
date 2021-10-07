@@ -9,7 +9,13 @@ Release date: -
 
 - Drop Python 2 and 3.5 support.
 - Combine ``class`` argument of ``render_field`` or ``field.render_kw.class`` with Bootstrap classes
-   (`#159 <https://github.com/greyli/bootstrap-flask/pull/159>`__).
+  (`#159 <https://github.com/greyli/bootstrap-flask/pull/159>`__).
+- Add initial support for Bootstrap 5 (`#161 <https://github.com/greyli/bootstrap-flask/pull/161>`__):
+  - Add ``Bootstrap4`` class and deprecate ``Bootstrap``.
+  - Add ``Bootstrap5`` class for Bootstrap 5 support.
+  - Move Bootstrap 4-related files to ``bootstrap4`` subfolder, and deprecate template path ``bootstrap/``.
+  - Bootstrap 4 macros are in the ``bootstrap4/`` template folder, and Bootstrap 5 macros are in ``bootstrap5/``.
+  - Add seperate tests, templates, static files, and examples for Bootstrap 5.
 
 
 1.8.0

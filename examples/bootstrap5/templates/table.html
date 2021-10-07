@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/table.html' import render_table %}
+
+{% block content %}
+<h2>Simple Table</h2>
+<pre>{% raw %}{{ render_table(messages) }}{% endraw %}</pre>
+{{ render_table(messages) }}
+
+<h2>Cutomized Table</h2>
+<pre>{% raw %}{{ render_table(messages, titles, table_classes='table-striped', header_classes='thead-dark', caption='Messages') }}{% endraw %}</pre>
+{{ render_table(messages, titles, table_classes='table-striped', header_classes='thead-dark', caption='Messages') }}
+
+<h2>Responsive Table</h2>
+<pre>{% raw %}{{ render_table(messages, responsive=True, responsive_class='table-responsive-sm') }}{% endraw %}</pre>
+{{ render_table(messages, responsive=True, responsive_class='table-responsive-sm') }}
+
+<h2>Table with actions</h2>
+<pre>{% raw %}{{ render_table(messages, show_actions=True, model=Message,
+                view_url=('view_message', [('message_id', ':id')]),
+                edit_url=('edit_message', [('message_id', ':id')]),
+                delete_url=('delete_message', [('message_id', ':id')]),
+                new_url=url_for('new_message')) }}{% endraw %}</pre>
+{{ render_table(messages, show_actions=True, model=Message,
+                view_url=('view_message', [('message_id', ':id')]),
+                edit_url=('edit_message', [('message_id', ':id')]),
+                delete_url=('delete_message', [('message_id', ':id')]),
+                new_url=url_for('new_message')) }}
+
+<h2>Table with custom actions</h2>
+<pre>{% raw %}{{ render_table(messages, show_actions=True, model=Message,
+                custom_actions=[
+                    (
+                        'Like',
+                        'heart-fill',
+                        ('like_message', [('message_id', ':id')])
+                    )
+                ]) }}{% endraw %}</pre>
+{{ render_table(messages, show_actions=True, model=Message,
+                custom_actions=[
+                    (
+                        'Like',
+                        'heart-fill',
+                        ('like_message', [('message_id', ':id')])
+                    )
+                ]) }}
+{% endblock %}

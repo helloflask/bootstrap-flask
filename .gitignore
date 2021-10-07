@@ -105,3 +105,6 @@ ENV/
 
 # VSCode
 .vscode/
+
+# Other
+.DS_Store

@@ -1,0 +1,44 @@
+{% extends 'base/utils.html' %}
+
+{#  This macro was part of Flask-Bootstrap and was modified under the terms of
+    its BSD License. Copyright (c) 2013, Marc Brinkmann. All rights reserved. #}
+
+{# versionadded: New in 1.2.0 #}
+
+{% macro render_messages(messages=None, container=False, transform={
+     'critical': 'danger',
+     'error': 'danger',
+     'info': 'info',
+     'warning': 'warning',
+     'debug': 'primary',
+     'notset': 'primary',
+     'message': 'primary',
+    }, default_category=config.BOOTSTRAP_MSG_CATEGORY, dismissible=False, dismiss_animate=False) -%}
+   
+    {% with messages = messages or get_flashed_messages(with_categories=True) -%}
+    {% if messages -%} {# don't output anything if there are no messages #}
+
+    {% if container -%}
+    <!-- begin message block -->
+    <div class="container flashed-messages">
+        <div class="row">
+            <div class="col-md-12">
+    {% endif -%}
+
+    {% for cat, msg in messages %}
+        <div class="alert alert-{{ transform.get(cat.lower(), cat or default_category) }}{% if dismissible %} alert-dismissible {% if dismiss_animate %}fade show{% endif %}{% endif %}" role="alert">
+    {% if dismissible %}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{% endif %}
+           {{ msg }}
+        </div>
+    {%- endfor -%}
+
+    {% if container %}
+            </div>
+        </div>
+    </div>
+    <!-- end message block -->
+    {% endif -%}
+    {% endif -%}
+    {% endwith -%}
+{% endmacro -%}

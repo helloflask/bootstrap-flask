@@ -22,12 +22,23 @@ Initialization
 
 .. code-block:: python
 
-    from flask_bootstrap import Bootstrap
+    from flask_bootstrap import Bootstrap4
     from flask import Flask
 
     app = Flask(__name__)
 
-    bootstrap = Bootstrap(app)
+    bootstrap = Bootstrap4(app)
+
+If you want to use Bootstrap 5, import and instanzlize the ``Bootstrap5`` class instead:
+
+.. code-block:: python
+
+    from flask_bootstrap import Bootstrap5
+    from flask import Flask
+
+    app = Flask(__name__)
+
+    bootstrap = Bootstrap5(app)
 
 Resources helpers
 -----------------
@@ -96,29 +107,29 @@ Macros
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
 | Macro                     | Templates Path                 | Description                                                        |
 +===========================+================================+====================================================================+
-| render_field()            | bootstrap/form.html            | Render a WTForms form field                                        |
+| render_field()            | bootstrap4/form.html           | Render a WTForms form field                                        |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
-| render_form()             | bootstrap/form.html            | Render a WTForms form                                              |
+| render_form()             | bootstrap4/form.html           | Render a WTForms form                                              |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
-| render_form_row()         | bootstrap/form.html            | Render a row of a grid form                                        |
+| render_form_row()         | bootstrap4/form.html           | Render a row of a grid form                                        |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
-| render_hidden_errors()    | bootstrap/form.html            | Render error messages for hidden form field                        |
+| render_hidden_errors()    | bootstrap4/form.html           | Render error messages for hidden form field                        |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
-| render_pager()            | bootstrap/pagination.html      | Render a basic Flask-SQLAlchemy pagniantion                        |
+| render_pager()            | bootstrap4/pagination.html     | Render a basic Flask-SQLAlchemy pagniantion                        |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
-| render_pagination()       | bootstrap/pagination.html      | Render a standard Flask-SQLAlchemy pagination                      |
+| render_pagination()       | bootstrap4/pagination.html     | Render a standard Flask-SQLAlchemy pagination                      |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
-| render_nav_item()         | bootstrap/nav.html             | Render a navigation item                                           |
+| render_nav_item()         | bootstrap4/nav.html            | Render a navigation item                                           |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
-| render_breadcrumb_item()  | bootstrap/nav.html             | Render a breadcrumb item                                           |
+| render_breadcrumb_item()  | bootstrap4/nav.html            | Render a breadcrumb item                                           |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
-| render_static()           | bootstrap/utils.html           | Render a resource reference code (i.e. ``<link>``, ``<script>``)   |
+| render_static()           | bootstrap4/utils.html          | Render a resource reference code (i.e. ``<link>``, ``<script>``)   |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
-| render_messages()         | bootstrap/utils.html           | Render flashed messages send by flash() function                   |
+| render_messages()         | bootstrap4/utils.html          | Render flashed messages send by flash() function                   |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
-| render_icon()             | bootstrap/utils.html           | Render a Bootstrap icon                                            |
+| render_icon()             | bootstrap4/utils.html          | Render a Bootstrap icon                                            |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
-| render_table()            | bootstrap/table.html           | Render a table with given data                                     |
+| render_table()            | bootstrap4/table.html          | Render a table with given data                                     |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
 
 How to use these macros? It's quite simple, just import them from the
@@ -126,9 +137,16 @@ corresponding path and call them like any other macro:
 
 .. code-block:: jinja
 
-    {% from 'bootstrap/form.html' import render_form %}
+    {% from 'bootstrap4/form.html' import render_form %}
 
     {{ render_form(form) }}
+
+Notice we import Bootstrap 4 macros from the path ``bootstrap4/...``, if you are using Bootstrap 5, import them from
+the ``bootstrap5/...`` path instead:
+
+.. code-block:: jinja
+
+    {% from 'bootstrap5/form.html' import render_form %}
 
 Go to the :doc:`macros` page to see the detailed usage for these macros.
 

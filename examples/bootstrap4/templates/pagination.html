@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% from 'bootstrap4/pagination.html' import render_pager, render_pagination %}
+
+{% block content %}
+    <h2>Messages</h2>
+    {% for message in messages %}
+        Message: {{ message.id }}<br>
+    {% endfor %}
+    <h2>Render a simple pagination component with render_pager</h2>
+    <pre>{% raw %}{{ render_pager(pagination) }}{% endraw %}</pre>
+    {{ render_pager(pagination) }}
+    <h2>Render a standard pagination component with render_pagination</h2>
+    <pre>{% raw %}{{ render_pagination(pagination) }}{% endraw %}</pre>
+    {{ render_pagination(pagination) }}
+{% endblock %}
