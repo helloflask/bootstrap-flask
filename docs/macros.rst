@@ -110,12 +110,11 @@ API
     :param horizontal_columns: When using the horizontal layout, layout forms
                               like this. Must be a 3-tuple of ``(column-type,
                               left-column-size, right-column-size)``.
-    :param button_style: Accept Bootstrap button style name (i.e. primary, secondary, outline-success, etc.),
-                    default to ``secondary`` (e.g. ``btn-secondary``). This will overwrite config ``BOOTSTRAP_BTN_STYLE``.
-    :param button_size: Accept Bootstrap button size name: sm, md, lg, block, default to ``md``. This will
-                    overwrite config ``BOOTSTRAP_BTN_SIZE``.
-    :param button_map: A dictionary, mapping button field name to Bootstrap button style names. For example,
-                      ``{'submit': 'success'}``. This will overwrite ``button_style`` and ``BOOTSTRAP_BTN_STYLE``.
+    :param button_style: Set button style for ``SubmitField``. Accept Bootstrap button style name (i.e. primary, 
+                         secondary, outline-success, etc.), default to ``primary`` (e.g. ``btn-primary``). This will
+                         overwrite config ``BOOTSTRAP_BTN_STYLE``.
+    :param button_size: Set button size for ``SubmitField``. Accept Bootstrap button size name: sm, md, lg, block,
+                        default to ``md``. This will overwrite config ``BOOTSTRAP_BTN_SIZE``.
 
 .. tip:: See :ref:`button_customization` to learn how to customize form buttons.
 
@@ -164,10 +163,11 @@ API
     :param enctype: ``<form>`` enctype attribute. If ``None``, will
                     automatically be set to ``multipart/form-data`` if a
                     :class:`~wtforms.fields.FileField` or :class:`~wtforms.fields.MultipleFileField` is present in the form.
-    :param button_style: Accept Bootstrap button style name (i.e. primary, secondary, outline-success, etc.),
-                    default to ``secondary`` (e.g. ``btn-secondary``). This will overwrite config ``BOOTSTRAP_BTN_STYLE``.
-    :param button_size: Accept Bootstrap button size name: sm, md, lg, block, default to ``md``. This will
-                    overwrite config ``BOOTSTRAP_BTN_SIZE``.
+    :param button_style: Set button style for ``SubmitField``. Accept Bootstrap button style name (i.e. primary, 
+                         secondary, outline-success, etc.), default to ``primary`` (e.g. ``btn-primary``). This will
+                         overwrite config ``BOOTSTRAP_BTN_STYLE``.
+    :param button_size: Set button size for ``SubmitField``. Accept Bootstrap button size name: sm, md, lg, block,
+                        default to ``md``. This will overwrite config ``BOOTSTRAP_BTN_SIZE``.
     :param button_map: A dictionary, mapping button field name to Bootstrap button style names. For example,
                       ``{'submit': 'success'}``. This will overwrite ``button_style`` and ``BOOTSTRAP_BTN_STYLE``.
     :param id: The ``<form>`` id attribute.
@@ -247,10 +247,11 @@ API
                                 if nothing more specific is said for the div column of the rendered field.
     :param col_map: A dictionary, mapping field.name to a class definition that should be applied to
                             the div column that contains the field. For example: ``col_map={'username': 'col-md-2'})``
-    :param button_style: Accept Bootstrap button style name (i.e. primary, secondary, outline-success, etc.),
-                    default to ``secondary`` (e.g. ``btn-secondary``). This will overwrite config ``BOOTSTRAP_BTN_STYLE``.
-    :param button_size: Accept Bootstrap button size name: sm, md, lg, block, default to ``md``. This will
-                    overwrite config ``BOOTSTRAP_BTN_SIZE``.
+    :param button_style: Set button style for ``SubmitField``. Accept Bootstrap button style name (i.e. primary, 
+                         secondary, outline-success, etc.), default to ``primary`` (e.g. ``btn-primary``). This will
+                         overwrite config ``BOOTSTRAP_BTN_STYLE``.
+    :param button_size: Set button size for ``SubmitField``. Accept Bootstrap button size name: sm, md, lg, block,
+                        default to ``md``. This will overwrite config ``BOOTSTRAP_BTN_SIZE``.
     :param button_map: A dictionary, mapping button field name to Bootstrap button style names. For example,
                       ``{'submit': 'success'}``. This will overwrite ``button_style`` and ``BOOTSTRAP_BTN_STYLE``.
 
