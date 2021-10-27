@@ -480,7 +480,7 @@ API
     :param model: The model used to build custom_action, view, edit, delete URLs.
     :param actions_title: Title for the actions column header. Default is ``'Actions'``.
     :param custom_actions: A list of tuples for creating custom action buttons, where each tuple contains
-                ('Title Text displayed on hover', 'bootstrap icon name', 'URL tuple')
+                ('Title Text displayed on hover', 'bootstrap icon name', 'URL tuple or fixed URL string')
                 (e.g. ``[('Run', 'play-fill', ('run_report', [('report_id', ':id')]))]``).
     :param view_url: URL string or URL tuple in ``('endpoint', [('url_parameter_name', ':db_model_fieldname')])``
                 to use for the view action.
@@ -488,15 +488,15 @@ API
                 to use for the edit action.
     :param delete_url: URL string or URL tuple in ``('endpoint', [('url_parameter_name', ':db_model_fieldname')])``
                 to use for the delete action.
-    :param new_url: URL string or endpoint to use for the create action (new in version 1.6.0).
+    :param new_url: URL string to use for the create action (new in version 1.6.0).
 
-To set the URLs for table actions, you will need to pass an URL tuple in the form of
-``('endpoint', [('url_parameter_name', ':db_model_fieldname')])``:
+To set the URLs for table actions, you will need to pass either a fixed URL string or
+an URL tuple in the form of ``('endpoint', [('url_parameter_name', ':db_model_fieldname')])``:
 
 - ``endpoint``: endpoint of the view, normally the name of the view function
 - ``[('url_parameter_name', ':db_model_fieldname')]``: a list of two-element tuples, the tuple should contain the
   URL parameter name and the corresponding field name in the database model (starts with a ``:`` mark to indicate
-  it's a variable, otherwise it will becomes a fixed value). `db_model_fieldname`` may also contain dots to access
+  it's a variable, otherwise it will becomes a fixed value). ``db_model_fieldname`` may also contain dots to access
   relationships and their fields (e.g. ``user.name``).
 
 Remember to set the ``model`` when setting this URLs, so that Bootstrap-Flask will know where to get the actual value
@@ -535,9 +535,6 @@ The following arguments are expect to accpet an URL tuple:
 - ``view_url``
 - ``edit_url``
 - ``delete_url``
-
-You can also pass a fiexd URL string, but use a primary key placeholder in the URL is deprecated and will be removed
-in version 2.0.
 
 When setting the ``delete_url``, you will also need to enable the CSRFProtect extension provided by Flask-WTF, so that
 the CSRF protection can be added to the delete button:
