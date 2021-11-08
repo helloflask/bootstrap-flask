@@ -16,8 +16,8 @@ def test_render_form(app, client, hello_form):
 
     response = client.get('/form')
     data = response.get_data(as_text=True)
-    assert '<input class="form-control" id="username" name="username"' in data
-    assert '<input class="form-control" id="password" name="password"' in data
+    assert '<input class="form-control" id="username"' in data
+    assert '<input class="form-control" id="password"' in data
 
 
 # test WTForm field description for BooleanField
