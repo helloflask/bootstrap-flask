@@ -1,0 +1,152 @@
+{% from 'base/utils.html' import render_icon, arg_url_for %}
+
+
+{% macro build_url(endpoint, model, pk, url_tuples) %}
+    {% if model == None %}
+        {{ raise("The model argument can't be None when setting action URLs.") }}
+    {% endif %}
+    {% with url_params = {} -%}
+        {%- do url_params.update(request.view_args if not endpoint else {}),
+            url_params.update(request.args if not endpoint else {}) -%}
+        {% with record = model.query.get(pk) %}
+            {% for url_parameter, db_field in url_tuples %}
+                {% if db_field.startswith(':') and '.' in db_field %}
+                    {%- set db_field = db_field[1:].split('.') -%}
+                    {%- do url_params.update({url_parameter: record[db_field[0]][db_field[1]]}) -%}
+                {% elif db_field.startswith(':') %}
+                    {%- set db_field = db_field[1:] -%}
+                    {%- do url_params.update({url_parameter: record[db_field]}) -%}
+                {% else %}
+                    {%- do url_params.update({url_parameter: db_field}) -%}
+                {% endif %}
+            {% endfor %}
+        {% endwith -%}
+        {{ arg_url_for(endpoint, url_params) }}
+    {%- endwith %}
+{%- endmacro %}
+
+{% macro render_table(data,
+                      titles=None,
+                      primary_key='id',
+                      primary_key_title='#',
+                      caption=None,
+                      table_classes=None,
+                      header_classes=None,
+                      responsive=False,
+                      responsive_class='table-responsive',
+                      model=None,
+                      show_actions=False,
+                      actions_title='Actions',
+                      custom_actions=None,
+                      view_url=None,
+                      edit_url=None,
+                      delete_url=None,
+                      new_url=None,
+                      action_pk_placeholder=':id') %}
+{% if not titles %}
+    {% set titles = get_table_titles(data, primary_key, primary_key_title) %}
+{% endif %}
+{% if responsive %}
+    <div class="{{ responsive_class }}">
+{% endif %}
+<table class="table{% if table_classes %}{{ ' ' + table_classes }}{% endif %}">
+    {% if caption %}
+    <caption>{{ caption }}</caption>
+    {% endif %}
+    <thead{% if header_classes %} class="{{ header_classes }}"{% endif %}>
+    <tr>
+    {% for title in titles %}
+        <th scope="col">{{ title[1] }}</th>
+    {% endfor %}
+    {% if show_actions %}
+        <th scope="col">{{ actions_title }}
+        {% if new_url %}
+            <a class="action-icon text-decoration-none"
+                {% if new_url.startswith('/') %}
+                href="{{ new_url }}"
+                {% else %}
+                href="{{ url_for(new_url) }}"
+                {% endif %}
+                title="{{ config['BOOTSTRAP_TABLE_NEW_TITLE'] }}">
+                {{ render_icon('plus-circle-fill') }}
+            </a>
+        {% endif %}
+        </th>
+    {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in data %}
+    <tr>
+        {% for title in titles %}
+        {% if title[0] == primary_key %}
+            <th scope="row">{{ row[title[0]] }}</th>
+        {% else %}
+            <td>{{ row[title[0]] }}</td>
+        {% endif %}
+        {% endfor %}
+        {% if show_actions %}
+        <td>
+            {% if custom_actions %}
+            {% for (action_name, action_icon, action_url) in custom_actions %}
+                <a class="action-icon text-decoration-none"
+                   {% if action_url is string %}
+                    href="{{ action_url }}"
+                   {% else %}
+                    href="{{ build_url(action_url[0], model, row[primary_key], action_url[1]) | trim }}"
+                   {% endif %}
+                    title="{{ action_name }}">{{ render_icon(action_icon) }}</a>
+            {% endfor %}
+            {% endif %}
+            {% if view_url %}
+                <a class="action-icon text-decoration-none"
+                   {% if view_url is string %}
+                    href="{{ view_url }}"
+                   {% else %}
+                    href="{{ build_url(view_url[0], model, row[primary_key], view_url[1]) | trim }}"
+                   {% endif %}
+                    title="{{ config['BOOTSTRAP_TABLE_VIEW_TITLE'] }}">
+                    {{ render_icon('eye-fill') }}
+                </a>
+            {% endif %}
+            {% if edit_url -%}
+                <a class="action-icon text-decoration-none"
+                   {% if edit_url is string %}
+                    href="{{ edit_url }}"
+                   {% else %}
+                    href="{{ build_url(edit_url[0], model, row[primary_key], edit_url[1]) | trim }}"
+                   {% endif %}
+                    title="{{ config['BOOTSTRAP_TABLE_EDIT_TITLE'] }}">
+                    {{ render_icon('pencil-fill') }}
+                </a>
+            {%- endif %}
+            {% if delete_url %}
+            <form style="display:inline"
+                  {% if delete_url is string %}
+                   action="{{ delete_url }}"
+                  {% else %}
+                   action="{{ build_url(delete_url[0], model, row[primary_key], delete_url[1]) | trim }}"
+                  {% endif %}
+                   method="post">
+                  {% if csrf_token is undefined %}
+                  {{ raise('You have to enable the CSRFProtect extension from Flask-WTF to use delete_url, see the docs for more details (https://bootstrap-flask.readthedocs.io/en/stable/macros.html#render-table).') }}
+                  {% endif %}
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <a class="action-icon text-decoration-none"
+                    href="javascript:{}"
+                    onclick="this.closest('form').submit();return false;"
+                    title="{{ config['BOOTSTRAP_TABLE_DELETE_TITLE'] }}">
+                    {{ render_icon('trash-fill') }}
+                </a>
+            </form>
+            {% endif %}
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% if responsive %}
+    </div>
+{% endif %}
+{% endmacro %}
