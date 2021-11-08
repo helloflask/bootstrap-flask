@@ -17,8 +17,8 @@ def test_render_field(app, client, hello_form):
     data = response.get_data(as_text=True)
     assert '<label class="form-control-label" for="csrf_token">CSRF Token</label>' not in data
     assert '<label class="form-control-label" for="hidden">Hidden</label>' not in data
-    assert '<input class="form-control" id="username" name="username"' in data
-    assert '<input class="form-control" id="password" name="password"' in data
+    assert '<input class="form-control" id="username"' in data
+    assert '<input class="form-control" id="password"' in data
 
 
 def test_render_field_with_render_kw_classes(app, client, hello_form):
@@ -38,8 +38,8 @@ def test_render_field_with_render_kw_classes(app, client, hello_form):
     response = client.get('/render_kw_class')
     data = response.get_data(as_text=True)
     assert '<input class="form-control render_kw_class" id="name" name="name"' in data
-    assert '<input class="form-control test" id="username" name="username"' in data
-    assert '<input class="form-control test" id="password" name="password"' in data
+    assert '<input class="form-control test" id="username"' in data
+    assert '<input class="form-control test" id="password"' in data
 
 
 def test_render_field_with_kwargs(app, client, hello_form):
@@ -54,8 +54,8 @@ def test_render_field_with_kwargs(app, client, hello_form):
 
     response = client.get('/kwargs_class')
     data = response.get_data(as_text=True)
-    assert '<input class="form-control test" id="username" name="username"' in data
-    assert '<input class="form-control test" id="password" name="password"' in data
+    assert '<input class="form-control test" id="username"' in data
+    assert '<input class="form-control test" id="password"' in data
 
     @app.route('/general_kwargs')
     def test_general_kwargs():
@@ -70,7 +70,7 @@ def test_render_field_with_kwargs(app, client, hello_form):
 
     response = client.get('/general_kwargs')
     data = response.get_data(as_text=True)
-    assert '<input class="form-control" id="username" name="username" placeholder="test"' in data
-    assert '<input class="form-control" id="password" name="password" placeholder="test"' in data
+    assert 'name="username" placeholder="test"' in data
+    assert 'name="password" placeholder="test"' in data
     assert '<input class="form-check-input test" id="remember" name="remember" type="checkbox" value="n"' in data
     assert '<input class="btn btn-primary btn-md" id="submit" name="submit" type="submit" value="test"' in data

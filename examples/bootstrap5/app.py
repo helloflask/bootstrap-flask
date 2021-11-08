@@ -2,7 +2,7 @@
 from flask import Flask, render_template, request, flash, Markup
 
 from flask_wtf import FlaskForm, CSRFProtect
-from wtforms import StringField, SubmitField, BooleanField, PasswordField, IntegerField, TextField,\
+from wtforms import StringField, SubmitField, BooleanField, PasswordField, IntegerField,\
     FormField, SelectField, FieldList
 from wtforms.validators import DataRequired, Length
 from wtforms.fields import *
@@ -64,20 +64,20 @@ class ButtonForm(FlaskForm):
 class TelephoneForm(FlaskForm):
     country_code = IntegerField('Country Code')
     area_code = IntegerField('Area Code/Exchange')
-    number = TextField('Number')
+    number = StringField('Number')
 
 
 class IMForm(FlaskForm):
     protocol = SelectField(choices=[('aim', 'AIM'), ('msn', 'MSN')])
-    username = TextField()
+    username = StringField()
 
 
 class ContactForm(FlaskForm):
-    first_name = TextField()
-    last_name = TextField()
+    first_name = StringField()
+    last_name = StringField()
     mobile_phone = FormField(TelephoneForm)
     office_phone = FormField(TelephoneForm)
-    emails = FieldList(TextField("Email"), min_entries=3)
+    emails = FieldList(StringField("Email"), min_entries=3)
     im_accounts = FieldList(FormField(IMForm), min_entries=2)
 
 
