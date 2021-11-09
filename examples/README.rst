@@ -6,8 +6,9 @@ Type these commands in the terminal:
 .. code-block:: bash
 
     $ git clone https://github.com/greyli/bootstrap-flask.git
-    $ cd bootstrap-flask/examples
-    $ pip install -r requirements.txt
+    $ cd bootstrap-flask
+    $ pip install -r requirements/examples.txt
+    $ cd examples
 
 Then based on the Bootstrap version you want to use to run the application.
 
