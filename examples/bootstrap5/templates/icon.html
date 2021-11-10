@@ -14,6 +14,9 @@
     <h2>Icon with custom size and custom color</h2>
     <pre>{% raw %}{{ render_icon('heart', '2em', 'red') }}{% endraw %}</pre>
     Output: {{ render_icon('heart', '2em', 'red') }}
+    <h2>Icon with title and descr</h2>
+    <pre>{% raw %}{{ render_icon('heart', title='Heart', desc='A heart.') }}{% endraw %}</pre>
+    Output: {{ render_icon('heart', title='Heart', desc='A heart.') }}
     <h2>Button example</h2>
     <a class="btn btn-primary text-white">Download {{ render_icon('arrow-down-circle') }}</a>
     <a class="btn btn-success text-white">Bookmark {{ render_icon('bookmark-star') }}</a>
