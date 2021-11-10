@@ -11,7 +11,7 @@ class TestBootstrap:
 
         app = Flask(__name__)
         with pytest.warns(UserWarning):
-            bootstrap = Bootstrap(app)  # noqa: F841
+            bootstrap = Bootstrap(app)  # noqa: F841  # pylint:disable=unused-variable
 
     def test_deprecate_bootstrap_template_path(self, app, client):
         @app.route('/test')

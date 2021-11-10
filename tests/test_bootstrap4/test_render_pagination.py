@@ -12,9 +12,9 @@ def test_render_pagination(app, client):
     def test():
         db.drop_all()
         db.create_all()
-        for i in range(100):
-            m = Message()
-            db.session.add(m)
+        for i in range(100):  # noqa: F841  # pylint:disable=unused-variable
+            msg = Message()
+            db.session.add(msg)
         db.session.commit()
         page = request.args.get('page', 1, type=int)
         pagination = Message.query.paginate(page, per_page=10)

@@ -15,8 +15,8 @@ def test_render_simple_table(app, client):
         db.drop_all()
         db.create_all()
         for i in range(10):
-            m = Message(text=f'Test message {i+1}')
-            db.session.add(m)
+            msg = Message(text=f'Test message {i+1}')
+            db.session.add(msg)
         db.session.commit()
         page = request.args.get('page', 1, type=int)
         pagination = Message.query.paginate(page, per_page=10)
@@ -49,8 +49,8 @@ def test_render_customized_table(app, client):
         db.drop_all()
         db.create_all()
         for i in range(10):
-            m = Message(text=f'Test message {i+1}')
-            db.session.add(m)
+            msg = Message(text=f'Test message {i+1}')
+            db.session.add(msg)
         db.session.commit()
         page = request.args.get('page', 1, type=int)
         pagination = Message.query.paginate(page, per_page=10)
@@ -81,8 +81,8 @@ def test_render_responsive_table(app, client):
         db.drop_all()
         db.create_all()
         for i in range(10):
-            m = Message(text=f'Test message {i+1}')
-            db.session.add(m)
+            msg = Message(text=f'Test message {i+1}')
+            db.session.add(msg)
         db.session.commit()
         page = request.args.get('page', 1, type=int)
         pagination = Message.query.paginate(page, per_page=10)
@@ -111,8 +111,8 @@ def test_build_table_titles(app, client):
         db.drop_all()
         db.create_all()
         for i in range(10):
-            m = Message(text=f'Test message {i+1}')
-            db.session.add(m)
+            msg = Message(text=f'Test message {i+1}')
+            db.session.add(msg)
         db.session.commit()
         page = request.args.get('page', 1, type=int)
         pagination = Message.query.paginate(page, per_page=10)
@@ -182,12 +182,10 @@ def test_render_table_with_actions(app, client):  # noqa: C901
         db.drop_all()
         db.create_all()
         for i in range(10):
-            m = Message(
-                text=f'Test message {i+1}',
-                sender='me',
-                recipient='john_doe'
-            )
-            db.session.add(m)
+            msg = Message(text=f'Test message {i+1}',
+                          sender='me',
+                          recipient='john_doe')
+            db.session.add(msg)
         db.session.commit()
         page = request.args.get('page', 1, type=int)
         pagination = Message.query.paginate(page, per_page=10)
@@ -241,8 +239,8 @@ def test_customize_icon_title_of_table_actions(app, client):
         db.drop_all()
         db.create_all()
         for i in range(10):
-            m = Message(text=f'Test message {i+1}')
-            db.session.add(m)
+            msg = Message(text=f'Test message {i+1}')
+            db.session.add(msg)
         db.session.commit()
         page = request.args.get('page', 1, type=int)
         pagination = Message.query.paginate(page, per_page=10)
