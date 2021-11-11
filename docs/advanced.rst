@@ -126,6 +126,24 @@ Here is a more complicate example:
 It will overwrite ``button_style`` and ``BOOTSTRAP_BTN_STYLE``.
 
 
+.. _check_box_customization:
+
+Form Check Box As Switch
+------------------------
+
+Bootstrap offers the rendering of a check box as a
+`switch <https://getbootstrap.com/docs/5.1/forms/checks-radios/#switches>`_. To
+enable this, add the following class:
+
+.. code-block:: python
+
+    class SwitchField(BooleanField):
+        def __init__(self, label=None, **kwargs):
+            super(SwitchField, self).__init__(label, **kwargs)
+
+Instead of using a ``BooleanField()`` in a form calls, use a ``SwitchField()``.
+This class has exactly the same properties but will be rendered as a switch.
+
 .. _bootswatch_theme:
 
 Bootswatch Themes

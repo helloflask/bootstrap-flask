@@ -32,6 +32,11 @@ db = SQLAlchemy(app)
 csrf = CSRFProtect(app)
 
 
+class SwitchField(BooleanField):
+    def __init__(self, label=None, **kwargs):
+        super(SwitchField, self).__init__(label, **kwargs)
+
+
 class ExampleForm(FlaskForm):
     """An example form that contains all the supported bootstrap style form fields."""
     date = DateField(description="We'll never share your email with anyone else.")  # add help text with `description`
@@ -56,6 +61,7 @@ class HelloForm(FlaskForm):
 
 class ButtonForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
+    confirm = SwitchField('Confirmation')
     submit = SubmitField()
     delete = SubmitField()
     cancel = SubmitField()
