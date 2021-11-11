@@ -50,6 +50,6 @@ def test_render_messages(app, client):
 
     response = client.get('/dismiss_animate')
     data = response.get_data(as_text=True)
-    assert 'alert-dismissible', data
+    assert 'alert-dismissible' in data
     assert '<button type="button" class="close" data-dismiss="alert"' in data
     assert 'fade show' in data
