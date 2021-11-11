@@ -134,8 +134,7 @@ class _Bootstrap:
             url = f'{CDN_BASE}/{name}@{version}/dist/{paths[name]}'
         if sri:
             return f'<script src="{url}" integrity="{sri}" crossorigin="anonymous"></script>'
-        else:
-            return f'<script src="{url}"></script>'
+        return f'<script src="{url}"></script>'
 
     def _get_sri(self, name, version, sri):
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
@@ -155,8 +154,7 @@ class _Bootstrap:
             return sri
         if version == versions[name] and serve_local is False:
             return sris[name]
-        else:
-            return None
+        return None
 
     def load_js(self, version=None, jquery_version=None,  # noqa: C901
                 popper_version=None, with_jquery=True, with_popper=True,
@@ -188,8 +186,7 @@ class _Bootstrap:
             return Markup(f'''{jquery}
         {popper}
         {bootstrap}''')
-        else:
-            return Markup(f'''{popper}
+        return Markup(f'''{popper}
         {bootstrap}''')
 
 
