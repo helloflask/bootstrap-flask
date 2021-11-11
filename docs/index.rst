@@ -1,7 +1,8 @@
 Bootstrap-Flask
 ===============
 
-`Bootstrap <https://getbootstrap.com>`_ helper for Flask.
+Bootstrap-Flask is a collection of Jinja macros for Bootstrap and Flask. It helps you to
+render Flask-related data and objects to Bootstrap markup HTML more easily.
 
 
 Contents
@@ -50,9 +51,16 @@ locally with the following commands:
     $ cd bootstrap-flask
     $ python3 -m venv venv
     $ . venv/bin/activate
-    $ pip install ".[dev]"
+    $ pip install -e .
+    $ pip install -r requirements/dev.txt
 
-Then run tests with tox:
+Run the tests with pytest:
+
+.. code-block:: bash
+
+    $ pytest
+
+Or run the full checks with tox:
 
 .. code-block:: bash
 
@@ -72,5 +80,6 @@ who participated in this project.
 License
 -------
 
-This project is licensed under the MIT License (see the
-``LICENSE`` file for details).
+This project is licensed under the MIT License (see the ``LICENSE`` file for
+details). Some macros were part of Flask-Bootstrap and were modified under
+the terms of its BSD License.

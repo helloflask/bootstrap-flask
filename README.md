@@ -95,5 +95,6 @@ migrate to this extension.
 
 ## License
 
-This project is licensed under the MIT License (see the
-`LICENSE` file for details).
+This project is licensed under the MIT License (see the `LICENSE` file for
+details). Some macros were part of Flask-Bootstrap and were modified under
+the terms of its BSD License.

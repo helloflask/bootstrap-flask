@@ -99,7 +99,7 @@ The template ``bootstrap/wtf.html`` changed to ``bootstrap/form.html``, some mac
 +---------------------------+--------------------------------+
 | form_field()              | render_field()                 |
 +---------------------------+--------------------------------+
-| flashed_messages()        | render_messages()               |
+| flashed_messages()        | render_messages()              |
 +---------------------------+--------------------------------+
 
 For example, you will need to change the import statement:

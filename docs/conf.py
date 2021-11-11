@@ -15,7 +15,7 @@
 # import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
-
+from pallets_sphinx_themes import get_version, ProjectLink
 
 # -- Project information -----------------------------------------------------
 
@@ -23,10 +23,7 @@ project = u'Bootstrap-Flask'
 copyright = u'2017, Grey Li'
 author = u'Grey Li'
 
-# The short X.Y version
-version = u'1.0'
-# The full version, including alpha/beta/rc tags
-release = u'1.0.4'
+version, release = get_version('Bootstrap-Flask')
 
 
 # -- General configuration ---------------------------------------------------
@@ -84,10 +81,7 @@ html_theme = 'flask'
 # documentation.
 #
 html_theme_options = {
-    # 'github_user': 'greyli',
     'index_logo': 'bootstrap-flask.png',
-    # 'github_fork': 'greyli/flask-ckeditor',
-    # 'description': 'Create social share component in Jinja2 template based on share.js.',
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -105,9 +99,10 @@ html_theme_path = ['_themes']
 #
 html_sidebars = {
     'index': ['sidebarintro.html', 'sourcelink.html', 'searchbox.html'],
-    '**': ['localtoc.html', 'relations.html',
+    '**': ['sidebarintro.html', 'localtoc.html', 'relations.html',
                  'sourcelink.html', 'searchbox.html']
 }
+html_show_sourcelink = False
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
