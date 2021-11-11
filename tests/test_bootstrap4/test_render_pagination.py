@@ -12,7 +12,7 @@ def test_render_pagination(app, client):
     def test():
         db.drop_all()
         db.create_all()
-        for i in range(100):  # noqa: F841 # pylint:disable=unused-variable
+        for i in range(100):  # noqa: F841
             msg = Message()
             db.session.add(msg)
         db.session.commit()

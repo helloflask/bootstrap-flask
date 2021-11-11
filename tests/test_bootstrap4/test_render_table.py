@@ -182,9 +182,11 @@ def test_render_table_with_actions(app, client):  # noqa: C901
         db.drop_all()
         db.create_all()
         for i in range(10):
-            msg = Message(text=f'Test message {i+1}',
-                          sender='me',
-                          recipient='john_doe')
+            msg = Message(
+                text=f'Test message {i+1}',
+                sender='me',
+                recipient='john_doe'
+            )
             db.session.add(msg)
         db.session.commit()
         page = request.args.get('page', 1, type=int)
