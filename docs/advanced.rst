@@ -4,7 +4,7 @@ Advanced Usage
 .. _button_customization:
 
 Form Button Customization
---------------------------
+-------------------------
 
 Button Style
 ~~~~~~~~~~~~
@@ -126,12 +126,15 @@ Here is a more complicate example:
 It will overwrite ``button_style`` and ``BOOTSTRAP_BTN_STYLE``.
 
 
-.. _check_box_customization:
+.. _checkbox_customization:
 
-Form Check Box As Switch
-------------------------
+Form Checkbox Customization
+---------------------------
 
-Bootstrap offers the rendering of a check box as a
+Rendering Switch
+~~~~~~~~~~~~~~~~
+
+Bootstrap offers the rendering of a checkbox (or check) as a
 `switch <https://getbootstrap.com/docs/5.1/forms/checks-radios/#switches>`_. To
 enable this, add the following class:
 
@@ -142,7 +145,9 @@ enable this, add the following class:
             super(SwitchField, self).__init__(label, **kwargs)
 
 Instead of using a ``BooleanField()`` in a form calls, use a ``SwitchField()``.
-This class has exactly the same properties but will be rendered as a switch.
+This class has exactly the same properties but will be rendered as a switch. See
+also the example application.
+
 
 .. _bootswatch_theme:
 
