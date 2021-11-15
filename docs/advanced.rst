@@ -142,7 +142,7 @@ enable this, add the following class:
 
     class SwitchField(BooleanField):
         def __init__(self, label=None, **kwargs):
-            super(SwitchField, self).__init__(label, **kwargs)
+            super().__init__(label, **kwargs)
 
 Instead of using a ``BooleanField()`` in a form calls, use a ``SwitchField()``.
 This class has exactly the same properties but will be rendered as a switch. See

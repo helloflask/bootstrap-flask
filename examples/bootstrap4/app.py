@@ -34,7 +34,7 @@ csrf = CSRFProtect(app)
 
 class SwitchField(BooleanField):
     def __init__(self, label=None, **kwargs):
-        super(SwitchField, self).__init__(label, **kwargs)
+        super().__init__(label, **kwargs)
 
 
 class ExampleForm(FlaskForm):
