@@ -35,7 +35,7 @@ csrf = CSRFProtect(app)
 class ExampleForm(FlaskForm):
     """An example form that contains all the supported bootstrap style form fields."""
     date = DateField(description="We'll never share your email with anyone else.")  # add help text with `description`
-    datetime = DateTimeField(render_kw={'placeholder': 'this is placeholder'})  # add HTML attribute with `render_kw`
+    datetime = DateTimeField(render_kw={'placeholder': 'this is a placeholder'})  # add HTML attribute with `render_kw`
     image = FileField(render_kw={'class': 'my-class'})  # add your class
     option = RadioField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')])
     select = SelectField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')])
