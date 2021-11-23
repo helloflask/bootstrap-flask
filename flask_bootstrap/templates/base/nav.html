@@ -11,7 +11,7 @@
 
 {% macro render_breadcrumb_item(endpoint, text) %}
     {% set active = True if request.endpoint and request.endpoint == endpoint else False %}
-    <li class="breadcrumb-item{% if active %} active" aria-current="page"{% else %}"{% endif %}>
+    <li class="breadcrumb-item{% if active %} active" aria-current="page{% endif %}">
         {% if active %}
             {{ text }}
         {% else %}
