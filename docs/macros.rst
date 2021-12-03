@@ -66,7 +66,8 @@ API
 render_field()
 ----------------
 
-Render a form input for form field created by Flask-WTF/WTForms.
+Render a form input for form field created by
+`Flask-WTF/WTForms <https://wtforms.readthedocs.io/en/master/fields/>`_.
 
 Example
 ~~~~~~~~
@@ -82,6 +83,11 @@ Example
     </form>
 
 You can pass any HTTP attributes as extra keyword arguements like ``class`` or ``placeholder``:
+
+Notice that a ``placeholder`` is only allowed by `W3C validation <https://validator.w3.org/>`_
+when the input type is ``email``, ``number``, ``password``, ``search``, ``tel``,
+``text`` or ``url``. However, it is possible to use a placeholder for input types
+such as ``datetime``.
 
 .. code-block:: jinja
 
@@ -550,7 +556,7 @@ the CSRF protection can be added to the delete button:
     csrf = CSRFProtect(app)
 
 By default, it will enable the CSRF token check for all the POST requests, read more about this extension in its
-`documentation <https://flask-wtf.readthedocs.io/en/0.15.x/csrf/>`_.
+`documentation <https://flask-wtf.readthedocs.io/en/latest/csrf/>`_.
 
 
 render_icon()
