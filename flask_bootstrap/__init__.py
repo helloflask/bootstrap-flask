@@ -2,6 +2,7 @@ import warnings
 
 from flask import current_app, Markup, Blueprint, url_for
 
+from wtforms import BooleanField
 try:  # pragma: no cover
     from wtforms.fields import HiddenField
 except ImportError:
@@ -272,3 +273,12 @@ class Bootstrap(Bootstrap4):
             'is deprecated and will be removed in 3.0.',
             stacklevel=2
         )
+
+class SwitchField(BooleanField):
+    """
+    Extension class to a render Bootstrap switch for a boolean.
+
+    .. versionadded:: 2.0.0
+    """
+    def __init__(self, label=None, **kwargs):
+        super().__init__(label, **kwargs)

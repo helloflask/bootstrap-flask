@@ -135,18 +135,9 @@ Rendering Switch
 ~~~~~~~~~~~~~~~~
 
 Bootstrap offers the rendering of a checkbox (or check) as a
-`switch <https://getbootstrap.com/docs/5.1/forms/checks-radios/#switches>`_. To
-enable this, add the following class:
-
-.. code-block:: python
-
-    class SwitchField(BooleanField):
-        def __init__(self, label=None, **kwargs):
-            super().__init__(label, **kwargs)
-
-Instead of using a ``BooleanField()`` in a form calls, use a ``SwitchField()``.
-This class has exactly the same properties but will be rendered as a switch. See
-also the example application.
+`switch <https://getbootstrap.com/docs/5.1/forms/checks-radios/#switches>`_. In
+Bootstrap-Flask, simply use the built-in class ``SwitchField()`` instead of
+``BooleanField()``. See also the example application.
 
 
 .. _bootswatch_theme:

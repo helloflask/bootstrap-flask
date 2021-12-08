@@ -7,7 +7,7 @@ from wtforms import StringField, SubmitField, BooleanField, PasswordField, Integ
 from wtforms.validators import DataRequired, Length
 from wtforms.fields import *
 
-from flask_bootstrap import Bootstrap5
+from flask_bootstrap import Bootstrap5, SwitchField
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -30,11 +30,6 @@ app.config['BOOTSTRAP_TABLE_NEW_TITLE'] = 'Create'
 bootstrap = Bootstrap5(app)
 db = SQLAlchemy(app)
 csrf = CSRFProtect(app)
-
-
-class SwitchField(BooleanField):
-    def __init__(self, label=None, **kwargs):
-        super().__init__(label, **kwargs)
 
 
 class ExampleForm(FlaskForm):
