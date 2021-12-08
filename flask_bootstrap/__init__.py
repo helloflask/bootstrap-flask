@@ -274,6 +274,7 @@ class Bootstrap(Bootstrap4):
             stacklevel=2
         )
 
+
 class SwitchField(BooleanField):
     """
     Extension class to a render Bootstrap switch for a boolean.
