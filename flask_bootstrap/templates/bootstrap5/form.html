@@ -57,13 +57,13 @@ the necessary fix for required=False attributes, but will also not set the requi
         {% set field_kwargs = kwargs %}
         {% call _hz_form_wrap(horizontal_columns, form_type, True, required=required) %}
         {% if field.type == 'SwitchField' %}
-             <div class="custom-control custom-switch{% if form_type == "inline" %} form-check-inline{% endif %}">
+             <div class="form-check form-switch{% if form_type == "inline" %} form-check-inline{% endif %}">
                 {%- if field.errors %}
-                    {{ field(class_="custom-control-input is-invalid%s" % extra_classes)|safe }}
+                    {{ field(class_="form-check-input is-invalid%s" % extra_classes)|safe }}
                 {%- else -%}
-                    {{ field(class_="custom-control-input%s" % extra_classes)|safe }}
+                    {{ field(class_="form-check-input%s" % extra_classes)|safe }}
                 {%- endif %}
-                {{ field.label(class="custom-control-label", for=field.id)|safe }}
+                {{ field.label(class="form-check-label", for=field.id)|safe }}
         {% else %}
             <div class="form-group form-check{% if form_type == "inline" %} form-check-inline{% endif %}">
                 {%- if field.errors %}
