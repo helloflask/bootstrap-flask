@@ -7,7 +7,7 @@ from wtforms import StringField, SubmitField, BooleanField, PasswordField, Integ
 from wtforms.validators import DataRequired, Length
 from wtforms.fields import *
 
-from flask_bootstrap import Bootstrap4
+from flask_bootstrap import Bootstrap4, SwitchField
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -56,6 +56,7 @@ class HelloForm(FlaskForm):
 
 class ButtonForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
+    confirm = SwitchField('Confirmation')
     submit = SubmitField()
     delete = SubmitField()
     cancel = SubmitField()

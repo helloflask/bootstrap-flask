@@ -82,7 +82,7 @@ Example
         {{ render_field(form.submit) }}
     </form>
 
-You can pass any HTTP attributes as extra keyword arguements like ``class`` or ``placeholder``:
+You can pass any HTTP attributes as extra keyword arguments like ``class`` or ``placeholder``:
 
 Notice that a ``placeholder`` is only allowed by `W3C validation <https://validator.w3.org/>`_
 when the input type is ``email``, ``number``, ``password``, ``search``, ``tel``,
@@ -102,7 +102,7 @@ such as ``datetime``.
 
 Notice the ``class`` value here will overwrite the ``render_kw={'class': '...'}`` you defined in
 the form class. Bootstrap-Flask will combine the class value you passed with the ``class`` key of
-the ``render_kw`` dict or the ``class`` keyword argments with Bootstrap classes.
+the ``render_kw`` dict or the ``class`` keyword arguments with Bootstrap classes.
 
 
 API
@@ -122,7 +122,7 @@ API
     :param button_size: Set button size for ``SubmitField``. Accept Bootstrap button size name: sm, md, lg, block,
                         default to ``md``. This will overwrite config ``BOOTSTRAP_BTN_SIZE``.
 
-.. tip:: See :ref:`button_customization` to learn how to customize form buttons.
+.. tip:: See :ref:`button_customization` and :ref:`checkbox_customization` to learn more on customizations.
 
 render_form()
 ---------------

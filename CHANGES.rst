@@ -17,6 +17,7 @@ Release date: -
   - Bootstrap 4 macros are in the ``bootstrap4/`` template folder, and Bootstrap 5 macros are in ``bootstrap5/``.
   - Add seperate tests, templates, static files, and examples for Bootstrap 5.
 - Remove the deprecated ``form_errors`` macro and the URL string variable support in ``render_table``.
+- Render boolean field as a Bootstrap switch with ``SwitchField`` class.
 
 
 1.8.0

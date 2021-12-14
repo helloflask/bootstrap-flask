@@ -4,7 +4,7 @@ Advanced Usage
 .. _button_customization:
 
 Form Button Customization
---------------------------
+-------------------------
 
 Button Style
 ~~~~~~~~~~~~
@@ -124,6 +124,20 @@ Here is a more complicate example:
     {{ render_form(form, button_map={'submit': 'success', 'cancel': 'secondary', 'delete': 'danger'}) }}
 
 It will overwrite ``button_style`` and ``BOOTSTRAP_BTN_STYLE``.
+
+
+.. _checkbox_customization:
+
+Form Checkbox Customization
+---------------------------
+
+Rendering Switch
+~~~~~~~~~~~~~~~~
+
+Bootstrap offers the rendering of a checkbox (or check) as a
+`switch <https://getbootstrap.com/docs/5.1/forms/checks-radios/#switches>`_. In
+Bootstrap-Flask, simply use the built-in class ``SwitchField()`` instead of
+``BooleanField()``. See also the example application.
 
 
 .. _bootswatch_theme:

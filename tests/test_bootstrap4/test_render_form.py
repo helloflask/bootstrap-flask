@@ -3,6 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import BooleanField, FileField, MultipleFileField,\
     PasswordField, RadioField, StringField, SubmitField
 from wtforms.validators import DataRequired
+from flask_bootstrap import SwitchField
 
 
 def test_render_form(app, client, hello_form):
@@ -37,6 +38,27 @@ def test_form_description_for_booleanfield(app, client):
     response = client.get('/description')
     data = response.get_data(as_text=True)
     assert 'Remember me' in data
+    assert '<small class="form-text text-muted">Just check this</small>' in data
+
+
+# test WTForm field description for SwitchField
+def test_form_description_for_switchfield(app, client):
+
+    class TestForm(FlaskForm):
+        remember = SwitchField('Remember me', description='Just check this')
+
+    @app.route('/description')
+    def description():
+        form = TestForm()
+        return render_template_string('''
+        {% from 'bootstrap4/form.html' import render_form %}
+        {{ render_form(form) }}
+        ''', form=form)
+
+    response = client.get('/description')
+    data = response.get_data(as_text=True)
+    assert 'Remember me' in data
+    assert 'custom-switch' in data
     assert '<small class="form-text text-muted">Just check this</small>' in data
 
 
