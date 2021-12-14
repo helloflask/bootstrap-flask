@@ -16,7 +16,7 @@
 {% macro _hz_form_wrap(horizontal_columns, form_type, add_group=False, required=False) %}
     {% if form_type == "horizontal" %}
         {% if add_group %}
-            <div class="form-group row{% if required %} required{% endif %}">{% endif %}
+            <div class="{{ form_group_class }} row{% if required %} required{% endif %}">{% endif %}
         <div class="offset-{{ horizontal_columns[0] }}-{{ horizontal_columns[1] }}
               col-{{ horizontal_columns[0] }}-{{ horizontal_columns[2] }}
              ">
@@ -34,13 +34,16 @@
                     horizontal_columns=('lg', 2, 10),
                     button_map={},
                     button_style='',
-                    button_size='') %}
+                    button_size='',
+                    form_group_class='') %}
 
     {# this is a workaround hack for the more straightforward-code of just passing required=required parameter. older versions of wtforms do not have
 the necessary fix for required=False attributes, but will also not set the required flag in the first place. we skirt the issue using the code below #}
     {% if field.flags.required and not required in kwargs %}
         {% set kwargs = dict(required=True, **kwargs) %}
     {% endif %}
+
+    {% set form_group_class = form_group_class or config.BOOTSTRAP_FORM_GROUP_CLASS %}
 
     {# combine render_kw class or class/class_ argument with Bootstrap classes #}
     {% set render_kw_class = ' ' + field.render_kw.class if field.render_kw.class else '' %}
@@ -57,7 +60,7 @@ the necessary fix for required=False attributes, but will also not set the requi
         {% set field_kwargs = kwargs %}
         {% call _hz_form_wrap(horizontal_columns, form_type, True, required=required) %}
         {% if field.type == 'SwitchField' %}
-             <div class="form-check form-switch{% if form_type == "inline" %} form-check-inline{% endif %}">
+             <div class="{{ form_group_class }} form-check form-switch{% if form_type == "inline" %} form-check-inline{% endif %}">
                 {%- if field.errors %}
                     {{ field(class_="form-check-input is-invalid%s" % extra_classes)|safe }}
                 {%- else -%}
@@ -65,7 +68,7 @@ the necessary fix for required=False attributes, but will also not set the requi
                 {%- endif %}
                 {{ field.label(class="form-check-label", for=field.id)|safe }}
         {% else %}
-            <div class="form-group form-check{% if form_type == "inline" %} form-check-inline{% endif %}">
+            <div class="{{ form_group_class }} form-check{% if form_type == "inline" %} form-check-inline{% endif %}">
                 {%- if field.errors %}
                     {{ field(class="form-check-input is-invalid%s" % extra_classes, **field_kwargs)|safe }}
                 {%- else -%}
@@ -87,7 +90,7 @@ the necessary fix for required=False attributes, but will also not set the requi
     {%- elif field.type == 'RadioField' -%}
         {# note: A cleaner solution would be rendering depending on the widget,
      this is just a hack for now, until I can think of something better #}
-        <div class="form-group {% if form_type == 'horizontal' %}row{% endif %}{% if required %} required{% endif %}">
+        <div class="{{ form_group_class }} {% if form_type == 'horizontal' %}row{% endif %}{% if required %} required{% endif %}">
             {%- if form_type == "inline" %}
                 {{ field.label(class="sr-only")|safe }}
             {% elif form_type == "horizontal" %}
@@ -146,7 +149,7 @@ the necessary fix for required=False attributes, but will also not set the requi
             {%- endfor %}
         </fieldset>
     {% else -%}
-        <div class="form-group{%- if form_type == "horizontal" %} row{% endif -%}
+        <div class="{{ form_group_class }}{%- if form_type == "horizontal" %} row{% endif -%}
                          {%- if field.flags.required %} required{% endif -%}">
             {%- if form_type == "inline" %}
                 {{ field.label(class="sr-only")|safe }}
@@ -208,7 +211,8 @@ the necessary fix for required=False attributes, but will also not set the requi
                     button_size="",
                     id="",
                     novalidate=False,
-                    render_kw={}) %}
+                    render_kw={},
+                    form_group_class='') %}
     {#-
 action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
 
@@ -263,7 +267,8 @@ action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
                     horizontal_columns=horizontal_columns,
                     button_map=button_map,
                     button_style=button_style,
-                    button_size=button_size) }}
+                    button_size=button_size,
+                    form_group_class=form_group_class) }}
             {%- endif %}
         {%- endfor %}
     </form>
@@ -275,7 +280,8 @@ action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
     col_map={},
     button_map={},
     button_style='',
-    button_size='') %}
+    button_size='',
+    form_group_class='') %}
 <div class="{{ row_class }}">
   {% for field in fields %}
     {% if field.name in col_map %}
@@ -284,7 +290,7 @@ action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
       {% set col_class = col_class_default %}
     {% endif %}
     <div class="{{ col_class }}">
-      {{ render_field(field, button_map=button_map, button_style=button_style, button_size=button_size) }}
+      {{ render_field(field, button_map=button_map, button_style=button_style, button_size=button_size, form_group_class=form_group_class) }}
     </div>
   {% endfor %}
 </div>

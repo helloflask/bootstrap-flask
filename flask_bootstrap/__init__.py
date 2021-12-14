@@ -87,6 +87,7 @@ class _Bootstrap:
         app.config.setdefault('BOOTSTRAP_TABLE_EDIT_TITLE', 'Edit')
         app.config.setdefault('BOOTSTRAP_TABLE_DELETE_TITLE', 'Delete')
         app.config.setdefault('BOOTSTRAP_TABLE_NEW_TITLE', 'New')
+        app.config.setdefault('BOOTSTRAP_FORM_GROUP_CLASS', 'mb-3')  # Bootstrap 5 only
 
     def load_css(self, version=None, bootstrap_sri=None):
         """Load Bootstrap's css resources with given version.

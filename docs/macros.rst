@@ -124,6 +124,10 @@ API
 
 .. tip:: See :ref:`button_customization` and :ref:`checkbox_customization` to learn more on customizations.
 
+.. tip:: For Bootstrap 5, you can use the ``form_group_class`` parameter to change the form group class, it will read
+         the config ``BOOTSTRAP_FORM_GROUP_CLASS`` first (the default value is``mb-3``).
+
+
 render_form()
 ---------------
 
@@ -182,6 +186,9 @@ API
                      ``<form>`` tag.
 
 .. tip:: See :ref:`button_customization` to learn how to customize form buttons.
+
+.. tip:: For Bootstrap 5, you can use the ``form_group_class`` parameter to change the form group class, it will read
+         the config ``BOOTSTRAP_FORM_GROUP_CLASS`` first (the default value is``mb-3``).
 
 
 render_hidden_errors()
@@ -262,6 +269,9 @@ API
                       ``{'submit': 'success'}``. This will overwrite ``button_style`` and ``BOOTSTRAP_BTN_STYLE``.
 
 .. tip:: See :ref:`button_customization` to learn how to customize form buttons.
+
+.. tip:: For Bootstrap 5, you can use the ``form_group_class`` parameter to change the form group class, it will read
+         the config ``BOOTSTRAP_FORM_GROUP_CLASS`` first (the default value is``mb-3``).
 
 
 render_pager()
