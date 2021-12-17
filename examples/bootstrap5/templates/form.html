@@ -13,7 +13,7 @@ class ExampleForm(FlaskForm):
     floating = FloatField()
     integer = IntegerField()
     decimalslider = DecimalRangeField()
-    integerslider = IntegerRangeField()
+    integerslider = IntegerRangeField(render_kw={'min': '0', 'max': '4'})
     email = EmailField()
     url = URLField()
     search = SearchField()
