@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, request, flash, Markup
+from flask import Flask, render_template, request, flash, Markup, redirect, url_for
 
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, SubmitField, BooleanField, PasswordField, IntegerField,\
-    FormField, SelectField, FieldList
+    FormField, SelectField, FieldList, DateField, DateTimeField, FileField, RadioField,\
+    SelectMultipleField, TextAreaField
 from wtforms.validators import DataRequired, Length
-from wtforms.fields import *
 
 from flask_bootstrap import Bootstrap4, SwitchField
 from flask_sqlalchemy import SQLAlchemy
@@ -116,7 +116,18 @@ def index():
 @app.route('/form', methods=['GET', 'POST'])
 def test_form():
     form = HelloForm()
-    return render_template('form.html', form=form, telephone_form=TelephoneForm(), contact_form=ContactForm(), im_form=IMForm(), button_form=ButtonForm(), example_form=ExampleForm())
+    if form.validate_on_submit():
+        flash('Form validated!')
+        return redirect(url_for('index'))
+    return render_template(
+        'form.html',
+        form=form,
+        telephone_form=TelephoneForm(),
+        contact_form=ContactForm(),
+        im_form=IMForm(),
+        button_form=ButtonForm(),
+        example_form=ExampleForm()
+    )
 
 
 @app.route('/nav', methods=['GET', 'POST'])
