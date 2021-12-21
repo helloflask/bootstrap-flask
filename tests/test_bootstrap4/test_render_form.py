@@ -41,21 +41,21 @@ def test_form_description_for_booleanfield(app, client):
     assert '<small class="form-text text-muted">Just check this</small>' in data
 
 
-# test WTForm field description for SwitchField
-def test_form_description_for_switchfield(app, client):
+# test render SwitchField
+def test_switchfield(app, client):
 
     class TestForm(FlaskForm):
         remember = SwitchField('Remember me', description='Just check this')
 
-    @app.route('/description')
-    def description():
+    @app.route('/switch')
+    def test_switch():
         form = TestForm()
         return render_template_string('''
         {% from 'bootstrap4/form.html' import render_form %}
         {{ render_form(form) }}
         ''', form=form)
 
-    response = client.get('/description')
+    response = client.get('/switch')
     data = response.get_data(as_text=True)
     assert 'Remember me' in data
     assert 'custom-switch' in data
