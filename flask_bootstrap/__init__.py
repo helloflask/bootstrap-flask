@@ -87,7 +87,7 @@ class _Bootstrap:
         app.config.setdefault('BOOTSTRAP_TABLE_EDIT_TITLE', 'Edit')
         app.config.setdefault('BOOTSTRAP_TABLE_DELETE_TITLE', 'Delete')
         app.config.setdefault('BOOTSTRAP_TABLE_NEW_TITLE', 'New')
-        app.config.setdefault('BOOTSTRAP_FORM_GROUP_CLASS', 'mb-3')  # Bootstrap 5 only
+        app.config.setdefault('BOOTSTRAP_FORM_GROUP_CLASSES', 'mb-3')  # Bootstrap 5 only
         app.config.setdefault(
             'BOOTSTRAP_FORM_INLINE_CLASSES',
             'row row-cols-lg-auto g-3 align-items-center'

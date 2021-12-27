@@ -39,7 +39,7 @@ def test_form_group_class(app, client, hello_form):
         form = hello_form()
         return render_template_string('''
                     {% from 'bootstrap5/form.html' import render_form %}
-                    {{ render_form(form, form_group_class='mb-2') }}
+                    {{ render_form(form, form_group_classes='mb-2') }}
                     ''', form=form)
 
     response = client.get('/default')
@@ -50,7 +50,7 @@ def test_form_group_class(app, client, hello_form):
     assert '<div class="mb-3' not in data
     assert '<div class="mb-2' in data
 
-    app.config['BOOTSTRAP_FORM_GROUP_CLASS'] = 'mb-4'
+    app.config['BOOTSTRAP_FORM_GROUP_CLASSES'] = 'mb-4'
 
     @app.route('/config')
     def test_config():
