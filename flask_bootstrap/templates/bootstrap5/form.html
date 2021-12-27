@@ -85,7 +85,7 @@ the necessary fix for required=False attributes, but will also not set the requi
      this is just a hack for now, until I can think of something better #}
         <div class="{{ form_group_class }} {% if form_type == 'horizontal' %}row{% endif %}{% if required %} required{% endif %}">
             {%- if form_type == "inline" %}
-                {{ field.label(class="sr-only")|safe }}
+                {{ field.label(class="visually-hidden")|safe }}
             {% elif form_type == "horizontal" %}
                 {{ field.label(class="col-form-label" + (
                 " col-%s-%s" % horizontal_columns[0:2]))|safe }}
@@ -145,7 +145,7 @@ the necessary fix for required=False attributes, but will also not set the requi
         <div class="{{ form_group_class }}{%- if form_type == "horizontal" %} row{% endif -%}
                          {%- if field.flags.required %} required{% endif -%}">
             {%- if form_type == "inline" %}
-                {{ field.label(class="sr-only")|safe }}
+                {{ field.label(class="visually-hidden")|safe }}
                 {% if field.errors %}
                     {{ field(class="form-control mb-2 mr-sm-2 mb-sm-0 is-invalid%s" % extra_classes, **kwargs)|safe }}
                 {% else %}
@@ -205,7 +205,8 @@ the necessary fix for required=False attributes, but will also not set the requi
                     id="",
                     novalidate=False,
                     render_kw={},
-                    form_group_class='') %}
+                    form_group_class='',
+                    form_inline_classes='') %}
     {#-
 action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
 
@@ -230,6 +231,7 @@ action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
 
     warning: the code below is guaranteed to make you cry =(
 #}
+    {%- set form_inline_classes = form_inline_classes or config.BOOTSTRAP_FORM_INLINE_CLASSES %}
     {%- set _enctype = [] %}
     {%- if enctype is none -%}
         {%- for field in form %}
@@ -242,11 +244,12 @@ action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
     {%- else %}
         {% set _ = _enctype.append(enctype) %}
     {%- endif %}
+    {%- if form_type == "inline" %}{% set form_group_class = 'col-12' %}{%- endif %}
     <form{%- if action != None %} action="{{ action }}"{% endif -%}
             {%- if id %} id="{{ id }}"{% endif -%}
             {%- if method %} method="{{ method }}"{% endif %}
             class="form
-{%- if extra_classes %} {{ extra_classes }}{% endif -%}{%- if form_type == "inline" %} form-inline{% endif -%}"
+{%- if extra_classes %} {{ extra_classes }}{% endif -%}{%- if form_type == "inline" %} {{ form_inline_classes }}{% endif -%}"
             {%- if _enctype[0] %} enctype="{{ _enctype[0] }}"{% endif -%}
             {%- if role %} role="{{ role }}"{% endif -%}
             {%- if novalidate %} novalidate{% endif -%}
