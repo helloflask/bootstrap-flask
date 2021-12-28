@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, request, flash, Markup, redirect, url_for
-
 from flask_wtf import FlaskForm, CSRFProtect
-from wtforms import StringField, SubmitField, BooleanField, PasswordField, IntegerField,\
-    FormField, SelectField, FieldList, DateField, DateTimeField, FileField, RadioField,\
-    SelectMultipleField, TextAreaField
-from wtforms.validators import DataRequired, Length
-
+from wtforms.validators import DataRequired, Length, Regexp
+from wtforms.fields import *
 from flask_bootstrap import Bootstrap5, SwitchField
 from flask_sqlalchemy import SQLAlchemy
 
@@ -36,7 +32,17 @@ class ExampleForm(FlaskForm):
     """An example form that contains all the supported bootstrap style form fields."""
     date = DateField(description="We'll never share your email with anyone else.")  # add help text with `description`
     datetime = DateTimeField(render_kw={'placeholder': 'this is a placeholder'})  # add HTML attribute with `render_kw`
-    image = FileField(render_kw={'class': 'my-class'})  # add your class
+    datetimelocal = DateTimeLocalField()
+    time = TimeField()
+    floating = FloatField()
+    integer = IntegerField()
+    decimalslider = DecimalRangeField()
+    integerslider = IntegerRangeField(render_kw={'min': '0', 'max': '4'})
+    email = EmailField()
+    url = URLField()
+    search = SearchField()
+    telephone = TelField()
+    image = FileField(render_kw={'class': 'my-class'}, validators=[Regexp('.+\.jpg$')])  # add your class
     option = RadioField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')])
     select = SelectField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')])
     selectmulti = SelectMultipleField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')])
