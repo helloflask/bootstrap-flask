@@ -38,6 +38,7 @@ class ExampleForm(FlaskForm):
     datetime = DateTimeField(render_kw={'placeholder': 'this is a placeholder'})  # add HTML attribute with `render_kw`
     datetimelocal = DateTimeLocalField()
     time = TimeField()
+    month = MonthField()
     floating = FloatField()
     integer = IntegerField()
     decimalslider = DecimalRangeField()
