@@ -18,8 +18,10 @@ Release date: -
     - Add separate tests, templates, static files, and examples for Bootstrap 5.
 - Remove the deprecated ``form_errors`` macro and the URL string variable support in ``render_table``.
 - Render boolean field as a Bootstrap switch with ``SwitchField`` class.
-- Add ``BOOTSTRAP_FORM_GROUP_CLASS`` config for Bootstrap 5, defaults to ``mb-3``. Also add a ``form_group_class``
+- Add ``BOOTSTRAP_FORM_GROUP_CLASSES`` config for Bootstrap 5, defaults to ``mb-3``. Also add a ``form_group_classes``
   parameter for ``render_form``, ``render_field``, and ``render_form_row``.
+- Add ``BOOTSTRAP_FORM_INLINE_CLASSES`` config for Bootstrap 5, defaults to ``row row-cols-lg-auto g-3 align-items-center``.
+  Also add a ``form_inline_classes`` parameter for ``render_form``.
 
 
 1.8.0

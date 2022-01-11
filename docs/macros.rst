@@ -108,7 +108,13 @@ the ``render_kw`` dict or the ``class`` keyword arguments with Bootstrap classes
 API
 ~~~~
 
-.. py:function:: render_field(field, form_type="basic", horizontal_columns=('lg', 2, 10), button_style="", button_size="", button_map={})
+.. py:function:: render_field(field,\
+                              form_type="basic",\
+                              horizontal_columns=('lg', 2, 10),\
+                              button_style="",\
+                              button_size="",\
+                              button_map={},\
+                              form_group_classes="")
 
     :param field: The form field (attribute) to render.
     :param form_type: One of ``basic``, ``inline`` or ``horizontal``. See the
@@ -121,11 +127,11 @@ API
                          overwrite config ``BOOTSTRAP_BTN_STYLE``.
     :param button_size: Set button size for ``SubmitField``. Accept Bootstrap button size name: sm, md, lg, block,
                         default to ``md``. This will overwrite config ``BOOTSTRAP_BTN_SIZE``.
+    :param form_group_classes: Bootstrap 5 only (``bootstrap5/form.html``). You can use this parameter to change the
+                               form group classes, it will read the config ``BOOTSTRAP_FORM_GROUP_CLASSES`` first
+                               (the default value is ``mb-3``)
 
 .. tip:: See :ref:`button_customization` and :ref:`checkbox_customization` to learn more on customizations.
-
-.. tip:: For Bootstrap 5, you can use the ``form_group_class`` parameter to change the form group class, it will read
-         the config ``BOOTSTRAP_FORM_GROUP_CLASS`` first (the default value is``mb-3``).
 
 
 render_form()
@@ -158,7 +164,9 @@ API
                     button_map={},\
                     id="",\
                     novalidate=False,\
-                    render_kw={})
+                    render_kw={},\
+                    form_group_classes="",\
+                    form_inline_classes="",)
 
     :param form: The form to output.
     :param action: The URL to receive form data.
@@ -184,11 +192,14 @@ API
     :param novalidate: Flag that decide whether add ``novalidate`` class in ``<form>``.
     :param render_kw: A dictionary, specifying custom attributes for the
                      ``<form>`` tag.
+    :param form_group_classes: Bootstrap 5 only (``bootstrap5/form.html``). You can use this parameter to change the form group classes, it will
+                               read the config ``BOOTSTRAP_FORM_GROUP_CLASSES`` first (the default value is ``mb-3``)
+    :param form_inline_classes: Bootstrap 5 only (``bootstrap5/form.html``). You can use this parameter to change the form inline classes,
+                                it will read the config ``BOOTSTRAP_FORM_INLINE_CLASSES`` first (the default value is
+                                ``row row-cols-lg-auto g-3 align-items-center``).
+
 
 .. tip:: See :ref:`button_customization` to learn how to customize form buttons.
-
-.. tip:: For Bootstrap 5, you can use the ``form_group_class`` parameter to change the form group class, it will read
-         the config ``BOOTSTRAP_FORM_GROUP_CLASS`` first (the default value is``mb-3``).
 
 
 render_hidden_errors()
@@ -251,7 +262,8 @@ API
                                  col_map={},\
                                  button_style="",\
                                  button_size="",\
-                                 button_map={})
+                                 button_map={},\
+                                 form_group_classes="")
 
     :param fields: An iterable of fields to render in a row.
     :param row_class: Class to apply to the div intended to represent the row, like ``form-row`` (Bootstrap 4)
@@ -267,11 +279,11 @@ API
                         default to ``md``. This will overwrite config ``BOOTSTRAP_BTN_SIZE``.
     :param button_map: A dictionary, mapping button field name to Bootstrap button style names. For example,
                       ``{'submit': 'success'}``. This will overwrite ``button_style`` and ``BOOTSTRAP_BTN_STYLE``.
+    :param form_group_classes: Bootstrap 5 only (``bootstrap5/form.html``). You can use this parameter to change the
+                               form group classes, it will read the config ``BOOTSTRAP_FORM_GROUP_CLASSES`` first
+                               (the default value is ``mb-3``)
 
 .. tip:: See :ref:`button_customization` to learn how to customize form buttons.
-
-.. tip:: For Bootstrap 5, you can use the ``form_group_class`` parameter to change the form group class, it will read
-         the config ``BOOTSTRAP_FORM_GROUP_CLASS`` first (the default value is``mb-3``).
 
 
 render_pager()
