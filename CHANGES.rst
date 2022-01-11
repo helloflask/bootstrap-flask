@@ -11,13 +11,17 @@ Release date: -
 - Combine ``class`` argument of ``render_field`` or ``field.render_kw.class`` with Bootstrap classes
   (`#159 <https://github.com/greyli/bootstrap-flask/pull/159>`__).
 - Add initial support for Bootstrap 5 (`#161 <https://github.com/greyli/bootstrap-flask/pull/161>`__):
-  - Add ``Bootstrap4`` class and deprecate ``Bootstrap``.
-  - Add ``Bootstrap5`` class for Bootstrap 5 support.
-  - Move Bootstrap 4-related files to ``bootstrap4`` subfolder, and deprecate template path ``bootstrap/``.
-  - Bootstrap 4 macros are in the ``bootstrap4/`` template folder, and Bootstrap 5 macros are in ``bootstrap5/``.
-  - Add seperate tests, templates, static files, and examples for Bootstrap 5.
+    - Add ``Bootstrap4`` class and deprecate ``Bootstrap``.
+    - Add ``Bootstrap5`` class for Bootstrap 5 support.
+    - Move Bootstrap 4-related files to ``bootstrap4`` subfolder, and deprecate template path ``bootstrap/``.
+    - Bootstrap 4 macros are in the ``bootstrap4/`` template folder, and Bootstrap 5 macros are in ``bootstrap5/``.
+    - Add separate tests, templates, static files, and examples for Bootstrap 5.
 - Remove the deprecated ``form_errors`` macro and the URL string variable support in ``render_table``.
 - Render boolean field as a Bootstrap switch with ``SwitchField`` class.
+- Add ``BOOTSTRAP_FORM_GROUP_CLASSES`` config for Bootstrap 5, defaults to ``mb-3``. Also add a ``form_group_classes``
+  parameter for ``render_form``, ``render_field``, and ``render_form_row``.
+- Add ``BOOTSTRAP_FORM_INLINE_CLASSES`` config for Bootstrap 5, defaults to ``row row-cols-lg-auto g-3 align-items-center``.
+  Also add a ``form_inline_classes`` parameter for ``render_form``.
 
 
 1.8.0
