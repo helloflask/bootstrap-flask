@@ -246,7 +246,7 @@ API
 ~~~~
 
 .. py:function:: render_form_row(fields,\
-                                 row_class='form-row',\
+                                 row_class='row/form-row',\
                                  col_class_default='col',\
                                  col_map={},\
                                  button_style="",\
@@ -254,8 +254,8 @@ API
                                  button_map={})
 
     :param fields: An iterable of fields to render in a row.
-    :param row_class: Class to apply to the div intended to represent the row, like ``form-row``
-                      or ``row``
+    :param row_class: Class to apply to the div intended to represent the row, like ``form-row`` (Bootstrap 4)
+                      or ``row`` (Bootstrap 5).
     :param col_class_default: The default class to apply to the div that represents a column
                                 if nothing more specific is said for the div column of the rendered field.
     :param col_map: A dictionary, mapping field.name to a class definition that should be applied to
