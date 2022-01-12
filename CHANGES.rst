@@ -22,6 +22,7 @@ Release date: -
   parameter for ``render_form``, ``render_field``, and ``render_form_row``.
 - Add ``BOOTSTRAP_FORM_INLINE_CLASSES`` config for Bootstrap 5, defaults to ``row row-cols-lg-auto g-3 align-items-center``.
   Also add a ``form_inline_classes`` parameter for ``render_form``.
+- Add support for WTForms range fields (``DecimalRangeField`` and ``IntegerRangeField``).
 
 
 1.8.0

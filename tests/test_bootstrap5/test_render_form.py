@@ -1,9 +1,10 @@
 from flask import render_template_string
 from flask_wtf import FlaskForm
 from flask_bootstrap import SwitchField
+from wtforms import IntegerRangeField, DecimalRangeField
 
 
-def test_switchfield(app, client):
+def test_switch_field(app, client):
 
     class TestForm(FlaskForm):
         remember = SwitchField('Remember me', description='Just check this')
@@ -23,6 +24,28 @@ def test_switchfield(app, client):
     assert 'form-check form-switch' in data
     assert 'role="switch"' in data
     assert '<small class="form-text text-muted">Just check this</small>' in data
+
+
+# test render IntegerRangeField and DecimalRangeField
+def test_range_fields(app, client):
+
+    class TestForm(FlaskForm):
+        decimal_slider = DecimalRangeField()
+        integer_slider = IntegerRangeField(render_kw={'min': '0', 'max': '4'})
+
+    @app.route('/range')
+    def test_range():
+        form = TestForm()
+        return render_template_string('''
+        {% from 'bootstrap5/form.html' import render_form %}
+        {{ render_form(form) }}
+        ''', form=form)
+
+    response = client.get('/range')
+    data = response.get_data(as_text=True)
+    assert 'Decimal Slider' in data
+    assert 'Integer Slider' in data
+    assert 'form-range' in data
 
 
 def test_form_group_class(app, client, hello_form):
