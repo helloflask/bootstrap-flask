@@ -299,7 +299,9 @@ action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
     col_map={},
     button_map={},
     button_style='',
-    button_size='') %}
+    button_size='',
+    form_type='basic',
+    horizontal_columns=('lg', 2, 10)) %}
 <div class="{{ row_class }}">
   {% for field in fields %}
     {% if field.name in col_map %}
@@ -308,7 +310,12 @@ action="" is what we want, from http://www.ietf.org/rfc/rfc2396.txt:
       {% set col_class = col_class_default %}
     {% endif %}
     <div class="{{ col_class }}">
-      {{ render_field(field, button_map=button_map, button_style=button_style, button_size=button_size) }}
+      {{ render_field(field,
+          button_map=button_map,
+          button_style=button_style,
+          button_size=button_size,
+          form_type=form_type,
+          horizontal_columns=horizontal_columns) }}
     </div>
   {% endfor %}
 </div>
