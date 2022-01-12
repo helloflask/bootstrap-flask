@@ -17,12 +17,14 @@ Release date: -
     - Bootstrap 4 macros are in the ``bootstrap4/`` template folder, and Bootstrap 5 macros are in ``bootstrap5/``.
     - Add separate tests, templates, static files, and examples for Bootstrap 5.
 - Remove the deprecated ``form_errors`` macro and the URL string variable support in ``render_table``.
-- Render boolean field as a Bootstrap switch with ``SwitchField`` class.
+- Render boolean field as a Bootstrap switch with ``SwitchField`` class (`#175 <https://github.com/greyli/bootstrap-flask/pull/175>`__).
 - Add ``BOOTSTRAP_FORM_GROUP_CLASSES`` config for Bootstrap 5, defaults to ``mb-3``. Also add a ``form_group_classes``
-  parameter for ``render_form``, ``render_field``, and ``render_form_row``.
+  parameter for ``render_form``, ``render_field``, and ``render_form_row`` (`#184 <https://github.com/greyli/bootstrap-flask/pull/184>`__).
 - Add ``BOOTSTRAP_FORM_INLINE_CLASSES`` config for Bootstrap 5, defaults to ``row row-cols-lg-auto g-3 align-items-center``.
-  Also add a ``form_inline_classes`` parameter for ``render_form``.
-- Add support for WTForms range fields (``DecimalRangeField`` and ``IntegerRangeField``).
+  Also add a ``form_inline_classes`` parameter for ``render_form`` (`#184 <https://github.com/greyli/bootstrap-flask/pull/184>`__).
+- Add ``form_type`` and ``horizontal_columns`` parameters to ``render_form_row`` (`#192 <https://github.com/greyli/bootstrap-flask/pull/192>`__).
+- Add support for WTForms range fields (``DecimalRangeField`` and ``IntegerRangeField``) (`#194 <https://github.com/greyli/bootstrap-flask/pull/194>`__).
+- Bump Bootstrap Icons to v1.7.2.
 
 
 1.8.0
