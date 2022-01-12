@@ -109,12 +109,12 @@ API
 ~~~~
 
 .. py:function:: render_field(field,\
-                              form_type="basic",\
+                              form_type='basic',\
                               horizontal_columns=('lg', 2, 10),\
-                              button_style="",\
-                              button_size="",\
+                              button_style='',\
+                              button_size='',\
                               button_map={},\
-                              form_group_classes="")
+                              form_group_classes='')
 
     :param field: The form field (attribute) to render.
     :param form_type: One of ``basic``, ``inline`` or ``horizontal``. See the
@@ -152,21 +152,21 @@ API
 ~~~~
 
 .. py:function:: render_form(form,\
-                    action="",\
-                    method="post",\
+                    action='',\
+                    method='post',\
                     extra_classes=None,\
-                    role="form",\
-                    form_type="basic",\
+                    role='form',\
+                    form_type='basic',\
                     horizontal_columns=('lg', 2, 10),\
                     enctype=None,\
-                    button_style="",\
-                    button_size="",\
+                    button_style='',\
+                    button_size='',\
                     button_map={},\
-                    id="",\
+                    id='',\
                     novalidate=False,\
                     render_kw={},\
-                    form_group_classes="",\
-                    form_inline_classes="",)
+                    form_group_classes='',\
+                    form_inline_classes='',)
 
     :param form: The form to output.
     :param action: The URL to receive form data.
@@ -260,10 +260,12 @@ API
                                  row_class='row/form-row',\
                                  col_class_default='col',\
                                  col_map={},\
-                                 button_style="",\
-                                 button_size="",\
+                                 button_style='',\
+                                 button_size='',\
                                  button_map={},\
-                                 form_group_classes="")
+                                 form_group_classes='',\
+                                 form_type='basic',\
+                                 horizontal_columns=('lg', 2, 10))
 
     :param fields: An iterable of fields to render in a row.
     :param row_class: Class to apply to the div intended to represent the row, like ``form-row`` (Bootstrap 4)
@@ -282,6 +284,10 @@ API
     :param form_group_classes: Bootstrap 5 only (``bootstrap5/form.html``). You can use this parameter to change the
                                form group classes, it will read the config ``BOOTSTRAP_FORM_GROUP_CLASSES`` first
                                (the default value is ``mb-3``)
+    :param form_type: One of ``basic``, ``inline`` or ``horizontal``. See the Bootstrap docs for details on different
+                      form layouts.
+    :param horizontal_columns: When using the horizontal layout, layout forms like this. Must be a 3-tuple of
+                               ``(column-type, left-column-size, right-column-size)``.
 
 .. tip:: See :ref:`button_customization` to learn how to customize form buttons.
 
