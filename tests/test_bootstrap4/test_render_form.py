@@ -1,7 +1,8 @@
 from flask import current_app, render_template_string
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, FileField, MultipleFileField,\
-    PasswordField, RadioField, StringField, SubmitField
+    PasswordField, RadioField, StringField, SubmitField, IntegerRangeField,\
+    DecimalRangeField
 from wtforms.validators import DataRequired
 from flask_bootstrap import SwitchField
 
@@ -42,7 +43,7 @@ def test_form_description_for_booleanfield(app, client):
 
 
 # test render SwitchField
-def test_switchfield(app, client):
+def test_switch_field(app, client):
 
     class TestForm(FlaskForm):
         remember = SwitchField('Remember me', description='Just check this')
@@ -60,6 +61,28 @@ def test_switchfield(app, client):
     assert 'Remember me' in data
     assert 'custom-switch' in data
     assert '<small class="form-text text-muted">Just check this</small>' in data
+
+
+# test render IntegerRangeField and DecimalRangeField
+def test_range_fields(app, client):
+
+    class TestForm(FlaskForm):
+        decimal_slider = DecimalRangeField()
+        integer_slider = IntegerRangeField(render_kw={'min': '0', 'max': '4'})
+
+    @app.route('/range')
+    def test_range():
+        form = TestForm()
+        return render_template_string('''
+        {% from 'bootstrap4/form.html' import render_form %}
+        {{ render_form(form) }}
+        ''', form=form)
+
+    response = client.get('/range')
+    data = response.get_data(as_text=True)
+    assert 'Decimal Slider' in data
+    assert 'Integer Slider' in data
+    assert 'form-control-range' in data
 
 
 # test WTForm fields for render_form and render_field
