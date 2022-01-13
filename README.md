@@ -5,7 +5,7 @@
 [![Build status](https://github.com/greyli/bootstrap-flask/workflows/build/badge.svg)](https://github.com/greyli/bootstrap-flask/actions)
 [![Coverage Status](https://coveralls.io/repos/github/greyli/bootstrap-flask/badge.svg?branch=master)](https://coveralls.io/github/greyli/bootstrap-flask?branch=master)
 
-Bootstrap-Flask is a collection of Jinja macros for Bootstrap and Flask. It helps you to
+Bootstrap-Flask is a collection of Jinja macros for Bootstrap 4 & 5 and Flask. It helps you to
 render Flask-related data and objects to Bootstrap markup HTML more easily:
 
 - Render Flask-WTF/WTForms form object to Bootstrap Form.
@@ -13,14 +13,11 @@ render Flask-related data and objects to Bootstrap markup HTML more easily:
 - Render Flask-SQLAlchemy `Pagination` object to Bootstrap Pagination.
 - etc.
 
-It currently only supports Bootstrap 4, while the Bootstrap 5 support is
-[on the way](https://github.com/greyli/bootstrap-flask/issues/162).
-
 
 ## Installation
 
 ```
-$ pip install bootstrap-flask
+$ pip install -U bootstrap-flask
 ```
 
 ## Example
@@ -32,10 +29,10 @@ from flask import Flask
 # To follow the naming rule of Flask extension, although
 # this project's name is Bootstrap-Flask, the actual package
 # installed is named `flask_bootstrap`.
-from flask_bootstrap import Bootstrap
+from flask_bootstrap import Bootstrap5
 
 app = Flask(__name__)
-bootstrap = Bootstrap(app)
+bootstrap = Bootstrap5(app)
 ```
 
 Assuming you have a Flask-WTF form like this:
@@ -51,7 +48,7 @@ class LoginForm(FlaskForm):
 Now with the `render_form` macro:
 
 ```html
-{% from 'bootstrap/form.html' import render_form %}
+{% from 'bootstrap5/form.html' import render_form %}
 <html>
 <head>
 <!-- Bootstrap CSS -->
@@ -78,11 +75,11 @@ Read the [Basic Usage](https://bootstrap-flask.readthedocs.io/en/stable/basic.ht
 docs for more details.
 
 
-## Migration from Flask-Bootstrap
+## Donate
 
-If you come from Flask-Bootstrap, check out
-[this tutorial](https://bootstrap-flask.readthedocs.io/en/stable/migrate.html) on how to
-migrate to this extension.
+If you find Bootstrap-Flask useful, please consider
+[donating today](https://opencollective.com/bootstrap-flask/donate). Your donation keeps
+Bootstrap-Flask maintained and updated with Bootstrap.
 
 
 ## Links
@@ -91,6 +88,52 @@ migrate to this extension.
 - [Example Application](https://github.com/greyli/bootstrap-flask/tree/master/examples)
 - [PyPI Releases](https://pypi.org/project/Bootstrap-Flask/)
 - [Changelog](https://github.com/greyli/bootstrap-flask/blob/master/CHANGES.rst)
+
+
+## Notes for Bootstrap 4 & 5 support
+
+The Bootstrap 5 support is added in Bootstrap-Flask 2.0 version. Now you can use
+the separate extension class for different Bootstrap major versions.
+
+For Bootstrap 4, use the `Bootstrap4` class:
+
+```python
+from flask_bootstrap import Bootstrap4
+
+# ...
+bootstrap = Bootstrap4(app)
+```
+
+and import macros from the template path `bootstrap4/`:
+
+```html
+{% from 'bootstrap4/form.html' import render_form %}
+```
+
+For Bootstrap 5, use the `Bootstrap5` class:
+
+```python
+from flask_bootstrap import Bootstrap5
+
+# ...
+bootstrap = Bootstrap5(app)
+```
+
+and import macros from the template path `bootstrap5/`:
+
+```html
+{% from 'bootstrap5/form.html' import render_form %}
+```
+
+The `Bootstrap` class and `bootstrap/` template path are deprecated since 2.0
+and will be removed in 3.0.
+
+
+## Migration from Flask-Bootstrap
+
+If you come from Flask-Bootstrap, check out
+[this tutorial](https://bootstrap-flask.readthedocs.io/en/stable/migrate.html) on how to
+migrate to this extension.
 
 
 ## License

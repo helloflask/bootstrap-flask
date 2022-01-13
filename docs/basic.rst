@@ -40,7 +40,7 @@ If you want to use Bootstrap 5, import and instanzlize the ``Bootstrap5`` class 
 
     bootstrap = Bootstrap5(app)
 
-Resources helpers
+Resources Helpers
 -----------------
 
 Bootstrap-Flask provides two helper functions to load Bootstrap resources in the template:
@@ -149,6 +149,12 @@ the ``bootstrap5/...`` path instead:
     {% from 'bootstrap5/form.html' import render_form %}
 
 Go to the :doc:`macros` page to see the detailed usage for these macros.
+
+Run the Demo Application
+------------------------
+
+Bootstrap-Flask provides a demo application that contains all the code snippets for the macros and the
+corresponding render output. See :doc:`examples` for the details.
 
 Configurations
 --------------
