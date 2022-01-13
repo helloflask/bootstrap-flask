@@ -200,20 +200,20 @@ class Bootstrap4(_Bootstrap):
     """
     Extension class for Bootstrap 4.
 
-    Initilize the extension::
+    Initialize the extension::
 
         from flask import Flask
-        from flask_bootstrap import Bootstrap
+        from flask_bootstrap import Bootstrap4
 
         app = Flask(__name__)
-        bootstrap = Bootstrap(app)
+        bootstrap = Bootstrap4(app)
 
     Or with the application factory::
 
         from flask import Flask
-        from flask_bootstrap import Bootstrap
+        from flask_bootstrap import Bootstrap4
 
-        bootstrap = Bootstrap()
+        bootstrap = Bootstrap4()
 
         def create_app():
             app = Flask(__name__)
@@ -237,7 +237,7 @@ class Bootstrap5(_Bootstrap):
     """
     Base class for Bootstrap 5.
 
-    Initilize the extension::
+    Initialize the extension::
 
         from flask import Flask
         from flask_bootstrap import Bootstrap5
@@ -254,7 +254,7 @@ class Bootstrap5(_Bootstrap):
 
         def create_app():
             app = Flask(__name__)
-            bootstrap5.init_app(app)
+            bootstrap.init_app(app)
 
     .. versionadded:: 2.0.0
     """
@@ -279,7 +279,7 @@ class Bootstrap(Bootstrap4):
 
 class SwitchField(BooleanField):
     """
-    Extension class to a render Bootstrap switch for a boolean.
+    A wrapper field for ``BooleanField`` that renders as a Bootstrap switch.
 
     .. versionadded:: 2.0.0
     """
