@@ -2,7 +2,7 @@
 Bootstrap-Flask
 ---------------
 
-Bootstrap-Flask is a collection of Jinja macros for Bootstrap and Flask.
+Bootstrap-Flask is a collection of Jinja macros for Bootstrap 4 & 5 and Flask.
 It helps you to render Flask-related objects and data to Bootstrap HTML more easily.
 
 If you come from Flask-Bootstrap, check out
@@ -16,12 +16,12 @@ from setuptools import setup
 
 setup(
     name='Bootstrap-Flask',
-    version='2.0.0dev',
+    version='2.0.0',
     url='https://github.com/greyli/bootstrap-flask',
     license='MIT',
     author='Grey Li',
     author_email='withlihui@gmail.com',
-    description='Bootstrap helper for Flask.',
+    description='Bootstrap 4 & 5 helper for your Flask projects.',
     long_description=__doc__,
     long_description_content_type='text/markdown',
     platforms='any',
