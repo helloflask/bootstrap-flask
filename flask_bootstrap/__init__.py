@@ -1,18 +1,13 @@
 import warnings
 
 from flask import current_app, Markup, Blueprint, url_for
-
-from wtforms import BooleanField
-try:  # pragma: no cover
-    from wtforms.fields import HiddenField
-except ImportError:
-    def is_hidden_field_filter(field):
-        raise RuntimeError('WTForms is not installed.')
-else:
-    def is_hidden_field_filter(field):
-        return isinstance(field, HiddenField)
+from wtforms import BooleanField, HiddenField
 
 CDN_BASE = 'https://cdn.jsdelivr.net/npm'
+
+
+def is_hidden_field_filter(field):
+    return isinstance(field, HiddenField)
 
 
 def raise_helper(message):  # pragma: no cover
