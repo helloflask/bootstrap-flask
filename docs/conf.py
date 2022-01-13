@@ -107,8 +107,12 @@ html_show_sourcelink = False
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'Bootstrap-Flaskdoc'
+html_favicon = "_static/bootstrap-flask-favicon.png"
+html_logo = "_static/bootstrap-flask-logo.png"
 
-
+html_css_files = [
+    'css/custom.css',
+]
 # -- Options for LaTeX output ------------------------------------------------
 
 latex_elements = {
