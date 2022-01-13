@@ -25,6 +25,7 @@ Release date: -
 - Add ``form_type`` and ``horizontal_columns`` parameters to ``render_form_row`` (`#192 <https://github.com/greyli/bootstrap-flask/pull/192>`__).
 - Add support for WTForms range fields (``DecimalRangeField`` and ``IntegerRangeField``) (`#194 <https://github.com/greyli/bootstrap-flask/pull/194>`__).
 - Bump Bootstrap Icons to v1.7.2.
+- Bump Bootstrap & Bootswatch to 4.6.1/5.1.3.
 
 
 1.8.0
