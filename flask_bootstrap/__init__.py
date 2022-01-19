@@ -263,7 +263,7 @@ class Bootstrap5(_Bootstrap):
 
 
 class Bootstrap(Bootstrap4):
-    def __init__(self, app):
+    def __init__(self, app=None):
         super().__init__(app=app)
         warnings.warn(
             'For Bootstrap 4, please import and use "Bootstrap4" class, the "Bootstrap" class '
