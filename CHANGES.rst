@@ -7,6 +7,17 @@ Changelog
 Release date: --
 
 
+2.0.1
+-----
+
+Release date: 2022/1/27
+
+- Remove extra quotaion mark in ``render_nav_item``
+  (`#201 <https://github.com/greyli/bootstrap-flask/pull/201>`__).
+- Fix signature of ``Bootstrap.__init__()`` incompatible with older version
+  (`#198 <https://github.com/greyli/bootstrap-flask/pull/198>`__).
+
+
 2.0.0
 -----
 
