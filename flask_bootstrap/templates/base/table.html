@@ -25,6 +25,8 @@
     {%- endwith %}
 {%- endmacro %}
 
+{% macro render_links(data) %}{% for part in data.strip().split(' ') %}{% if loop.index != 1 %} {% endif %}{{ part | urlize(target='_blank') }}{% endfor %}{%- endmacro %}
+
 {% macro render_table(data,
                       titles=None,
                       primary_key='id',
@@ -34,6 +36,8 @@
                       header_classes=None,
                       responsive=False,
                       responsive_class='table-responsive',
+                      safe=None,
+                      urlize=None,
                       model=None,
                       show_actions=False,
                       actions_title='Actions',
@@ -79,10 +83,12 @@
     {% for row in data %}
     <tr>
         {% for title in titles %}
-        {% if title[0] == primary_key %}
-            <th scope="row">{{ row[title[0]] }}</th>
+        {% set key = title[0] %}
+        {% set value = row[key] %}
+        {% if key == primary_key %}
+            <th scope="row">{% if value is string %}{% if safe and key in safe %}{{ value|safe }}{% else %}{% if urlize and key in urlize %}{{ render_links(value) }}{% else %}{{ value }}{% endif %}{% endif %}{% else %}{{ value }}{% endif %}</th>
         {% else %}
-            <td>{{ row[title[0]] }}</td>
+            <td>{% if value is string %}{% if safe and key in safe %}{{ value|safe }}{% else %}{% if urlize and key in urlize %}{{ render_links(value) }}{% else %}{{ value }}{% endif %}{% endif %}{% else %}{{ value }}{% endif %}</td>
         {% endif %}
         {% endfor %}
         {% if show_actions %}

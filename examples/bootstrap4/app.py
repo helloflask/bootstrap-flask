@@ -102,8 +102,21 @@ def before_first_request_func():
     db.drop_all()
     db.create_all()
     for i in range(20):
+        url = 'mailto:x@t.me'
+        if i % 7 == 0:
+            url = 'www.t.me'
+        elif i % 7 == 1:
+            url = 'https://t.me'
+        elif i % 7 == 2:
+            url = 'http://t.me'
+        elif i % 7 == 3:
+            url = 'http://t'
+        elif i % 7 == 4:
+            url = 'http://'
+        elif i % 7 == 5:
+            url = 'x@t.me'
         m = Message(
-            text=f'Test message {i+1}',
+            text=f'Message {i+1} {url}',
             author=f'Author {i+1}',
             category=f'Category {i+1}',
             create_time=4321*(i+1)
