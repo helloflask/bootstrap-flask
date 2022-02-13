@@ -152,6 +152,12 @@ the necessary fix for required=False attributes, but will also not set the requi
                     {% else %}
                         {{ field(class="form-range%s" % extra_classes, **kwargs)|safe }}
                     {% endif %}
+                {%- elif field.type == 'SelectField' -%}
+                    {% if field.errors %}
+                        {{ field(class="form-select mb-2 mr-sm-2 mb-sm-0 is-invalid%s" % extra_classes, **kwargs)|safe }}
+                    {% else %}
+                        {{ field(class="form-select mb-2 mr-sm-2 mb-sm-0%s" % extra_classes, **kwargs)|safe }}
+                    {% endif %}
                 {%- else -%}
                     {% if field.errors %}
                         {{ field(class="form-control mb-2 mr-sm-2 mb-sm-0 is-invalid%s" % extra_classes, **kwargs)|safe }}
@@ -167,6 +173,12 @@ the necessary fix for required=False attributes, but will also not set the requi
                         {{ field(class="form-range is-invalid%s" % extra_classes, **kwargs)|safe }}
                     {% else %}
                         {{ field(class="form-range%s" % extra_classes, **kwargs)|safe }}
+                    {% endif %}
+                {%- elif field.type == 'SelectField' -%}
+                    {% if field.errors %}
+                        {{ field(class="form-select is-invalid%s" % extra_classes, **kwargs)|safe }}
+                    {% else %}
+                        {{ field(class="form-select%s" % extra_classes, **kwargs)|safe }}
                     {% endif %}
                 {%- else -%}
                     {% if field.errors %}
@@ -194,6 +206,12 @@ the necessary fix for required=False attributes, but will also not set the requi
                         {{ field(class="form-range is-invalid%s" % extra_classes, **kwargs)|safe }}
                     {% else %}
                         {{ field(class="form-range%s" % extra_classes, **kwargs)|safe }}
+                    {% endif %}
+                {%- elif field.type == 'SelectField' -%}
+                    {% if field.errors %}
+                        {{ field(class="form-select is-invalid%s" % extra_classes, **kwargs)|safe }}
+                    {% else %}
+                        {{ field(class="form-select%s" % extra_classes, **kwargs)|safe }}
                     {% endif %}
                 {%- else -%}
                     {% if field.errors %}
