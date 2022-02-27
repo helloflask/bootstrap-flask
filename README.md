@@ -88,6 +88,7 @@ Bootstrap-Flask maintained and updated with Bootstrap.
 - [Example Application](https://github.com/greyli/bootstrap-flask/tree/master/examples)
 - [PyPI Releases](https://pypi.org/project/Bootstrap-Flask/)
 - [Changelog](https://github.com/greyli/bootstrap-flask/blob/master/CHANGES.rst)
+- [Discussions](https://github.com/greyli/bootstrap-flask/discussions)
 
 
 ## Notes for Bootstrap 4 & 5 support
