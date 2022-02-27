@@ -10,7 +10,7 @@ Release date: --
 2.0.2
 -----
 
-Release date: --
+Release date: 2022/2/27
 
 - Add the missing ``form-select`` class for Bootstrap 5 form select fields
   (`#211 <https://github.com/greyli/bootstrap-flask/pull/211>`__).
