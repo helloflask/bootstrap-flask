@@ -132,7 +132,7 @@ and will be removed in 3.0.
 ## Migration from Flask-Bootstrap
 
 If you come from Flask-Bootstrap, check out
-[this tutorial](https://bootstrap-flask.readthedocs.io/en/stable/migrate.html) on how to
+[this tutorial](https://bootstrap-flask.readthedocs.io/en/stable/migrate/) on how to
 migrate to this extension.
 
 
