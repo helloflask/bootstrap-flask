@@ -391,7 +391,8 @@ API
 .. py:function:: render_static(type, filename_or_url, local=True)
 
     :param type: Resources type, one of ``css``, ``js``, ``icon``.
-    :param filename_or_url: The name of the file, or the full URL when ``local`` set to ``False``.
+    :param filename_or_url: The path of the file (relative to the static folder),
+                            or the full URL when ``local`` set to ``False``.
     :param local: Load local resources or from the passed URL.
 
 
