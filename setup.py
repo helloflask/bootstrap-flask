@@ -6,7 +6,7 @@ Bootstrap-Flask is a collection of Jinja macros for Bootstrap 4 & 5 and Flask.
 It helps you to render Flask-related objects and data to Bootstrap HTML more easily.
 
 If you come from Flask-Bootstrap, check out
-[this tutorial](https://bootstrap-flask.readthedocs.io/en/latest/migrate.html)
+[this tutorial](https://bootstrap-flask.readthedocs.io/en/stable/migrate/)
 on how to migrate to this extension.
 
 Go to [GitHub page](https://github.com/greyli/bootstrap-flask), which you
