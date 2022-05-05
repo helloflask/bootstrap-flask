@@ -75,6 +75,13 @@ Read the [Basic Usage](https://bootstrap-flask.readthedocs.io/en/stable/basic.ht
 docs for more details.
 
 
+## Live demo
+
+Live demos of the latest release are:
+- [Examples with Bootstrap 4](http://173.212.198.217/)
+- [Examples with Bootstrap 5](http://173.212.227.186/)
+
+
 ## Donate
 
 If you find Bootstrap-Flask useful, please consider
