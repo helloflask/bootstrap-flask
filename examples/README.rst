@@ -26,6 +26,9 @@ Bootstrap 5:
 
 Now go to http://localhost:5000.
 
+Live demos of the latest release are:
+- `Examples with Bootstrap 4 <http://173.212.198.217/>`_
+- `Examples with Bootstrap 5 <http://173.212.227.186/>`_
 
 Overview of icons
 -----------------
