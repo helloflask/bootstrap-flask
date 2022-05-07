@@ -70,7 +70,10 @@ Or run the full checks with tox:
 Authors
 -------
 
-Maintainer: `Grey Li <https://github.com/greyli>`_
+Maintainers:
+
+- `Grey Li <https://github.com/greyli>`_
+- `Pander <https://github.com/PanderMusubi>`_
 
 See also the list of
 `contributors <https://github.com/greyli/bootstrap-flask/contributors>`_
