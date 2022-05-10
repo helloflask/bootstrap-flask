@@ -129,7 +129,7 @@ API
                         default to ``md``. This will overwrite config ``BOOTSTRAP_BTN_SIZE``.
     :param form_group_classes: Bootstrap 5 only (``bootstrap5/form.html``). You can use this parameter to change the
                                form group classes, it will read the config ``BOOTSTRAP_FORM_GROUP_CLASSES`` first
-                               (the default value is ``mb-3``)
+                               (the default value is ``mb-3``).
 
 .. tip:: See :ref:`button_customization` and :ref:`checkbox_customization` to learn more on customizations.
 
@@ -193,7 +193,7 @@ API
     :param render_kw: A dictionary, specifying custom attributes for the
                      ``<form>`` tag.
     :param form_group_classes: Bootstrap 5 only (``bootstrap5/form.html``). You can use this parameter to change the form group classes, it will
-                               read the config ``BOOTSTRAP_FORM_GROUP_CLASSES`` first (the default value is ``mb-3``)
+                               read the config ``BOOTSTRAP_FORM_GROUP_CLASSES`` first (the default value is ``mb-3``).
     :param form_inline_classes: Bootstrap 5 only (``bootstrap5/form.html``). You can use this parameter to change the form inline classes,
                                 it will read the config ``BOOTSTRAP_FORM_INLINE_CLASSES`` first (the default value is
                                 ``row row-cols-lg-auto g-3 align-items-center``).
@@ -273,7 +273,7 @@ API
     :param col_class_default: The default class to apply to the div that represents a column
                                 if nothing more specific is said for the div column of the rendered field.
     :param col_map: A dictionary, mapping field.name to a class definition that should be applied to
-                            the div column that contains the field. For example: ``col_map={'username': 'col-md-2'})``
+                            the div column that contains the field. For example: ``col_map={'username': 'col-md-2'})``.
     :param button_style: Set button style for ``SubmitField``. Accept Bootstrap button style name (i.e. primary, 
                          secondary, outline-success, etc.), default to ``primary`` (e.g. ``btn-primary``). This will
                          overwrite config ``BOOTSTRAP_BTN_STYLE``.
@@ -283,7 +283,7 @@ API
                       ``{'submit': 'success'}``. This will overwrite ``button_style`` and ``BOOTSTRAP_BTN_STYLE``.
     :param form_group_classes: Bootstrap 5 only (``bootstrap5/form.html``). You can use this parameter to change the
                                form group classes, it will read the config ``BOOTSTRAP_FORM_GROUP_CLASSES`` first
-                               (the default value is ``mb-3``)
+                               (the default value is ``mb-3``).
     :param form_type: One of ``basic``, ``inline`` or ``horizontal``. See the Bootstrap docs for details on different
                       form layouts.
     :param horizontal_columns: When using the horizontal layout, layout forms like this. Must be a 3-tuple of
@@ -366,7 +366,7 @@ API
     :param size: Can be 'sm' or 'lg' for smaller/larger pagination.
     :param args: Additional arguments passed to :func:`~flask.url_for`. If
                 ``endpoint`` is ``None``, uses :attr:`~flask.Request.args` and
-                :attr:`~flask.Request.view_args`
+                :attr:`~flask.Request.view_args`.
     :param fragment: Add URL fragment into link, such as ``#comment``.
     :param align: The align of the pagination. Can be 'left', 'center' or 'right', default to 'left'.
     :param kwargs: Extra attributes for the ``<ul>``-element.
@@ -442,7 +442,7 @@ API
     :param dismissible: If true, will output a button to close an alert. For fully functioning dismissible alerts, you must use the alerts JavaScript plugin.
     :param dismiss_animate: If true, will enable dismiss animate when click the dismiss button.
 
-When you call ``flash('message', 'category')``, there are 8 category options available, mapping to Bootstrap 4's alerts type:
+When you call ``flash('message', 'category')``, there are 8 category options available, mapping to Bootstrap's alerts type:
 
 primary, secondary, success, danger, warning, info, light, dark.
 
@@ -491,6 +491,8 @@ API
                               header_classes=None,\
                               responsive=False,\
                               responsive_class='table-responsive',\
+                              safe=None,\
+                              urlize=None,\
                               show_actions=False,\
                               actions_title='Actions',\
                               model=None,\                              
@@ -510,6 +512,10 @@ API
     :param header_classes: A string of classes to apply to the table header (e.g ``'thead-dark'``).
     :param responsive: Whether to enable/disable table responsiveness.
     :param responsive_class: The responsive class to apply to the table. Default is ``'table-responsive'``.
+    :param safe: Tuple with columns names to render HTML safe using ``|safe``.
+                Has priority over ``urlize`` parameter. Default is ``None``.
+    :param urlize: Tuple with column names to render with HTML link on each URL using
+                ``render_links()``. Is overruled by ``safe`` parameter. Default is ``None``.
     :param show_actions: Whether to display the actions column. Default is ``False``.
     :param model: The model used to build custom_action, view, edit, delete URLs.
     :param actions_title: Title for the actions column header. Default is ``'Actions'``.
@@ -614,3 +620,29 @@ API
                 string (e.g. ``'red'``, ``'#ddd'`` or ``'(250, 250, 250)'``), default to use configuration ``BOOTSTRAP_ICON_COLOR`` (default value is ``None``).
     :param title: The title of the icon for accessibility support.
     :param desc: The description of the icon for accessibility support.
+
+
+render_links()
+--------------
+
+Render links in a text.
+
+Example
+~~~~~~~
+
+.. code-block:: jinja
+
+    {% from 'bootstrap4/table.html' import render_links %}
+
+    {{ render_links('See https://github.com and http://gitlab.com for info.') }}
+
+API
+~~~~
+
+.. py:function:: render_links(data)
+
+    :param data: The text which can be empty, contain one URL, contain only
+                without URLs or contain text with one or more URLs using
+                Jinja's `urlize <https://jinja.palletsprojects.com/en/latest/templates/?highlight=urlize#jinja-filters.urlize>`_.
+
+This macro is usually called inside ``render_table``, but can also be used diredctly.
