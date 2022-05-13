@@ -136,6 +136,15 @@ If you come from Flask-Bootstrap, check out
 migrate to this extension.
 
 
+## Contributing
+
+For guidance on setting up a development environment and how to make a
+contribution to Bootstrap-Flask, see the
+[development documentation](https://bootstrap-flask.readthedocs.io/en/stable/#development)
+and Flask's
+[contributing guidelines](https://github.com/pallets/flask/blob/main/CONTRIBUTING.rst).
+
+
 ## License
 
 This project is licensed under the MIT License (see the `LICENSE` file for
