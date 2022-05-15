@@ -47,7 +47,7 @@ locally with the following commands:
 
 .. code-block:: bash
 
-    $ git clone git@github.com:greyli/bootstrap-flask.git
+    $ git clone git@github.com:helloflask/bootstrap-flask.git
     $ cd bootstrap-flask
     $ python3 -m venv venv
     $ . venv/bin/activate
@@ -76,7 +76,7 @@ Maintainers:
 - `Pander <https://github.com/PanderMusubi>`_
 
 See also the list of
-`contributors <https://github.com/greyli/bootstrap-flask/contributors>`_
+`contributors <https://github.com/helloflask/bootstrap-flask/contributors>`_
 who participated in this project.
 
 
