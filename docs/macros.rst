@@ -491,8 +491,8 @@ API
                               header_classes=None,\
                               responsive=False,\
                               responsive_class='table-responsive',\
-                              safe=None,\
-                              urlize=None,\
+                              safe_columns=None,\
+                              urlize_columns=None,\
                               show_actions=False,\
                               actions_title='Actions',\
                               model=None,\                              
@@ -512,10 +512,10 @@ API
     :param header_classes: A string of classes to apply to the table header (e.g ``'thead-dark'``).
     :param responsive: Whether to enable/disable table responsiveness.
     :param responsive_class: The responsive class to apply to the table. Default is ``'table-responsive'``.
-    :param safe: Tuple with columns names to render HTML safe using ``|safe``.
+    :param safe_columns: Tuple with columns names to render HTML safe using ``|safe``.
                 Has priority over ``urlize`` parameter. Default is ``None``.
-    :param urlize: Tuple with column names to render with HTML link on each URL using
-                ``render_links()``. Is overruled by ``safe`` parameter. Default is ``None``.
+    :param urlize_columns: Tuple with column names to render with HTML link on each URL
+                using ``|urlize``. Is overruled by ``safe`` parameter. Default is ``None``.
     :param show_actions: Whether to display the actions column. Default is ``False``.
     :param model: The model used to build custom_action, view, edit, delete URLs.
     :param actions_title: Title for the actions column header. Default is ``'Actions'``.
@@ -620,29 +620,3 @@ API
                 string (e.g. ``'red'``, ``'#ddd'`` or ``'(250, 250, 250)'``), default to use configuration ``BOOTSTRAP_ICON_COLOR`` (default value is ``None``).
     :param title: The title of the icon for accessibility support.
     :param desc: The description of the icon for accessibility support.
-
-
-render_links()
---------------
-
-Render links in a text.
-
-Example
-~~~~~~~
-
-.. code-block:: jinja
-
-    {% from 'bootstrap4/table.html' import render_links %}
-
-    {{ render_links('See https://github.com and http://gitlab.com for info.') }}
-
-API
-~~~~
-
-.. py:function:: render_links(data)
-
-    :param data: The text which can be empty, contain one URL, contain only
-                without URLs or contain text with one or more URLs using
-                Jinja's `urlize <https://jinja.palletsprojects.com/en/latest/templates/?highlight=urlize#jinja-filters.urlize>`_.
-
-This macro is usually called inside ``render_table``, but can also be used diredctly.

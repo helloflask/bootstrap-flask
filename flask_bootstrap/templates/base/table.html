@@ -25,8 +25,6 @@
     {%- endwith %}
 {%- endmacro %}
 
-{% macro render_links(data) %}{% for part in data.strip().split(' ') %}{% if loop.index != 1 %} {% endif %}{{ part | urlize(target='_blank') }}{% endfor %}{%- endmacro %}
-
 {% macro render_table(data,
                       titles=None,
                       primary_key='id',
@@ -36,8 +34,8 @@
                       header_classes=None,
                       responsive=False,
                       responsive_class='table-responsive',
-                      safe=None,
-                      urlize=None,
+                      safe_columns=None,
+                      urlize_columns=None,
                       model=None,
                       show_actions=False,
                       actions_title='Actions',
@@ -85,11 +83,29 @@
         {% for title in titles %}
         {% set key = title[0] %}
         {% set value = row[key] %}
-        {% if key == primary_key %}
-            <th scope="row">{% if value is string %}{% if safe and key in safe %}{{ value|safe }}{% else %}{% if urlize and key in urlize %}{{ render_links(value) }}{% else %}{{ value }}{% endif %}{% endif %}{% else %}{{ value }}{% endif %}</th>
-        {% else %}
-            <td>{% if value is string %}{% if safe and key in safe %}{{ value|safe }}{% else %}{% if urlize and key in urlize %}{{ render_links(value) }}{% else %}{{ value }}{% endif %}{% endif %}{% else %}{{ value }}{% endif %}</td>
-        {% endif %}
+        {%- if key == primary_key -%}
+            <th scope="row">
+        {%- else -%}
+            <td>
+        {%- endif -%}
+        {%- if value is string -%}
+            {%- if safe_columns and key in safe_columns -%}
+                {{ value|safe }}
+            {%- else -%}
+                {%- if urlize_columns and key in urlize_columns -%}
+                    {{ value|urlize }}
+                {%- else -%}
+                    {{ value }}
+                {%- endif -%}
+            {%- endif -%}
+        {%- else -%}
+            {{ value }}
+        {%- endif -%}
+        {%- if key == primary_key -%}
+            </th>
+        {%- else -%}
+            </td>
+        {%- endif -%}
         {% endfor %}
         {% if show_actions %}
         <td>

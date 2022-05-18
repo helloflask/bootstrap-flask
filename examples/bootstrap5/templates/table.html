@@ -15,12 +15,12 @@
 {{ render_table(messages, responsive=True, responsive_class='table-responsive-sm') }}
 
 <h2>Table with actions</h2>
-<pre>{% raw %}{{ render_table(messages, urlize=('text'), show_actions=True, model=Message,
+<pre>{% raw %}{{ render_table(messages, urlize_columns=('text'), show_actions=True, model=Message,
                 view_url=('view_message', [('message_id', ':id')]),
                 edit_url=('edit_message', [('message_id', ':id')]),
                 delete_url=('delete_message', [('message_id', ':id')]),
                 new_url=url_for('new_message')) }}{% endraw %}</pre>
-{{ render_table(messages, urlize=('text'), show_actions=True, model=Message,
+{{ render_table(messages, urlize_columns=('text'), show_actions=True, model=Message,
                 view_url=('view_message', [('message_id', ':id')]),
                 edit_url=('edit_message', [('message_id', ':id')]),
                 delete_url=('delete_message', [('message_id', ':id')]),
