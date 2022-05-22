@@ -513,9 +513,10 @@ API
     :param responsive: Whether to enable/disable table responsiveness.
     :param responsive_class: The responsive class to apply to the table. Default is ``'table-responsive'``.
     :param safe_columns: Tuple with columns names to render HTML safe using ``|safe``.
-                Has priority over ``urlize`` parameter. Default is ``None``.
+                Has priority over ``urlize_columns`` parameter. Default is ``None``.
     :param urlize_columns: Tuple with column names to render with HTML link on each URL
-                using ``|urlize``. Is overruled by ``safe`` parameter. Default is ``None``.
+                using ``|urlize``. Is overruled by ``safe_columns`` parameter. Default is ``None``.
+                WARNING: Only use this for sanitized user data to prevent XSS attacks.
     :param show_actions: Whether to display the actions column. Default is ``False``.
     :param model: The model used to build custom_action, view, edit, delete URLs.
     :param actions_title: Title for the actions column header. Default is ``'Actions'``.
