@@ -34,6 +34,8 @@
                       header_classes=None,
                       responsive=False,
                       responsive_class='table-responsive',
+                      safe_columns=None,
+                      urlize_columns=None,
                       model=None,
                       show_actions=False,
                       actions_title='Actions',
@@ -79,11 +81,31 @@
     {% for row in data %}
     <tr>
         {% for title in titles %}
-        {% if title[0] == primary_key %}
-            <th scope="row">{{ row[title[0]] }}</th>
-        {% else %}
-            <td>{{ row[title[0]] }}</td>
-        {% endif %}
+        {% set key = title[0] %}
+        {% set value = row[key] %}
+        {%- if key == primary_key -%}
+            <th scope="row">
+        {%- else -%}
+            <td>
+        {%- endif -%}
+        {%- if value is string -%}
+            {%- if safe_columns and key in safe_columns -%}
+                {{ value|safe }}
+            {%- else -%}
+                {%- if urlize_columns and key in urlize_columns -%}
+                    {{ value|urlize }}
+                {%- else -%}
+                    {{ value }}
+                {%- endif -%}
+            {%- endif -%}
+        {%- else -%}
+            {{ value }}
+        {%- endif -%}
+        {%- if key == primary_key -%}
+            </th>
+        {%- else -%}
+            </td>
+        {%- endif -%}
         {% endfor %}
         {% if show_actions %}
         <td>

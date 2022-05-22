@@ -32,9 +32,75 @@ def test_render_simple_table(app, client):
     assert '<table class="table">' in data
     assert '<th scope="col">#</th>' in data
     assert '<th scope="col">Message</th>' in data
-    assert '<th scope="col">Message</th>' in data
     assert '<th scope="row">1</th>' in data
     assert '<td>Test message 1</td>' in data
+
+
+def test_render_safe_table(app, client):
+    db = SQLAlchemy(app)
+
+    class Message(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        text = db.Column(db.Text)
+
+    @app.route('/table')
+    def test():
+        db.drop_all()
+        db.create_all()
+        for i in range(10):
+            msg = Message(text=f'Test <em>message</em> {i+1}')
+            db.session.add(msg)
+        db.session.commit()
+        page = request.args.get('page', 1, type=int)
+        pagination = Message.query.paginate(page, per_page=10)
+        messages = pagination.items
+        titles = [('id', '#'), ('text', 'Message')]
+        return render_template_string('''
+                                {% from 'bootstrap4/table.html' import render_table %}
+                                {{ render_table(messages, titles, safe_columns=('text'), urlize_columns=('text')) }}
+                                ''', titles=titles, messages=messages)
+
+    response = client.get('/table')
+    data = response.get_data(as_text=True)
+    assert '<table class="table">' in data
+    print(data)
+    assert '<th scope="col">#</th>' in data
+    assert '<th scope="col">Message</th>' in data
+    assert '<th scope="row">1</th>' in data
+    assert '<td>Test <em>message</em> 1</td>' in data
+
+
+def test_render_urlize_table(app, client):
+    db = SQLAlchemy(app)
+
+    class Message(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        text = db.Column(db.Text)
+
+    @app.route('/table')
+    def test():
+        db.drop_all()
+        db.create_all()
+        for i in range(10):
+            msg = Message(text=f'Test https://t.me {i+1}')
+            db.session.add(msg)
+        db.session.commit()
+        page = request.args.get('page', 1, type=int)
+        pagination = Message.query.paginate(page, per_page=10)
+        messages = pagination.items
+        titles = [('id', '#'), ('text', 'Message')]
+        return render_template_string('''
+                                {% from 'bootstrap4/table.html' import render_table %}
+                                {{ render_table(messages, titles, urlize_columns=('text')) }}
+                                ''', titles=titles, messages=messages)
+
+    response = client.get('/table')
+    data = response.get_data(as_text=True)
+    assert '<table class="table">' in data
+    assert '<th scope="col">#</th>' in data
+    assert '<th scope="col">Message</th>' in data
+    assert '<th scope="row">1</th>' in data
+    assert '<td>Test <a href="https://t.me" rel="noopener">https://t.me</a> 1</td>' in data
 
 
 def test_render_customized_table(app, client):
