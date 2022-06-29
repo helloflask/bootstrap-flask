@@ -25,3 +25,21 @@ Bootstrap 5:
     $ python bootstrap5/app.py
 
 Now go to http://localhost:5000.
+
+
+Overview of icons
+-----------------
+
+The example applications contain a page called icons which gives an overview
+of all icons supported by this version of Bootstrap-Flask. This overview can be
+used for testing purposes but is also offline documentation on the icons
+available.
+
+When Bootstrap-Flask updates the icon file, the overview page can be upgraded
+with:
+
+
+.. code-block:: bash
+
+    $ python3 update-icons.py
+

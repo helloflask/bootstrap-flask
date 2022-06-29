@@ -129,22 +129,6 @@ The `Bootstrap` class and `bootstrap/` template path are deprecated since 2.0
 and will be removed in 3.0.
 
 
-## Overview of icons
-
-The example applications contain a page called icons which gives an overview
-of all icons supported by this version of Bootstrap-Flask. This overview can be
-used for testing purposes but is also offline documentation on the icons
-available.
-
-When Bootstrap-Flask maintenance this requires, these overviews can be upgraded
-with:
-
-```
-$ cd examples
-$ pip generate.py
-```
-
-
 ## Migration from Flask-Bootstrap
 
 If you come from Flask-Bootstrap, check out

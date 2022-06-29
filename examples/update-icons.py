@@ -33,8 +33,8 @@ def generate(version):
 <use xlink:href="bootstrap-icons.svg#{name}" />
 </svg>
 </div>
-<div class="name text-muted text-decoration-none text-center pt-1">{name}</div>
 </a>
+<div class="name text-muted text-decoration-none text-center pt-1">{name}</div>
 </li>
 '''
             file.write(item)
