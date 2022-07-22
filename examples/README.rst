@@ -46,4 +46,3 @@ with:
 .. code-block:: bash
 
     $ python3 update-icons.py
-
