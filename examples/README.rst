@@ -30,3 +30,20 @@ Live demos of the latest release are:
 
 - `Examples with Bootstrap 4 <http://173.212.198.217/>`_
 - `Examples with Bootstrap 5 <http://173.212.227.186/>`_
+
+Overview of icons
+-----------------
+
+The example applications contain a page called icons which gives an overview
+of all icons supported by this version of Bootstrap-Flask. This overview can be
+used for testing purposes but is also offline documentation on the icons
+available.
+
+When Bootstrap-Flask updates the icon file, the overview page can be upgraded
+with:
+
+
+.. code-block:: bash
+
+    $ python3 update-icons.py
+
