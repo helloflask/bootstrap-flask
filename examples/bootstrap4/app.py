@@ -230,5 +230,10 @@ def test_icon():
     return render_template('icon.html')
 
 
+@app.route('/icons')
+def test_icons():
+    return render_template('icons.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
