@@ -18,7 +18,7 @@ Flask-Bootstrap first and then install Bootstrap-Flask:
     $ pip uninstall flask-bootstrap
     $ pip install bootstrap-flask
 
-if you accidentally installed both of them, you will need to uninstall them both first:
+If you accidentally installed both of them, you will need to uninstall them both first:
 
 .. code-block:: bash
 
@@ -26,6 +26,11 @@ if you accidentally installed both of them, you will need to uninstall them both
     $ pip install bootstrap-flask
 
 If you want to use both Flask-Bootstrap and Bootstrap-Flask for different projects, you can use virtual environment.
+
+The mix of these two project will cause the template not found error:
+
+- TemplateNotFound jinja2.exceptions.TemplateNotFound: bootstrap/nav.html
+- TemplateNotFound jinja2.exceptions.TemplateNotFound: bootstrap/wtf.html
 
 Initialize the Extension
 ------------------------

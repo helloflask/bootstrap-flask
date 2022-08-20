@@ -4,7 +4,7 @@ Changelog
 2.1.0
 -----
 
-Release date: --
+Release date: 2022/8/20
 
 - Add ``safe_columns`` and ``urlize_columns`` parameters to ``render_table`` macro
   to support rendering table column as HTML/URL (`#204 <https://github.com/helloflask/bootstrap-flask/pull/204>`__).
