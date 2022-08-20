@@ -8,6 +8,8 @@ Release date: --
 
 - Add ``safe_columns`` and ``urlize_columns`` parameters to ``render_table`` macro
   to support rendering table column as HTML/URL (`#204 <https://github.com/helloflask/bootstrap-flask/pull/204>`__).
+- Remame the ``badge`` parameter of ``render_nav_item`` macro to ``_badge``.
+- Remame the ``use_li`` parameter of ``render_nav_item`` macro to ``_use_li``.
 
 
 2.0.2
