@@ -1,11 +1,11 @@
-{% macro render_nav_item(endpoint, text, badge='', use_li=False) %}
+{% macro render_nav_item(endpoint, text, _badge='', _use_li=False) %}
     {% set active = True if request.endpoint and request.endpoint == endpoint else False %}
-    {% if use_li %}<li class="nav-item">{% endif %}
-    <a class="{% if not use_li %}nav-item {% endif %}nav-link{% if active %} active" aria-current="page{% endif %}"
+    {% if _use_li %}<li class="nav-item">{% endif %}
+    <a class="{% if not _use_li %}nav-item {% endif %}nav-link{% if active %} active" aria-current="page{% endif %}"
        href="{{ url_for(endpoint, **kwargs) }}">
-        {{ text }} {% if badge %}<span class="badge badge-light">{{ badge }}</span>{% endif %}
+        {{ text }} {% if _badge %}<span class="badge badge-light">{{ _badge }}</span>{% endif %}
     </a>
-    {% if use_li %}</li>{% endif %}
+    {% if _use_li %}</li>{% endif %}
 {% endmacro %}
 
 
