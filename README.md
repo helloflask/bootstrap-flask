@@ -71,7 +71,7 @@ When the validation fails, the error messages will be rendered with proper style
 
 ![error form rendering](./docs/_static/error-form-example.png)
 
-Read the [Basic Usage](https://bootstrap-flask.readthedocs.io/en/stable/basic.html) 
+Read the [Basic Usage](https://bootstrap-flask.readthedocs.io/en/stable/basic) 
 docs for more details.
 
 
