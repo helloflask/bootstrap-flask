@@ -5,7 +5,7 @@ Type these commands in the terminal:
 
 .. code-block:: bash
 
-    $ git clone https://github.com/greyli/bootstrap-flask.git
+    $ git clone https://github.com/helloflask/bootstrap-flask.git
     $ cd bootstrap-flask
     $ pip install -r requirements/examples.txt
     $ cd examples

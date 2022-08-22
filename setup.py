@@ -9,7 +9,7 @@ If you come from Flask-Bootstrap, check out
 [this tutorial](https://bootstrap-flask.readthedocs.io/en/stable/migrate/)
 on how to migrate to this extension.
 
-Go to [GitHub page](https://github.com/greyli/bootstrap-flask), which you
+Go to [GitHub page](https://github.com/helloflask/bootstrap-flask), which you
 can check for more details.
 """
 from setuptools import setup
@@ -17,7 +17,7 @@ from setuptools import setup
 setup(
     name='Bootstrap-Flask',
     version='2.2.0dev',
-    url='https://github.com/greyli/bootstrap-flask',
+    url='https://github.com/helloflask/bootstrap-flask',
     license='MIT',
     author='Grey Li',
     author_email='withlihui@gmail.com',
