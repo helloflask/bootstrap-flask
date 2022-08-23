@@ -43,4 +43,7 @@
                         ('like_message', [('message_id', ':id')])
                     )
                 ]) }}
+<h2>Table without SQLAlchemy</h2>
+<pre>{% raw %}{{ render_table(data, titles) }}{% endraw %}</pre>
+{{ render_table(data, titles) }}
 {% endblock %}
