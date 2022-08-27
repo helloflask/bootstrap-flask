@@ -184,7 +184,10 @@ def test_table():
     pagination = Message.query.paginate(page, per_page=10)
     messages = pagination.items
     titles = [('id', '#'), ('text', 'Message'), ('author', 'Author'), ('category', 'Category'), ('draft', 'Draft'), ('create_time', 'Create Time')]
-    return render_template('table.html', messages=messages, titles=titles, Message=Message)
+    data = []
+    for msg in messages:
+        data.append({'id': msg.id, 'text': msg.text, 'author': msg.author, 'category': msg.category, 'draft': msg.draft, 'create_time': msg.create_time})
+    return render_template('table.html', messages=messages, titles=titles, Message=Message, data=data)
 
 
 @app.route('/table/<int:message_id>/view')
