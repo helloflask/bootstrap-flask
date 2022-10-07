@@ -59,9 +59,13 @@ Call it in your base template, for example:
     {{ bootstrap.load_js() }}
     </body>
 
-You can pass ``version`` to pin the Bootstrap 4 version you want to use. It defaults to load files from CDN. Set ``BOOTSTRAP_SERVE_LOCAL``
+You can pass ``version`` to pin the Bootstrap version you want to use.
+It defaults to load files from CDN. Set ``BOOTSTRAP_SERVE_LOCAL``
 to ``True`` to use built-in local files. However, these methods are optional, you can also write ``<href></href>``
 and ``<script></script>`` tags to include Bootstrap resources (from your ``static`` folder or CDN) manually by yourself.
+If you want to apply a strict Content Security Policy (CSP), you can pass ``nonce`` to ``bootstrap.load_js()``.
+E.g. if using `Talisman
+<https://github.com/wntrblm/flask-talisman>`_ it can be called with ``bootstrap.load_js(nonce=csp_nonce())``.
 
 Starter template
 ----------------
