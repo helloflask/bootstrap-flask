@@ -158,7 +158,7 @@ def test_nav():
 @app.route('/pagination', methods=['GET', 'POST'])
 def test_pagination():
     page = request.args.get('page', 1, type=int)
-    pagination = Message.query.paginate(page, per_page=10)
+    pagination = Message.query.paginate(page=page, per_page=10)
     messages = pagination.items
     return render_template('pagination.html', pagination=pagination, messages=messages)
 
@@ -181,7 +181,7 @@ def test_flash():
 @app.route('/table')
 def test_table():
     page = request.args.get('page', 1, type=int)
-    pagination = Message.query.paginate(page, per_page=10)
+    pagination = Message.query.paginate(page=page, per_page=10)
     messages = pagination.items
     titles = [('id', '#'), ('text', 'Message'), ('author', 'Author'), ('category', 'Category'), ('draft', 'Draft'), ('create_time', 'Create Time')]
     data = []

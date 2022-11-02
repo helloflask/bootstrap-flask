@@ -17,7 +17,7 @@ def test_render_pager(app, client):
             db.session.add(msg)
         db.session.commit()
         page = request.args.get('page', 1, type=int)
-        pagination = Message.query.paginate(page, per_page=10)
+        pagination = Message.query.paginate(page=page, per_page=10)
         messages = pagination.items
         return render_template_string('''
                         {% from 'bootstrap4/pagination.html' import render_pager %}
