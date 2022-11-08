@@ -6,7 +6,7 @@
         {%- for fieldname, errors in form.errors.items() %}
             {%- if bootstrap_is_hidden_field(form[fieldname]) %}
                 {%- for error in errors %}
-                <div class="invalid-feedback d-block">{{ error }}</div>
+                    <div class="invalid-feedback d-block">{{ error }}</div>
                 {%- endfor %}
             {%- endif %}
         {%- endfor %}
