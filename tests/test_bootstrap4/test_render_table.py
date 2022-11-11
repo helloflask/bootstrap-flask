@@ -19,7 +19,7 @@ def test_render_simple_table(app, client):
             db.session.add(msg)
         db.session.commit()
         page = request.args.get('page', 1, type=int)
-        pagination = Message.query.paginate(page, per_page=10)
+        pagination = Message.query.paginate(page=page, per_page=10)
         messages = pagination.items
         titles = [('id', '#'), ('text', 'Message')]
         return render_template_string('''
@@ -52,7 +52,7 @@ def test_render_safe_table(app, client):
             db.session.add(msg)
         db.session.commit()
         page = request.args.get('page', 1, type=int)
-        pagination = Message.query.paginate(page, per_page=10)
+        pagination = Message.query.paginate(page=page, per_page=10)
         messages = pagination.items
         titles = [('id', '#'), ('text', 'Message')]
         return render_template_string('''
@@ -86,7 +86,7 @@ def test_render_urlize_table(app, client):
             db.session.add(msg)
         db.session.commit()
         page = request.args.get('page', 1, type=int)
-        pagination = Message.query.paginate(page, per_page=10)
+        pagination = Message.query.paginate(page=page, per_page=10)
         messages = pagination.items
         titles = [('id', '#'), ('text', 'Message')]
         return render_template_string('''
@@ -119,7 +119,7 @@ def test_render_customized_table(app, client):
             db.session.add(msg)
         db.session.commit()
         page = request.args.get('page', 1, type=int)
-        pagination = Message.query.paginate(page, per_page=10)
+        pagination = Message.query.paginate(page=page, per_page=10)
         messages = pagination.items
         titles = [('id', '#'), ('text', 'Message')]
         return render_template_string('''
@@ -151,7 +151,7 @@ def test_render_responsive_table(app, client):
             db.session.add(msg)
         db.session.commit()
         page = request.args.get('page', 1, type=int)
-        pagination = Message.query.paginate(page, per_page=10)
+        pagination = Message.query.paginate(page=page, per_page=10)
         messages = pagination.items
         titles = [('id', '#'), ('text', 'Message')]
         return render_template_string('''
@@ -181,7 +181,7 @@ def test_build_table_titles(app, client):
             db.session.add(msg)
         db.session.commit()
         page = request.args.get('page', 1, type=int)
-        pagination = Message.query.paginate(page, per_page=10)
+        pagination = Message.query.paginate(page=page, per_page=10)
         messages = pagination.items
         return render_template_string('''
                                 {% from 'bootstrap4/table.html' import render_table %}
@@ -256,7 +256,7 @@ def test_render_table_with_actions(app, client):  # noqa: C901
             db.session.add(msg)
         db.session.commit()
         page = request.args.get('page', 1, type=int)
-        pagination = Message.query.paginate(page, per_page=10)
+        pagination = Message.query.paginate(page=page, per_page=10)
         messages = pagination.items
         titles = [('id', '#'), ('text', 'Message')]
         return render_template_string('''
@@ -311,7 +311,7 @@ def test_customize_icon_title_of_table_actions(app, client):
             db.session.add(msg)
         db.session.commit()
         page = request.args.get('page', 1, type=int)
-        pagination = Message.query.paginate(page, per_page=10)
+        pagination = Message.query.paginate(page=page, per_page=10)
         messages = pagination.items
         return render_template_string('''
             {% from 'bootstrap4/table.html' import render_table %}
