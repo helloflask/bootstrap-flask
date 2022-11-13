@@ -6,6 +6,10 @@ Changelog
 -----
 
 Release date: -
+- Upgrade to Bootstrap 5.2.2, Bootswatch 5.2.2 and Boostrap Icons 1.9.1.
+- Support testing and deployment for also Python 3.10.
+- Fix example issue with ``paginate`` named parameters.
+- Add applying available Bootswatch theme in examples.
 
 
 2.1.0
