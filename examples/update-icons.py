@@ -13,7 +13,7 @@ def parse(filename):
 
 def generate(version):
     '''Write the HTML template file.'''
-    head = f'''<!-- DO NOT EDIT! Use generate.py for updating this file. -->
+    head = f'''<!-- DO NOT EDIT! Use update-icons.py for updating this file. -->
 {{% extends 'base.html' %}}
 {{% from 'bootstrap{version}/utils.html' import render_icon %}}
 

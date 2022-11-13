@@ -15,7 +15,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
 # set default button sytle and size, will be overwritten by macro parameters
 app.config['BOOTSTRAP_BTN_STYLE'] = 'primary'
 app.config['BOOTSTRAP_BTN_SIZE'] = 'sm'
-# app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = 'lumen'  # uncomment this line to test bootswatch theme
 
 # set default icon title of table actions
 app.config['BOOTSTRAP_TABLE_VIEW_TITLE'] = 'Read'
@@ -89,6 +88,43 @@ class ContactForm(FlaskForm):
     im_accounts = FieldList(FormField(IMForm), min_entries=2)
 
 
+class BootswatchForm(FlaskForm):
+    """Form to test Bootswatch."""
+    #DO NOT EDIT! Use list-bootswatch.py to generate the Radiofield below.
+    theme_name = RadioField(
+        default='default',
+        choices=[
+            ('default', 'none'),
+            ('cerulean', 'Cerulean 5.1.3'),
+            ('cosmo', 'Cosmo 5.1.3'),
+            ('cyborg', 'Cyborg 5.1.3'),
+            ('darkly', 'Darkly 5.1.3'),
+            ('flatly', 'Flatly 5.1.3'),
+            ('journal', 'Journal 5.1.3'),
+            ('litera', 'Litera 5.1.3'),
+            ('lumen', 'Lumen 5.1.3'),
+            ('lux', 'Lux 5.1.3'),
+            ('materia', 'Materia 5.1.3'),
+            ('minty', 'Minty 5.1.3'),
+            ('morph', 'Morph 5.1.3'),
+            ('pulse', 'Pulse 5.1.3'),
+            ('quartz', 'Quartz 5.1.3'),
+            ('sandstone', 'Sandstone 5.1.3'),
+            ('simplex', 'Simplex 5.1.3'),
+            ('sketchy', 'Sketchy 5.1.3'),
+            ('slate', 'Slate 5.1.3'),
+            ('solar', 'Solar 5.1.3'),
+            ('spacelab', 'Spacelab 5.1.3'),
+            ('superhero', 'Superhero 5.1.3'),
+            ('united', 'United 5.1.3'),
+            ('vapor', 'Vapor 5.1.3'),
+            ('yeti', 'Yeti 5.1.3'),
+            ('zephyr', 'Zephyr 5.1.3'),
+        ]
+    )
+    submit = SubmitField()
+
+
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
@@ -153,6 +189,21 @@ def test_form():
 @app.route('/nav', methods=['GET', 'POST'])
 def test_nav():
     return render_template('nav.html')
+
+
+@app.route('/bootswatch', methods=['GET', 'POST'])
+def test_bootswatch():
+    form = BootswatchForm()
+    if form.validate_on_submit():
+        if form.theme_name.data == 'default':
+            app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = None
+        else:
+            app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = form.theme_name.data
+        flash(f'Render style has been set to {form.theme_name.data}.')
+    else:
+        if app.config['BOOTSTRAP_BOOTSWATCH_THEME'] != None:
+            form.theme_name.data = app.config['BOOTSTRAP_BOOTSWATCH_THEME']
+    return render_template('bootswatch.html', form=form)
 
 
 @app.route('/pagination', methods=['GET', 'POST'])
