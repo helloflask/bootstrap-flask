@@ -154,7 +154,7 @@
                   {{ raise('You have to enable the CSRFProtect extension from Flask-WTF to use delete_url, see the docs for more details (https://bootstrap-flask.readthedocs.io/en/stable/macros.html#render-table).') }}
                   {% endif %}
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                <button type="submit" class="btn btn-link p-0 border-0" title="{{ config['BOOTSTRAP_TABLE_DELETE_TITLE'] }}">
+                <button type="submit" class="btn btn-link p-0 border-0 align-baseline" title="{{ config['BOOTSTRAP_TABLE_DELETE_TITLE'] }}">
                     {{ render_icon('trash-fill') }}
                 </button>
             </form>
