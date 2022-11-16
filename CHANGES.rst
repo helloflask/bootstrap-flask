@@ -11,6 +11,8 @@ Release date: -
 - Fix example issue with ``paginate`` named parameters.
 - Add applying available Bootswatch theme in examples.
 
+- Add support for strict Content Security Policy (CSP) (`#252 <https://github.com/helloflask/bootstrap-flask/pull/252>`__)
+
 
 2.1.0
 -----

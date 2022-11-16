@@ -143,7 +143,7 @@
                 </a>
             {%- endif %}
             {% if delete_url %}
-            <form style="display:inline"
+            <form class="d-inline"
                   {% if delete_url is string %}
                    action="{{ delete_url }}"
                   {% else %}
@@ -154,12 +154,9 @@
                   {{ raise('You have to enable the CSRFProtect extension from Flask-WTF to use delete_url, see the docs for more details (https://bootstrap-flask.readthedocs.io/en/stable/macros.html#render-table).') }}
                   {% endif %}
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                <a class="action-icon text-decoration-none"
-                    href="javascript:{}"
-                    onclick="this.closest('form').submit();return false;"
-                    title="{{ config['BOOTSTRAP_TABLE_DELETE_TITLE'] }}">
+                <button type="submit" class="btn btn-link p-0 border-0 align-baseline" title="{{ config['BOOTSTRAP_TABLE_DELETE_TITLE'] }}">
                     {{ render_icon('trash-fill') }}
-                </a>
+                </button>
             </form>
             {% endif %}
         </td>

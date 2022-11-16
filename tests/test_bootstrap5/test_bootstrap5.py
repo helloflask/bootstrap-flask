@@ -52,6 +52,22 @@ class TestBootstrap5:
         rv = bootstrap.load_js(version='5.0.0', popper_version='4.0.0')
         _check_assertions(rv)
 
+    def test_load_js_with_nonce(self, bootstrap):
+        nonce = "rAnd0m"
+        rv = bootstrap.load_js(nonce=nonce)
+        bootstrap_js = f'<script src="{CDN_BASE}/bootstrap@{bootstrap.bootstrap_version}/dist/js/' \
+                       f'bootstrap.min.js" integrity="{bootstrap.bootstrap_js_integrity}" ' \
+                       f'crossorigin="anonymous" nonce="{nonce}"></script>'
+        jquery_js = f'<script src="{CDN_BASE}/jquery@{bootstrap.jquery_version}/dist/jquery.min.js"' \
+                    f' integrity="{bootstrap.jquery_integrity}" crossorigin="anonymous"' \
+                    f' nonce="{nonce}"></script>'
+        popper_js = f'<script src="{CDN_BASE}/@popperjs/core@{bootstrap.popper_version}/dist/umd/popper.min.js"' \
+                    f' integrity="{bootstrap.popper_integrity}" crossorigin="anonymous"' \
+                    f' nonce="{nonce}"></script>'
+        assert bootstrap_js in rv
+        assert jquery_js not in rv
+        assert popper_js in rv
+
     def test_local_resources(self, bootstrap, client):
         current_app.config['BOOTSTRAP_SERVE_LOCAL'] = True
 

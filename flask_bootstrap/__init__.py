@@ -120,8 +120,8 @@ class _Bootstrap:
             css = f'<link rel="stylesheet" href="{boostrap_url}">'
         return Markup(css)
 
-    def _get_js_script(self, version, name, sri):
-        """Get <script> tag for JavaScipt resources."""
+    def _get_js_script(self, version, name, sri, nonce):
+        """Get <script> tag for JavaScript resources."""
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
         paths = {
             'bootstrap': f'js/{self.bootstrap_js_filename}',
@@ -133,9 +133,9 @@ class _Bootstrap:
             url = url_for('bootstrap.static', filename=paths[name])
         else:
             url = f'{CDN_BASE}/{name}@{version}/dist/{paths[name]}'
-        if sri:
-            return f'<script src="{url}" integrity="{sri}" crossorigin="anonymous"></script>'
-        return f'<script src="{url}"></script>'
+        nonce_attribute = f' nonce="{nonce}"' if nonce else ''
+        sri_attributes = f' integrity="{sri}" crossorigin="anonymous"' if sri else ''
+        return f'<script src="{url}"{sri_attributes}{nonce_attribute}></script>'
 
     def _get_sri(self, name, version, sri):
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
@@ -159,7 +159,8 @@ class _Bootstrap:
 
     def load_js(self, version=None, jquery_version=None,  # noqa: C901
                 popper_version=None, with_jquery=True, with_popper=True,
-                bootstrap_sri=None, jquery_sri=None, popper_sri=None):
+                bootstrap_sri=None, jquery_sri=None, popper_sri=None,
+                nonce=None):
         """Load Bootstrap and related library's js resources with given version.
 
         .. versionadded:: 0.1.0
@@ -169,6 +170,10 @@ class _Bootstrap:
         :param popper_version: The version of Popper.js.
         :param with_jquery: Include jQuery or not (only needed with Bootstrap 4).
         :param with_popper: Include Popper.js or not.
+        :param bootstrap_sri: The integrity attribute value of Bootstrap for SRI
+        :param jquery_sri: The integrity attribute value of jQuery for SRI
+        :param popper_sri: The integrity attribute value of Popper.js for SRI
+        :param nonce: The nonce attribute value for use with strict CSP
         """
         if version is None:
             version = self.bootstrap_version
@@ -177,13 +182,13 @@ class _Bootstrap:
 
         bootstrap_sri = self._get_sri('bootstrap_js', version, bootstrap_sri)
         popper_sri = self._get_sri('popper', popper_version, popper_sri)
-        bootstrap = self._get_js_script(version, 'bootstrap', bootstrap_sri)
-        popper = self._get_js_script(popper_version, self.popper_name, popper_sri) if with_popper else ''
+        bootstrap = self._get_js_script(version, 'bootstrap', bootstrap_sri, nonce)
+        popper = self._get_js_script(popper_version, self.popper_name, popper_sri, nonce) if with_popper else ''
         if version.startswith('4'):
             if jquery_version is None:
                 jquery_version = self.jquery_version
             jquery_sri = self._get_sri('jquery', jquery_version, jquery_sri)
-            jquery = self._get_js_script(jquery_version, 'jquery', jquery_sri) if with_jquery else ''
+            jquery = self._get_js_script(jquery_version, 'jquery', jquery_sri, nonce) if with_jquery else ''
             return Markup(f'''{jquery}
         {popper}
         {bootstrap}''')
@@ -278,5 +283,6 @@ class SwitchField(BooleanField):
 
     .. versionadded:: 2.0.0
     """
+
     def __init__(self, label=None, **kwargs):
         super().__init__(label, **kwargs)

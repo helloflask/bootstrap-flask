@@ -20,6 +20,7 @@ class TestBootstrap:
                     {% from 'bootstrap/utils.html' import render_icon %}
                     {{ render_icon('heart') }}
                     ''')
+
         with pytest.warns(UserWarning):
             client.get('/test')
 
@@ -70,6 +71,22 @@ class TestBootstrap:
         rv = bootstrap.load_js(version='4.0.0', jquery_version='4.0.0',
                                popper_version='4.0.0')
         _check_assertions(rv)
+
+    def test_load_js_with_nonce(self, bootstrap):
+        nonce = "rAnd0m"
+        rv = bootstrap.load_js(nonce=nonce)
+        bootstrap_js = f'<script src="{CDN_BASE}/bootstrap@{bootstrap.bootstrap_version}/dist/js/bootstrap.min.js"' \
+                       f' integrity="{bootstrap.bootstrap_js_integrity}" crossorigin="anonymous"' \
+                       f' nonce="{nonce}"></script>'
+        jquery_js = f'<script src="{CDN_BASE}/jquery@{bootstrap.jquery_version}/dist/jquery.min.js"' \
+                    f' integrity="{bootstrap.jquery_integrity}" crossorigin="anonymous"' \
+                    f' nonce="{nonce}"></script>'
+        popper_js = f'<script src="{CDN_BASE}/popper.js@{bootstrap.popper_version}/dist/umd/popper.min.js"' \
+                    f' integrity="{bootstrap.popper_integrity}" crossorigin="anonymous"' \
+                    f' nonce="{nonce}"></script>'
+        assert bootstrap_js in rv
+        assert jquery_js in rv
+        assert popper_js in rv
 
     def test_local_resources(self, bootstrap, client):
         current_app.config['BOOTSTRAP_SERVE_LOCAL'] = True
