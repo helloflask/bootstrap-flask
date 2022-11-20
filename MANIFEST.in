@@ -1,3 +1,6 @@
 graft flask_bootstrap/static
 graft flask_bootstrap/templates
 include LICENSE
+include README.md
+global-exclude *.pyc
+global-exclude .DS_Store
