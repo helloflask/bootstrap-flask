@@ -6,11 +6,12 @@ Changelog
 -----
 
 Release date: -
+
+- Drop Python 3.6 support.
 - Upgrade to Bootstrap 5.2.2, Bootswatch 5.2.2 and Boostrap Icons 1.9.1.
 - Support testing and deployment for also Python 3.10.
 - Fix example issue with ``paginate`` named parameters.
 - Add applying available Bootswatch theme in examples.
-
 - Add support for strict Content Security Policy (CSP) (`#252 <https://github.com/helloflask/bootstrap-flask/pull/252>`__)
 
 
