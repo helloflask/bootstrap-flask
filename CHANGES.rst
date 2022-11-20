@@ -2,17 +2,23 @@ Changelog
 =========
 
 
+2.3.0
+-----
+
+Release date: -
+
+
 2.2.0
 -----
 
 Release date: 2022/11/20
 
-- Drop Python 3.6 support.
+- Drop Python 3.6 support, and test against Python 3.10.
 - Add support for strict Content Security Policy (CSP) (`#252 <https://github.com/helloflask/bootstrap-flask/pull/252>`__)
 - Upgrade to Bootstrap 5.2.2, Popper 2.11.6, Bootswatch 5.2.2, and Boostrap Icons 1.9.1.
-- Support testing and deployment for also Python 3.10.
-- Fix example issue with Flask-SQLAlchemy ``paginate`` named parameters.
-- Add applying available Bootswatch theme in examples.
+- Fix Flask-SQLAlchemy ``paginate`` named parameters in tests and examples.
+- Support to preview available Bootswatch theme in the example application.
+- Remove ``.DS_Store`` files from the distribution files.
 
 
 2.1.0
