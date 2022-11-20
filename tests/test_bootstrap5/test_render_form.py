@@ -73,6 +73,8 @@ def test_form_group_class(app, client, hello_form):
     assert '<div class="mb-3' not in data
     assert '<div class="mb-2' in data
 
+
+def test_form_group_class_config(app, client, hello_form):
     app.config['BOOTSTRAP_FORM_GROUP_CLASSES'] = 'mb-4'
 
     @app.route('/config')
@@ -118,6 +120,8 @@ def test_form_inline_classes(app, client, hello_form):
     assert 'row row-cols-lg-auto g-3 align-items-center' not in data
     assert 'custom-inline-classes' in data
 
+
+def test_form_inline_classes_config(app, client, hello_form):
     app.config['BOOTSTRAP_FORM_INLINE_CLASSES'] = 'custom-inline-classes'
 
     @app.route('/config')
