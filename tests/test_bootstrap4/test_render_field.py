@@ -52,11 +52,6 @@ def test_render_field_with_kwargs(app, client, hello_form):
         {{ render_field(form.password, class='test') }}
         ''', form=form)
 
-    response = client.get('/kwargs_class')
-    data = response.get_data(as_text=True)
-    assert '<input class="form-control test" id="username"' in data
-    assert '<input class="form-control test" id="password"' in data
-
     @app.route('/general_kwargs')
     def test_general_kwargs():
         form = hello_form()
@@ -67,6 +62,11 @@ def test_render_field_with_kwargs(app, client, hello_form):
         {{ render_field(form.remember, class='test', value='n') }}
         {{ render_field(form.submit, value='test') }}
         ''', form=form)
+
+    response = client.get('/kwargs_class')
+    data = response.get_data(as_text=True)
+    assert '<input class="form-control test" id="username"' in data
+    assert '<input class="form-control test" id="password"' in data
 
     response = client.get('/general_kwargs')
     data = response.get_data(as_text=True)

@@ -155,10 +155,6 @@ def test_button_size(app, client, hello_form):
         {{ render_form(form) }}
         ''', form=form)
 
-    response = client.get('/form')
-    data = response.get_data(as_text=True)
-    assert 'btn-lg' in data
-
     @app.route('/form2')
     def test_overwrite():
         form = hello_form()
@@ -166,6 +162,10 @@ def test_button_size(app, client, hello_form):
         {% from 'bootstrap4/form.html' import render_form %}
         {{ render_form(form, button_size='sm') }}
         ''', form=form)
+
+    response = client.get('/form')
+    data = response.get_data(as_text=True)
+    assert 'btn-lg' in data
 
     response = client.get('/form2')
     data = response.get_data(as_text=True)
@@ -185,10 +185,6 @@ def test_button_style(app, client, hello_form):
         {{ render_form(form) }}
         ''', form=form)
 
-    response = client.get('/form')
-    data = response.get_data(as_text=True)
-    assert 'btn-secondary' in data
-
     @app.route('/form2')
     def test_overwrite():
         form = hello_form()
@@ -197,11 +193,6 @@ def test_button_style(app, client, hello_form):
         {{ render_form(form, button_style='success') }}
         ''', form=form)
 
-    response = client.get('/form2')
-    data = response.get_data(as_text=True)
-    assert 'btn-primary' not in data
-    assert 'btn-success' in data
-
     @app.route('/form3')
     def test_button_map():
         form = hello_form()
@@ -209,6 +200,15 @@ def test_button_style(app, client, hello_form):
         {% from 'bootstrap4/form.html' import render_form %}
         {{ render_form(form, button_map={'submit': 'warning'}) }}
         ''', form=form)
+
+    response = client.get('/form')
+    data = response.get_data(as_text=True)
+    assert 'btn-secondary' in data
+
+    response = client.get('/form2')
+    data = response.get_data(as_text=True)
+    assert 'btn-primary' not in data
+    assert 'btn-success' in data
 
     response = client.get('/form3')
     data = response.get_data(as_text=True)
