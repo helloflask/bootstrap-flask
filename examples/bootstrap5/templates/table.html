@@ -43,6 +43,7 @@
                         ('like_message', [('message_id', ':id')])
                     )
                 ]) }}
+
 <h2>Table without SQLAlchemy</h2>
 <p>The <pre>data</pre> contains a list of dict: <pre>[{'field1': 'value', 'field2': 'value', ...}, {...}]</pre></p>
 <pre>{% raw %}{{ render_table(data, titles) }}{% endraw %}</pre>
