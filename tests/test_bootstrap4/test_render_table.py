@@ -1,3 +1,4 @@
+from enum import Enum
 from flask import render_template_string, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
@@ -288,6 +289,11 @@ def test_render_table_with_actions(app, client):  # noqa: C901
     assert 'href="/table/new-message"' in data
 
 
+class MyCat(Enum):
+    CAT1 = 'Category A'
+    CAT2 = 'Category B'
+
+
 def test_customize_icon_title_of_table_actions(app, client):
 
     app.config['BOOTSTRAP_TABLE_VIEW_TITLE'] = 'Read'
@@ -301,6 +307,7 @@ def test_customize_icon_title_of_table_actions(app, client):
     class Message(db.Model):
         id = db.Column(db.Integer, primary_key=True)
         text = db.Column(db.Text)
+        category = db.Column(db.Enum(MyCat), default=MyCat.CAT1, nullable=False)
 
     @app.route('/table')
     def test():
@@ -328,3 +335,4 @@ def test_customize_icon_title_of_table_actions(app, client):
     assert 'title="Update">' in data
     assert 'title="Remove">' in data
     assert 'title="Create">' in data
+    assert 'Category A' in data

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from enum import Enum
 from flask import Flask, render_template, request, flash, Markup, redirect, url_for
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms.validators import DataRequired, Length, Regexp
@@ -121,11 +122,16 @@ class BootswatchForm(FlaskForm):
     submit = SubmitField()
 
 
+class MyCategory(Enum):
+    CAT1 = 'Category 1'
+    CAT2 = 'Category 2'
+
+
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
     author = db.Column(db.String(100), nullable=False)
-    category = db.Column(db.String(100), nullable=False)
+    category = db.Column(db.Enum(MyCategory), default=MyCategory.CAT1, nullable=False)
     draft = db.Column(db.Boolean, default=False, nullable=False)
     create_time = db.Column(db.Integer, nullable=False, unique=True)
 
@@ -151,9 +157,10 @@ def before_first_request_func():
         m = Message(
             text=f'Message {i+1} {url}',
             author=f'Author {i+1}',
-            category=f'Category {i+1}',
             create_time=4321*(i+1)
             )
+        if i % 2:
+            m.category = MyCategory.CAT2
         if i % 4:
             m.draft = True
         db.session.add(m)

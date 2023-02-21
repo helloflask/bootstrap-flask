@@ -98,6 +98,8 @@
                     {{ value }}
                 {%- endif -%}
             {%- endif -%}
+        {%- elif value.__class__.__name__ == 'Enum' or value.__class__.__base__.__name__ == 'Enum' -%}
+            {{ value.value }}
         {%- else -%}
             {{ value }}
         {%- endif -%}
