@@ -7,6 +7,8 @@ Changelog
 
 Release date: -
 
+- Renden enums in tables by their labels.
+
 
 2.2.0
 -----
