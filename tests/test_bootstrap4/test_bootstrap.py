@@ -1,10 +1,14 @@
 import pytest
 from flask import current_app, render_template_string
-from flask_bootstrap import CDN_BASE
+from flask_bootstrap import CDN_BASE, raise_helper
 
 
 @pytest.mark.usefixtures('client')
 class TestBootstrap:
+    def test_raise_helper(self):
+        with pytest.raises(RuntimeError, match='Test message'):
+            raise_helper('Test message')
+
     def test_deprecate_bootstrap_class(self):
         from flask_bootstrap import Bootstrap
         from flask import Flask
