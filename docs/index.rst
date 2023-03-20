@@ -60,7 +60,15 @@ Run the tests with pytest:
 
     $ pytest
 
-Or run the full checks with tox:
+or with code coverage reporting:
+
+.. code-block:: bash
+
+    $ pip install pytest-cov
+    $ pytest --cov
+    $ browse htmlcov/index.html
+
+You can also  run the full checks with tox:
 
 .. code-block:: bash
 
