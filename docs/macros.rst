@@ -519,7 +519,9 @@ API
                 using ``|urlize``. Is overruled by ``safe_columns`` parameter. Default is ``None``.
                 WARNING: Only use this for sanitized user data to prevent XSS attacks.
     :param show_actions: Whether to display the actions column. Default is ``False``.
-    :param model: The model used to build custom_action, view, edit, delete URLs.
+    :param model: An optional model used to build custom_action, view, edit,
+            delete URLs. Set this if you need to pull the URL arguments from
+            a different SQLAlchemy class indexed with the same primary key.
     :param actions_title: Title for the actions column header. Default is ``'Actions'``.
     :param custom_actions: A list of tuples for creating custom action buttons, where each tuple contains
                 ('Title Text displayed on hover', 'bootstrap icon name', 'URL tuple or fixed URL string')
@@ -541,8 +543,10 @@ an URL tuple in the form of ``('endpoint', [('url_parameter_name', ':db_model_fi
   it's a variable, otherwise it will becomes a fixed value). ``db_model_fieldname`` may also contain dots to access
   relationships and their fields (e.g. ``user.name``).
 
-Remember to set the ``model`` when setting this URLs, so that Bootstrap-Flask will know where to get the actual value
-when building the URL.
+By default, Bootstrap-Flask will take the fields from the row data provided.
+Alternatively, you may set the ``model``, in which case a record from that
+model, indexed with the same primary key, will be used to get the actual
+value when building the URL.
 
 For example, for the view below:
 
@@ -563,13 +567,13 @@ Here is the full example:
     @app.route('/test')
     def test():
         data = Message.query.all()
-        return render_template('test.html', data=data, Message=Message)
+        return render_template('test.html', data=data)
 
 .. code-block:: jinja
 
     {% from 'bootstrap4/table.html' import render_table %}
 
-    {{ render_table(data, model=Message, view_url=('view_message', [('message_id', ':id')])) }}
+    {{ render_table(data, view_url=('view_message', [('message_id', ':id')])) }}
 
 The following arguments are expect to accpet an URL tuple:
 
