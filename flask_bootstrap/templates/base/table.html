@@ -39,6 +39,7 @@
                       model=None,
                       show_actions=False,
                       actions_title='Actions',
+                      actions_location='end',
                       custom_actions=None,
                       view_url=None,
                       edit_url=None,
@@ -57,9 +58,11 @@
     {% endif %}
     <thead{% if header_classes %} class="{{ header_classes }}"{% endif %}>
     <tr>
+    {% if actions_location != 'front' %}
     {% for title in titles %}
         <th scope="col">{{ title[1] }}</th>
     {% endfor %}
+    {% endif %}
     {% if show_actions %}
         <th scope="col">{{ actions_title }}
         {% if new_url %}
@@ -75,11 +78,17 @@
         {% endif %}
         </th>
     {% endif %}
+    {% if actions_location == 'front' %}
+    {% for title in titles %}
+        <th scope="col">{{ title[1] }}</th>
+    {% endfor %}
+    {% endif %}
     </tr>
     </thead>
     <tbody>
     {% for row in data %}
     <tr>
+        {% if actions_location != 'front' %}
         {% for title in titles %}
         {% set key = title[0] %}
         {% set value = row[key] %}
@@ -107,6 +116,7 @@
             </td>
         {%- endif -%}
         {% endfor %}
+        {% endif %}
         {% if show_actions %}
         <td>
             {% if custom_actions %}
@@ -161,6 +171,35 @@
             {% endif %}
         </td>
         {% endif %}
+        {% if actions_location == 'front' %}
+        {% for title in titles %}
+        {% set key = title[0] %}
+        {% set value = row[key] %}
+        {%- if key == primary_key -%}
+            <th scope="row">
+        {%- else -%}
+            <td>
+        {%- endif -%}
+        {%- if value is string -%}
+            {%- if safe_columns and key in safe_columns -%}
+                {{ value|safe }}
+            {%- else -%}
+                {%- if urlize_columns and key in urlize_columns -%}
+                    {{ value|urlize }}
+                {%- else -%}
+                    {{ value }}
+                {%- endif -%}
+            {%- endif -%}
+        {%- else -%}
+            {{ value }}
+        {%- endif -%}
+        {%- if key == primary_key -%}
+            </th>
+        {%- else -%}
+            </td>
+        {%- endif -%}
+        {% endfor %}
+        {% endif %} 
     </tr>
     {% endfor %}
     </tbody>
