@@ -244,7 +244,7 @@ def test_render_table_with_actions(app, client):  # noqa: C901
         return 'New message'
 
     @app.route('/table')
-    def test():
+    def table():
         db.drop_all()
         db.create_all()
         for i in range(10):
@@ -277,42 +277,8 @@ def test_render_table_with_actions(app, client):  # noqa: C901
             ) }}
         ''', titles=titles, model=Message, messages=messages)
 
-    response = client.get('/table')
-    data = response.get_data(as_text=True)
-    assert 'icons/bootstrap-icons.svg#bootstrap-reboot' in data
-    assert 'href="/table/john_doe/1/resend"' in data
-    assert 'title="Resend">' in data
-    assert 'href="/table/me/1/view"' in data
-    assert 'action="/table/me/1/delete"' in data
-    assert 'href="/table/me/1/edit"' in data
-    assert 'href="/table/new-message"' in data
-
-
-def test_render_table_with_actions_no_db(app, client):  # noqa: C901
-    app.jinja_env.globals['csrf_token'] = lambda: ''
-
-    @app.route('/table/<string:recipient>/<int:message_id>/resend')
-    def test_resend_message(recipient, message_id):
-        return f'Re-sending {message_id} to {recipient}'
-
-    @app.route('/table/<string:sender>/<int:message_id>/view')
-    def test_view_message(sender, message_id):
-        return f'Viewing {message_id} from {sender}'
-
-    @app.route('/table/<string:sender>/<int:message_id>/edit')
-    def test_edit_message(sender, message_id):
-        return f'Editing {message_id} from {sender}'
-
-    @app.route('/table/<string:sender>/<int:message_id>/delete')
-    def test_delete_message(sender, message_id):
-        return f'Deleting {message_id} from {sender}'
-
-    @app.route('/table/new-message')
-    def test_create_message():
-        return 'New message'
-
-    @app.route('/table')
-    def test():
+    @app.route('/table-with-dict-data')
+    def dict_data_table():
         row_dicts = [{
             "id": i+1,
             "text": f'Test message {i + 1}',
@@ -340,15 +306,16 @@ def test_render_table_with_actions_no_db(app, client):  # noqa: C901
             ) }}
         ''', titles=titles, messages=messages)
 
-    response = client.get('/table')
-    data = response.get_data(as_text=True)
-    assert 'icons/bootstrap-icons.svg#bootstrap-reboot' in data
-    assert 'href="/table/john_doe/1/resend"' in data
-    assert 'title="Resend">' in data
-    assert 'href="/table/me/1/view"' in data
-    assert 'action="/table/me/1/delete"' in data
-    assert 'href="/table/me/1/edit"' in data
-    assert 'href="/table/new-message"' in data
+    for url in ['/table', '/table-with-dict-data']:
+        response = client.get(url)
+        data = response.get_data(as_text=True)
+        assert 'icons/bootstrap-icons.svg#bootstrap-reboot' in data
+        assert 'href="/table/john_doe/1/resend"' in data
+        assert 'title="Resend">' in data
+        assert 'href="/table/me/1/view"' in data
+        assert 'action="/table/me/1/delete"' in data
+        assert 'href="/table/me/1/edit"' in data
+        assert 'href="/table/new-message"' in data
 
 
 def test_customize_icon_title_of_table_actions(app, client):
