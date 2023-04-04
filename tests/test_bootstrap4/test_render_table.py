@@ -193,7 +193,6 @@ def test_build_table_titles(app, client):
     assert '<table class="table">' in data
     assert '<th scope="col">#</th>' in data
     assert '<th scope="col">Text</th>' in data
-    assert '<th scope="col">Text</th>' in data
     assert '<th scope="row">1</th>' in data
     assert '<td>Test message 1</td>' in data
 
