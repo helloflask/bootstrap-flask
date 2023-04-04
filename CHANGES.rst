@@ -8,6 +8,7 @@ Changelog
 Release date: -
 
 - Render enums in tables by their labels.
+- Support creating action URLs for dict data (`#268 <https://github.com/helloflask/bootstrap-flask/issues/268>`__).
 
 
 2.2.0

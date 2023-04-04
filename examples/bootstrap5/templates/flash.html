@@ -2,7 +2,5 @@
 
 {% block content %}
 The messages above were rendered with the following code:
-<pre>
-{% raw %}{{ render_messages(container=False, dismissible=True, dismiss_animate=True) }}{% endraw %}
-</pre>
+<pre>{% raw %}{{ render_messages(container=False, dismissible=True) }}{% endraw %}</pre>
 {% endblock %}

@@ -10,7 +10,7 @@ def is_hidden_field_filter(field):
     return isinstance(field, HiddenField)
 
 
-def raise_helper(message):  # pragma: no cover
+def raise_helper(message):
     raise RuntimeError(message)
 
 
@@ -23,7 +23,7 @@ def get_table_titles(data, primary_key, primary_key_title):
         return []
     titles = []
     for k in data[0].__table__.columns.keys():
-        if not k.startswith('_'):
+        if not k.startswith('_'):  # pragma: no branch
             titles.append((k, k.replace('_', ' ').title()))
     titles[0] = (primary_key, primary_key_title)
     return titles
@@ -50,13 +50,13 @@ class _Bootstrap:
     popper_filename = 'popper.min.js'
 
     def __init__(self, app=None):
-        if app is not None:
+        if app is not None:  # pragma: no branch
             self.init_app(app)
 
     def init_app(self, app):
 
         if not hasattr(app, 'extensions'):
-            app.extensions = {}
+            app.extensions = {}  # pragma: no cover
         app.extensions['bootstrap'] = self
 
         blueprint = Blueprint('bootstrap', __name__, static_folder=f'static/{self.static_folder}',
