@@ -8,6 +8,7 @@ Changelog
 Release date: -
 
 - Support creating action URLs for dict data (`#268 <https://github.com/helloflask/bootstrap-flask/issues/268>`__).
+- Updated Bootstrap Icons to version 1.10.4
 
 
 2.2.0
