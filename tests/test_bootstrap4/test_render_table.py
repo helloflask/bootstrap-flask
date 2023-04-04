@@ -288,6 +288,69 @@ def test_render_table_with_actions(app, client):  # noqa: C901
     assert 'href="/table/new-message"' in data
 
 
+def test_render_table_with_actions_no_db(app, client):  # noqa: C901
+    app.jinja_env.globals['csrf_token'] = lambda: ''
+
+    @app.route('/table/<string:recipient>/<int:message_id>/resend')
+    def test_resend_message(recipient, message_id):
+        return f'Re-sending {message_id} to {recipient}'
+
+    @app.route('/table/<string:sender>/<int:message_id>/view')
+    def test_view_message(sender, message_id):
+        return f'Viewing {message_id} from {sender}'
+
+    @app.route('/table/<string:sender>/<int:message_id>/edit')
+    def test_edit_message(sender, message_id):
+        return f'Editing {message_id} from {sender}'
+
+    @app.route('/table/<string:sender>/<int:message_id>/delete')
+    def test_delete_message(sender, message_id):
+        return f'Deleting {message_id} from {sender}'
+
+    @app.route('/table/new-message')
+    def test_create_message():
+        return 'New message'
+
+    @app.route('/table')
+    def test():
+        row_dicts = [{
+            "id": i+1,
+            "text": f'Test message {i + 1}',
+            "sender": 'me',
+            "recipient": 'john_doe'
+        } for i in range(10)]
+
+        messages = row_dicts
+        titles = [('id', '#'), ('text', 'Message')]
+        return render_template_string('''
+            {% from 'bootstrap4/table.html' import render_table %}
+            # URL arguments with URL tuple
+            {{ render_table(messages, titles, show_actions=True,
+            custom_actions=[
+                (
+                    'Resend',
+                    'bootstrap-reboot',
+                    ('test_resend_message', [('recipient', ':recipient'), ('message_id', ':id')])
+                )
+            ],
+            view_url=('test_view_message', [('sender', ':sender'), ('message_id', ':id')]),
+            edit_url=('test_edit_message', [('sender', ':sender'), ('message_id', ':id')]),
+            delete_url=('test_delete_message', [('sender', ':sender'), ('message_id', ':id')]),
+            new_url=('test_create_message')
+            ) }}
+        ''', titles=titles, messages=messages)
+
+    response = client.get('/table')
+    data = response.get_data(as_text=True)
+    assert 'icons/bootstrap-icons.svg#bootstrap-reboot' in data
+    assert 'href="/table/john_doe/1/resend"' in data
+    assert 'title="Resend">' in data
+    assert 'href="/table/me/1/view"' in data
+    assert 'action="/table/me/1/delete"' in data
+    assert 'href="/table/me/1/edit"' in data
+    assert 'href="/table/new-message"' in data
+
+
 def test_customize_icon_title_of_table_actions(app, client):
 
     app.config['BOOTSTRAP_TABLE_VIEW_TITLE'] = 'Read'
