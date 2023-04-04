@@ -18,6 +18,14 @@ setup(
     name='Bootstrap-Flask',
     version='2.3.0dev',
     url='https://github.com/helloflask/bootstrap-flask',
+    project_urls={
+        'Documentation': 'https://bootstrap-flask.readthedocs.io/en/stable/',
+        'Funding': 'https://opencollective.com/bootstrap-flask',
+        'Changes': 'https://bootstrap-flask.readthedocs.io/en/stable/changelog/',
+        'Source Code': 'https://github.com/helloflask/bootstrap-flask/',
+        'Issue Tracker': 'https://github.com/helloflask/bootstrap-flask/issues/',
+        'Discussions': 'https://github.com/helloflask/bootstrap-flask/discussions/'
+    },
     license='MIT',
     author='Grey Li',
     author_email='withlihui@gmail.com',
