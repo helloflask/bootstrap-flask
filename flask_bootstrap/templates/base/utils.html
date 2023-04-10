@@ -43,8 +43,8 @@
     sort_asc_value = config.BOOTSTRAP_SORT_ASC_VALUE or "asc",
     sort_desc_value = config.BOOTSTRAP_SORT_DESC_VALUE or "desc",
     sort_title_template = config.SORT_TITLE_TEMPLATE or "Sort %s (%s)",
-    sort_value_name_map = config.SORT_VALUE_NAME_MAP or {"asc": "Ascending", "desc": "Descending"}
-
+    sort_value_name_map = config.SORT_VALUE_NAME_MAP or {"asc": "Ascending", "desc": "Descending"},
+    link_attrs = {}
     ) %}
 
     {% if sort_style == "csv" %}
