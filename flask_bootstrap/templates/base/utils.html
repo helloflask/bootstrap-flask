@@ -71,7 +71,7 @@
     {% endif %}
 
     <span class="text-nowrap">
-        <a href="{{url_for(request.endpoint, **args)}}">{{text}}</a>
+        <a href="{{url_for(request.endpoint, **args)}}" {{link_attrs|xmlattr}}>{{text}}</a>
         {{render_icon(icon_asc if desired_dir == sort_desc_value else icon_desc) if attr == curr_attr}}
     </span>
     {% endmacro %}
