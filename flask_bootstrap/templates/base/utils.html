@@ -30,3 +30,48 @@
         {{ url_for(endpoint, **kargs) }}
     {%- endwith %}
 {%- endmacro %}
+
+
+{% macro render_sortlink(
+    attr,
+    text = attr | title,
+    icon_asc = config.BOOTSTRAP_SORT_ICON_ASC or "caret-up",
+    icon_desc = config.BOOTSTRAP_SORT_ICON_DESC or "caret-down",
+    sort_style = config.BOOTSTRAP_SORT_STYLE or "csv",
+    sort_param = config.BOOTSTRAP_SORT_PARAM or "sort",
+    sort_dir_param = config.BOOTSTRAP_SORT_DIR_PARAM or "dir",
+    sort_asc_value = config.BOOTSTRAP_SORT_ASC_VALUE or "asc",
+    sort_desc_value = config.BOOTSTRAP_SORT_DESC_VALUE or "desc",
+    sort_title_template = config.SORT_TITLE_TEMPLATE or "Sort %s (%s)",
+    sort_value_name_map = config.SORT_VALUE_NAME_MAP or {"asc": "Ascending", "desc": "Descending"}
+
+    ) %}
+
+    {% if sort_style == "csv" %}
+    {% set curr_attr, _, curr_dir = request.args.get(sort_param, "").partition(",")%}
+    {% else %}
+    {% set curr_attr = request.args.get(sort_param) %}
+    {% set curr_dir = request.args.get(sort_dir_param) %}
+    {% endif %}
+
+    {% set desired_dir = sort_desc_value if curr_attr == attr and curr_dir == sort_asc_value else
+    sort_asc_value %}
+
+    {% set args = request.args.copy() %}
+
+    {% if sort_style == "csv" %}
+    {% set _ = args.setlist(sort_param, ["%s,%s" | format(attr, desired_dir)])%}
+    {% else %}
+    {% set _ = args.setlist(sort_param, [attr])%}
+    {% set _ = args.setlist(sort_dir_param, [desired_dir]) %}
+    {% endif %}
+
+    {% if sort_title_template %}
+    {% set _ = link_attrs.update({"title":sort_title_template | format(text, sort_value_name_map[desired_dir])}) %}
+    {% endif %}
+
+    <span class="text-nowrap">
+        <a href="{{url_for(request.endpoint, **args)}}">{{text}}</a>
+        {{render_icon(icon_asc if desired_dir == sort_desc_value else icon_desc) if attr == curr_attr}}
+    </span>
+    {% endmacro %}
