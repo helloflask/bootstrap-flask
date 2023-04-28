@@ -49,7 +49,7 @@ Release date: 2022/2/27
 
 Release date: 2022/1/27
 
-- Remove extra quotaion mark in ``render_nav_item``
+- Remove extra quotation mark in ``render_nav_item``
   (`#201 <https://github.com/helloflask/bootstrap-flask/pull/201>`__).
 - Fix signature of ``Bootstrap.__init__()`` incompatible with older version
   (`#198 <https://github.com/helloflask/bootstrap-flask/pull/198>`__).
