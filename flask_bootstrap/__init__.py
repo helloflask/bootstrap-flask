@@ -1,6 +1,7 @@
 import warnings
 
-from flask import current_app, Markup, Blueprint, url_for
+from flask import current_app, Blueprint, url_for
+from markupsafe import Markup
 from wtforms import BooleanField, HiddenField
 
 CDN_BASE = 'https://cdn.jsdelivr.net/npm'
