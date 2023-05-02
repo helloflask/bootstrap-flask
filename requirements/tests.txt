@@ -6,22 +6,22 @@
 #
 attrs==22.1.0
     # via pytest
+blinker==1.6.2
+    # via flask
 click==8.1.3
     # via flask
 coverage[toml]==6.5.0
     # via pytest-cov
-exceptiongroup==1.0.4
-    # via pytest
-flask==2.2.2
+flask==2.3.2
     # via
     #   flask-sqlalchemy
     #   flask-wtf
 flask-sqlalchemy==3.0.2
-    # via -r requirements/tests.in
+    # via -r tests.in
 flask-wtf==1.0.1
-    # via -r requirements/tests.in
-importlib-metadata==5.0.0
-    # via flask
+    # via -r tests.in
+greenlet==2.0.2
+    # via sqlalchemy
 iniconfig==1.1.1
     # via pytest
 itsdangerous==2.1.2
@@ -43,19 +43,13 @@ pyparsing==3.0.9
     # via packaging
 pytest==7.2.0
     # via
-    #   -r requirements/tests.in
+    #   -r tests.in
     #   pytest-cov
 pytest-cov==4.0.0
-    # via -r requirements/tests.in
+    # via -r tests.in
 sqlalchemy==1.4.44
     # via flask-sqlalchemy
-tomli==2.0.1
-    # via
-    #   coverage
-    #   pytest
-werkzeug==2.2.2
+werkzeug==2.3.3
     # via flask
 wtforms==3.0.1
     # via flask-wtf
-zipp==3.10.0
-    # via importlib-metadata
