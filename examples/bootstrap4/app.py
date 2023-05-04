@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from enum import Enum
-from flask import Flask, render_template, request, flash, Markup, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for
+from markupsafe import Markup
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms.validators import DataRequired, Length, Regexp
 from wtforms.fields import *

@@ -122,7 +122,7 @@ API
     :param horizontal_columns: When using the horizontal layout, layout forms
                               like this. Must be a 3-tuple of ``(column-type,
                               left-column-size, right-column-size)``.
-    :param button_style: Set button style for ``SubmitField``. Accept Bootstrap button style name (i.e. primary, 
+    :param button_style: Set button style for ``SubmitField``. Accept Bootstrap button style name (i.e. primary,
                          secondary, outline-success, etc.), default to ``primary`` (e.g. ``btn-primary``). This will
                          overwrite config ``BOOTSTRAP_BTN_STYLE``.
     :param button_size: Set button size for ``SubmitField``. Accept Bootstrap button size name: sm, md, lg, block,
@@ -181,7 +181,7 @@ API
     :param enctype: ``<form>`` enctype attribute. If ``None``, will
                     automatically be set to ``multipart/form-data`` if a
                     :class:`~wtforms.fields.FileField` or :class:`~wtforms.fields.MultipleFileField` is present in the form.
-    :param button_style: Set button style for ``SubmitField``. Accept Bootstrap button style name (i.e. primary, 
+    :param button_style: Set button style for ``SubmitField``. Accept Bootstrap button style name (i.e. primary,
                          secondary, outline-success, etc.), default to ``primary`` (e.g. ``btn-primary``). This will
                          overwrite config ``BOOTSTRAP_BTN_STYLE``.
     :param button_size: Set button size for ``SubmitField``. Accept Bootstrap button size name: sm, md, lg, block,
@@ -274,7 +274,7 @@ API
                                 if nothing more specific is said for the div column of the rendered field.
     :param col_map: A dictionary, mapping field.name to a class definition that should be applied to
                             the div column that contains the field. For example: ``col_map={'username': 'col-md-2'})``.
-    :param button_style: Set button style for ``SubmitField``. Accept Bootstrap button style name (i.e. primary, 
+    :param button_style: Set button style for ``SubmitField``. Accept Bootstrap button style name (i.e. primary,
                          secondary, outline-success, etc.), default to ``primary`` (e.g. ``btn-primary``). This will
                          overwrite config ``BOOTSTRAP_BTN_STYLE``.
     :param button_size: Set button size for ``SubmitField``. Accept Bootstrap button size name: sm, md, lg, block,
@@ -447,11 +447,12 @@ When you call ``flash('message', 'category')``, there are 8 category options ava
 
 primary, secondary, success, danger, warning, info, light, dark.
 
-If you want to use HTML in your message body, just wrapper your message string with ``flask.Markup`` to tell Jinja it's safe:
+If you want to use HTML in your message body, just wrapper your message string with ``markupsafe.Markup`` to tell Jinja it's safe:
 
 .. code-block:: python
 
-    from flask import flash, Markup
+    from flask import flash
+    from markupsafe import Markup
 
     @app.route('/test')
     def test():
@@ -496,7 +497,7 @@ API
                               urlize_columns=None,\
                               show_actions=False,\
                               actions_title='Actions',\
-                              model=None,\                              
+                              model=None,\
                               custom_actions=None,\
                               view_url=None,\
                               edit_url=None,\
