@@ -9,6 +9,7 @@ Release date: -
 
 - Render enums in tables by their labels.
 - Support creating action URLs for dict data (`#268 <https://github.com/helloflask/bootstrap-flask/issues/268>`__).
+- Updated Bootstrap Icons to version 1.10.5
 
 
 2.2.0
