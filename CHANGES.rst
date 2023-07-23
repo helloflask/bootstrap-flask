@@ -7,10 +7,10 @@ Changelog
 
 Release date: -
 
+- Drop Python 3.7 support, and test against Python 3.11.
 - Render enums in tables by their labels.
 - Support creating action URLs for dict data (`#268 <https://github.com/helloflask/bootstrap-flask/issues/268>`__).
-- Updated Bootstrap to version 5.3.0
-- Updated Bootstrap Icons to version 1.10.5
+- Upgrade to Bootstrap 5.3.0, Bootstrap Icons 1.10.5, and Popper 2.11.8.
 
 
 2.2.0
