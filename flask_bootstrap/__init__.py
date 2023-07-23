@@ -260,10 +260,10 @@ class Bootstrap5(_Bootstrap):
     .. versionadded:: 2.0.0
     """
     bootstrap_version = '5.3.0'
-    popper_version = '2.11.6'
+    popper_version = '2.11.8'
     bootstrap_css_integrity = 'sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM'
     bootstrap_js_integrity = 'sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz'
-    popper_integrity = 'sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3'
+    popper_integrity = 'sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r'
     popper_name = '@popperjs/core'
     static_folder = 'bootstrap5'
 
