@@ -5,7 +5,7 @@ Changelog
 2.3.0
 -----
 
-Release date: -
+Release date: 2023/7/24
 
 - Drop Python 3.7 support, and test against Python 3.11.
 - Render enums in tables by their labels.
