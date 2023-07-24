@@ -262,7 +262,7 @@ class Bootstrap5(_Bootstrap):
     bootstrap_version = '5.3.0'
     popper_version = '2.11.8'
     bootstrap_css_integrity = 'sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM'
-    bootstrap_js_integrity = 'sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz'
+    bootstrap_js_integrity = 'sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS'
     popper_integrity = 'sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r'
     popper_name = '@popperjs/core'
     static_folder = 'bootstrap5'
