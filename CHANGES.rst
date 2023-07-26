@@ -6,6 +6,8 @@ Changelog
 
 Release date: -
 
+- Upgrade to Bootstrap 5.3.1
+
 
 2.3.0
 -----
