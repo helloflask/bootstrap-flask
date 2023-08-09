@@ -38,11 +38,9 @@ def generate(version):
 '''
             file.write(item)
             number += 1
-        tail = '''</ul>
-{% endblock %}
-'''
-        file.write(tail)
+        file.write('</ul>\n')
         file.write(f'<p>This is a total of {number} icons.</p>\n')
+        file.write('{% endblock %}\n')
         print(f'For Bootstrap{version}, a total of {number} icons are supported.')
 
 for value in (4, 5):
