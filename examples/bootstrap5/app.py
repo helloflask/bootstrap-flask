@@ -141,8 +141,7 @@ class Message(db.Model):
     create_time = db.Column(db.Integer, nullable=False, unique=True)
 
 
-@app.before_first_request
-def before_first_request_func():
+with app.app_context():
     db.drop_all()
     db.create_all()
     for i in range(20):
