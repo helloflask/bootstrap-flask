@@ -6,9 +6,7 @@ Changelog
 
 Release date: -
 
-- Upgrade to Bootstrap 5.3.2
-- Upgrade to Bootswatch 5.3.1
-- Upgrade to Bootstrap Icons 1.11.1
+- Upgrade to Bootstrap 5.3.2, Bootswatch 5.3.1, and Bootstrap Icons 1.11.1.
 
 
 2.3.0
