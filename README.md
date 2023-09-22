@@ -78,9 +78,11 @@ docs for more details.
 
 ## Live demo
 
-Live demos of the latest release are:
-- [Examples with Bootstrap 4](http://173.212.198.217/)
-- [Examples with Bootstrap 5](http://109.205.179.12/)
+Live demos are:
+- Lastest release [Examples with Bootstrap 4](http://173.212.198.217/)
+- Lastest release [Examples with Bootstrap 5](http://109.205.179.12/)
+- Development version [Examples with Bootstrap 4](http://173.212.227.186/)
+- Development version [Examples with Bootstrap 5](http://109.205.179.158/)
 
 
 ## Donate
