@@ -576,7 +576,7 @@ Here is the full example:
 
     {{ render_table(data, view_url=('view_message', [('message_id', ':id')])) }}
 
-The following arguments are expect to accpet an URL tuple:
+The following arguments are expected to accept a URL tuple:
 
 - ``custom_actions``
 - ``view_url``
