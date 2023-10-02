@@ -1,5 +1,5 @@
 -r tests.in
 -r docs.in
 -r style.in
-pip-tools
+pip-compile-multi
 tox

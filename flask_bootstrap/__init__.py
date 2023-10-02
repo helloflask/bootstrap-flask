@@ -1,6 +1,7 @@
 import warnings
 
-from flask import current_app, Markup, Blueprint, url_for
+from flask import current_app, Blueprint, url_for
+from markupsafe import Markup
 from wtforms import BooleanField, HiddenField
 
 CDN_BASE = 'https://cdn.jsdelivr.net/npm'
@@ -10,7 +11,7 @@ def is_hidden_field_filter(field):
     return isinstance(field, HiddenField)
 
 
-def raise_helper(message):  # pragma: no cover
+def raise_helper(message):
     raise RuntimeError(message)
 
 
@@ -23,7 +24,7 @@ def get_table_titles(data, primary_key, primary_key_title):
         return []
     titles = []
     for k in data[0].__table__.columns.keys():
-        if not k.startswith('_'):
+        if not k.startswith('_'):  # pragma: no branch
             titles.append((k, k.replace('_', ' ').title()))
     titles[0] = (primary_key, primary_key_title)
     return titles
@@ -50,13 +51,13 @@ class _Bootstrap:
     popper_filename = 'popper.min.js'
 
     def __init__(self, app=None):
-        if app is not None:
+        if app is not None:  # pragma: no branch
             self.init_app(app)
 
     def init_app(self, app):
 
         if not hasattr(app, 'extensions'):
-            app.extensions = {}
+            app.extensions = {}  # pragma: no cover
         app.extensions['bootstrap'] = self
 
         blueprint = Blueprint('bootstrap', __name__, static_folder=f'static/{self.static_folder}',
@@ -258,11 +259,11 @@ class Bootstrap5(_Bootstrap):
 
     .. versionadded:: 2.0.0
     """
-    bootstrap_version = '5.2.2'
-    popper_version = '2.11.6'
-    bootstrap_css_integrity = 'sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi'
-    bootstrap_js_integrity = 'sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk'
-    popper_integrity = 'sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3'
+    bootstrap_version = '5.3.2'
+    popper_version = '2.11.8'
+    bootstrap_css_integrity = 'sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN'
+    bootstrap_js_integrity = 'sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL'
+    popper_integrity = 'sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r'
     popper_name = '@popperjs/core'
     static_folder = 'bootstrap5'
 

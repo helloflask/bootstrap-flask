@@ -1,11 +1,23 @@
 Changelog
 =========
 
+2.3.1
+-----
+
+Release date: -
+
+- Upgrade to Bootstrap 5.3.2, Bootswatch 5.3.1, and Bootstrap Icons 1.11.1.
+
 
 2.3.0
 -----
 
-Release date: -
+Release date: 2023/7/24
+
+- Drop Python 3.7 support, and test against Python 3.11.
+- Render enums in tables by their labels.
+- Support creating action URLs for dict data (`#268 <https://github.com/helloflask/bootstrap-flask/issues/268>`__).
+- Upgrade to Bootstrap 5.3.0, Bootstrap Icons 1.10.5, and Popper 2.11.8.
 
 
 2.2.0
@@ -46,7 +58,7 @@ Release date: 2022/2/27
 
 Release date: 2022/1/27
 
-- Remove extra quotaion mark in ``render_nav_item``
+- Remove extra quotation mark in ``render_nav_item``
   (`#201 <https://github.com/helloflask/bootstrap-flask/pull/201>`__).
 - Fix signature of ``Bootstrap.__init__()`` incompatible with older version
   (`#198 <https://github.com/helloflask/bootstrap-flask/pull/198>`__).

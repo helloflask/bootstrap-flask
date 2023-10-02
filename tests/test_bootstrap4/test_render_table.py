@@ -1,3 +1,4 @@
+from enum import Enum
 from flask import render_template_string, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
@@ -193,7 +194,6 @@ def test_build_table_titles(app, client):
     assert '<table class="table">' in data
     assert '<th scope="col">#</th>' in data
     assert '<th scope="col">Text</th>' in data
-    assert '<th scope="col">Text</th>' in data
     assert '<th scope="row">1</th>' in data
     assert '<td>Test message 1</td>' in data
 
@@ -244,7 +244,7 @@ def test_render_table_with_actions(app, client):  # noqa: C901
         return 'New message'
 
     @app.route('/table')
-    def test():
+    def table():
         db.drop_all()
         db.create_all()
         for i in range(10):
@@ -277,15 +277,50 @@ def test_render_table_with_actions(app, client):  # noqa: C901
             ) }}
         ''', titles=titles, model=Message, messages=messages)
 
-    response = client.get('/table')
-    data = response.get_data(as_text=True)
-    assert 'icons/bootstrap-icons.svg#bootstrap-reboot' in data
-    assert 'href="/table/john_doe/1/resend"' in data
-    assert 'title="Resend">' in data
-    assert 'href="/table/me/1/view"' in data
-    assert 'action="/table/me/1/delete"' in data
-    assert 'href="/table/me/1/edit"' in data
-    assert 'href="/table/new-message"' in data
+    @app.route('/table-with-dict-data')
+    def dict_data_table():
+        row_dicts = [{
+            "id": i+1,
+            "text": f'Test message {i + 1}',
+            "sender": 'me',
+            "recipient": 'john_doe'
+        } for i in range(10)]
+
+        messages = row_dicts
+        titles = [('id', '#'), ('text', 'Message')]
+        return render_template_string('''
+            {% from 'bootstrap4/table.html' import render_table %}
+            # URL arguments with URL tuple
+            {{ render_table(messages, titles, show_actions=True,
+            custom_actions=[
+                (
+                    'Resend',
+                    'bootstrap-reboot',
+                    ('test_resend_message', [('recipient', ':recipient'), ('message_id', ':id')])
+                )
+            ],
+            view_url=('test_view_message', [('sender', ':sender'), ('message_id', ':id')]),
+            edit_url=('test_edit_message', [('sender', ':sender'), ('message_id', ':id')]),
+            delete_url=('test_delete_message', [('sender', ':sender'), ('message_id', ':id')]),
+            new_url=('test_create_message')
+            ) }}
+        ''', titles=titles, messages=messages)
+
+    for url in ['/table', '/table-with-dict-data']:
+        response = client.get(url)
+        data = response.get_data(as_text=True)
+        assert 'icons/bootstrap-icons.svg#bootstrap-reboot' in data
+        assert 'href="/table/john_doe/1/resend"' in data
+        assert 'title="Resend">' in data
+        assert 'href="/table/me/1/view"' in data
+        assert 'action="/table/me/1/delete"' in data
+        assert 'href="/table/me/1/edit"' in data
+        assert 'href="/table/new-message"' in data
+
+
+class MyCat(Enum):
+    CAT1 = 'Category A'
+    CAT2 = 'Category B'
 
 
 def test_customize_icon_title_of_table_actions(app, client):
@@ -301,6 +336,7 @@ def test_customize_icon_title_of_table_actions(app, client):
     class Message(db.Model):
         id = db.Column(db.Integer, primary_key=True)
         text = db.Column(db.Text)
+        category = db.Column(db.Enum(MyCat), default=MyCat.CAT1, nullable=False)
 
     @app.route('/table')
     def test():
@@ -328,3 +364,4 @@ def test_customize_icon_title_of_table_actions(app, client):
     assert 'title="Update">' in data
     assert 'title="Remove">' in data
     assert 'title="Create">' in data
+    assert 'Category A' in data

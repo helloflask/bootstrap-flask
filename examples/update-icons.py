@@ -25,6 +25,7 @@ def generate(version):
     names = parse(f'../flask_bootstrap/static/bootstrap{version}/icons/bootstrap-icons.svg')
     with open(f'bootstrap{version}/templates/icons.html', 'w') as file:  # pylint:disable=unspecified-encoding
         file.write(head)
+        number = 0
         for name in sorted(names):
             item=f'''<li class="col mb-4">
 <a class="d-block text-dark text-body-emphasis text-decoration-none" href="https://icons.getbootstrap.com/icons/{name}/">
@@ -36,10 +37,11 @@ def generate(version):
 </li>
 '''
             file.write(item)
-        tail = '''</ul>
-{% endblock %}
-'''
-        file.write(tail)
+            number += 1
+        file.write('</ul>\n')
+        file.write(f'<p>This is a total of {number} icons.</p>\n')
+        file.write('{% endblock %}\n')
+        print(f'For Bootstrap{version}, a total of {number} icons are supported.')
 
 for value in (4, 5):
     generate(value)

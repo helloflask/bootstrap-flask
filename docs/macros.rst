@@ -122,7 +122,7 @@ API
     :param horizontal_columns: When using the horizontal layout, layout forms
                               like this. Must be a 3-tuple of ``(column-type,
                               left-column-size, right-column-size)``.
-    :param button_style: Set button style for ``SubmitField``. Accept Bootstrap button style name (i.e. primary, 
+    :param button_style: Set button style for ``SubmitField``. Accept Bootstrap button style name (i.e. primary,
                          secondary, outline-success, etc.), default to ``primary`` (e.g. ``btn-primary``). This will
                          overwrite config ``BOOTSTRAP_BTN_STYLE``.
     :param button_size: Set button size for ``SubmitField``. Accept Bootstrap button size name: sm, md, lg, block,
@@ -181,7 +181,7 @@ API
     :param enctype: ``<form>`` enctype attribute. If ``None``, will
                     automatically be set to ``multipart/form-data`` if a
                     :class:`~wtforms.fields.FileField` or :class:`~wtforms.fields.MultipleFileField` is present in the form.
-    :param button_style: Set button style for ``SubmitField``. Accept Bootstrap button style name (i.e. primary, 
+    :param button_style: Set button style for ``SubmitField``. Accept Bootstrap button style name (i.e. primary,
                          secondary, outline-success, etc.), default to ``primary`` (e.g. ``btn-primary``). This will
                          overwrite config ``BOOTSTRAP_BTN_STYLE``.
     :param button_size: Set button size for ``SubmitField``. Accept Bootstrap button size name: sm, md, lg, block,
@@ -274,7 +274,7 @@ API
                                 if nothing more specific is said for the div column of the rendered field.
     :param col_map: A dictionary, mapping field.name to a class definition that should be applied to
                             the div column that contains the field. For example: ``col_map={'username': 'col-md-2'})``.
-    :param button_style: Set button style for ``SubmitField``. Accept Bootstrap button style name (i.e. primary, 
+    :param button_style: Set button style for ``SubmitField``. Accept Bootstrap button style name (i.e. primary,
                          secondary, outline-success, etc.), default to ``primary`` (e.g. ``btn-primary``). This will
                          overwrite config ``BOOTSTRAP_BTN_STYLE``.
     :param button_size: Set button size for ``SubmitField``. Accept Bootstrap button size name: sm, md, lg, block,
@@ -447,11 +447,12 @@ When you call ``flash('message', 'category')``, there are 8 category options ava
 
 primary, secondary, success, danger, warning, info, light, dark.
 
-If you want to use HTML in your message body, just wrapper your message string with ``flask.Markup`` to tell Jinja it's safe:
+If you want to use HTML in your message body, just wrapper your message string with ``markupsafe.Markup`` to tell Jinja it's safe:
 
 .. code-block:: python
 
-    from flask import flash, Markup
+    from flask import flash
+    from markupsafe import Markup
 
     @app.route('/test')
     def test():
@@ -496,7 +497,7 @@ API
                               urlize_columns=None,\
                               show_actions=False,\
                               actions_title='Actions',\
-                              model=None,\                              
+                              model=None,\
                               custom_actions=None,\
                               view_url=None,\
                               edit_url=None,\
@@ -519,7 +520,9 @@ API
                 using ``|urlize``. Is overruled by ``safe_columns`` parameter. Default is ``None``.
                 WARNING: Only use this for sanitized user data to prevent XSS attacks.
     :param show_actions: Whether to display the actions column. Default is ``False``.
-    :param model: The model used to build custom_action, view, edit, delete URLs.
+    :param model: An optional model used to build custom_action, view, edit,
+            delete URLs. Set this if you need to pull the URL arguments from
+            a different SQLAlchemy class indexed with the same primary key.
     :param actions_title: Title for the actions column header. Default is ``'Actions'``.
     :param custom_actions: A list of tuples for creating custom action buttons, where each tuple contains
                 ('Title Text displayed on hover', 'bootstrap icon name', 'URL tuple or fixed URL string')
@@ -541,8 +544,10 @@ an URL tuple in the form of ``('endpoint', [('url_parameter_name', ':db_model_fi
   it's a variable, otherwise it will becomes a fixed value). ``db_model_fieldname`` may also contain dots to access
   relationships and their fields (e.g. ``user.name``).
 
-Remember to set the ``model`` when setting this URLs, so that Bootstrap-Flask will know where to get the actual value
-when building the URL.
+By default, Bootstrap-Flask will take the fields from the row data provided.
+Alternatively, you may set the ``model``, in which case a record from that
+model, indexed with the same primary key, will be used to get the actual
+value when building the URL.
 
 For example, for the view below:
 
@@ -563,13 +568,13 @@ Here is the full example:
     @app.route('/test')
     def test():
         data = Message.query.all()
-        return render_template('test.html', data=data, Message=Message)
+        return render_template('test.html', data=data)
 
 .. code-block:: jinja
 
     {% from 'bootstrap4/table.html' import render_table %}
 
-    {{ render_table(data, model=Message, view_url=('view_message', [('message_id', ':id')])) }}
+    {{ render_table(data, view_url=('view_message', [('message_id', ':id')])) }}
 
 The following arguments are expect to accpet an URL tuple:
 
