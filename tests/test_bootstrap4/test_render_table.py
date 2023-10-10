@@ -64,7 +64,6 @@ def test_render_safe_table(app, client):
     response = client.get('/table')
     data = response.get_data(as_text=True)
     assert '<table class="table">' in data
-    print(data)
     assert '<th scope="col">#</th>' in data
     assert '<th scope="col">Message</th>' in data
     assert '<th scope="row">1</th>' in data
