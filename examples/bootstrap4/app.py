@@ -36,6 +36,7 @@ class ExampleForm(FlaskForm):
     datetime_local = DateTimeLocalField()
     time = TimeField()
     month = MonthField()
+    color = ColorField()
     floating = FloatField()
     integer = IntegerField()
     decimal_slider = DecimalRangeField()
