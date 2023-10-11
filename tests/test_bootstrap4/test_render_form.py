@@ -1,7 +1,7 @@
 from flask import current_app, render_template_string
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, FileField, MultipleFileField,\
-    PasswordField, RadioField, StringField, SubmitField, IntegerRangeField,\
+from wtforms import BooleanField, FileField, MultipleFileField, \
+    PasswordField, RadioField, StringField, SubmitField, IntegerRangeField, \
     DecimalRangeField
 from wtforms.validators import DataRequired
 from flask_bootstrap import SwitchField
