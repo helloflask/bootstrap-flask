@@ -16,7 +16,7 @@ from setuptools import setup
 
 setup(
     name='Bootstrap-Flask',
-    version='2.3.1',
+    version='2.3.2-dev',
     url='https://github.com/helloflask/bootstrap-flask',
     project_urls={
         'Documentation': 'https://bootstrap-flask.readthedocs.io/en/stable/',
