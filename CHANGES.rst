@@ -4,9 +4,10 @@ Changelog
 2.3.1
 -----
 
-Release date: -
+Release date: 2023/10/11
 
 - Upgrade to Bootstrap 5.3.2, Bootswatch 5.3.1, and Bootstrap Icons 1.11.1.
+- Set up the Azure web app for the example application.
 
 
 2.3.0
