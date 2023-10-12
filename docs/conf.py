@@ -19,9 +19,9 @@ from pallets_sphinx_themes import get_version, ProjectLink
 
 # -- Project information -----------------------------------------------------
 
-project = u'Bootstrap-Flask'
-copyright = u'2017, Grey Li'
-author = u'Grey Li'
+project = 'Bootstrap-Flask'
+copyright = '2017, Grey Li'
+author = 'Grey Li'
 
 version, release = get_version('Bootstrap-Flask')
 
@@ -63,7 +63,7 @@ language = 'en'
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path .
-exclude_patterns = [u'_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
@@ -107,8 +107,8 @@ html_show_sourcelink = False
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'Bootstrap-Flaskdoc'
-html_favicon = "_static/bootstrap-flask-favicon.png"
-html_logo = "_static/bootstrap-flask-logo.png"
+html_favicon = '_static/bootstrap-flask-favicon.png'
+html_logo = '_static/bootstrap-flask-logo.png'
 
 html_css_files = [
     'css/custom.css',
@@ -137,8 +137,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'Bootstrap-Flask.tex', u'Bootstrap-Flask Documentation',
-     u'Grey Li', 'manual'),
+    (master_doc, 'Bootstrap-Flask.tex', 'Bootstrap-Flask Documentation',
+     'Grey Li', 'manual'),
 ]
 
 
@@ -147,7 +147,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'bootstrap-flask', u'Bootstrap-Flask Documentation',
+    (master_doc, 'bootstrap-flask', 'Bootstrap-Flask Documentation',
      [author], 1)
 ]
 
@@ -158,7 +158,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'Bootstrap-Flask', u'Bootstrap-Flask Documentation',
+    (master_doc, 'Bootstrap-Flask', 'Bootstrap-Flask Documentation',
      author, 'Bootstrap-Flask', 'One line description of project.',
      'Miscellaneous'),
 ]
