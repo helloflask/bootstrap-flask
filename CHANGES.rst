@@ -4,7 +4,9 @@ Changelog
 2.3.2
 -----
 
-Release date: -
+Release date: 2023/10/11
+
+- Fix the incorrect JS file integrity value.
 
 
 2.3.1
