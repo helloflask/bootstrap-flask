@@ -1,6 +1,8 @@
 Changelog
 =========
 
+- Reduced icon whitespace and support for classes.
+
 2.3.3
 -----
 
