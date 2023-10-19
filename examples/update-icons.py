@@ -33,7 +33,7 @@ def generate(version):
 {{{{ render_icon('{name}', 32) }}}}
 </div>
 </a>
-<div class="name text-muted text-decoration-none text-center pt-1">{name}</div>
+<div class="name text-body-secondary text-decoration-none text-center pt-1">{name}</div>
 </li>
 '''
             file.write(item)

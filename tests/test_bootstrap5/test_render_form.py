@@ -23,7 +23,7 @@ def test_switch_field(app, client):
     assert 'custom-control custom-switch' not in data
     assert 'form-check form-switch' in data
     assert 'role="switch"' in data
-    assert '<small class="form-text text-muted">Just check this</small>' in data
+    assert '<small class="form-text text-body-secondary">Just check this</small>' in data
 
 
 # test render IntegerRangeField and DecimalRangeField
