@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/utils.html' import render_image, render_figure %}
+
+{% block content %}
+See also <a href="https://getbootstrap.com/docs/5.3/content/images/">https://getbootstrap.com/docs/5.3/content/images/</a>
+and <a href="https://getbootstrap.com/docs/5.3/content/figures/">https://getbootstrap.com/docs/5.3/content/figures/</a>.
+
+<h2>Image</h2>
+<pre>{% raw %}{{ render_image(url_for('static', filename='rectangle-256x64.png'), alt='url_for') }}{% endraw %}</pre>
+Output: {{ render_image(url_for('static', filename='rectangle-256x64.png'), alt='url_for') }}
+
+<h2>Thumbnail</h2>
+<pre>{% raw %}{{ render_image('static/rectangle-256x64.png', alt='thumb', corner='thumbnail') }}{% endraw %}</pre>
+Output: {{ render_image('static/rectangle-256x64.png', alt='thumb', corner='thumbnail') }}
+
+<h2>Image fluid</h2>
+<pre>{% raw %}{{ render_image('static/rectangle-256x64.png', alt='fluid', fluid=True) }}{% endraw %}</pre>
+Output: {{ render_image('static/rectangle-256x64.png', alt='fluid', fluid=True) }}
+
+<h2>Aligned image</h2>
+<pre>{% raw %}{{ render_image('static/rectangle-256x64.png', alt='center', text_align='center') }}{% endraw %}</pre>
+Output: {{ render_image('static/rectangle-256x64.png', alt='center', text_align='center') }}
+<pre>{% raw %}{{ render_image('static/rectangle-256x64.png', alt='end', text_align='end') }}{% endraw %}</pre>
+Output: {{ render_image('static/rectangle-256x64.png', alt='end', text_align='end') }}
+<pre>{% raw %}{{ render_image('static/rectangle-256x64.png', alt='mx-auto', mx_auto=True) }}{% endraw %}</pre>
+Output: {{ render_image('static/rectangle-256x64.png', alt='mx-auto', mx_auto=True) }}
+
+<h2>Rounded image</h2>
+<pre>{% raw %}{{ render_image('static/rectangle-256x64.png', alt='rounded', corner='rounded') }}{% endraw %}</pre>
+Output: {{ render_image('static/rectangle-256x64.png', alt='rounded', corner='rounded') }}
+
+<h2>Float image</h2>
+<pre>{% raw %}{{ render_image('static/rectangle-256x64.png', alt='float-start', float='start') }}
+{{ render_image('static/rectangle-256x64.png', alt='float-end', float='end') }}{% endraw %}</pre>
+Output: {{ render_image('static/rectangle-256x64.png', alt='float-start', float='start') }}{{ render_image('static/rectangle-256x64.png', alt='float-end', float='end') }}
+
+<h2>Figure</h2>
+<pre>{% raw %}{{ render_figure('static/rectangle-256x64.png', alt='rounded', caption='A caption for the above image.', corner='rounded') }}{% endraw %}</pre>
+Output: {{ render_figure('static/rectangle-256x64.png', alt='rounded', caption='A caption for the above image.', corner='rounded') }}
+<pre>{% raw %}{{ render_figure('static/rectangle-256x64.png', alt='thumb', caption='A caption for the above image.', corner='thumbnail') }}{% endraw %}</pre>
+Output: {{ render_figure('static/rectangle-256x64.png', alt='thumb', caption='A caption for the above image.', corner='thumbnail') }}
+<pre>{% raw %}{{ render_figure('static/rectangle-256x64.png', alt='end', caption='A caption for the above image.', text_align='end') }}{% endraw %}</pre>
+Output: {{ render_figure('static/rectangle-256x64.png', alt='end', caption='A caption for the above image.', text_align='end') }}
+{% endblock %}

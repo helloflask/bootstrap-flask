@@ -38,3 +38,31 @@
     {% endif -%}
     {% endwith -%}
 {% endmacro -%}
+
+
+{% macro render_image(src, alt, fluid=False, corner=None, text_align=None,
+    float=None, mx_auto=False) -%}
+    {%- if text_align -%}
+    <div class="text-{{ text_align }}">
+    {%- endif -%}
+    <img src="{{ src }}" alt="{{ alt }}"
+    {%- if fluid or float or mx_auto or corner %} class="
+        {%- if fluid %} img-fluid{% endif -%}
+        {%- if float %} float-{{ float }}{% endif -%}
+        {%- if mx_auto %} mx-auto d-block{% endif -%}
+        {%- if corner == 'thumbnail' %} img-thumbnail
+        {%- elif corner == 'rounded' %} rounded{% endif -%}"
+    {%- endif %}>
+    {%- if text_align -%}
+    </div>
+    {%- endif -%}
+{%- endmacro -%}
+
+{% macro render_figure(src, alt, caption, corner=None, text_align=None) -%}
+    <figure class="figure">
+    <img src="{{ src }}" alt="{{ alt }}" class="figure-img img-fluid
+        {%- if corner == 'thumbnail' %} img-thumbnail
+        {%- elif corner == 'rounded' %} rounded{% endif -%}">
+    <figcaption class="figure-caption{% if text_align %} text-{{ text_align }}{% endif %}">{{ caption }}</figcaption>
+    </figure>
+{%- endmacro -%}

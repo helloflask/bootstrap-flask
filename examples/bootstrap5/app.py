@@ -287,6 +287,11 @@ def new_message():
     return 'Here is the new message page. Return to <a href="/table">table</a>.'
 
 
+@app.route('/image')
+def test_image():
+    return render_template('image.html')
+
+
 @app.route('/icon')
 def test_icon():
     return render_template('icon.html')
