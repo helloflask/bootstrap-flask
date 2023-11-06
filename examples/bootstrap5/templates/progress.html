@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/utils.html' import render_progress %}
+
+{% block content %}
+See also <a href="https://getbootstrap.com/docs/5.3/components/progress/">https://getbootstrap.com/docs/5.3/components/progress/</a>.
+
+<h2>Progress</h2>
+<pre>{% raw %}{{ render_progress(0, aria_label='Basic example') }}{% endraw %}</pre>
+Output: {{ render_progress(0, aria_label='Basic example') }}
+<pre>{% raw %}{{ render_progress(25, aria_label='Basic example') }}{% endraw %}</pre>
+Output: {{ render_progress(25, aria_label='Basic example') }}
+<pre>{% raw %}{{ render_progress(50, aria_label='Basic example') }}{% endraw %}</pre>
+Output: {{ render_progress(50, aria_label='Basic example') }}
+<pre>{% raw %}{{ render_progress(75, aria_label='Basic example') }}{% endraw %}</pre>
+Output: {{ render_progress(75, aria_label='Basic example') }}
+<pre>{% raw %}{{ render_progress(100, aria_label='Basic example') }}{% endraw %}</pre>
+Output: {{ render_progress(100, aria_label='Basic example') }}
+
+<h2>Progress height</h2>
+<pre>{% raw %}{{ render_progress(25, aria_label='Example 1px height', height='1px') }}{% endraw %}</pre>
+Output: {{ render_progress(25, aria_label='Example 1px height', height='1px') }}
+<pre>{% raw %}{{ render_progress(25, aria_label='Example 25px height', height='20px') }}{% endraw %}</pre>
+Output: {{ render_progress(25, aria_label='Example 25px height', height='20px') }}
+
+<h2>Progress label</h2>
+<pre>{% raw %}{{ render_progress(25, aria_label='Example with label', label='25%') }}{% endraw %}</pre>
+Output: {{ render_progress(25, aria_label='Example with label', label='25%') }}
+<pre>{% raw %}{{ render_progress(10, aria_label='Example with long label', label='Long label text for the progress bar, set to a dark color', foreground='text-dark') }}{% endraw %}</pre>
+Output: {{ render_progress(10, aria_label='Example with long label', label='Long label text for the progress bar, set to a dark color', foreground='text-dark') }}
+
+<h2>Progress background</h2>
+<pre>{% raw %}{{ render_progress(25, aria_label='Succes example', background='succes') }}{% endraw %}</pre>
+Output: {{ render_progress(25, aria_label='Succes example', background='succes') }}
+<pre>{% raw %}{{ render_progress(50, aria_label='Info example', background='info') }}{% endraw %}</pre>
+Output: {{ render_progress(50, aria_label='Info example', background='info') }}
+<pre>{% raw %}{{ render_progress(75, aria_label='Warning example', background='warning') }}{% endraw %}</pre>
+Output: {{ render_progress(75, aria_label='Warning example', background='warning') }}
+<pre>{% raw %}{{ render_progress(100, aria_label='Danger example', background='danger') }}{% endraw %}</pre>
+Output: {{ render_progress(100, aria_label='Danger example', background='danger') }}
+
+<h2>Progress label color</h2>
+<pre>{% raw %}{{ render_progress(25, aria_label='Succes example', label='25%', background='succes') }}{% endraw %}</pre>
+Output: {{ render_progress(25, aria_label='Succes example', label='25%', background='succes') }}
+<pre>{% raw %}{{ render_progress(50, aria_label='Info example', label='50%', background='info', foreground='text-dark') }}{% endraw %}</pre>
+Output: {{ render_progress(50, aria_label='Info example', label='50%', background='info', foreground='text-dark') }}
+<pre>{% raw %}{{ render_progress(75, aria_label='Warning example', label='75%', background='warning', foreground='text-dark') }}{% endraw %}</pre>
+Output: {{ render_progress(75, aria_label='Warning example', label='75%', background='warning', foreground='text-dark') }}
+<pre>{% raw %}{{ render_progress(100, aria_label='Danger example', label='100%', background='danger') }}{% endraw %}</pre>
+Output: {{ render_progress(100, aria_label='Danger example', label='100%', background='danger') }}
+<pre>{% raw %}{{ render_progress(75, aria_label='Warning example', label='75%', foreground='text-bg-warning') }}{% endraw %}</pre>
+Output: {{ render_progress(75, aria_label='Warning example', label='75%', foreground='text-bg-warning') }}
+
+<h2>Progress striped</h2>
+<pre>{% raw %}{{ render_progress(10, aria_label='Default striped example', striped=True) }}{% endraw %}</pre>
+Output: {{ render_progress(10, aria_label='Default striped example', striped=True) }}
+<pre>{% raw %}{{ render_progress(25, aria_label='Succes striped example', background='succes', striped=True) }}{% endraw %}</pre>
+Output: {{ render_progress(25, aria_label='Succes striped example', background='succes', striped=True) }}
+<pre>{% raw %}{{ render_progress(50, aria_label='Info striped example', background='info', striped=True) }}{% endraw %}</pre>
+Output: {{ render_progress(50, aria_label='Info striped example', background='info', striped=True) }}
+<pre>{% raw %}{{ render_progress(75, aria_label='Warning striped example', background='warning', striped=True) }}{% endraw %}</pre>
+Output: {{ render_progress(75, aria_label='Warning striped example', background='warning', striped=True) }}
+<pre>{% raw %}{{ render_progress(100, aria_label='Danger striped example', background='danger', striped=True) }}{% endraw %}</pre>
+Output: {{ render_progress(100, aria_label='Danger striped example', background='danger', striped=True) }}
+
+<h2>Progress animated striped</h2>
+<pre>{% raw %}{{ render_progress(75, aria_label='Animated striped example', striped=True, animated=True) }}{% endraw %}</pre>
+Output: {{ render_progress(75, aria_label='Animated striped example', striped=True, animated=True) }}
+{% endblock %}

@@ -38,3 +38,15 @@
     {% endif -%}
     {% endwith -%}
 {% endmacro -%}
+
+<!-- As foreground such as text-bg-warning also set the background, there is no
+default value in macro declaration below for background. See also
+https://getbootstrap.com/docs/5.3/helpers/color-background/ -->
+{% macro render_progress(aria_valuenow=0, aria_valuemin=0, aria_valuemax=100,
+                         aria_label='', height=None, label=None,
+                         background=None, foreground=None,
+                         striped=False, animated=False) -%}
+<div class="progress" role="progressbar" aria-label="{{ aria_label }}" aria-valuenow="{{ aria_valuenow }}" aria-valuemin="{{ aria_valuemin }}" aria-valuemax="{{ aria_valuemax }}" {% if height %}style="height: {{ height }}"{% endif %}>
+  <div class="progress-bar{% if striped %} progress-bar-striped{% if animated %} progress-bar-animated{% endif %}{% endif %}{% if background %} bg-{{ background }}{% endif %}{% if foreground %} {{ foreground }}{% endif %}" style="width: {{ aria_valuenow }}%">{% if label %}{{ label }}{% endif %}</div>
+</div>
+{%- endmacro %}
