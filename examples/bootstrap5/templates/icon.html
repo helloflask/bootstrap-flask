@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'bootstrap5/utils.html' import render_icon, render_iconlink %}
 
 {% block content %}
 <h2>Icon</h2>
@@ -25,4 +25,17 @@ Output: {{ render_icon('heart', title='Heart', desc='A heart.') }}
 <h2>Button example</h2>
 <a class="btn btn-primary text-white">Download {{ render_icon('arrow-down-circle') }}</a>
 <a class="btn btn-success text-white">Bookmark {{ render_icon('bookmark-star') }}</a>
+
+<h2>Icon link</h2>
+See also <a href="https://getbootstrap.com/docs/5.3/helpers/icon-link/">https://getbootstrap.com/docs/5.3/helpers/icon-link/</a>.
+<pre>{% raw %}{{ render_iconlink('.', 'Icon link', name='box-seam', title='Reload', desc='Reload this page.') }}{% endraw %}</pre>
+Output: {{ render_iconlink('.', 'Icon link', name='box-seam', title='Reload', desc='Reload this page.') }}
+<pre>{% raw %}{{ render_iconlink('.', 'Icon link', before=True, name='arrow-right', title='Reload', desc='Reload this page.') }}{% endraw %}</pre>
+Output: {{ render_iconlink('.', 'Icon link', before=True, name='arrow-right', title='Reload', desc='Reload this page.') }}
+<pre>{% raw %}{{ render_iconlink('.', 'Icon link', hover=True, name='arrow-right', title='Reload', desc='Reload this page.') }}{% endraw %}</pre>
+Output: {{ render_iconlink('.', 'Icon link', hover=True, name='arrow-right', title='Reload', desc='Reload this page.') }}
+<pre>{% raw %}{{ render_iconlink('.', 'Icon link', before=True, hover=True, hover_up=True, name='clipboard', title='Reload', desc='Reload this page.') }}{% endraw %}</pre>
+Output: {{ render_iconlink('.', 'Icon link', before=True, hover=True, hover_up=True, name='clipboard', title='Reload', desc='Reload this page.') }}
+<pre>{% raw %}{{ render_iconlink('.', 'Icon link', name='arrow-right', title='Reload', desc='Reload this page.', color='danger') }}{% endraw %}</pre>
+Output: {{ render_iconlink('.', 'Icon link', name='arrow-right', title='Reload', desc='Reload this page.', color='danger') }}
 {% endblock %}

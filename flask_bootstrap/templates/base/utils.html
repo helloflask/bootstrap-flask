@@ -10,14 +10,27 @@
 {% endmacro %}
 
 
-{% macro render_icon(name, size=config.BOOTSTRAP_ICON_SIZE, color=config.BOOTSTRAP_ICON_COLOR, title=None, desc=None) %}
+{% macro render_icon(name, size=config.BOOTSTRAP_ICON_SIZE, color=config.BOOTSTRAP_ICON_COLOR, title=None, desc=None, hidden=False) %}
 {% set bootstrap_colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'muted'] %}
 <svg class="bi{% if not color %}"{% elif color in bootstrap_colors %} text-{{ color }}"{% else %}" style="color: {{ color }}"{% endif %}
- width="{{ size }}" height="{{ size }}" fill="currentColor">
+ width="{{ size }}" height="{{ size }}" fill="currentColor"{% if hidden %} aria-hidden="true"{% endif %}>
     {% if title is not none %}<title>{{ title }}</title>{% endif %}
     {% if desc is not none %}<desc>{{ desc }}</desc>{% endif %}
     <use xlink:href="{{ url_for('bootstrap.static', filename='icons/bootstrap-icons.svg') }}#{{ name }}"/>
 </svg>
+{% endmacro %}
+
+{% macro render_iconlink(url, text, name, before=False, hover=False, hover_up=False, size=config.BOOTSTRAP_ICON_SIZE, color=config.BOOTSTRAP_ICON_COLOR, title=None, desc=None) %}
+{% set bootstrap_colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'muted'] %}
+<a class="icon-link{% if hover %} icon-link-hover{% endif %}{%if not color %}"{% else %} link-{{ color }} link-underline-{{ color }}"{% endif %} href="{{ url }}" {%if hover_up%} style="--bs-icon-link-transform: translate3d(0, -.125rem, 0);"{% endif %}>
+{%- if not before -%}
+{{ text }}
+{%- endif -%}
+{{ render_icon(name, size, title=title, desc=desc, hidden=True) }}
+{%- if before -%}
+{{ text }}
+{%- endif -%}
+</a>
 {% endmacro %}
 
 
