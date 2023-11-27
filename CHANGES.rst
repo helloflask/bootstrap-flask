@@ -6,6 +6,8 @@ Changelog
 
 Release date: -
 
+- Upgrade to Bootstrap Icons 1.11.2.
+
 
 2.3.2
 -----
