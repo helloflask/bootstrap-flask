@@ -15,19 +15,15 @@ jobs:
           python-version: '3.x'
           cache: pip
           cache-dependency-path: requirements*/*.txt
-      - run: pip install -r requirements/build.txt
+      - run: pip install setuptools wheel
       # Use the commit date instead of the current date during the build.
       - run: echo "SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)" >> $GITHUB_ENV
       - run: python setup.py sdist bdist_wheel
-      # Generate hashes used for provenance.
-      - name: generate hash
-        id: hash
-        run: cd dist && echo "hash=$(sha256sum * | base64 -w0)" >> $GITHUB_OUTPUT
       - uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32
         with:
           path: ./dist
   create-release:
-    # Upload the sdist, wheels, and provenance to a GitHub release. They remain
+    # Upload the sdist, wheels to a GitHub release. They remain
     # available as build artifacts for a while as well.
     needs: [build]
     runs-on: ubuntu-latest
