@@ -35,7 +35,6 @@ jobs:
         run: >
           gh release create --draft --repo ${{ github.repository }}
           ${{ github.ref_name }}
-          *.intoto.jsonl/* artifact/*
         env:
           GH_TOKEN: ${{ github.token }}
   publish-pypi:
