@@ -4,7 +4,7 @@ Changelog
 2.3.3
 -----
 
-Release date: -
+Release date: 2023/11/30
 
 - Upgrade to Bootstrap Icons 1.11.2.
 
