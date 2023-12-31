@@ -45,6 +45,23 @@ the necessary fix for required=False attributes, but will also not set the requi
 
     {% set form_group_classes = form_group_classes or config.BOOTSTRAP_FORM_GROUP_CLASSES %}
 
+    {# support for label_class and descr_class which are popped, to prevent they are added to input, but restored at the end of this macro for the next rendering #}
+    {%- set label_class = '' -%}
+    {%- if field.render_kw.label_class -%}
+        {% set label_class = field.render_kw.pop('label_class', '') -%}
+        {% set label_classes = ' ' + label_class -%}
+    {%- endif -%}
+    {%- set radio_class = '' -%}
+    {%- if field.render_kw.radio_class -%}
+        {% set radio_class = field.render_kw.pop('radio_class', '') -%}
+        {% set radio_classes = ' ' + radio_class -%}
+    {%- endif -%}
+    {%- set descr_class = '' -%}
+    {%- if field.render_kw.descr_class -%}
+        {% set descr_class = field.render_kw.pop('descr_class', '') -%}
+        {% set descr_classes = ' ' + descr_class -%}
+    {%- endif -%}
+
     {# combine render_kw class or class/class_ argument with Bootstrap classes #}
     {% set render_kw_class = ' ' + field.render_kw.class if field.render_kw.class else '' %}
     {% set class = kwargs.pop('class', '') or kwargs.pop('class_', '') %}
@@ -68,14 +85,14 @@ the necessary fix for required=False attributes, but will also not set the requi
                 {%- else -%}
                     {{ field(class="form-check-input%s" % extra_classes, **field_kwargs)|safe }}
                 {%- endif %}
-                {{ field.label(class="form-check-label", for=field.id)|safe }}
+                {{ field.label(class="form-check-label%s" % label_classes, for=field.id)|safe }}
                 {%- if field.errors %}
                     {%- for error in field.errors %}
                         <div class="invalid-feedback d-block">{{ error }}</div>
                     {%- endfor %}
                 {%- elif field.description -%}
                     {% call _hz_form_wrap(horizontal_columns, form_type, required=required) %}
-                        <small class="form-text text-body-secondary">{{ field.description|safe }}</small>
+                        <small class="form-text text-body-secondary{{ descr_classes|safe }}">{{ field.description|safe }}</small>
                     {% endcall %}
                 {%- endif %}
             </div>
@@ -85,12 +102,13 @@ the necessary fix for required=False attributes, but will also not set the requi
      this is just a hack for now, until I can think of something better #}
         <div class="{{ form_group_classes }} {% if form_type == 'horizontal' %}row{% endif %}{% if required %} required{% endif %}">
             {%- if form_type == "inline" %}
-                {{ field.label(class="visually-hidden")|safe }}
+                {{ field.label(class="visually-hidden%s" % label_classes)|safe }}
             {% elif form_type == "horizontal" %}
                 {{ field.label(class="col-form-label" + (
-                " col-%s-%s" % horizontal_columns[0:2]))|safe }}
+                " col-%s-%s" % horizontal_columns[0:2]) + (
+                "%s" % label_classes))|safe }}
             {%- else -%}
-                {{ field.label(class="form-label")|safe }}
+                {{ field.label(class="form-label%s" % label_classes)|safe }}
             {% endif %}
             {% if form_type == 'horizontal' %}
               <div class="col-{{ horizontal_columns[0] }}-{{ horizontal_columns[2] }}">
@@ -99,7 +117,7 @@ the necessary fix for required=False attributes, but will also not set the requi
             {% for item in field -%}
                 <div class="form-check{% if form_type == "inline" %} form-check-inline{% endif %}">
                     {{ item(class="form-check-input")|safe }}
-                    {{ item.label(class="form-check-label", for=item.id)|safe }}
+                    {{ item.label(class="form-check-label%s" % radio_classes, for=item.id)|safe }}
                 </div>
             {% endfor %}
         {#% endcall %#}
@@ -111,7 +129,7 @@ the necessary fix for required=False attributes, but will also not set the requi
                 <div class="invalid-feedback d-block">{{ error }}</div>
             {%- endfor %}
         {%- elif field.description -%}
-            <small class="form-text text-body-secondary">{{ field.description|safe }}</small>
+            <small class="form-text text-body-secondary{{ descr_classes|safe }}">{{ field.description|safe }}</small>
         {%- endif %}
         </div>
     {%- elif field.type == 'SubmitField' -%}
@@ -145,7 +163,7 @@ the necessary fix for required=False attributes, but will also not set the requi
         <div class="{{ form_group_classes }}{%- if form_type == "horizontal" %} row{% endif -%}
                          {%- if field.flags.required %} required{% endif -%}">
             {%- if form_type == "inline" %}
-                {{ field.label(class="visually-hidden")|safe }}
+                {{ field.label(class="visually-hidden%s" % label_classes)|safe }}
                 {%- if field.type in ['DecimalRangeField', 'IntegerRangeField'] %}
                     {% if field.errors %}
                         {{ field(class="form-range is-invalid%s" % extra_classes, **kwargs)|safe }}
@@ -166,7 +184,9 @@ the necessary fix for required=False attributes, but will also not set the requi
                     {% endif %}
                 {%- endif %}
             {% elif form_type == "horizontal" %}
-                {{ field.label(class="col-form-label" + (" col-%s-%s" % horizontal_columns[0:2]))|safe }}
+                {{ field.label(class="col-form-label" + (
+                " col-%s-%s" % horizontal_columns[0:2]) + (
+                "%s" % label_classes))|safe }}
                 <div class="col-{{ horizontal_columns[0] }}-{{ horizontal_columns[2] }}">
                 {%- if field.type in ['DecimalRangeField', 'IntegerRangeField'] %}
                     {% if field.errors %}
@@ -196,11 +216,11 @@ the necessary fix for required=False attributes, but will also not set the requi
                     {%- endfor %}
                 {%- elif field.description -%}
                     {% call _hz_form_wrap(horizontal_columns, form_type, required=required) %}
-                        <small class="form-text text-body-secondary">{{ field.description|safe }}</small>
+                        <small class="form-text text-body-secondary{{ descr_classes|safe }}">{{ field.description|safe }}</small>
                     {% endcall %}
                 {%- endif %}
             {%- else -%}
-                {{ field.label(class="form-label")|safe }}
+                {{ field.label(class="form-label%s" % label_classes)|safe }}
                 {%- if field.type in ['DecimalRangeField', 'IntegerRangeField'] %}
                     {% if field.errors %}
                         {{ field(class="form-range is-invalid%s" % extra_classes, **kwargs)|safe }}
@@ -225,11 +245,21 @@ the necessary fix for required=False attributes, but will also not set the requi
                         <div class="invalid-feedback d-block">{{ error }}</div>
                     {%- endfor %}
                 {%- elif field.description -%}
-                    <small class="form-text text-body-secondary">{{ field.description|safe }}</small>
+                    <small class="form-text text-body-secondary{{ descr_classes|safe }}">{{ field.description|safe }}</small>
                 {%- endif %}
             {%- endif %}
         </div>
     {% endif %}
+
+    {%- if label_class -%}
+        {%- set _ = field.render_kw.update({'label_class': label_class}) -%}
+    {%- endif -%}
+    {%- if radio_class -%}
+        {%- set _ = field.render_kw.update({'radio_class': radio_class}) -%}
+    {%- endif -%}
+    {%- if descr_class -%}
+        {%- set _ = field.render_kw.update({'descr_class': descr_class}) -%}
+    {%- endif -%}
 {% endmacro %}
 
 {# valid form types are "basic", "inline" and "horizontal" #}
