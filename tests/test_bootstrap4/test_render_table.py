@@ -125,13 +125,15 @@ def test_render_customized_table(app, client):
         return render_template_string('''
                                 {% from 'bootstrap4/table.html' import render_table %}
                                 {{ render_table(messages, titles, table_classes='table-striped',
-                                header_classes='thead-dark', caption='Messages') }}
+                                header_classes='thead-dark', body_classes='table-group-divider',
+                                caption='Messages') }}
                                 ''', titles=titles, messages=messages)
 
     response = client.get('/table')
     data = response.get_data(as_text=True)
     assert '<table class="table table-striped">' in data
     assert '<thead class="thead-dark">' in data
+    assert '<tbody class="table-group-divider">' in data
     assert '<caption>Messages</caption>' in data
 
 

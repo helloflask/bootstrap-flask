@@ -30,6 +30,7 @@
                       caption=None,
                       table_classes=None,
                       header_classes=None,
+                      body_classes=None,
                       responsive=False,
                       responsive_class='table-responsive',
                       safe_columns=None,
@@ -75,7 +76,7 @@
     {% endif %}
     </tr>
     </thead>
-    <tbody>
+    <tbody{% if body_classes %} class="{{ body_classes }}"{% endif %}>
     {% for row in data %}
     <tr>
         {% for title in titles %}

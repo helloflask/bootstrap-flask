@@ -7,8 +7,8 @@
 {{ render_table(messages) }}
 
 <h2>Customized Table</h2>
-<pre>{% raw %}{{ render_table(messages, titles, table_classes='table-striped', header_classes='thead-dark', caption='Messages') }}{% endraw %}</pre>
-{{ render_table(messages, titles, table_classes='table-striped', header_classes='thead-dark', caption='Messages') }}
+<pre>{% raw %}{{ render_table(messages, titles, table_classes='table-striped', header_classes='thead-dark', body_classes='table-group-divider', caption='Messages') }}{% endraw %}</pre>
+{{ render_table(messages, titles, table_classes='table-striped', header_classes='thead-dark', body_classes='table-group-divider', caption='Messages') }}
 
 <h2>Responsive Table</h2>
 <pre>{% raw %}{{ render_table(messages, responsive=True, responsive_class='table-responsive-sm') }}{% endraw %}</pre>
