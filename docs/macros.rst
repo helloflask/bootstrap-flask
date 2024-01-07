@@ -491,6 +491,7 @@ API
                               caption=None,\
                               table_classes=None,\
                               header_classes=None,\
+                              body_classes=None,\
                               responsive=False,\
                               responsive_class='table-responsive',\
                               safe_columns=None,\
@@ -512,6 +513,7 @@ API
     :param caption: A caption to attach to the table.
     :param table_classes: A string of classes to apply to the table (e.g ``'table-small table-dark'``).
     :param header_classes: A string of classes to apply to the table header (e.g ``'thead-dark'``).
+    :param body_classes: A string of classes to apply to the table body (e.g ``'table-group-divider'``).
     :param responsive: Whether to enable/disable table responsiveness.
     :param responsive_class: The responsive class to apply to the table. Default is ``'table-responsive'``.
     :param safe_columns: Tuple with columns names to render HTML safe using ``|safe``.
