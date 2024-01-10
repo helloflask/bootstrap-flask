@@ -1,21 +1,27 @@
-{% macro render_nav_item(endpoint, text, _badge='', _use_li=False) %}
-    {% set active = True if request.endpoint and request.endpoint == endpoint else False %}
-    {% if _use_li %}<li class="nav-item">{% endif %}
-    <a class="{% if not _use_li %}nav-item {% endif %}nav-link{% if active %} active" aria-current="page{% endif %}"
-       href="{{ url_for(endpoint, **kwargs) }}">
-        {{ text }} {% if _badge %}<span class="badge badge-light">{{ _badge }}</span>{% endif %}
+{% macro render_nav_item(endpoint, text, _badge=None, _badge_pill=False, _badge_style=config.BOOTSTRAP_BTN_STYLE, _use_li=False) %}
+    {%- set active = True if request.endpoint and request.endpoint == endpoint else False -%}
+    {% if _use_li -%}
+    <li class="nav-item">
+    {%- endif -%}
+    <a class="{% if not _use_li %}nav-item {% endif %}nav-link{% if active %} active" aria-current="page{% endif %}" href="{{ url_for(endpoint, **kwargs) }}">{{ text }}
+    {%- if _badge %} <span class="badge{%if _badge_pill %} badge-pill{% endif %} badge-{% if _badge_style %}{{ _badge_style }}{% else %}light{% endif %}">{{ _badge }}</span>{% endif -%}
     </a>
-    {% if _use_li %}</li>{% endif %}
+    {%- if _use_li -%}
+    </li>
+    {%- endif -%}
 {% endmacro %}
 
 
-{% macro render_breadcrumb_item(endpoint, text) %}
-    {% set active = True if request.endpoint and request.endpoint == endpoint else False %}
+{% macro render_breadcrumb_item(endpoint, text, _badge=None, _badge_pill=False, _badge_style=config.BOOTSTRAP_BTN_STYLE) %}
+    {%- set active = True if request.endpoint and request.endpoint == endpoint else False -%}
     <li class="breadcrumb-item{% if active %} active" aria-current="page{% endif %}">
-        {% if active %}
-            {{ text }}
-        {% else %}
-        <a href="{{ url_for(endpoint, **kwargs) }}">{{ text }}</a>
-        {% endif %}
+        {%- if not active -%}
+        <a href="{{ url_for(endpoint, **kwargs) }}">
+        {%- endif -%}
+        {{ text }}
+        {%- if _badge %} <span class="badge{%if _badge_pill %} badge-pill{% endif %} badge-{% if _badge_style %}{{ _badge_style }}{% else %}light{% endif %}">{{ _badge }}</span>{% endif -%}
+        {%- if not active -%}
+        </a>
+        {%- endif -%}
     </li>
 {% endmacro %}

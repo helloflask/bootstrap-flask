@@ -31,8 +31,8 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 {{ render_nav_item('index', 'Home') }}
-                {{ render_nav_item('test_form', 'Form') }}
-                {{ render_nav_item('test_nav', 'Nav') }}
+                {{ render_nav_item('test_form', 'Form', _use_li=True) }}
+                {{ render_nav_item('test_nav', 'Nav', _badge='New', _badge_style='Light') }}
                 {{ render_nav_item('test_bootswatch', 'Bootswatch') }}
                 {{ render_nav_item('test_pagination', 'Pagination') }}
                 {{ render_nav_item('test_flash', 'Flash Messages') }}
