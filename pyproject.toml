@@ -22,7 +22,7 @@ classifiers = [
     'Topic :: Software Development :: Libraries :: Python Modules',
 ]
 dependencies = ["Flask", "WTForms"]
-dynamic = ["version"]
+version = "2.3.3"
 
 [project.urls]
 Documentation = "https://bootstrap-flask.readthedocs.io/en/stable/"
