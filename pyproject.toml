@@ -21,10 +21,7 @@ classifiers = [
     'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     'Topic :: Software Development :: Libraries :: Python Modules',
 ]
-dependencies = [
-    "Flask",
-    "WTForms",
-]
+dependencies = ["Flask", "WTForms"]
 dynamic = ["version"]
 
 [project.urls]
@@ -38,9 +35,6 @@ Discussions = "https://github.com/helloflask/bootstrap-flask/discussions/"
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
-
-[tool.setuptools.dynamic]
-version = { attr = "flask.__version__" }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
