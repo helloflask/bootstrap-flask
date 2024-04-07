@@ -1,6 +1,17 @@
 Changelog
 =========
 
+2.4.0
+-----
+
+Release date: 2024/4/7
+
+- Test against Python 3.12.
+- Replaced deprecated color "muted" with "secondary" (`#340 <https://github.com/helloflask/bootstrap-flask/pull/340>`__).
+- Adding ``body_classes`` parameter to ``render_table`` (`#350 <https://github.com/helloflask/bootstrap-flask/pull/350>`__).
+- Migrate setup.py to pyproject.toml.
+
+
 2.3.3
 -----
 

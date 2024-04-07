@@ -1,5 +1,6 @@
 [project]
 name = "Bootstrap-Flask"
+version = "2.4.0"
 description = "Bootstrap 4 & 5 helper for your Flask projects."
 readme = "README.md"
 license = { text = "MIT" }
@@ -22,7 +23,6 @@ classifiers = [
     'Topic :: Software Development :: Libraries :: Python Modules',
 ]
 dependencies = ["Flask", "WTForms"]
-version = "2.3.3"
 
 [project.urls]
 Documentation = "https://bootstrap-flask.readthedocs.io/en/stable/"
@@ -33,7 +33,7 @@ Funding = "https://opencollective.com/bootstrap-flask"
 Discussions = "https://github.com/helloflask/bootstrap-flask/discussions/"
 
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.pytest.ini_options]

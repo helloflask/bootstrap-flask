@@ -15,10 +15,10 @@ jobs:
           python-version: '3.x'
           cache: pip
           cache-dependency-path: requirements*/*.txt
-      - run: pip install setuptools wheel
+      - run: pip install setuptools wheel build
       # Use the commit date instead of the current date during the build.
       - run: echo "SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)" >> $GITHUB_ENV
-      - run: python setup.py sdist bdist_wheel
+      - run: python -m build
       - uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32
         with:
           path: ./dist
