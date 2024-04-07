@@ -1,0 +1,4 @@
+[flake8]
+exclude = static,.git,*migrations*,build,.tox,docs
+max-line-length = 119
+max-complexity = 7
