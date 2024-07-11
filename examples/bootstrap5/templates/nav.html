@@ -4,8 +4,8 @@
 {% block content %}
 <h2>Render Navbar item with render_nav_item</h2>
 <pre>{% raw %}
-{{ render_nav_item('test_form', 'Form') }}
-{{ render_nav_item('test_nav', 'Nav') }}
+{{ render_nav_item('test_form', 'Form', _use_li=True) }}
+{{ render_nav_item('test_nav', 'Nav', _badge='New', _badge_style='Light') }}
 {{ render_nav_item('test_pagination', 'Pagination') }}
 {{ render_nav_item('test_static', 'Static') }}
 {{ render_nav_item('test_flash', 'Flash Messages') }}
@@ -17,8 +17,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <div class="navbar-nav mr-auto">
-            {{ render_nav_item('test_form', 'Form') }}
-            {{ render_nav_item('test_nav', 'Nav') }}
+            {{ render_nav_item('test_form', 'Form', _use_li=True) }}
+            {{ render_nav_item('test_nav', 'Nav', _badge='New', _badge_style='Light') }}
             {{ render_nav_item('test_pagination', 'Pagination') }}
             {{ render_nav_item('test_flash', 'Flash Messages') }}
         </div>
@@ -28,14 +28,14 @@
 <h2>Render Breadcrumb item with render_breadcrumb_item</h2>
 <pre>{% raw %}
 {{ render_breadcrumb_item('test_form', 'Form') }}
-{{ render_breadcrumb_item('test_nav', 'Nav') }}
+{{ render_breadcrumb_item('test_nav', 'Nav', _badge='17', _badge_pill=True) }}
 {{ render_breadcrumb_item('test_pagination', 'Pagination') }}
 {{ render_breadcrumb_item('test_flash', 'Flash Messages') }}
 {% endraw %}</pre>
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         {{ render_breadcrumb_item('test_form', 'Form') }}
-        {{ render_breadcrumb_item('test_nav', 'Nav') }}
+        {{ render_breadcrumb_item('test_nav', 'Nav', _badge='17', _badge_pill=True) }}
         {{ render_breadcrumb_item('test_pagination', 'Pagination') }}
         {{ render_breadcrumb_item('test_flash', 'Flash Messages') }}
     </ol>
