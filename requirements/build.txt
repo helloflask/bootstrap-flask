@@ -7,11 +7,11 @@
 #
 build==1.2.1
     # via -r requirements/build.in
-packaging==24.0
+packaging==24.1
     # via build
-pyproject-hooks==1.0.0
+pyproject-hooks==1.1.0
     # via build
 tomli==2.0.1
     # via build
-wheel==0.43.0
+wheel==0.44.0
     # via -r requirements/build.in

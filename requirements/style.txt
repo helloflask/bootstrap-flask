@@ -5,11 +5,11 @@
 #
 #    pip-compile-multi
 #
-flake8==7.0.0
+flake8==7.1.1
     # via -r requirements/style.in
 mccabe==0.7.0
     # via flake8
-pycodestyle==2.11.1
+pycodestyle==2.12.1
     # via flake8
 pyflakes==3.2.0
     # via flake8
