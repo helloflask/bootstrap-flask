@@ -1,6 +1,14 @@
 Changelog
 =========
 
+2.4.1
+-----
+
+Release date: -
+
+- Fix the badge classes in the ``render_nav_item`` macro for Bootstrap 5.
+- Add ``_badge_classes`` param to the ``render_nav_item`` macro to set badge classes.
+
 2.4.0
 -----
 

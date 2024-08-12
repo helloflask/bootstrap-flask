@@ -25,11 +25,13 @@ Example
 API
 ~~~~
 
-.. py:function:: render_nav_item(endpoint, text, _badge='', _use_li=False, **kwargs)
+.. py:function:: render_nav_item(endpoint, text, _badge='', _use_li=False, _badge_classes='...', **kwargs)
 
     :param endpoint: The endpoint used to generate URL.
     :param text: The text that will displayed on the item.
     :param _badge: Badge text.
+    :param _badge_classes: Badge classes. For Bootstrap 4, the default value is ``badge badge-light``.
+                           For Bootstrap 5, the default value is ``badge text-bg-light``.
     :param _use_li: Default to generate ``<a></a>``, if set to ``True``, it will generate ``<li><a></a></li>``.
     :param kwargs: Additional keyword arguments pass to ``url_for()``.
 
