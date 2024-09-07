@@ -38,6 +38,12 @@ class TestBootstrap:
                         'crossorigin="anonymous">'
         assert bootstrap_css in rv
 
+    def test_load_css_with_bootswatch_theme(self, bootstrap):
+        rv = bootstrap.load_css(bootswatch_theme="mist")
+        bootstrap_css = f'<link rel="stylesheet" href="{CDN_BASE}/bootswatch@{bootstrap.bootstrap_version}/' \
+                        f'dist/mist/bootstrap.min.css"'
+        assert bootstrap_css in rv
+
     def test_load_css_with_non_default_versions(self, bootstrap):
         def _check_assertions(rv):
             assert 'bootstrap.min.css' in rv
