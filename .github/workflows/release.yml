@@ -47,6 +47,6 @@ jobs:
       id-token: write
     steps:
       - uses: actions/download-artifact@v4.1.7
-      - uses: pypa/gh-action-pypi-publish@b7f401de30cb6434a1e19f805ff006643653240e
+      - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           packages-dir: artifact/
