@@ -11,25 +11,21 @@ click==8.1.7
     # via flask
 coverage[toml]==7.6.1
     # via pytest-cov
-exceptiongroup==1.2.2
-    # via pytest
 flask==3.0.3
     # via
     #   flask-sqlalchemy
     #   flask-wtf
 flask-sqlalchemy==3.1.1
-    # via -r requirements/tests.in
+    # via -r tests.in
 flask-wtf==1.2.1
-    # via -r requirements/tests.in
-greenlet==3.0.3
-    # via sqlalchemy
+    # via -r tests.in
 iniconfig==2.0.0
     # via pytest
 itsdangerous==2.2.0
     # via
     #   flask
     #   flask-wtf
-jinja2==3.1.4
+jinja2==3.1.5
     # via flask
 markupsafe==2.1.5
     # via
@@ -42,16 +38,12 @@ pluggy==1.5.0
     # via pytest
 pytest==8.3.2
     # via
-    #   -r requirements/tests.in
+    #   -r tests.in
     #   pytest-cov
 pytest-cov==5.0.0
-    # via -r requirements/tests.in
+    # via -r tests.in
 sqlalchemy==2.0.32
     # via flask-sqlalchemy
-tomli==2.0.1
-    # via
-    #   coverage
-    #   pytest
 typing-extensions==4.12.2
     # via sqlalchemy
 werkzeug==3.0.3
