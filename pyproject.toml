@@ -1,0 +1,46 @@
+[project]
+name = "Bootstrap-Flask"
+version = "2.4.1"
+description = "Bootstrap 4 & 5 helper for your Flask projects."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Grey Li", email = "withlihui@gmail.com" }]
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+    'Environment :: Web Environment',
+    'Intended Audience :: Developers',
+    'License :: OSI Approved :: MIT License',
+    'Operating System :: OS Independent',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+    'Framework :: Flask',
+    'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+]
+dependencies = ["Flask", "WTForms"]
+
+[project.urls]
+Documentation = "https://bootstrap-flask.readthedocs.io/en/stable/"
+Changes = "https://bootstrap-flask.readthedocs.io/en/stable/changelog/"
+"Source Code" = "https://github.com/helloflask/bootstrap-flask/"
+"Issue Tracker" = "https://github.com/helloflask/bootstrap-flask/issues/"
+Funding = "https://opencollective.com/bootstrap-flask"
+Discussions = "https://github.com/helloflask/bootstrap-flask/discussions/"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["flask_bootstrap"]
+
+[tool.coverage.report]
+exclude_lines = ["pragma: no cover", " except ImportError:"]

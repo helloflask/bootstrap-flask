@@ -25,11 +25,13 @@ Example
 API
 ~~~~
 
-.. py:function:: render_nav_item(endpoint, text, _badge='', _use_li=False, **kwargs)
+.. py:function:: render_nav_item(endpoint, text, _badge='', _use_li=False, _badge_classes='...', **kwargs)
 
     :param endpoint: The endpoint used to generate URL.
     :param text: The text that will displayed on the item.
     :param _badge: Badge text.
+    :param _badge_classes: Badge classes. For Bootstrap 4, the default value is ``badge badge-light``.
+                           For Bootstrap 5, the default value is ``badge text-bg-light``.
     :param _use_li: Default to generate ``<a></a>``, if set to ``True``, it will generate ``<li><a></a></li>``.
     :param kwargs: Additional keyword arguments pass to ``url_for()``.
 
@@ -491,6 +493,7 @@ API
                               caption=None,\
                               table_classes=None,\
                               header_classes=None,\
+                              body_classes=None,\
                               responsive=False,\
                               responsive_class='table-responsive',\
                               safe_columns=None,\
@@ -512,6 +515,7 @@ API
     :param caption: A caption to attach to the table.
     :param table_classes: A string of classes to apply to the table (e.g ``'table-small table-dark'``).
     :param header_classes: A string of classes to apply to the table header (e.g ``'thead-dark'``).
+    :param body_classes: A string of classes to apply to the table body (e.g ``'table-group-divider'``).
     :param responsive: Whether to enable/disable table responsiveness.
     :param responsive_class: The responsive class to apply to the table. Default is ``'table-responsive'``.
     :param safe_columns: Tuple with columns names to render HTML safe using ``|safe``.

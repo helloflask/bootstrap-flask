@@ -89,15 +89,16 @@ class _Bootstrap:
             'row row-cols-lg-auto g-3 align-items-center'
         )  # Bootstrap 5 only
 
-    def load_css(self, version=None, bootstrap_sri=None):
+    def load_css(self, version=None, bootstrap_sri=None, bootswatch_theme=None):
         """Load Bootstrap's css resources with given version.
 
         .. versionadded:: 0.1.0
 
         :param version: The version of Bootstrap.
+        :param bootswatch_theme: Set the bootswatch theme at the request/session level.
         """
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
-        bootswatch_theme = current_app.config['BOOTSTRAP_BOOTSWATCH_THEME']
+        bootswatch_theme = bootswatch_theme or current_app.config['BOOTSTRAP_BOOTSWATCH_THEME']
         if version is None:
             version = self.bootstrap_version
         bootstrap_sri = self._get_sri('bootstrap_css', version, bootstrap_sri)

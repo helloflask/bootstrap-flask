@@ -3,10 +3,32 @@ Changelog
 
 - Reduced icon whitespace and support for classes.
 
+2.4.1
+-----
+
+Release date: 2024/10/3
+
+- Fix the badge classes in the ``render_nav_item`` macro for Bootstrap 5.
+- Add ``_badge_classes`` param to the ``render_nav_item`` macro to set badge classes.
+- Support ``bootswatch_theme`` as parameter to ``load_css``.
+
+2.4.0
+-----
+
+Release date: 2024/4/7
+
+- Test against Python 3.12.
+- Replaced deprecated color "muted" with "secondary" (`#340 <https://github.com/helloflask/bootstrap-flask/pull/340>`__).
+- Adding ``body_classes`` parameter to ``render_table`` (`#350 <https://github.com/helloflask/bootstrap-flask/pull/350>`__).
+- Migrate setup.py to pyproject.toml.
+
+
 2.3.3
 -----
 
-Release date: -
+Release date: 2023/11/30
+
+- Upgrade to Bootstrap Icons 1.11.2.
 
 
 2.3.2
