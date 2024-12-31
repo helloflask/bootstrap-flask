@@ -37,18 +37,11 @@ def test_render_icon(app, client):
             {{ render_icon('heart', title='Heart') }}
         ''')
 
-    @app.route('/icon-desc')
-    def icon_desc():
+    @app.route('/icon-desc-classes')
+    def icon_desc_classes():
         return render_template_string('''
         {% from 'bootstrap4/utils.html' import render_icon %}
-            {{ render_icon('heart', desc='A heart.') }}
-        ''')
-
-    @app.route('/icon-classes')
-    def icon_classes():
-        return render_template_string('''
-        {% from 'bootstrap4/utils.html' import render_icon %}
-            {{ render_icon('heart', classes='text-success bg-light') }}
+            {{ render_icon('heart', desc='A heart.', classes='text-success bg-light') }}
         ''')
 
     response = client.get('/icon')
@@ -78,14 +71,10 @@ def test_render_icon(app, client):
     assert 'bootstrap-icons.svg#heart' in data
     assert '<title>Heart</title>' in data
 
-    response = client.get('/icon-desc')
+    response = client.get('/icon-desc-classes')
     data = response.get_data(as_text=True)
     assert 'bootstrap-icons.svg#heart' in data
     assert '<desc>A heart.</desc>' in data
-
-    response = client.get('/icon-classes')
-    data = response.get_data(as_text=True)
-    assert 'bootstrap-icons.svg#heart' in data
     assert 'class="bi text-success bg-light"' in data
 
 
