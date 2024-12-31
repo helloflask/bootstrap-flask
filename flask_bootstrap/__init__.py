@@ -1,6 +1,6 @@
 import warnings
 
-from quart import current_app, Blueprint, url_for
+from flask import current_app, Blueprint, url_for
 from markupsafe import Markup
 from wtforms import BooleanField, HiddenField
 
