@@ -18,6 +18,10 @@ Output: {{ render_icon('heart', 25, 'primary') }}
 <pre>{% raw %}{{ render_icon('heart', '2em', 'red') }}{% endraw %}</pre>
 Output: {{ render_icon('heart', '2em', 'red') }}
 
+<h2>Icon with additional classes for styling</h2>
+<pre>{% raw %}{{ render_icon('heart', '2em', classes='text-success bg-light p-2 rounded-lg') }}{% endraw %}</pre>
+Output: {{ render_icon('heart', '4em', classes='text-success bg-light p-2 rounded-lg') }}
+
 <h2>Icon with title and descr</h2>
 <pre>{% raw %}{{ render_icon('heart', title='Heart', desc='A heart.') }}{% endraw %}</pre>
 Output: {{ render_icon('heart', title='Heart', desc='A heart.') }}
