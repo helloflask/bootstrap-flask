@@ -46,7 +46,7 @@ sqlalchemy==2.0.32
     # via flask-sqlalchemy
 typing-extensions==4.12.2
     # via sqlalchemy
-werkzeug==3.0.3
+werkzeug==3.0.6
     # via flask
 wtforms==3.1.2
     # via flask-wtf
