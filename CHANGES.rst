@@ -2,6 +2,7 @@ Changelog
 =========
 
 - Added support for offline icons and font icons.
+- Upgrade to Bootstrap Icons 1.11.3.
 
 2.4.1
 -----
