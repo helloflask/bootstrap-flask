@@ -607,7 +607,7 @@ By default, it will enable the CSRF token check for all the POST requests, read 
 render_icon()
 -------------
 
-Render a Bootstrap icon.
+Render a Bootstrap icon. This an SVG with a ``use`` element which refers to a locally hosted SVG sprite with an fragment identifier. Note that serving the SVG sprite across a domain has an `issue with Chrome <https://issues.chromium.org/issues/41164645>`_.
 
 Example
 ~~~~~~~
@@ -631,3 +631,30 @@ API
                 string (e.g. ``'red'``, ``'#ddd'`` or ``'(250, 250, 250)'``), default to use configuration ``BOOTSTRAP_ICON_COLOR`` (default value is ``None``).
     :param title: The title of the icon for accessibility support.
     :param desc: The description of the icon for accessibility support.
+
+
+render_icon_font()
+------------------
+
+Render a Bootstrap icon font. This has less functionality than ``render_icon()``, but works with serving the SVG sprite across a domain by setting ``BOOTSTRAP_SERVE_LOCAL`` to ``True``.
+
+Example
+~~~~~~~
+
+.. code-block:: jinja
+
+    {% from 'bootstrap4/utils.html' import render_icon_font %}
+
+    {{ render_icon_font('heart') }}
+
+API
+~~~~
+
+.. py:function:: render_icon_font(name, size=config.BOOTSTRAP_ICON_SIZE, color=config.BOOTSTRAP_ICON_COLOR)
+
+    :param name: The name of icon, you can find all available names at `Bootstrap Icon <https://icons.getbootstrap.com/>`_.
+    :param size: The size of icon, you can pass any vaild size value (e.g. ``32``/``'32px'``, ``1.5em``, etc.), default to
+                use configuration ``BOOTSTRAP_ICON_SIZE`` (default value is `'1em'`).
+    :param color: The color of icon, follow the context with ``currentColor`` if not set. Accept values are Bootstrap style name
+                (one of ``['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'muted']``) or any valid color
+                string (e.g. ``'red'``, ``'#ddd'`` or ``'(250, 250, 250)'``), default to use configuration ``BOOTSTRAP_ICON_COLOR`` (default value is ``None``).

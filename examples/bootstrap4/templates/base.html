@@ -8,6 +8,7 @@
     <title>Bootstrap-Flask Demo Application</title>
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
     {{ bootstrap.load_css() }}
+    {{ bootstrap.load_icon_font_css() }}
     <style>
         pre {
             background: #ddd;
@@ -38,6 +39,7 @@
                 {{ render_nav_item('test_table', 'Table') }}
                 {{ render_nav_item('test_icon', 'Icon') }}
                 {{ render_nav_item('test_icons', 'Icons') }}
+                {{ render_nav_item('test_icons_font', 'Icons Font') }}
                 <li class="nav-item"><a class="nav-link" href="https://bootstrap-flask.readthedocs.io/" target="_blank">Documentation</a></li>
                 <li class="nav-item"><a class="nav-link" href="https://getbootstrap.com/docs/4.6/getting-started/introduction/" target="_blank">Bootstrap Documentation</a></li>
                 <li class="nav-item"><a class="nav-link" href="https://github.com/greyli/bootstrap-flask" target="_blank">GitHub</a></li>

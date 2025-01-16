@@ -36,7 +36,6 @@ class _Bootstrap:
 
     .. versionadded:: 2.0.0
     """
-
     bootstrap_version = None
     jquery_version = None
     popper_version = None
@@ -108,18 +107,31 @@ class _Bootstrap:
                 base_path = 'css'
             else:
                 base_path = f'css/bootswatch/{bootswatch_theme.lower()}'
-            boostrap_url = url_for('bootstrap.static', filename=f'{base_path}/{self.bootstrap_css_filename}')
+            bootstrap_url = url_for('bootstrap.static', filename=f'{base_path}/{self.bootstrap_css_filename}')
         else:
             if not bootswatch_theme:
                 base_path = f'{CDN_BASE}/bootstrap@{version}/dist/css'
             else:
                 base_path = f'{CDN_BASE}/bootswatch@{version}/dist/{bootswatch_theme.lower()}'
-            boostrap_url = f'{base_path}/{self.bootstrap_css_filename}'
+            bootstrap_url = f'{base_path}/{self.bootstrap_css_filename}'
 
         if bootstrap_sri and not bootswatch_theme:
-            css = f'<link rel="stylesheet" href="{boostrap_url}" integrity="{bootstrap_sri}" crossorigin="anonymous">'
+            css = f'<link rel="stylesheet" href="{bootstrap_url}" integrity="{bootstrap_sri}" crossorigin="anonymous">'
         else:
-            css = f'<link rel="stylesheet" href="{boostrap_url}">'
+            css = f'<link rel="stylesheet" href="{bootstrap_url}">'
+        return Markup(css)
+
+    def load_icon_font_css(self):
+        """Load Bootstrap's css icon font resource.
+
+        .. versionadded:: 2.4.2
+        """
+        serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
+        if serve_local:
+            icons_url = url_for('bootstrap.static', filename='font/bootstrap-icons.min.css')
+        else:
+            icons_url = f'{CDN_BASE}/bootstrap-icons@{self.icons_version}/font/bootstrap-icons.min.css'
+        css = f'<link rel="stylesheet" href="{icons_url}">'
         return Markup(css)
 
     def _get_js_script(self, version, name, sri, nonce):
@@ -225,6 +237,7 @@ class Bootstrap4(_Bootstrap):
        Move common logic to base class ``_Bootstrap``.
     """
     bootstrap_version = '4.6.1'
+    icons_version = '1.11.3'
     jquery_version = '3.5.1'
     popper_version = '1.16.1'
     bootstrap_css_integrity = 'sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn'
@@ -261,6 +274,7 @@ class Bootstrap5(_Bootstrap):
     .. versionadded:: 2.0.0
     """
     bootstrap_version = '5.3.2'
+    icons_version = '1.11.3'
     popper_version = '2.11.8'
     bootstrap_css_integrity = 'sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN'
     bootstrap_js_integrity = 'sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+'

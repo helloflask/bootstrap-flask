@@ -21,6 +21,12 @@
 {% endmacro %}
 
 
+{% macro render_icon_font(name, size=config.BOOTSTRAP_ICON_SIZE, color=config.BOOTSTRAP_ICON_COLOR) %}
+{% set bootstrap_colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'muted'] %}
+<i class="bi-{{ name }}{% if color in bootstrap_colors %} text-{{ color }}{% endif %}" style="{% if color and color not in bootstrap_colors %}color: {{ color }}; {% endif %}font-size: {{ size }};"></i>
+{% endmacro %}
+
+
 {% macro arg_url_for(endpoint, base) %}
     {# calls url_for() with a given endpoint and **base as the parameters,
    additionally passing on all keyword_arguments (may overwrite existing ones)

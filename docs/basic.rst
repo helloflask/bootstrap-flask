@@ -67,6 +67,8 @@ If you want to apply a strict Content Security Policy (CSP), you can pass ``nonc
 E.g. if using `Talisman
 <https://github.com/wntrblm/flask-talisman>`_ it can be called with ``bootstrap.load_js(nonce=csp_nonce())``.
 
+In order to use icon font, there is an additional helper called ``bootstrap.load_icon_font_css()``. User this only when calling ``render_icon_font()``. For  more information, see the documentation for that marco.
+
 Starter template
 ----------------
 
@@ -132,6 +134,8 @@ Macros
 | render_messages()         | bootstrap4/utils.html          | Render flashed messages send by flash() function                   |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
 | render_icon()             | bootstrap4/utils.html          | Render a Bootstrap icon                                            |
++---------------------------+--------------------------------+--------------------------------------------------------------------+
+| render_icon_font()        | bootstrap4/utils.html          | Render a Bootstrap font icon                                       |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+
 | render_table()            | bootstrap4/table.html          | Render a table with given data                                     |
 +---------------------------+--------------------------------+--------------------------------------------------------------------+

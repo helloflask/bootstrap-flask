@@ -1,6 +1,8 @@
 Changelog
 =========
 
+- Added support for offline icons and font icons.
+
 2.4.1
 -----
 

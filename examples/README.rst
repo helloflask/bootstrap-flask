@@ -31,10 +31,11 @@ Live demos for the example application: https://bootstrap-flask-example.azureweb
 Overview of icons
 -----------------
 
-The example applications contain a page called icons which gives an overview
-of all icons supported by this version of Bootstrap-Flask. This overview can be
-used for testing purposes but is also offline documentation on the icons
-available.
+The example applications contain pages called icons and icons_font which gives
+an overview of all icons, respectively from SVG file and CSS font file,
+supported by this version of Bootstrap-Flask. This overview can be used for
+testing purposes but is also offline documentation on the icons available for
+development purposes.
 
 When Bootstrap-Flask updates the icon file, the overview page can be upgraded
 with:
@@ -42,5 +43,5 @@ with:
 
 .. code-block:: bash
 
-    $ python3 update-icons.py
+    $ python3 update_icons.py
 

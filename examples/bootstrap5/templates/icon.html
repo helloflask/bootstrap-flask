@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% from 'bootstrap5/utils.html' import render_icon %}
+{% from 'bootstrap5/utils.html' import render_icon, render_icon_font %}
 
 {% block content %}
 <h2>Icon</h2>
@@ -25,4 +25,15 @@ Output: {{ render_icon('heart', title='Heart', desc='A heart.') }}
 <h2>Button example</h2>
 <a class="btn btn-primary text-white">Download {{ render_icon('arrow-down-circle') }}</a>
 <a class="btn btn-success text-white">Bookmark {{ render_icon('bookmark-star') }}</a>
+
+<h2>Icon font examples</h2>
+<pre>{% raw %}{{ render_icon_font('heart', '32px') }}{% endraw %}</pre>
+Output: {{ render_icon_font('heart', '32px') }}
+<pre>{% raw %}{{ render_icon_font('heart', '25px', 'primary') }}{% endraw %}</pre>
+Output: {{ render_icon_font('heart', '25px', 'primary') }}
+<pre>{% raw %}{{ render_icon_font('heart', '2em', 'red') }}{% endraw %}</pre>
+Output: {{ render_icon_font('heart', '2em', 'red') }}
+<br>
+<a class="btn btn-primary text-white">Download {{ render_icon_font('arrow-down-circle') }}</a>
+<a class="btn btn-success text-white">Bookmark {{ render_icon_font('bookmark-star') }}</a>
 {% endblock %}

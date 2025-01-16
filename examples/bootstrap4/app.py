@@ -14,6 +14,7 @@ app.secret_key = 'dev'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
 
+app.config['BOOTSTRAP_SERVE_LOCAL'] = True
 # set default button sytle and size, will be overwritten by macro parameters
 app.config['BOOTSTRAP_BTN_STYLE'] = 'primary'
 app.config['BOOTSTRAP_BTN_SIZE'] = 'sm'
@@ -291,6 +292,11 @@ def test_icon():
 @app.route('/icons')
 def test_icons():
     return render_template('icons.html')
+
+
+@app.route('/icons_font')
+def test_icons_font():
+    return render_template('icons_font.html')
 
 
 if __name__ == '__main__':
