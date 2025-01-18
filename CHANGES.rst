@@ -1,6 +1,7 @@
 Changelog
 =========
 
+- Serve examples locally for faster and offline development.
 - Upgrade to Bootstrap Icons 1.11.3.
 
 
