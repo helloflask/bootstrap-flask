@@ -10,14 +10,18 @@
 {% endmacro %}
 
 
-{% macro render_icon(name, size=config.BOOTSTRAP_ICON_SIZE, color=config.BOOTSTRAP_ICON_COLOR, title=None, desc=None) %}
+{% macro render_icon(name, size=config.BOOTSTRAP_ICON_SIZE, color=config.BOOTSTRAP_ICON_COLOR, title=None, desc=None, font=False) %}
 {% set bootstrap_colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'muted'] %}
+{%- if font == true -%}
+<i class="bi-{{ name }}{% if color in bootstrap_colors %} text-{{ color }}{% endif %}" style="{% if color and color not in bootstrap_colors %}color: {{ color }}; {% endif %}font-size: {{ size }};"></i>
+{%- else -%}
 <svg class="bi{% if not color %}"{% elif color in bootstrap_colors %} text-{{ color }}"{% else %}" style="color: {{ color }}"{% endif %}
  width="{{ size }}" height="{{ size }}" fill="currentColor">
     {% if title is not none %}<title>{{ title }}</title>{% endif %}
     {% if desc is not none %}<desc>{{ desc }}</desc>{% endif %}
     <use xlink:href="{{ url_for('bootstrap.static', filename='icons/bootstrap-icons.svg') }}#{{ name }}"/>
 </svg>
+{%- endif -%}
 {% endmacro %}
 
 
