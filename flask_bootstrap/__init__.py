@@ -1,21 +1,28 @@
+"""TODO."""
+
 import warnings
+from typing import NoReturn, ParamSpec
 
 from flask import current_app, Blueprint, url_for
 from markupsafe import Markup
 from wtforms import BooleanField, HiddenField
 
+P = ParamSpec('P')
+
 CDN_BASE = 'https://cdn.jsdelivr.net/npm'
 
 
 def is_hidden_field_filter(field):
+    """TODO."""
     return isinstance(field, HiddenField)
 
 
-def raise_helper(message):
+def raise_helper(message: str) -> NoReturn:
+    """TODO."""
     raise RuntimeError(message)
 
 
-def get_table_titles(data, primary_key, primary_key_title):
+def get_table_titles(data: list, primary_key: str, primary_key_title: str) -> list[tuple[str, str]]:
     """Detect and build the table titles tuple from ORM object, currently only support SQLAlchemy.
 
     .. versionadded:: 1.4.0
@@ -37,14 +44,14 @@ class _Bootstrap:
     .. versionadded:: 2.0.0
     """
 
-    bootstrap_version = None
-    jquery_version = None
-    popper_version = None
-    bootstrap_css_integrity = None
-    bootstrap_js_integrity = None
-    jquery_integrity = None
-    popper_integrity = None
-    static_folder = None
+    bootstrap_version: str | None = None
+    jquery_version: str | None = None
+    popper_version: str | None = None
+    bootstrap_css_integrity: str | None = None
+    bootstrap_js_integrity: str | None = None
+    jquery_integrity: str | None = None
+    popper_integrity: str | None = None
+    static_folder: str | None = None
     bootstrap_css_filename = 'bootstrap.min.css'
     bootstrap_js_filename = 'bootstrap.min.js'
     jquery_filename = 'jquery.min.js'
@@ -55,7 +62,7 @@ class _Bootstrap:
             self.init_app(app)
 
     def init_app(self, app):
-
+        """TODO."""
         if not hasattr(app, 'extensions'):
             app.extensions = {}  # pragma: no cover
         app.extensions['bootstrap'] = self
@@ -270,6 +277,8 @@ class Bootstrap5(_Bootstrap):
 
 
 class Bootstrap(Bootstrap4):
+    """TODO."""
+
     def __init__(self, app=None):
         super().__init__(app=app)
         warnings.warn(
@@ -285,6 +294,7 @@ class SwitchField(BooleanField):
 
     .. versionadded:: 2.0.0
     """
-
-    def __init__(self, label=None, **kwargs):
+    def __init__(self, label: str | None = None,
+                 *args: P.args,
+                 **kwargs: P.kwargs) -> None:
         super().__init__(label, **kwargs)
