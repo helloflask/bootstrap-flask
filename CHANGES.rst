@@ -1,6 +1,7 @@
 Changelog
 =========
 
+- Reduced icon whitespace and support for classes.
 - Upgrade to Bootstrap Icons 1.11.3.
 
 2.4.1
