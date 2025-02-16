@@ -6,10 +6,10 @@
     <h2>Example Form</h2>
     <pre>
 class ExampleForm(FlaskForm):
-    date = DateField(description="We'll never share your email with anyone else.")  # add help text with `description`
-    datetime = DateTimeField(render_kw={'placeholder': 'this is a placeholder'})  # add HTML attribute with `render_kw`
+    date = DateField(description='Your memorable date')  # add help text with `description`
+    datetime = DateTimeField(render_kw={'placeholder': 'this is a placeholder', 'class': 'fst-italic'})  # add HTML attribute with `render_kw`
     datetimelocal = DateTimeLocalField()
-    time = TimeField()
+    time = TimeField(description='This is private', render_kw={'descr_class': 'fs-1 text-decoration-underline'})
     month = MonthField()
     color = ColorField()
     floating = FloatField()
@@ -20,16 +20,24 @@ class ExampleForm(FlaskForm):
     url = URLField()
     telephone = TelField()
     image = FileField(render_kw={'class': 'my-class'}, validators=[Regexp('.+\.jpg$')])  # add your class
-    option = RadioField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')])
+    option = RadioField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')], render_kw={'label_class': 'text-decoration-underline', 'radio_class': 'text-decoration-line-through'})
     select = SelectField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')])
     selectmulti = SelectMultipleField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')])
     bio = TextAreaField()
-    search = SearchField() # will autocapitalize on mobile
-    title = StringField() # will not autocapitalize on mobile
+    search = SearchField()  # will autocapitalize on mobile
+    title = StringField()  # will not autocapitalize on mobile
     secret = PasswordField()
     remember = BooleanField('Remember me')
     submit = SubmitField()</pre>
     {{ render_form(example_form) }}
+
+    <h2>Inline form</h2>
+    <pre>{% raw %}{{ render_form(inline_form, form_type='inline') }}{% endraw %}</pre>
+    {{ render_form(inline_form, form_type='inline') }}
+
+    <h2>Horizontal form</h2>
+    <pre>{% raw %}{{ render_form(horizontal_form, form_type='horizontal') }}{% endraw %}</pre>
+    {{ render_form(horizontal_form, form_type='horizontal') }}
 
     <h2>Render a form with render_form</h2>
     <pre>{% raw %}{{ render_form(form) }}{% endraw %}</pre>
