@@ -1,9 +1,7 @@
 Changelog
 =========
 
-- Fixed typo in Bootstrap in code and CHANGES.rst.
 - Upgrade to Bootstrap Icons 1.11.3.
-
 
 2.4.1
 -----
