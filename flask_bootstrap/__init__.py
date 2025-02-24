@@ -109,18 +109,18 @@ class _Bootstrap:
                 base_path = 'css'
             else:
                 base_path = f'css/bootswatch/{bootswatch_theme.lower()}'
-            boostrap_url = url_for('bootstrap.static', filename=f'{base_path}/{self.bootstrap_css_filename}')
+            bootstrap_url = url_for('bootstrap.static', filename=f'{base_path}/{self.bootstrap_css_filename}')
         else:
             if not bootswatch_theme:
                 base_path = f'{CDN_BASE}/bootstrap@{version}/dist/css'
             else:
                 base_path = f'{CDN_BASE}/bootswatch@{version}/dist/{bootswatch_theme.lower()}'
-            boostrap_url = f'{base_path}/{self.bootstrap_css_filename}'
+            bootstrap_url = f'{base_path}/{self.bootstrap_css_filename}'
 
         if bootstrap_sri and not bootswatch_theme:
-            css = f'<link rel="stylesheet" href="{boostrap_url}" integrity="{bootstrap_sri}" crossorigin="anonymous">'
+            css = f'<link rel="stylesheet" href="{bootstrap_url}" integrity="{bootstrap_sri}" crossorigin="anonymous">'
         else:
-            css = f'<link rel="stylesheet" href="{boostrap_url}">'
+            css = f'<link rel="stylesheet" href="{bootstrap_url}">'
         return Markup(css)
 
     def load_icon_font_css(self):

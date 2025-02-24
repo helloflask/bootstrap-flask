@@ -623,7 +623,7 @@ Example
 API
 ~~~~
 
-.. py:function:: render_icon(name, size=config.BOOTSTRAP_ICON_SIZE, color=config.BOOTSTRAP_ICON_COLOR, title=None, desc=None, font=False)
+.. py:function:: render_icon(name, size=config.BOOTSTRAP_ICON_SIZE, color=config.BOOTSTRAP_ICON_COLOR, title=None, desc=None, classes=None, font=False)
 
     :param name: The name of icon, you can find all available names at `Bootstrap Icon <https://icons.getbootstrap.com/>`_.
     :param size: The size of icon, you can pass any vaild size value (e.g. ``32``/``'32px'``, ``1.5em``, etc.), default to
@@ -633,4 +633,5 @@ API
                 string (e.g. ``'red'``, ``'#ddd'`` or ``'(250, 250, 250)'``), default to use configuration ``BOOTSTRAP_ICON_COLOR`` (default value is ``None``).
     :param title: The title of the icon for accessibility support. This is not supported for ``font=True``.
     :param desc: The description of the icon for accessibility support. This is not supported for ``font=True``.
+    :param classes: The classes to use for styling (e.g. ``'text-success bg-body-secondary p-2 rounded-3'``).
     :param font: Default to generate ``<svg></svg>``, if set to ``True``, it will generate ``<i></i>`` which uses icon font.

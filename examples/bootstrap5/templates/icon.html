@@ -22,6 +22,10 @@ Output: {{ render_icon('heart', '2em', 'red') }}
 <pre>{% raw %}{{ render_icon('heart', title='Heart', desc='A heart.') }}{% endraw %}</pre>
 Output: {{ render_icon('heart', title='Heart', desc='A heart.') }}
 
+<h2>SVG icon with additional classes for styling</h2>
+<pre>{% raw %}{{ render_icon('heart', '2em', classes='text-success bg-body-secondary p-2 rounded-3') }}{% endraw %}</pre>
+Output: {{ render_icon('heart', '4em', classes='text-success bg-body-secondary p-2 rounded-3') }}
+
 <h2>Buttons with SVG icon</h2>
 <a class="btn btn-primary text-white">Download {{ render_icon('arrow-down-circle') }}</a>
 <a class="btn btn-success text-white">Bookmark {{ render_icon('bookmark-star') }}</a>

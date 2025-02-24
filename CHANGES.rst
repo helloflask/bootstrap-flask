@@ -1,8 +1,8 @@
 Changelog
 =========
 
+- Reduced icon whitespace and support for classes.
 - Upgrade to Bootstrap Icons 1.11.3.
-
 
 2.4.1
 -----
@@ -67,7 +67,7 @@ Release date: 2022/11/20
 
 - Drop Python 3.6 support, and test against Python 3.10.
 - Add support for strict Content Security Policy (CSP) (`#252 <https://github.com/helloflask/bootstrap-flask/pull/252>`__)
-- Upgrade to Bootstrap 5.2.2, Popper 2.11.6, Bootswatch 5.2.2, and Boostrap Icons 1.9.1.
+- Upgrade to Bootstrap 5.2.2, Popper 2.11.6, Bootswatch 5.2.2, and Bootstrap Icons 1.9.1.
 - Fix Flask-SQLAlchemy ``paginate`` named parameters in tests and examples.
 - Support to preview available Bootswatch theme in the example application.
 - Remove ``.DS_Store`` files from the distribution files.
