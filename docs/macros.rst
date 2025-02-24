@@ -634,4 +634,4 @@ API
     :param title: The title of the icon for accessibility support. This is not supported for ``font=True``.
     :param desc: The description of the icon for accessibility support. This is not supported for ``font=True``.
     :param classes: The classes to use for styling (e.g. ``'text-success bg-body-secondary p-2 rounded-3'``).
-    :param font: Default to generate ``<svg></svg>``, if set to ``True``, it will generate ``<i></i>`` which uses icon font.
+    :param font: Generate ``<svg></svg>`` if set to ``False`` and generate ``<i></i>`` to use the icon font if set to ``True``, default to use configuration ``BOOTSTRAP_ICON_USE_FONT`` (default value is ``False``).

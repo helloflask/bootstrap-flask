@@ -79,6 +79,7 @@ class _Bootstrap:
         app.config.setdefault('BOOTSTRAP_BOOTSWATCH_THEME', None)
         app.config.setdefault('BOOTSTRAP_ICON_SIZE', '1em')
         app.config.setdefault('BOOTSTRAP_ICON_COLOR', None)
+        app.config.setdefault('BOOTSTRAP_ICON_USE_FONT', False)
         app.config.setdefault('BOOTSTRAP_MSG_CATEGORY', 'primary')
         app.config.setdefault('BOOTSTRAP_TABLE_VIEW_TITLE', 'View')
         app.config.setdefault('BOOTSTRAP_TABLE_EDIT_TITLE', 'Edit')

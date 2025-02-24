@@ -68,7 +68,8 @@ E.g. if using `Talisman
 <https://github.com/wntrblm/flask-talisman>`_ it can be called with ``bootstrap.load_js(nonce=csp_nonce())``.
 
 In order to use icon font, there is an additional helper called ``bootstrap.load_icon_font_css()``.
-This is used only by ``render_icon(..., font=True)``. See its also the documentation for that marco.
+This is used only by ``render_icon(..., font=True)`` or can be globally controlled via ``BOOTSTRAP_ICON_USE_FONT``.
+See its also the documentation for that marco.
 
 Starter template
 ----------------
