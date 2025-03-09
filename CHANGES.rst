@@ -1,8 +1,12 @@
 Changelog
 =========
 
-- Reduced icon whitespace and support for classes.
+2.4.2
+-----
+
+- Add support for icon classes.
 - Upgrade to Bootstrap Icons 1.11.3.
+- Replace deprecated color ``muted`` with ``secondary``.
 
 2.4.1
 -----
