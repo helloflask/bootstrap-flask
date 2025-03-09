@@ -136,3 +136,97 @@ def test_form_inline_classes_config(app, client, hello_form):
     data = response.get_data(as_text=True)
     assert 'row row-cols-lg-auto g-3 align-items-center' not in data
     assert 'custom-inline-classes' in data
+
+
+# test render label_class, radio_class and description_class
+def test_class(app, client, class_form):
+
+    @app.route('/class')
+    def test_class():
+        form = class_form()
+        return render_template_string('''
+        {% from 'bootstrap5/form.html' import render_form %}
+        {{ render_form(form) }}
+        ''', form=form)
+
+    response = client.get('/class')
+    data = response.get_data(as_text=True)
+
+    # render_field form.html line 88
+    assert '<label class="form-check-label text-decoration-underline" for="boolean">Bool label</label>' in data
+    # render_field form.html line 95
+    assert '<small class="form-text text-body-secondary text-decoration-line-through">Bool descr</small>' in data
+
+    # render_field form.html line 223
+    assert '<label class="form-label text-decoration-underline" for="integer">Int label</label>' in data
+    # render_field form.html line 248
+    assert '<small class="form-text text-body-secondary text-decoration-line-through">Int descr</small>' in data
+
+    # render_field form.html line 111
+    assert '<label class="form-label text-uppercase" for="option">Rad label</label>' in data
+    # render_field form.html line 120
+    assert '<label class="form-check-label text-decoration-line-through" for="option-1">Two</label>' in data
+    # render_field form.html line 132
+    assert '<small class="form-text text-body-secondary text-decoration-underline">Rad descr</small>' in data
+
+
+def test_class_inline(app, client, class_form):
+
+    @app.route('/class_inline')
+    def test_class_inline():
+        form = class_form()
+        return render_template_string('''
+        {% from 'bootstrap5/form.html' import render_form %}
+        {{ render_form(form, form_type='inline') }}
+        ''', form=form)
+
+    response = client.get('/class_inline')
+    data = response.get_data(as_text=True)
+
+    # render_field form.html line 88, repeat from other test
+    assert '<label class="form-check-label text-decoration-underline" for="boolean">Bool label</label>' in data
+    # render_field form.html line 95, repeat from other test
+    assert '<small class="form-text text-body-secondary text-decoration-line-through">Bool descr</small>' in data
+
+    # render_field form.html line 166, probably not displayed
+    assert '<label class="visually-hidden text-decoration-underline" for="integer">Int label</label>' in data
+    # render_field form.html not rendered description
+    assert '">Int descr</small>' not in data
+
+    # render_field form.html line 105, probabaly not displayed
+    assert '<label class="visually-hidden text-uppercase" for="option">Rad label</label>' in data
+    # render_field form.html line 120, repeat from other test
+    assert '<label class="form-check-label text-decoration-line-through" for="option-1">Two</label>' in data
+    # render_field form.html line 132, repeat from other test
+    assert '<small class="form-text text-body-secondary text-decoration-underline">Rad descr</small>' in data
+
+
+def test_class_horizontal(app, client, class_form):
+
+    @app.route('/class_horizontal')
+    def test_class_horizontal():
+        form = class_form()
+        return render_template_string('''
+        {% from 'bootstrap5/form.html' import render_form %}
+        {{ render_form(form, form_type='horizontal') }}
+        ''', form=form)
+
+    response = client.get('/class_horizontal')
+    data = response.get_data(as_text=True)
+
+    # render_field form.html line 88, repeat from other test
+    assert '<label class="form-check-label text-decoration-underline" for="boolean">Bool label</label>' in data
+    # render_field form.html line 95, repeat from other test
+    assert '<small class="form-text text-body-secondary text-decoration-line-through">Bool descr</small>' in data
+
+    # render_field form.html line 189
+    assert '<label class="col-form-label col-lg-2 text-decoration-underline" for="integer">Int label</label>' in data
+    # render_field form.html line 219
+    assert '<small class="form-text text-body-secondary text-decoration-line-through">Int descr</small>' in data
+
+    # render_field form.html line 109
+    assert '<label class="col-form-label col-lg-2 text-uppercase" for="option">Rad label</label>' in data
+    # render_field form.html line 120, repeat from other test
+    assert '<label class="form-check-label text-decoration-line-through" for="option-1">Two</label>' in data
+    # render_field form.html line 132, repeat from other test
+    assert '<small class="form-text text-body-secondary text-decoration-underline">Rad descr</small>' in data

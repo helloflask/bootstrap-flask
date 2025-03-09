@@ -140,6 +140,34 @@ Bootstrap-Flask, simply use the built-in class ``SwitchField()`` instead of
 ``BooleanField()``. See also the example application.
 
 
+.. _inputcustomization:
+
+Form Input Customization
+------------------------
+
+Rendering Label
+~~~~~~~~~~~~~~~
+
+Bootstrap offers control for rendering
+`text <https://getbootstrap.com/docs/5.3/utilities/text/>`_. This is supported
+for inputs of a form by adding ``render_kw={'label_class': '... ...'}`` to the
+field constructor. In order to control the rendering of the label of a field,
+use ``render_kw={'label_class': '... ...'}``. See also the example application.
+
+Rendering Radio Label
+~~~~~~~~~~~~~~~~~~~~~
+
+Similar support exists for the rendering of the labels of options of a
+``RadioField()` with ``render_kw={'radio_class': '... ...'}``. See also the
+example application.
+
+Rendering Description
+~~~~~~~~~~~~~~~~~~~~~
+
+Use ``render_kw={'description_class': '... ...'}`` for controlling the
+rendering of a field's description. See also the example application.
+
+
 .. _bootswatch_theme:
 
 Bootswatch Themes
