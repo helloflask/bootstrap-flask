@@ -45,7 +45,7 @@ the necessary fix for required=False attributes, but will also not set the requi
 
     {% set form_group_classes = form_group_classes or config.BOOTSTRAP_FORM_GROUP_CLASSES %}
 
-    {# support for label_class and descr_class which are popped, to prevent they are added to input, but restored at the end of this macro for the next rendering #}
+    {# support for label_class, radio_class and description_class which are popped, to prevent they are added to input, but restored at the end of this macro for the next rendering #}
     {%- set label_class = '' -%}
     {%- if field.render_kw.label_class -%}
         {% set label_class = field.render_kw.pop('label_class', '') -%}
@@ -56,10 +56,10 @@ the necessary fix for required=False attributes, but will also not set the requi
         {% set radio_class = field.render_kw.pop('radio_class', '') -%}
         {% set radio_classes = ' ' + radio_class -%}
     {%- endif -%}
-    {%- set descr_class = '' -%}
-    {%- if field.render_kw.descr_class -%}
-        {% set descr_class = field.render_kw.pop('descr_class', '') -%}
-        {% set descr_classes = ' ' + descr_class -%}
+    {%- set description_class = '' -%}
+    {%- if field.render_kw.description_class -%}
+        {% set description_class = field.render_kw.pop('description_class', '') -%}
+        {% set description_classes = ' ' + description_class -%}
     {%- endif -%}
 
     {# combine render_kw class or class/class_ argument with Bootstrap classes #}
@@ -92,7 +92,7 @@ the necessary fix for required=False attributes, but will also not set the requi
                     {%- endfor %}
                 {%- elif field.description -%}
                     {% call _hz_form_wrap(horizontal_columns, form_type, required=required) %}
-                        <small class="form-text text-body-secondary{{ descr_classes|safe }}">{{ field.description|safe }}</small>
+                        <small class="form-text text-body-secondary{{ description_classes|safe }}">{{ field.description|safe }}</small>
                     {% endcall %}
                 {%- endif %}
             </div>
@@ -129,7 +129,7 @@ the necessary fix for required=False attributes, but will also not set the requi
                 <div class="invalid-feedback d-block">{{ error }}</div>
             {%- endfor %}
         {%- elif field.description -%}
-            <small class="form-text text-body-secondary{{ descr_classes|safe }}">{{ field.description|safe }}</small>
+            <small class="form-text text-body-secondary{{ description_classes|safe }}">{{ field.description|safe }}</small>
         {%- endif %}
         </div>
     {%- elif field.type == 'SubmitField' -%}
@@ -216,7 +216,7 @@ the necessary fix for required=False attributes, but will also not set the requi
                     {%- endfor %}
                 {%- elif field.description -%}
                     {% call _hz_form_wrap(horizontal_columns, form_type, required=required) %}
-                        <small class="form-text text-body-secondary{{ descr_classes|safe }}">{{ field.description|safe }}</small>
+                        <small class="form-text text-body-secondary{{ description_classes|safe }}">{{ field.description|safe }}</small>
                     {% endcall %}
                 {%- endif %}
             {%- else -%}
@@ -245,7 +245,7 @@ the necessary fix for required=False attributes, but will also not set the requi
                         <div class="invalid-feedback d-block">{{ error }}</div>
                     {%- endfor %}
                 {%- elif field.description -%}
-                    <small class="form-text text-body-secondary{{ descr_classes|safe }}">{{ field.description|safe }}</small>
+                    <small class="form-text text-body-secondary{{ description_classes|safe }}">{{ field.description|safe }}</small>
                 {%- endif %}
             {%- endif %}
         </div>
@@ -257,8 +257,8 @@ the necessary fix for required=False attributes, but will also not set the requi
     {%- if radio_class -%}
         {%- set _ = field.render_kw.update({'radio_class': radio_class}) -%}
     {%- endif -%}
-    {%- if descr_class -%}
-        {%- set _ = field.render_kw.update({'descr_class': descr_class}) -%}
+    {%- if description_class -%}
+        {%- set _ = field.render_kw.update({'description_class': description_class}) -%}
     {%- endif -%}
 {% endmacro %}
 

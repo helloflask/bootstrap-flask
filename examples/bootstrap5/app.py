@@ -37,7 +37,7 @@ class ExampleForm(FlaskForm):
     date = DateField(description='Your memorable date')  # add help text with `description`
     datetime = DateTimeField(render_kw={'placeholder': 'this is a placeholder', 'class': 'text-decoration-line-through'})  # add HTML attribute with `render_kw`
     datetime_local = DateTimeLocalField()
-    time = TimeField(description='This is private', render_kw={'descr_class': 'fst-italic text-decoration-underline'})
+    time = TimeField(description='This is private', render_kw={'description_class': 'fst-italic text-decoration-underline'})
     month = MonthField()
     color = ColorField()
     floating = FloatField()
@@ -62,15 +62,15 @@ class ExampleForm(FlaskForm):
 class ExampleFormInline(FlaskForm):
     """An example inline form."""
     floating = FloatField(description='a float', render_kw={'label_class': 'text-decoration-underline'})
-    integer = IntegerField(description='an int', render_kw={'descr_class': 'text-decoration-line-through'})
-    option = RadioField(description='Choose one', choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')], render_kw={'radio_class': 'text-decoration-line-through', 'descr_class': 'fw-bold'})
+    integer = IntegerField(description='an int', render_kw={'description_class': 'text-decoration-line-through'})
+    option = RadioField(description='Choose one', choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')], render_kw={'radio_class': 'text-decoration-line-through', 'description_class': 'fw-bold'})
     submit = SubmitField()
 
 
 class ExampleFormHorizontal(FlaskForm):
     """An example horizontal form."""
     floating = FloatField(description='a float', render_kw={'label_class': 'text-decoration-underline'})
-    integer = IntegerField(description='an int', render_kw={'descr_class': 'text-decoration-line-through'})
+    integer = IntegerField(description='an int', render_kw={'description_class': 'text-decoration-line-through'})
     option = RadioField(description='choose 1', choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')], render_kw={'label_class': 'text-decoration-underline'})
     submit = SubmitField()
 
@@ -78,7 +78,7 @@ class ExampleFormHorizontal(FlaskForm):
 class HelloForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
     password = PasswordField('Password', validators=[DataRequired(), Length(8, 150)])
-    remember = BooleanField('Remember me', description='Rember me on my next visit', render_kw={'descr_class': 'fw-bold text-decoration-line-through'})
+    remember = BooleanField('Remember me', description='Rember me on my next visit', render_kw={'description_class': 'fw-bold text-decoration-line-through'})
     submit = SubmitField()
 
 

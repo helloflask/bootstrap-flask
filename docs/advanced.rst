@@ -164,8 +164,8 @@ example application.
 Rendering Description
 ~~~~~~~~~~~~~~~~~~~~~
 
-Use ``render_kw={'descr_class': '... ...'}`` for controlling the rendering of a
-field's description. See also the example application.
+Use ``render_kw={'description_class': '... ...'}`` for controlling the
+rendering of a field's description. See also the example application.
 
 
 .. _bootswatch_theme:

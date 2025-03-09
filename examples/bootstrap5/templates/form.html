@@ -9,7 +9,7 @@ class ExampleForm(FlaskForm):
     date = DateField(description='Your memorable date')  # add help text with `description`
     datetime = DateTimeField(render_kw={'placeholder': 'this is a placeholder', 'class': 'fst-italic'})  # add HTML attribute with `render_kw`
     datetimelocal = DateTimeLocalField()
-    time = TimeField(description='This is private', render_kw={'descr_class': 'fs-1 text-decoration-underline'})
+    time = TimeField(description='This is private', render_kw={'description_class': 'fs-1 text-decoration-underline'})
     month = MonthField()
     color = ColorField()
     floating = FloatField()

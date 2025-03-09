@@ -17,16 +17,16 @@ class HelloForm(FlaskForm):
 class ClassForm(FlaskForm):
     boolean = BooleanField('Bool label', description="Bool descr",
                            render_kw={'label_class': 'text-decoration-underline',
-                                      'descr_class': 'text-decoration-line-through'})
+                                      'description_class': 'text-decoration-line-through'})
     integer = IntegerField('Int label', description="Int descr",
                            render_kw={'label_class': 'text-decoration-underline',
-                                      'descr_class': 'text-decoration-line-through'})
+                                      'description_class': 'text-decoration-line-through'})
     option = RadioField('Rad label',
                         description='Rad descr',
                         choices=[('one', 'One'), ('two', 'Two')],
                         render_kw={'label_class': 'text-uppercase',
                                    'radio_class': 'text-decoration-line-through',
-                                   'descr_class': 'text-decoration-underline'})
+                                   'description_class': 'text-decoration-underline'})
 
 
 @pytest.fixture

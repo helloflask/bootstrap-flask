@@ -138,7 +138,7 @@ def test_form_inline_classes_config(app, client, hello_form):
     assert 'custom-inline-classes' in data
 
 
-# test render label_class, radio_class and descr_class
+# test render label_class, radio_class and description_class
 def test_class(app, client, class_form):
 
     @app.route('/class')
