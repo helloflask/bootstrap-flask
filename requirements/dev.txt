@@ -18,11 +18,11 @@ colorama==0.4.6
     # via tox
 distlib==0.3.9
     # via virtualenv
-filelock==3.17.0
+filelock==3.16.1
     # via
     #   tox
     #   virtualenv
-pip-compile-multi==2.8.0
+pip-compile-multi==2.6.4
     # via -r requirements/dev.in
 pip-tools==7.4.1
     # via pip-compile-multi
@@ -30,7 +30,7 @@ platformdirs==4.3.6
     # via
     #   tox
     #   virtualenv
-pyproject-api==1.9.0
+pyproject-api==1.8.0
     # via tox
 pyproject-hooks==1.2.0
     # via
