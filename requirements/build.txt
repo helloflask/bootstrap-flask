@@ -5,13 +5,17 @@
 #
 #    pip-compile-multi
 #
-build==1.2.1
+build==1.2.2.post1
     # via -r requirements/build.in
-packaging==24.1
+importlib-metadata==8.5.0
     # via build
-pyproject-hooks==1.1.0
+packaging==24.2
     # via build
-tomli==2.0.1
+pyproject-hooks==1.2.0
     # via build
-wheel==0.44.0
+tomli==2.2.1
+    # via build
+wheel==0.45.1
     # via -r requirements/build.in
+zipp==3.20.2
+    # via importlib-metadata
