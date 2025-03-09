@@ -14,6 +14,9 @@ app.secret_key = 'dev'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
 
+# serve locally for faster and offline development
+app.config['BOOTSTRAP_SERVE_LOCAL'] = True
+
 # set default button sytle and size, will be overwritten by macro parameters
 app.config['BOOTSTRAP_BTN_STYLE'] = 'primary'
 app.config['BOOTSTRAP_BTN_SIZE'] = 'sm'

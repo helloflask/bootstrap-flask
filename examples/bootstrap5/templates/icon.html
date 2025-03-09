@@ -2,27 +2,43 @@
 {% from 'bootstrap5/utils.html' import render_icon %}
 
 {% block content %}
-<h2>Icon</h2>
+<h2>SVG icon</h2>
 <pre>{% raw %}{{ render_icon('heart') }}{% endraw %}</pre>
 Output: {{ render_icon('heart') }}
 
-<h2>Icon with custom size</h2>
+<h2>SVG icon with custom size</h2>
 <pre>{% raw %}{{ render_icon('heart', 32) }}{% endraw %}</pre>
 Output: {{ render_icon('heart', 32) }}
 
-<h2>Icon with custom size and Bootstrap color</h2>
+<h2>SVG icon with custom size and Bootstrap color</h2>
 <pre>{% raw %}{{ render_icon('heart', 25, 'primary') }}{% endraw %}</pre>
 Output: {{ render_icon('heart', 25, 'primary') }}
 
-<h2>Icon with custom size and custom color</h2>
+<h2>SVG icon with custom size and custom color</h2>
 <pre>{% raw %}{{ render_icon('heart', '2em', 'red') }}{% endraw %}</pre>
 Output: {{ render_icon('heart', '2em', 'red') }}
 
-<h2>Icon with title and descr</h2>
+<h2>SVG icon with title and descr</h2>
 <pre>{% raw %}{{ render_icon('heart', title='Heart', desc='A heart.') }}{% endraw %}</pre>
 Output: {{ render_icon('heart', title='Heart', desc='A heart.') }}
 
-<h2>Button example</h2>
+<h2>SVG icon with additional classes for styling</h2>
+<pre>{% raw %}{{ render_icon('heart', '2em', classes='text-success bg-body-secondary p-2 rounded-3') }}{% endraw %}</pre>
+Output: {{ render_icon('heart', '4em', classes='text-success bg-body-secondary p-2 rounded-3') }}
+
+<h2>Buttons with SVG icon</h2>
 <a class="btn btn-primary text-white">Download {{ render_icon('arrow-down-circle') }}</a>
 <a class="btn btn-success text-white">Bookmark {{ render_icon('bookmark-star') }}</a>
+
+<h2>Font icon with custom size and Bootstrap color</h2>
+<pre>{% raw %}{{ render_icon('heart', '25px', 'primary', font=True) }}{% endraw %}</pre>
+Output: {{ render_icon('heart', '25px', 'primary', font=True) }}
+
+<h2>Font icon with custom size and custom color</h2>
+<pre>{% raw %}{{ render_icon('heart', '2em', 'red', font=True) }}{% endraw %}</pre>
+Output: {{ render_icon('heart', '2em', 'red', font=True) }}
+
+<h2>Buttons with font icon</h2>
+<a class="btn btn-primary text-white">Download {{ render_icon('arrow-down-circle', font=True) }}</a>
+<a class="btn btn-success text-white">Bookmark {{ render_icon('bookmark-star', font=True) }}</a>
 {% endblock %}
