@@ -40,6 +40,7 @@ class _Bootstrap:
     bootstrap_version = None
     jquery_version = None
     popper_version = None
+    icons_version = None
     bootstrap_css_integrity = None
     bootstrap_js_integrity = None
     jquery_integrity = None
@@ -78,6 +79,7 @@ class _Bootstrap:
         app.config.setdefault('BOOTSTRAP_BOOTSWATCH_THEME', None)
         app.config.setdefault('BOOTSTRAP_ICON_SIZE', '1em')
         app.config.setdefault('BOOTSTRAP_ICON_COLOR', None)
+        app.config.setdefault('BOOTSTRAP_ICON_USE_FONT', False)
         app.config.setdefault('BOOTSTRAP_MSG_CATEGORY', 'primary')
         app.config.setdefault('BOOTSTRAP_TABLE_VIEW_TITLE', 'View')
         app.config.setdefault('BOOTSTRAP_TABLE_EDIT_TITLE', 'Edit')
@@ -120,6 +122,19 @@ class _Bootstrap:
             css = f'<link rel="stylesheet" href="{bootstrap_url}" integrity="{bootstrap_sri}" crossorigin="anonymous">'
         else:
             css = f'<link rel="stylesheet" href="{bootstrap_url}">'
+        return Markup(css)
+
+    def load_icon_font_css(self):
+        """Load Bootstrap's css icon font resource.
+
+        .. versionadded:: 2.4.2
+        """
+        serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
+        if serve_local:
+            icons_url = url_for('bootstrap.static', filename='font/bootstrap-icons.min.css')
+        else:
+            icons_url = f'{CDN_BASE}/bootstrap-icons@{self.icons_version}/font/bootstrap-icons.min.css'
+        css = f'<link rel="stylesheet" href="{icons_url}">'
         return Markup(css)
 
     def _get_js_script(self, version, name, sri, nonce):
@@ -227,6 +242,7 @@ class Bootstrap4(_Bootstrap):
     bootstrap_version = '4.6.1'
     jquery_version = '3.5.1'
     popper_version = '1.16.1'
+    icons_version = '1.11.3'
     bootstrap_css_integrity = 'sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn'
     bootstrap_js_integrity = 'sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2'
     jquery_integrity = 'sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0='
@@ -262,6 +278,7 @@ class Bootstrap5(_Bootstrap):
     """
     bootstrap_version = '5.3.2'
     popper_version = '2.11.8'
+    icons_version = '1.11.3'
     bootstrap_css_integrity = 'sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN'
     bootstrap_js_integrity = 'sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+'
     popper_integrity = 'sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r'

@@ -607,7 +607,9 @@ By default, it will enable the CSRF token check for all the POST requests, read 
 render_icon()
 -------------
 
-Render a Bootstrap icon.
+Render a Bootstrap icon. This is either an SVG with a ``use`` element which refers to a locally hosted SVG sprite with an fragment identifier.
+Note that serving the SVG sprite across a domain has an `issue with Chrome <https://issues.chromium.org/issues/41164645>`_.
+Or it is possible to have a font icon rendered. This does support``BOOTSTRAP_SERVE_LOCAL`` but requires ``bootstrap.load_icon_font_css()`` in the template header.
 
 Example
 ~~~~~~~
@@ -621,7 +623,7 @@ Example
 API
 ~~~~
 
-.. py:function:: render_icon(name, size=config.BOOTSTRAP_ICON_SIZE, color=config.BOOTSTRAP_ICON_COLOR, title=None, desc=None, classes=None)
+.. py:function:: render_icon(name, size=config.BOOTSTRAP_ICON_SIZE, color=config.BOOTSTRAP_ICON_COLOR, title=None, desc=None, classes=None, font=False)
 
     :param name: The name of icon, you can find all available names at `Bootstrap Icon <https://icons.getbootstrap.com/>`_.
     :param size: The size of icon, you can pass any vaild size value (e.g. ``32``/``'32px'``, ``1.5em``, etc.), default to
@@ -629,6 +631,7 @@ API
     :param color: The color of icon, follow the context with ``currentColor`` if not set. Accept values are Bootstrap style name
                 (one of ``['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'muted']``) or any valid color
                 string (e.g. ``'red'``, ``'#ddd'`` or ``'(250, 250, 250)'``), default to use configuration ``BOOTSTRAP_ICON_COLOR`` (default value is ``None``).
-    :param title: The title of the icon for accessibility support.
-    :param desc: The description of the icon for accessibility support.
+    :param title: The title of the icon for accessibility support. This is not supported for ``font=True``.
+    :param desc: The description of the icon for accessibility support. This is not supported for ``font=True``.
     :param classes: The classes to use for styling (e.g. ``'text-success bg-body-secondary p-2 rounded-3'``).
+    :param font: Generate ``<svg></svg>`` if set to ``False`` and generate ``<i></i>`` to use the icon font if set to ``True``, default to use configuration ``BOOTSTRAP_ICON_USE_FONT`` (default value is ``False``).
