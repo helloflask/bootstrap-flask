@@ -2,8 +2,10 @@
 
 from os import listdir
 
+# pylint:disable=unspecified-encoding
 
-def list(version):
+
+def list_names(version):
     """List template file names."""
     print(f"To add to bootstrap{version}/app.py")
     print("    theme_name = RadioField(")
@@ -23,4 +25,4 @@ def list(version):
 
 
 for value in (4, 5):
-    list(value)
+    list_names(value)

@@ -42,5 +42,5 @@ with:
 
 .. code-block:: bash
 
-    $ python3 update-icons.py
+    $ python3 update_icons.py
 
