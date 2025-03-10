@@ -154,9 +154,17 @@ def test_render_icon_font_config(app, client):
     def icon():
         return render_template_string('''
         {% from 'bootstrap4/utils.html' import render_icon %}
+            {{ bootstrap.load_icon_font_css() }}
             {{ render_icon('heart', font=True) }}
         ''')
 
+    response = client.get('/icon')
+    data = response.get_data(as_text=True)
+    assert 'size: 100;' in data
+    assert 'text-success' in data
+
+    # complete test coverage for bootstrap.load_icon_font_css()
+    app.config['BOOTSTRAP_SERVE_LOCAL'] = not app.config['BOOTSTRAP_SERVE_LOCAL']
     response = client.get('/icon')
     data = response.get_data(as_text=True)
     assert 'size: 100;' in data

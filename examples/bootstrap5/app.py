@@ -5,8 +5,8 @@ from markupsafe import Markup
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms.validators import DataRequired, Length, Regexp
 from wtforms.fields import *
-from flask_bootstrap import Bootstrap5, SwitchField
 from flask_sqlalchemy import SQLAlchemy
+from flask_bootstrap import Bootstrap5, SwitchField
 
 app = Flask(__name__)
 app.secret_key = 'dev'
@@ -34,6 +34,7 @@ csrf = CSRFProtect(app)
 
 class ExampleForm(FlaskForm):
     """An example form that contains all the supported bootstrap style form fields."""
+
     date = DateField(description="We'll never share your email with anyone else.")  # add help text with `description`
     datetime = DateTimeField(render_kw={'placeholder': 'this is a placeholder'})  # add HTML attribute with `render_kw`
     datetime_local = DateTimeLocalField()
@@ -52,8 +53,8 @@ class ExampleForm(FlaskForm):
     select = SelectField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')])
     select_multiple = SelectMultipleField(choices=[('dog', 'Dog'), ('cat', 'Cat'), ('bird', 'Bird'), ('alien', 'Alien')])
     bio = TextAreaField()
-    search = SearchField() # will autocapitalize on mobile
-    title = StringField() # will not autocapitalize on mobile
+    search = SearchField()  # will autocapitalize on mobile
+    title = StringField()  # will not autocapitalize on mobile
     secret = PasswordField()
     remember = BooleanField('Remember me')
     submit = SubmitField()
@@ -96,7 +97,8 @@ class ContactForm(FlaskForm):
 
 class BootswatchForm(FlaskForm):
     """Form to test Bootswatch."""
-    #DO NOT EDIT! Use list-bootswatch.py to generate the Radiofield below.
+
+    # DO NOT EDIT! Use list-bootswatch.py to generate the Radiofield below.
     theme_name = RadioField(
         default='default',
         choices=[
@@ -212,7 +214,7 @@ def test_bootswatch():
             app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = form.theme_name.data
         flash(f'Render style has been set to {form.theme_name.data}.')
     else:
-        if app.config['BOOTSTRAP_BOOTSWATCH_THEME'] != None:
+        if app.config['BOOTSTRAP_BOOTSWATCH_THEME'] is not None:
             form.theme_name.data = app.config['BOOTSTRAP_BOOTSWATCH_THEME']
     return render_template('bootswatch.html', form=form)
 

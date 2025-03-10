@@ -12,7 +12,7 @@ def test_render_pager(app, client):
     def test():
         db.drop_all()
         db.create_all()
-        for i in range(100):
+        for _ in range(100):
             msg = Message()
             db.session.add(msg)
         db.session.commit()
