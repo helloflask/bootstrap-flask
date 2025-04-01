@@ -131,7 +131,7 @@ class _Bootstrap:
         """
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
         if serve_local:
-            icons_url = url_for('bootstrap.static', filename='font/bootstrap-icons.min.css')
+            icons_url = url_for('bootstrap.static', filename='css/font/bootstrap-icons.min.css')
         else:
             icons_url = f'{CDN_BASE}/bootstrap-icons@{self.icons_version}/font/bootstrap-icons.min.css'
         css = f'<link rel="stylesheet" href="{icons_url}">'
