@@ -1,6 +1,8 @@
 Changelog
 =========
 
+- Upgrade to Bootstrap 5.3.5, including Bootswatch (adding theme Brite).
+
 2.4.2
 -----
 

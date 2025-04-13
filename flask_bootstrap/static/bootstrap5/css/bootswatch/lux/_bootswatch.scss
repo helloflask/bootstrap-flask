@@ -1,12 +1,16 @@
-// Lux 5.3.1
+// Lux 5.3.5
 // Bootswatch
 
 
 // Variables
 
-$web-font-path: "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600&display=swap" !default;
+$web-font-path: "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;500;600;700&display=swap" !default;
 @if $web-font-path {
-  @import url($web-font-path);
+  @import url("#{$web-font-path}");
+}
+
+:root {
+  --bs-border-width: 0;
 }
 
 // Navbar
@@ -68,6 +72,13 @@ $web-font-path: "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;6
   color: $gray-600;
   border-color: $gray-600;
 
+  &.disabled,
+  &:disabled,
+  fieldset:disabled & {
+    color: $gray-600;
+    border-color: $gray-600;
+  }
+
   &:not([disabled]):not(.disabled):hover,
   &:not([disabled]):not(.disabled):focus,
   &:not([disabled]):not(.disabled):active {
@@ -89,10 +100,15 @@ $web-font-path: "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;6
   border: 1px solid $gray-400 !important;
 }
 
+@include color-mode(dark) {
+  .btn-primary {
+    background-color: #080808;
+  }
+}
+
 // Typography
 
 body {
-  font-weight: 200;
   letter-spacing: 1px;
 }
 
@@ -128,6 +144,63 @@ th {
     td {
       padding: .75rem;
     }
+  }
+}
+
+.table-primary,
+.table-secondary,
+.table-success,
+.table-warning,
+.table-danger,
+.table-info,
+.table-light {
+  --#{$prefix}table-color: #{$body-color};
+}
+
+// Forms
+
+@include color-mode(dark) {
+  .form-control {
+    color: $body-color;
+
+    &::placeholder {
+      color: $body-secondary-color;
+    }
+  }
+
+  .form-floating {
+    > label,
+    > .form-control:focus ~ label,
+    > .form-control:not(:placeholder-shown) ~ label,
+    > .form-control-plaintext ~ label,
+    > .form-select ~ label {
+      color: $body-secondary-color;
+    }
+
+    > .form-control::placeholder,
+    > .form-control-plaintext::placeholder {
+      color: transparent;
+    }
+  }
+
+  .form-check-input:checked {
+    background-color: $body-secondary-color;
+  }
+
+  .form-switch .form-check-input {
+    background-image: $form-switch-bg-image;
+  }
+
+  .form-range::-webkit-slider-thumb {
+    background-color: $gray-600;
+  }
+
+  .form-range:disabled::-webkit-slider-thumb {
+    background-color: $gray-800;
+  }
+
+  .input-group-text {
+    color: $body-secondary-color;
   }
 }
 
