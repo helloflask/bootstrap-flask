@@ -239,6 +239,7 @@ class Bootstrap4(_Bootstrap):
     .. versionchanged:: 2.0.0
        Move common logic to base class ``_Bootstrap``.
     """
+
     bootstrap_version = '4.6.1'
     jquery_version = '3.5.1'
     popper_version = '1.16.1'
@@ -276,6 +277,7 @@ class Bootstrap5(_Bootstrap):
 
     .. versionadded:: 2.0.0
     """
+
     bootstrap_version = '5.3.2'
     popper_version = '2.11.8'
     icons_version = '1.11.3'
