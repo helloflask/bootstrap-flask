@@ -15,11 +15,11 @@ class TestBootstrap:
 
         app = Flask(__name__)
         with pytest.warns(UserWarning):
-            bootstrap = Bootstrap(app)  # noqa: F841
+            _ = Bootstrap(app)
 
     def test_deprecate_bootstrap_template_path(self, app, client):
         @app.route('/test')
-        def foo():
+        def test_render_template_string():
             return render_template_string('''
                     {% from 'bootstrap/utils.html' import render_icon %}
                     {{ render_icon('heart') }}

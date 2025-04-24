@@ -3,17 +3,17 @@ from flask import render_template_string
 
 def test_render_breadcrumb_item_active(app, client):
     @app.route('/not_active_item')
-    def foo():
+    def item_foo():
         return render_template_string('''
                 {% from 'bootstrap4/nav.html' import render_breadcrumb_item %}
-                {{ render_breadcrumb_item('bar', 'Bar') }}
+                {{ render_breadcrumb_item('item_bar', 'Bar') }}
                 ''')
 
     @app.route('/active_item')
-    def bar():
+    def item_bar():
         return render_template_string('''
                 {% from 'bootstrap4/nav.html' import render_breadcrumb_item %}
-                {{ render_breadcrumb_item('bar', 'Bar') }}
+                {{ render_breadcrumb_item('item_bar', 'Bar') }}
                 ''')
 
     response = client.get('/not_active_item')
