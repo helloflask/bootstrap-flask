@@ -97,8 +97,7 @@ class ContactForm(FlaskForm):
 
 class BootswatchForm(FlaskForm):
     """Form to test Bootswatch."""
-
-    # DO NOT EDIT! Use list-bootswatch.py to generate the Radiofield below.
+    # DO NOT EDIT! Use list_bootswatch.py to generate the Radiofield below.
     theme_name = RadioField(
         default='default',
         choices=[
