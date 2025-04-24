@@ -1,4 +1,4 @@
-// Slate 5.3.1
+// Slate 5.3.5
 // Bootswatch
 
 $theme: "slate" !default;
@@ -39,6 +39,8 @@ $danger:        $red !default;
 $light:         $gray-200 !default;
 $dark:          $gray-900 !default;
 
+$primary-bg-subtle:       lighten($gray-800, 10%) !default;
+
 $min-contrast-ratio:   1.95 !default;
 
 // Body
@@ -54,7 +56,7 @@ $link-color:                $white !default;
 
 // Tables
 
-$table-color:                 $white !default;
+$table-color:                 initial !default;
 $table-accent-bg:             rgba($white, .05) !default;
 $table-hover-bg:              rgba($white, .075) !default;
 $table-border-color:          rgba($black, .6) !default;
@@ -105,11 +107,15 @@ $nav-tabs-link-hover-border-color:  $nav-tabs-border-color !default;
 $nav-tabs-link-active-color:        $white !default;
 $nav-tabs-link-active-border-color: $nav-tabs-border-color !default;
 
+$nav-underline-link-active-color:   $white !default;
+
 // Navbar
 
 $navbar-padding-y:                  0 !default;
 
 // Pagination
+$pagination-padding-y:              $input-btn-padding-y !default;
+$pagination-padding-x:              $input-btn-padding-x !default;
 
 $pagination-color:                  $white !default;
 $pagination-bg:                     transparent !default;
@@ -127,6 +133,12 @@ $pagination-disabled-border-color:  rgba($black, .6) !default;
 $card-border-color:                 rgba($black, .6) !default;
 $card-cap-bg:                       lighten($gray-800, 10%) !default;
 $card-bg:                           lighten($body-bg, 5%) !default;
+
+// Accordions
+
+$accordion-bg:                      lighten($body-bg, 5%) !default;
+$accordion-border-color:            $table-border-color !default;
+$accordion-button-active-color:     $white !default;
 
 // Popovers
 

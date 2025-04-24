@@ -5,8 +5,8 @@ from markupsafe import Markup
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms.validators import DataRequired, Length, Regexp
 from wtforms.fields import *
-from flask_bootstrap import Bootstrap5, SwitchField
 from flask_sqlalchemy import SQLAlchemy
+from flask_bootstrap import Bootstrap5, SwitchField
 
 app = Flask(__name__)
 app.secret_key = 'dev'
@@ -34,8 +34,9 @@ csrf = CSRFProtect(app)
 
 class ExampleForm(FlaskForm):
     """An example form that contains all the supported bootstrap style form fields."""
-    date = DateField(description='Your memorable date')  # add help text with `description`
-    datetime = DateTimeField(render_kw={'placeholder': 'this is a placeholder', 'class': 'text-decoration-line-through'})  # add HTML attribute with `render_kw`
+
+    date = DateField(description="We'll never share your email with anyone else.")  # add help text with `description`
+    datetime = DateTimeField(render_kw={'placeholder': 'this is a placeholder'})  # add HTML attribute with `render_kw`
     datetime_local = DateTimeLocalField()
     time = TimeField(description='This is private', render_kw={'description_class': 'fst-italic text-decoration-underline'})
     month = MonthField()
@@ -112,36 +113,38 @@ class ContactForm(FlaskForm):
 
 class BootswatchForm(FlaskForm):
     """Form to test Bootswatch."""
-    #DO NOT EDIT! Use list-bootswatch.py to generate the Radiofield below.
+
+    # DO NOT EDIT! Use list_bootswatch.py to generate the Radiofield below.
     theme_name = RadioField(
         default='default',
         choices=[
             ('default', 'none'),
-            ('cerulean', 'Cerulean 5.3.1'),
-            ('cosmo', 'Cosmo 5.3.1'),
-            ('cyborg', 'Cyborg 5.3.1'),
-            ('darkly', 'Darkly 5.3.1'),
-            ('flatly', 'Flatly 5.3.1'),
-            ('journal', 'Journal 5.3.1'),
-            ('litera', 'Litera 5.3.1'),
-            ('lumen', 'Lumen 5.3.1'),
-            ('lux', 'Lux 5.3.1'),
-            ('materia', 'Materia 5.3.1'),
-            ('minty', 'Minty 5.3.1'),
-            ('morph', 'Morph 5.3.1'),
-            ('pulse', 'Pulse 5.3.1'),
-            ('quartz', 'Quartz 5.3.1'),
-            ('sandstone', 'Sandstone 5.3.1'),
-            ('simplex', 'Simplex 5.3.1'),
-            ('sketchy', 'Sketchy 5.3.1'),
-            ('slate', 'Slate 5.3.1'),
-            ('solar', 'Solar 5.3.1'),
-            ('spacelab', 'Spacelab 5.3.1'),
-            ('superhero', 'Superhero 5.3.1'),
-            ('united', 'United 5.3.1'),
-            ('vapor', 'Vapor 5.3.1'),
-            ('yeti', 'Yeti 5.3.1'),
-            ('zephyr', 'Zephyr 5.3.1'),
+            ('brite', 'Brite 5.3.5'),
+            ('cerulean', 'Cerulean 5.3.5'),
+            ('cosmo', 'Cosmo 5.3.5'),
+            ('cyborg', 'Cyborg 5.3.5'),
+            ('darkly', 'Darkly 5.3.5'),
+            ('flatly', 'Flatly 5.3.5'),
+            ('journal', 'Journal 5.3.5'),
+            ('litera', 'Litera 5.3.5'),
+            ('lumen', 'Lumen 5.3.5'),
+            ('lux', 'Lux 5.3.5'),
+            ('materia', 'Materia 5.3.5'),
+            ('minty', 'Minty 5.3.5'),
+            ('morph', 'Morph 5.3.5'),
+            ('pulse', 'Pulse 5.3.5'),
+            ('quartz', 'Quartz 5.3.5'),
+            ('sandstone', 'Sandstone 5.3.5'),
+            ('simplex', 'Simplex 5.3.5'),
+            ('sketchy', 'Sketchy 5.3.5'),
+            ('slate', 'Slate 5.3.5'),
+            ('solar', 'Solar 5.3.5'),
+            ('spacelab', 'Spacelab 5.3.5'),
+            ('superhero', 'Superhero 5.3.5'),
+            ('united', 'United 5.3.5'),
+            ('vapor', 'Vapor 5.3.5'),
+            ('yeti', 'Yeti 5.3.5'),
+            ('zephyr', 'Zephyr 5.3.5'),
         ]
     )
     submit = SubmitField()
@@ -230,7 +233,7 @@ def test_bootswatch():
             app.config['BOOTSTRAP_BOOTSWATCH_THEME'] = form.theme_name.data
         flash(f'Render style has been set to {form.theme_name.data}.')
     else:
-        if app.config['BOOTSTRAP_BOOTSWATCH_THEME'] != None:
+        if app.config['BOOTSTRAP_BOOTSWATCH_THEME'] is not None:
             form.theme_name.data = app.config['BOOTSTRAP_BOOTSWATCH_THEME']
     return render_template('bootswatch.html', form=form)
 

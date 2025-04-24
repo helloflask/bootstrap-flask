@@ -131,7 +131,7 @@ class _Bootstrap:
         """
         serve_local = current_app.config['BOOTSTRAP_SERVE_LOCAL']
         if serve_local:
-            icons_url = url_for('bootstrap.static', filename='font/bootstrap-icons.min.css')
+            icons_url = url_for('bootstrap.static', filename='css/font/bootstrap-icons.min.css')
         else:
             icons_url = f'{CDN_BASE}/bootstrap-icons@{self.icons_version}/font/bootstrap-icons.min.css'
         css = f'<link rel="stylesheet" href="{icons_url}">'
@@ -239,6 +239,7 @@ class Bootstrap4(_Bootstrap):
     .. versionchanged:: 2.0.0
        Move common logic to base class ``_Bootstrap``.
     """
+
     bootstrap_version = '4.6.1'
     jquery_version = '3.5.1'
     popper_version = '1.16.1'
@@ -276,11 +277,11 @@ class Bootstrap5(_Bootstrap):
 
     .. versionadded:: 2.0.0
     """
-    bootstrap_version = '5.3.2'
+    bootstrap_version = '5.3.5'
     popper_version = '2.11.8'
     icons_version = '1.11.3'
-    bootstrap_css_integrity = 'sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN'
-    bootstrap_js_integrity = 'sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+'
+    bootstrap_css_integrity = 'sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7'
+    bootstrap_js_integrity = 'sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+'
     popper_integrity = 'sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r'
     popper_name = '@popperjs/core'
     static_folder = 'bootstrap5'
