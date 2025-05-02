@@ -1,10 +1,20 @@
 Changelog
 =========
 
+2.5.0
+-----
+
+Release date: 2025/5/2
+
+- Drop Python 3.8 support.
 - Upgrade to Bootstrap 5.3.5, including Bootswatch (adding theme Brite).
+- Fix icon font loading issue when ``BOOTSTRAP_SERVE_LOCAL`` is ``True``.
+- Add support for customzing the form input with ``label_class``, ``radio_class``, and ``description_class`` parameters in the ``render_kw`` dict.
 
 2.4.2
 -----
+
+Release date: 2025/3/9
 
 - Add support for icon classes.
 - Upgrade to Bootstrap Icons 1.11.3.
