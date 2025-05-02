@@ -1,6 +1,6 @@
 [project]
 name = "Bootstrap-Flask"
-version = "2.4.2"
+version = "2.5.0"
 description = "Bootstrap 4 & 5 helper for your Flask projects."
 readme = "README.md"
 license = { text = "MIT" }
