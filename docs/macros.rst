@@ -133,7 +133,7 @@ API
                                form group classes, it will read the config ``BOOTSTRAP_FORM_GROUP_CLASSES`` first
                                (the default value is ``mb-3``).
 
-.. tip:: See :ref:`button_customization` and :ref:`checkbox_customization` to learn more on customizations.
+.. tip:: See :ref:`button_customization`, :ref:`checkbox_customization` and :ref:`input_customization` to learn more on customizations.
 
 
 render_form()

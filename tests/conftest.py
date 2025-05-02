@@ -1,7 +1,7 @@
 import pytest
 from flask import Flask, render_template_string
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, PasswordField, StringField, SubmitField, HiddenField
+from wtforms import BooleanField, PasswordField, StringField, SubmitField, HiddenField, IntegerField, RadioField
 from wtforms.validators import DataRequired, Length
 
 
@@ -14,9 +14,29 @@ class HelloForm(FlaskForm):
     submit = SubmitField()
 
 
+class ClassForm(FlaskForm):
+    boolean = BooleanField('Bool label', description="Bool descr",
+                           render_kw={'label_class': 'text-decoration-underline',
+                                      'description_class': 'text-decoration-line-through'})
+    integer = IntegerField('Int label', description="Int descr",
+                           render_kw={'label_class': 'text-decoration-underline',
+                                      'description_class': 'text-decoration-line-through'})
+    option = RadioField('Rad label',
+                        description='Rad descr',
+                        choices=[('one', 'One'), ('two', 'Two')],
+                        render_kw={'label_class': 'text-uppercase',
+                                   'radio_class': 'text-decoration-line-through',
+                                   'description_class': 'text-decoration-underline'})
+
+
 @pytest.fixture
 def hello_form():
     return HelloForm
+
+
+@pytest.fixture
+def class_form():
+    return ClassForm
 
 
 @pytest.fixture(autouse=True)
