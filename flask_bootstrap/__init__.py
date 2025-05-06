@@ -277,11 +277,11 @@ class Bootstrap5(_Bootstrap):
 
     .. versionadded:: 2.0.0
     """
-    bootstrap_version = '5.3.5'
+    bootstrap_version = '5.3.6'
     popper_version = '2.11.8'
     icons_version = '1.11.3'
-    bootstrap_css_integrity = 'sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7'
-    bootstrap_js_integrity = 'sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+'
+    bootstrap_css_integrity = 'sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT'
+    bootstrap_js_integrity = 'sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D'
     popper_integrity = 'sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r'
     popper_name = '@popperjs/core'
     static_folder = 'bootstrap5'
