@@ -3,13 +3,12 @@ name = "Bootstrap-Flask"
 version = "2.5.0"
 description = "Bootstrap 4 & 5 helper for your Flask projects."
 readme = "README.md"
-license = { text = "MIT" }
+license = "MIT"
 authors = [{ name = "Grey Li", email = "withlihui@gmail.com" }]
 classifiers = [
     'Development Status :: 5 - Production/Stable',
     'Environment :: Web Environment',
     'Intended Audience :: Developers',
-    'License :: OSI Approved :: MIT License',
     'Operating System :: OS Independent',
     'Programming Language :: Python',
     'Programming Language :: Python :: 3',
