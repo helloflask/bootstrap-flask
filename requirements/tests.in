@@ -2,3 +2,4 @@ pytest
 pytest-cov
 flask-wtf
 flask-sqlalchemy
+beautifulsoup4
