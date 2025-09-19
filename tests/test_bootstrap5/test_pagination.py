@@ -85,19 +85,11 @@ def test_pagination_after_delete(app, client):
             flash(f'Message {message_id} did not exist.', 'warning')
             return redirect(url_for('test_table'))
 
-    _test_delete_from_middle_page(app, db, Message, client)
-    _test_delete_from_last_page(app, db, Message, client)
-    _test_delete_all_messages(app, db, Message, client)
-
-
-def _test_delete_from_middle_page(app, db, Message, client):
-    """Test Case 1: Delete from middle page - should stay on same page."""
     with app.app_context():
+        # Test Case 1: Delete from middle page - should stay on same page
         db.drop_all()
         db.create_all()
-
-        # Create 25 messages (3 pages of 10 each, 5 on last page)
-        for i in range(25):
+        for i in range(25):  # Create 25 messages (3 pages of 10 each, 5 on last page)
             msg = Message(text=f'Message {i+1}')
             db.session.add(msg)
         db.session.commit()
@@ -112,15 +104,10 @@ def _test_delete_from_middle_page(app, db, Message, client):
         assert 'Page 2 of 3' in data  # Should still be on page 2
         assert 'Total: 24' in data     # One less message
 
-
-def _test_delete_from_last_page(app, db, Message, client):
-    """Test Case 2: Delete all items from last page - should redirect to previous page."""
-    with app.app_context():
+        # Test Case 2: Delete all items from last page - should redirect to previous page
         db.drop_all()
         db.create_all()
-
-        # Create 21 messages (3 pages: 10, 10, 1)
-        for i in range(21):
+        for i in range(21):  # Create 21 messages (3 pages: 10, 10, 1)
             msg = Message(text=f'Message {i+1}')
             db.session.add(msg)
         db.session.commit()
@@ -137,10 +124,7 @@ def _test_delete_from_last_page(app, db, Message, client):
         assert 'Page 2 of 2' in data  # Should redirect to page 2
         assert 'Total: 20' in data     # One less message
 
-
-def _test_delete_all_messages(app, db, Message, client):
-    """Test Case 3: Delete all messages - should go to page 1."""
-    with app.app_context():
+        # Test Case 3: Delete all messages - should go to page 1
         db.drop_all()
         db.create_all()
         msg = Message(text='Last message')
