@@ -271,10 +271,32 @@ def edit_message(message_id):
 def delete_message(message_id):
     message = Message.query.get(message_id)
     if message:
+        # Get current page from referrer or request args
+        current_page = request.args.get('page', 1, type=int)
+        if request.referrer and 'page=' in request.referrer:
+            # Extract page number from referrer URL
+            import re
+            page_match = re.search(r'[?&]page=(\d+)', request.referrer)
+            if page_match:
+                current_page = int(page_match.group(1))
+        
+        # Delete the message
         db.session.delete(message)
         db.session.commit()
-        return f'Message {message_id} has been deleted. Return to <a href="/table">table</a>.'
-    return f'Message {message_id} did not exist and could therefore not be deleted. Return to <a href="/table">table</a>.'
+        
+        # Calculate total remaining messages and pages
+        total_messages = Message.query.count()
+        per_page = 10  # Same as used in test_table route
+        total_pages = max(1, (total_messages + per_page - 1) // per_page)  # At least page 1
+        
+        # Determine which page to redirect to
+        redirect_page = min(current_page, total_pages)
+        
+        flash(f'Message {message_id} has been deleted.', 'success')
+        return redirect(url_for('test_table', page=redirect_page))
+    else:
+        flash(f'Message {message_id} did not exist and could therefore not be deleted.', 'warning')
+        return redirect(url_for('test_table'))
 
 
 @app.route('/table/<int:message_id>/like')
