@@ -32,7 +32,7 @@ def test_render_pagination(app, client):
     assert '<a class="page-link" href="#">1</a>' in data
 
 
-def test_pagination_after_delete(app, client):
+def test_pagination_after_delete(app, client):  # noqa: C901
     """Test that pagination works correctly after deleting items."""
     db = SQLAlchemy(app)
 
