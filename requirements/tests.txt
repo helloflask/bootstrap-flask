@@ -6,27 +6,21 @@
 #    pip-compile-multi
 #
 beautifulsoup4==4.13.4
-    # via -r requirements/tests.in
+    # via -r tests.in
 blinker==1.8.2
     # via flask
 click==8.1.8
     # via flask
 coverage[toml]==7.6.1
     # via pytest-cov
-exceptiongroup==1.2.2
-    # via pytest
 flask==3.0.3
     # via
     #   flask-sqlalchemy
     #   flask-wtf
 flask-sqlalchemy==3.1.1
-    # via -r requirements/tests.in
+    # via -r tests.in
 flask-wtf==1.2.1
-    # via -r requirements/tests.in
-greenlet==3.1.1
-    # via sqlalchemy
-importlib-metadata==8.5.0
-    # via flask
+    # via -r tests.in
 iniconfig==2.0.0
     # via pytest
 itsdangerous==2.2.0
@@ -46,25 +40,19 @@ pluggy==1.5.0
     # via pytest
 pytest==8.3.5
     # via
-    #   -r requirements/tests.in
+    #   -r tests.in
     #   pytest-cov
 pytest-cov==5.0.0
-    # via -r requirements/tests.in
-sqlalchemy==2.0.38
-    # via flask-sqlalchemy
+    # via -r tests.in
 soupsieve==2.7
     # via beautifulsoup4
-tomli==2.2.1
-    # via
-    #   coverage
-    #   pytest
+sqlalchemy==2.0.38
+    # via flask-sqlalchemy
 typing-extensions==4.12.2
     # via
     #   beautifulsoup4
     #   sqlalchemy
-werkzeug==3.0.6
+werkzeug==3.1.4
     # via flask
 wtforms==3.1.2
     # via flask-wtf
-zipp==3.20.2
-    # via importlib-metadata
