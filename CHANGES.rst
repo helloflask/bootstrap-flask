@@ -1,6 +1,7 @@
 Changelog
 =========
 
+- Upgrade to Bootstrap Icons 1.13.1.
 - Upgrade license format in pyproject.toml.
 - Upgrade to Bootstrap 5.3.6
 
