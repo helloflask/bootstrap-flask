@@ -1,6 +1,7 @@
 Changelog
 =========
 
+- Added upgrade documentation
 - Upgrade license format in pyproject.toml.
 - Upgrade to Bootstrap 5.3.6
 
