@@ -1,6 +1,8 @@
 Changelog
 =========
 
+- Drop Python 3.9 and 3.10 support.
+- Upgrade dependencies.
 - Upgrade license format in pyproject.toml.
 - Upgrade to Bootstrap 5.3.6
 
