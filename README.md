@@ -3,7 +3,8 @@
 ![PyPI - License](https://img.shields.io/pypi/l/bootstrap-flask)
 [![Current version on PyPI](https://img.shields.io/pypi/v/bootstrap-flask)](https://pypi.org/project/bootstrap-flask/)
 [![Build status](https://github.com/helloflask/bootstrap-flask/workflows/build/badge.svg)](https://github.com/helloflask/bootstrap-flask/actions)
-[![Coverage Status](https://coveralls.io/repos/github/helloflask/bootstrap-flask/badge.svg?branch=main)](https://coveralls.io/github/helloflask/bootstrap-flask?branch=main)
+[![codecov](https://codecov.io/gh/helloflask/bootstrap-flask/branch/main/graph/badge.svg)](https://codecov.io/gh/helloflask/bootstrap-flask)
+[![PyPI downloads](https://img.shields.io/pypi/dm/bootstrap-flask)](https://pypistats.org/packages/bootstrap-flask)
 [![Open Collective](https://img.shields.io/opencollective/all/bootstrap-flask)](https://opencollective.com/bootstrap-flask)
 
 Bootstrap-Flask is a collection of Jinja macros for Bootstrap 4 & 5 and Flask. It helps you to
