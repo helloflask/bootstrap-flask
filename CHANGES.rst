@@ -4,6 +4,7 @@ Changelog
 - Upgrade to Bootstrap Icons 1.13.1.
 - Drop Python 3.9 and 3.10 support.
 - Upgrade to Bootstrap 5.3.8
+- Upgrade Bootstrap 4 and Bootswatch to 4.6.2.
 
 2.5.0
 -----
