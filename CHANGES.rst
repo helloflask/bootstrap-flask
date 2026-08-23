@@ -1,10 +1,16 @@
 Changelog
 =========
 
-- Upgrade to Bootstrap Icons 1.13.1.
+2.6.0
+-----
+
+Release date: 2026/8/23
+
 - Drop Python 3.9 and 3.10 support.
-- Upgrade to Bootstrap 5.3.8
+- Upgrade Bootstrap 5 to 5.3.8
 - Upgrade Bootstrap 4 and Bootswatch to 4.6.2.
+- Upgrade Bootstrap Icons to 1.13.1.
+- This is the final planned minor release with Bootstrap 4 support. Bootstrap 4 support will be removed in Bootstrap-Flask 3.0.
 
 2.5.0
 -----
