@@ -1,9 +1,8 @@
 Changelog
 =========
 
+- Upgrade to Bootstrap Icons 1.13.1.
 - Drop Python 3.9 and 3.10 support.
-- Upgrade dependencies.
-- Upgrade license format in pyproject.toml.
 - Upgrade to Bootstrap 5.3.8
 
 2.5.0

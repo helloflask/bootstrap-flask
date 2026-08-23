@@ -243,7 +243,7 @@ class Bootstrap4(_Bootstrap):
     bootstrap_version = '4.6.1'
     jquery_version = '3.5.1'
     popper_version = '1.16.1'
-    icons_version = '1.11.3'
+    icons_version = '1.13.1'
     bootstrap_css_integrity = 'sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn'
     bootstrap_js_integrity = 'sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2'
     jquery_integrity = 'sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0='
@@ -279,7 +279,7 @@ class Bootstrap5(_Bootstrap):
     """
     bootstrap_version = '5.3.8'
     popper_version = '2.11.8'
-    icons_version = '1.11.3'
+    icons_version = '1.13.1'
     bootstrap_css_integrity = 'sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB'
     bootstrap_js_integrity = 'sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y'
     popper_integrity = 'sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r'
