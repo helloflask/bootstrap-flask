@@ -35,7 +35,7 @@ pygments==2.19.1
     # via sphinx
 pytz==2025.1
     # via babel
-requests==2.32.3
+requests==2.32.4
     # via sphinx
 snowballstemmer==2.2.0
     # via sphinx
@@ -61,7 +61,7 @@ sphinxcontrib-qthelp==1.0.3
     # via sphinx
 sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
-urllib3==2.2.3
+urllib3==2.6.3
     # via requests
 zipp==3.20.2
     # via importlib-metadata
