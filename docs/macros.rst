@@ -106,6 +106,11 @@ Notice the ``class`` value here will overwrite the ``render_kw={'class': '...'}`
 the form class. Bootstrap-Flask will combine the class value you passed with the ``class`` key of
 the ``render_kw`` dict or the ``class`` keyword arguments with Bootstrap classes.
 
+``RecaptchaField`` is rendered without Bootstrap input classes so Flask-WTF can
+use its default ``g-recaptcha`` class or the configured ``RECAPTCHA_DIV_CLASS``.
+Classes supplied through ``render_kw``, ``class`` or ``class_`` are passed to the
+widget, with keyword arguments taking precedence over ``render_kw``.
+
 
 API
 ~~~~

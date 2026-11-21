@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Unreleased
+----------
+
+- Preserve Flask-WTF captcha widget classes when rendering ``RecaptchaField``
+  with Bootstrap 4 or 5.
+
 2.6.0
 -----
 
