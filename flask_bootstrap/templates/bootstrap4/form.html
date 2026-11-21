@@ -45,7 +45,9 @@ the necessary fix for required=False attributes, but will also not set the requi
     {# combine render_kw class or class/class_ argument with Bootstrap classes #}
     {% set render_kw_class = ' ' + field.render_kw.class if field.render_kw.class else '' %}
     {% set class = kwargs.pop('class', '') or kwargs.pop('class_', '') %}
-    {% if class %}
+    {% if class and field.type == 'RecaptchaField' %}
+        {% set _ = kwargs.update({'class': class}) %}
+    {% elif class %}
         {# override render_kw class when class/class_ presents as keyword argument #}
         {% set render_kw_class = '' %}
         {% set render_kw_class_ = '' %}
@@ -150,7 +152,9 @@ the necessary fix for required=False attributes, but will also not set the requi
                          {%- if field.flags.required %} required{% endif -%}">
             {%- if form_type == "inline" %}
                 {{ field.label(class="sr-only")|safe }}
-                {% if field.type == 'FileField' %}
+                {% if field.type == 'RecaptchaField' %}
+                    {{ field(**kwargs)|safe }}
+                {% elif field.type == 'FileField' %}
                     {% if field.errors %}
                         {{ field(class="form-control-file is-invalid%s" % extra_classes, **kwargs)|safe }}
                     {% else %}
@@ -172,7 +176,9 @@ the necessary fix for required=False attributes, but will also not set the requi
             {% elif form_type == "horizontal" %}
                 {{ field.label(class="col-form-label" + (" col-%s-%s" % horizontal_columns[0:2]))|safe }}
                 <div class="col-{{ horizontal_columns[0] }}-{{ horizontal_columns[2] }}">
-                    {% if field.type == 'FileField' %}
+                    {% if field.type == 'RecaptchaField' %}
+                        {{ field(**kwargs)|safe }}
+                    {% elif field.type == 'FileField' %}
                         {% if field.errors %}
                             {{ field(class="form-control-file is-invalid%s" % extra_classes, **kwargs)|safe }}
                         {% else %}
@@ -205,7 +211,9 @@ the necessary fix for required=False attributes, but will also not set the requi
                 {%- endif %}
             {%- else -%}
                 {{ field.label(class="form-control-label")|safe }}
-                {% if field.type == 'FileField' %}
+                {% if field.type == 'RecaptchaField' %}
+                    {{ field(**kwargs)|safe }}
+                {% elif field.type == 'FileField' %}
                     {% if field.errors %}
                         {{ field(class="form-control-file is-invalid%s" % extra_classes, **kwargs)|safe }}
                     {% else %}
